@@ -5,6 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script src="//code.jquery.com/jquery-3.6.0.js"></script>
 <meta charset="UTF-8">
 <style>
 	.container{
@@ -43,21 +44,27 @@
 	
 		<c:forEach items="${group}" var="group">
 			<div class="box">
-				<span> <a href="./detail"> ${group.group_name} </a> </span>
+				<span class="group_name" > ${group.group_name} </span>
 				<span> ${group.leader}</span>
 				<span> ${group.subject }</span>
-				<span> ${group.description }</span>
 				<span> ${group.member_number}</span>
-				<a href="${group.gno}">
-					<button>  detail </button>
-				</a>
 			</div>
 		</c:forEach>
+		<form method="get" action="./detail">
+			<input type="hidden" name="group_name">
+		</form>
 	</div>
 	
 </body>
 
 	<script>
-		
+		$(document).ready(function(e){
+
+			$('.group_name').click(function(e){
+				console.log(e.target.innerText)
+				$('input').val(e.target.innerText)
+				$('form').submit()
+			})
+		})
 	</script>
 </html>

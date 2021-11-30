@@ -19,6 +19,10 @@
 	<select id="showOne" resultType="com.green.vo.GroupVO">
 		select * from tbl_group where group_name = #{group_name}
 	</select>
+	
+	<delete id="deleteGroup">
+		delete from tbl_group where group_name = #{group_name}
+	</delete>
 </mapper>
 
    

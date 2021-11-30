@@ -46,9 +46,9 @@ public class MapperTests {
 	public void makegroupTest() {
 		for(int i=0; i<10; i++) {
 			GroupVO groupVO = new GroupVO();
-			groupVO.setGroup_name("testname" + i);
+			groupVO.setGroup_name("테스트" + i);
 			groupVO.setDescription("test description " + i);
-			groupVO.setLeader(Long.valueOf(i));
+			groupVO.setLeader("aaa");
 			groupVO.setMember_number(4);
 			groupVO.setSubject(" test ");
 			gMapper.makeGroup(groupVO);
@@ -67,6 +67,11 @@ public class MapperTests {
 //	@Test
 	public void showAll() {
 		gMapper.showOne("test name 0");
+	}
+	
+//	@Test
+	public void deleteTest() {
+		gMapper.deleteGroup("1");
 	}
 	
 

@@ -5,6 +5,7 @@ WHERE   object_type = 'TABLE';
 -- spring database에서 모든 table을 삭제 했습니다
 drop table tbl_user;
 
+
 create table tbl_user(
     uno number,
     user_id varchar2(30),
@@ -14,19 +15,27 @@ create table tbl_user(
 
 create sequence seq_uno;
 
+
+drop table tbl_group;
 create table tbl_group(
-    group_name varchar2(30),
+    gno number,
+    group_name varchar2(100),
     leader varchar2(30),
     subject varchar2(30),
-    description varchar2(30),
+    description varchar2(500),
     member_number number);
+delete from tbl_group;
+select * from tbl_group;
+create sequence seq_gno;
 
+drop table tbl_groupuser;
 create table tbl_groupuser(
     cno number,
-    authorized varchar2(1),
-    user_id number(30),
+    authorized varchar2(1) default 'N',
+    user_id varchar2(30),
     group_name varchar2(30));
 
+select * from tbl_groupuser;
 create sequence seq_cno;
 
 create table tbl_review(
@@ -46,7 +55,7 @@ create table tbl_qanda(
     writer varchar2(30),
     regdate date default sysdate );    
     
-create sequence seq_gno;
+create sequence seq_qno;
     
 create table tbl_board(
     bno number,
@@ -60,9 +69,16 @@ create sequence seq_bno;
     
 commit;
 
-    
+select * from tbl_user;
+select * from tbl_group;
+
+
 
     
-
+CREATE DATABASE spring CHARACTER SET utf8 COLLATE utf8_general_ci;
     
+insert into tbl_group(group_name) values('한글');
+select * from tbl_group;
+    
+
 

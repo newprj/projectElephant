@@ -15,7 +15,7 @@ public class GroupVO {
 	
 	private Long gno;
     private String group_name;
-    private Long leader;
+    private String leader;
     private String subject;
     private String description;
     private int member_number;
