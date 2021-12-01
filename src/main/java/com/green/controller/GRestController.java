@@ -37,6 +37,7 @@ public class GRestController {
 	@Setter(onMethod_=@Autowired)
 	BoardService boardService;
 	
+	// 스터디 그룹 삭제
 	@DeleteMapping("/{group_name}")
 	public void delete(@PathVariable("group_name") String group_name) {
 		System.out.println("delete 컨트롤러로 들어옴   ");
@@ -45,6 +46,8 @@ public class GRestController {
 		 		
 	}
 	
+	
+	// 그룹에 가입 신청
 	@PostMapping(value= "/", 
 			consumes= "application/json",
 			produces = {MediaType.TEXT_PLAIN_VALUE})
@@ -54,23 +57,27 @@ public class GRestController {
 		return new ResponseEntity<String>("success", HttpStatus.OK);
 	}
 	
+	// 게시글 조회
 	@GetMapping(value="/temp/{bno}",  produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseEntity<BoardVO> readOne(@RequestParam("bno") Long bno){
 		BoardVO board = boardService.read(bno);
 		return new ResponseEntity<BoardVO>(board, HttpStatus.OK);
 	}
 	
+	//게시글 삭제
 	@DeleteMapping(value="/temp/{bno}")
 	public void boardDelete(@PathVariable("bno") Long bno) {
 		boardService.delete(bno);
 	}
 	
+	// 게시글 수정
 	@PutMapping(value="/temp/{bno}",
 			consumes= "application/json")
 	public void boardUpdate(@RequestBody BoardVO board) {
 		boardService.update(board);
 	}
 	
+	// 게시글 입력 
 	@PostMapping(value="/temp", consumes= "application/json")
 	public void boardCreate(@RequestBody BoardVO board) {
 		boardService.register(board);

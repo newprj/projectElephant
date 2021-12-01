@@ -61,6 +61,10 @@ public class MainController {
 		model.addAttribute("board", boardService.showList(group_name));
 	}
 	
+	@GetMapping("/test")
+	public void test() {
+		
+	}
 
 
 }
