@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.green.service.BoardService;
 import com.green.service.GroupService;
 import com.green.vo.GroupVO;
 
@@ -22,6 +24,9 @@ public class MainController {
 	
 	@Setter(onMethod_=@Autowired)
 	GroupService groupService;
+	
+	@Setter(onMethod_=@Autowired)
+	BoardService boardService;
 	
 	@GetMapping("/main")
 	public void main(Model model) {
@@ -48,6 +53,12 @@ public class MainController {
 	@GetMapping("/detail")
 	public void getDetail(String group_name, Model model){
 		model.addAttribute("one", groupService.showOne(group_name));
+	}
+	
+	@GetMapping("/temp")
+	public void tempGroupPage(Model model, String group_name) {
+		model.addAttribute("name", group_name);
+		model.addAttribute("board", boardService.showList(group_name));
 	}
 	
 

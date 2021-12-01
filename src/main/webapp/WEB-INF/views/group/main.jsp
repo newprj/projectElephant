@@ -40,8 +40,7 @@
 	<button> 내 그룹 보기 </button>
 	<span> 모집 중인 그룹 </span>
 	<div class="container">
-	
-	
+
 		<c:forEach items="${group}" var="group">
 			<div class="box">
 				<span class="group_name" > ${group.group_name} </span>
