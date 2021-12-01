@@ -14,7 +14,7 @@ create table tbl_user(
     email varchar2(30));
 
 create sequence seq_uno;
-
+drop sequence seq_uno;
 
 drop table tbl_group;
 create table tbl_group(
@@ -27,7 +27,7 @@ create table tbl_group(
 delete from tbl_group;
 select * from tbl_group;
 create sequence seq_gno;
-
+drop sequence seq_gno;
 drop table tbl_groupuser;
 create table tbl_groupuser(
     cno number,
@@ -37,7 +37,7 @@ create table tbl_groupuser(
 
 select * from tbl_groupuser;
 create sequence seq_cno;
-
+drop sequence seq_cno;
 create table tbl_review(
     rno number,
     group_name varchar2(30),
@@ -48,6 +48,7 @@ create table tbl_review(
 
 create sequence seq_rno;
 
+drop sequence seq_rno;
 create table tbl_qanda(
     qno number,
     title varchar2(200),
@@ -56,7 +57,7 @@ create table tbl_qanda(
     regdate date default sysdate );    
     
 create sequence seq_qno;
-    
+drop sequence seq_qno;    
 create table tbl_board(
     bno number,
     group_name varchar2(30),
@@ -66,19 +67,20 @@ create table tbl_board(
     regdate date default sysdate );  
 
 create sequence seq_bno;
-    
+drop sequence seq_bno;    
 commit;
 
 select * from tbl_user;
 select * from tbl_group;
 
 
-
+select * from tbl_board;
     
 CREATE DATABASE spring CHARACTER SET utf8 COLLATE utf8_general_ci;
     
 insert into tbl_group(group_name) values('ÇÑ±Û');
 select * from tbl_group;
-    
+
+select * from user_sequences;
 
 
