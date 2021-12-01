@@ -6,12 +6,13 @@
 	<select id="listqna" resultType="com.green.vo.QnaVO" >
 		select * from qna_tbl order by qno
 	</select>
-	<select id="test" resultType="String" >
-		select writer from qna_tbl where qno=#{qno}
-	</select>
 
 	<insert id="insertQna">
-		insert into qna_tbl(qno, title, writer,reg_date,pwd,p_group) 
-			values(qna_seq.nextval, #{title},#{writer},#{reg_date},#{pwd},#{p_group})
+		insert into qna_tbl(qno, title, writer,q_content,reg_date,pwd,p_group) 
+			values(qna_seq.nextval, #{title},#{writer},#{q_content},#{reg_date},#{pwd, jdbcType=VARCHAR},#{p_group})
 	</insert>
+	
+	<select id="get" resultType="com.green.vo.QnaVO" >
+		select * from qna_tbl where qno=#{qno}
+	</select>
 </mapper>

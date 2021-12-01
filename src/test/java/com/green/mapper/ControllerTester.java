@@ -29,16 +29,21 @@ public class ControllerTester {
 	public void test() {
 		QnaVO vo =new QnaVO();
 		vo.setP_group("public");
-		vo.setPwd("1234");
+		vo.setQ_content("내용");
 		vo.setReg_date(date);
-		vo.setTitle("제목");
+		vo.setTitle("제목5");
 		vo.setWriter("사용자");
+		vo.setPwd(null);
 		service.insertQna(vo);
 	}
 	
-	@Test
+	//@Test
 	public void sele() {
 		service.list();
 	}
 	
+	@Test
+	public void get() {
+		service.get(2L);
+	}
 }

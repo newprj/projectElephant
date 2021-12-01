@@ -10,7 +10,7 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <title>Q & A 목록</title>
 </head>
 <body>
-	<h1>Q&A 상세 페이지 입니다.</h1>
+	<h1>Q&An 상세 페이지 입니다.</h1>
 	
 </body>
 <script type="text/javascript">

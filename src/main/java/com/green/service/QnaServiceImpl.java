@@ -25,14 +25,14 @@ public class QnaServiceImpl implements QnaService{
 	}
 
 	@Override
-	public String test(Long qno) {
-		log.info("2) 서비스에서 test 가져오기 ");
-		return mapper.test(qno);
+	public int insertQna(QnaVO vo) {
+		log.info("2) 서비스에서 insert 하기 ");
+		return mapper.insertQna(vo);
 	}
 
 	@Override
-	public int insertQna(QnaVO vo) {
-		log.info("2) 서비스에서 test 가져오기 ");
-		return mapper.insertQna(vo);
+	public QnaVO get(Long qno) {
+		log.info("2) 서비스에서 1개 get ");
+		return mapper.get(qno);
 	}
 }

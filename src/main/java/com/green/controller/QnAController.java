@@ -6,6 +6,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import com.green.service.QnaService;
 import com.green.vo.QnaVO;
 
@@ -29,14 +31,14 @@ public class QnAController {
 		System.out.println("로그인 정보 가지고 와야함");
 	}
 	@PostMapping("/write")
-	public String writepost(QnaVO vo) {
+	public String writepost(QnaVO vo,RedirectAttributes rttr) {
 		System.out.println("받은 게시글 내용"+vo);
 		service.insertQna(vo);
-		return "/qna/list";
+		return "redirect:/qna/list";
 	}
-	@GetMapping("/{qno}")
-	public String detail() {
-		System.out.println("QnA 세부내용 들어옴");
+	@GetMapping({"/detail","/{qno}"})
+	public String detail(Long qno) {
+		System.out.println("QnA 세부내용 들어옴"+qno);
 		return "/qna/detail";
 	}
 }

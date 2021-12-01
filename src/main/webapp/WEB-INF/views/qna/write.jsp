@@ -2,7 +2,9 @@
     pageEncoding="UTF-8"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core"
 prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %> 
- <script src="https://code.jquery.com/jquery-3.6.0.js" ></script>
+<script
+  src="https://code.jquery.com/jquery-3.6.0.js"></script>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,11 +13,11 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 </head>
 <body>
 	<h1>QnA 등록</h1>
-	<h3>첨부파일(db 추가), 임시저장, 날짜 넘기는거 해야함</h3>
+	<h3>첨부파일(db 추가), 임시저장</h3>
 	<form action="/qna/write" id="register" method="post">
 		<div>
 			<label for="p_select">구분</label>
-			<select id="p_select" onchange="selectOption(this.value)">
+			<select id="p_select" onchange="selectOption(this.value);">
 				<option value="0">선택</option>
 				<option value="public">공개글</option>
 				<option value="private">비밀글</option>			
@@ -34,8 +36,8 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 			<input type="text" name="writer"/> 
 		</div>
 		<div>
-			<label for="content">내용</label>
-			<textarea name="content"></textarea>
+			<label for="q_content">내용</label>
+			<textarea name="q_content"></textarea>
 		</div>
 		
 		<button >임시저장(될까?)</button>
@@ -44,23 +46,25 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 		
 	</form>
 </body>
+
 <script type="text/javascript">
 	var today=new Date()
 	
-	console.log(today)
-	
-	
+	console.log(today)	
+	var choice=''
 	var selectOption=function(value){
 		console.log(value)
-		$("#p_select").val(value)
+		choice="<input type='hidden' name='p_group' value='"+value+"'/>"
+		console.log(choice)
 	}
 	
 	
 	$(document).ready(function () {
-		$("sbtn").click(function(e){
+		$("#sbtn").click(function(e){
 			e.preventDefault();
-			$("#register").append("<input type='hidden' name='p_group' value='"+selectOption+"'>");
-			$("#register").append("<input type='hidden' name='reg_date' value='"+today+"'>");
+			$("form").append(choice);
+			$("form").append("<input type='hidden' name='reg_date' pattern ='yy/MM/dd hh:mm' value='"+today+"'>");
+			$("form").submit()
 		})
 		
 	})

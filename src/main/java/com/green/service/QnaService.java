@@ -6,6 +6,6 @@ import com.green.vo.QnaVO;
 
 public interface QnaService {
 	public List<QnaVO> list();
-	public String test(Long qno);
 	public int insertQna(QnaVO vo);
+	public QnaVO get(Long qno);
 }
