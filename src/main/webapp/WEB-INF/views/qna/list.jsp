@@ -30,5 +30,6 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 			</tr>
 		</c:forEach>
 	</table>
+	
 </body>
 </html>
