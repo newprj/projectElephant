@@ -31,15 +31,30 @@ public class QnAController {
 		System.out.println("로그인 정보 가지고 와야함/write로 할것인가 register로 할것인가");
 	}
 	@PostMapping("/write")
-	public String writepost(QnaVO vo,RedirectAttributes rttr) {
+	public String writepost(QnaVO vo) {
 		System.out.println("받은 게시글 내용"+vo);
 		service.insertQna(vo);
 		return "redirect:/qna/list";
 	}
-	@GetMapping("/detail")
-	public String detail(Model model,Long qno) {
+	@GetMapping({"/detail","/modify"})
+	public void detail(Model model,Long qno) {
 		System.out.println("QnA 세부내용 들어옴"+qno);
 		model.addAttribute("get",service.get(qno));
-		return "/qna/detail";
+		model.addAttribute("reply",service.replyList(qno));
+		
+	}
+//	@GetMapping("/modify")
+//	public String modify(Model model,Long) {
+//		System.out.println("QnA 수정 페이지 ");
+//		model.addAttribute("get");
+//		return "/qna/modify";
+//	}
+//	
+	@PostMapping("/modify")
+	public String modifyPost(QnaVO vo) {
+		//RedirectAttributes rttr
+		System.out.println("수정된 데이터"+vo);
+		service.update(vo);		
+		return "redirect:/qna/list";
 	}
 }

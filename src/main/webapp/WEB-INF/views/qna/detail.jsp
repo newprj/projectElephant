@@ -35,12 +35,16 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 </head>
 <body>
 	<h1>Q&A 상세 페이지 입니다.</h1>
-	<div>
-	<h3>수정,삭제 페이지 만들기</h3>
-	<h4>Q & N 게시글</h4>
+	<form>
+		<h3>수정,삭제 페이지 만들기, 댓글 추가 누르면 새로운 댓글 update바로 출력</h3>
+		<h4>Q & N 게시글</h4>
+		<div>
+			<label for="qno">게시물 번호</label>
+			<input type="text" name="qno"  value="${get.qno}" readonly="readonly"  /> 
+		</div>
 		<div>
 			<label for="p_group">구분</label>
-			<input type="p_group" name="pwd"  value="${get.p_group}" readonly="readonly"  /> 
+			<input type="text" name="p_group"  value="${get.p_group}" readonly="readonly"  /> 
 		</div>
 
 		<div>
@@ -55,13 +59,31 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 			<label for="q_content">내용</label>
 			<textarea name="q_content"  readonly="readonly" >${get.q_content}</textarea>
 		</div>
-		<button>수정</button>
-		<button>삭제</button>
-		<button onclick="location='/qna/list'">목록</button>
-	</div>
+		
+		<button type="button" onclick="location.href='/qna/list'">목록</button>
+	</form>
 	<div>
-	<h4>댓글</h4>
-	<button type="button" id="addReply">댓글 달기</button>
+	<h4>댓글  <button type="button" id="addReply">댓글 달기</button></h4>
+	
+	<div>
+		<c:forEach items="${reply}" var="i">
+			<table style="border: 1px solid #dddddd;">
+			
+				<tbody>
+					<tr style="background-color: gray">
+						<td align="left">${i.r_writer}</td>
+						<td colspan="2"></td>
+						<td align="right">${i.r_reg_date}</td>
+					</tr>	
+					<tr>
+						<td colspan="5">${i.r_content}</td>
+					</tr>
+				</tbody>		
+			
+			</table>
+		</c:forEach>
+	</div>
+	
 	
 	</div>
 	<div class="modal" id="modal" >
@@ -98,6 +120,8 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 </body>
 <script type="text/javascript">
 	$(document).ready(function () {
+		
+		
 		
 		var modal=$(".modal")
 		

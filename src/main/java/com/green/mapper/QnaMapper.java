@@ -8,4 +8,5 @@ public interface QnaMapper {
 	public List<QnaVO> listqna();
 	public int insertQna(QnaVO vo);
 	public QnaVO get(Long qno);
+	public int update(QnaVO vo);
 }

@@ -60,6 +60,6 @@ public class ControllerTester {
 	}
 	@Test
 	public void replySelect() {
-		service.replyList();
+		service.replyList(2L);
 	}
 }

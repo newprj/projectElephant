@@ -42,7 +42,7 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 		
 		<button >임시저장(될까?)</button>
 		<button id="sbtn" type="submit">등록</button>
-		<button onclick="location='/qna/list'">취소</button>
+		<button type="button" onclick="location.href='/qna/list'">취소</button>
 		
 	</form>
 </body>

@@ -48,8 +48,16 @@ public class QnaServiceImpl implements QnaService{
 	}
 
 	@Override
-	public List<ReplyVO> replyList() {
-		log.info("2) 서비스에서 reply 모든 list ");
-		return replyMapper.replyList();
+	public List<ReplyVO> replyList(Long qno) {
+		log.info("2) 서비스에서 reply 목록 ");
+		return replyMapper.replyList(qno);
 	}
+
+	@Override
+	public int update(QnaVO vo) {
+		log.info("2) 서비스에서 qna 수정");
+		return mapper.update(vo);
+	}
+
+	
 }

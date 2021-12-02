@@ -10,8 +10,9 @@ public interface QnaService {
 	public List<QnaVO> list();
 	public int insertQna(QnaVO vo);
 	public QnaVO get(Long qno);
+	public int update(QnaVO vo);
 	
 	//reply
 	public int register(ReplyVO vo);
-	public List<ReplyVO> replyList();
+	public List<ReplyVO> replyList(Long qno);
 }
