@@ -18,9 +18,20 @@ create table qna_tbl
 );
 
 create sequence qna_seq;
+
+create table reply_tbl(
+    rno number(10,0) primary key,
+    qno number(10,0) not null,
+    r_writer varchar2(50) not null,
+    r_content varchar2(100) not null,
+    r_reg_date timestamp not null,
+    r_up_date timestamp ,
+    constraint fk_qna_no foreign key(qno) references qna_tbl(qno) on delete cascade
+);
+create sequence reply_seq;
 insert into  qna_tbl values(qna_seq.nextval,'test2','test2',sysdate,null,'public');
 select*from qna_tbl;
 select * from qna_tbl ;
 grant connect ,dba  to spring ;
 select writer from qna_tbl where qno=1 ;
-
+select * from qna_tbl where qno=1;

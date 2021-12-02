@@ -17,7 +17,7 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 		top:0;
 		width: 100%;
 		height:100%;
-		overflow:auto;;
+		overflow:auto;
 		background-color:rgb(0,0,0);
 		background-color:rgba(0,0,0,0.4);
 	}
@@ -26,8 +26,8 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 		background-color:#fefefe;
 		margin:15% auto;
 		padding: 20px;
-		 border: 1px solid #888;
-            width: 30%;
+		border: 1px solid #888;
+        width: 30%;
 
 	}
 </style>
@@ -65,7 +65,6 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 	
 	</div>
 	<div class="modal" id="modal" >
-		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close">X</button>
@@ -74,7 +73,7 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 				<div class="modal-body">
 					<div class="modal-group">
 						<label>작성자</label>
-						<input class="form-control" name="replyer"/>
+						<input name="replyer"/>
 					</div>
 					<div class="modal-group">
 						<label>댓글</label><br/>
@@ -83,7 +82,7 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 					</div>
 					<div class="modal-group">
 						<label>날짜</label>
-						<input class="form-control" name="replyDate"/>
+						<input name="replyDate"/>
 					</div>
 				</div><br/>
 				<div class="modal-footer">
@@ -93,7 +92,6 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 					<button type="button" id="close">닫기</button>
 				</div>
 				
-			</div>
 		</div>
 	</div>
 	
@@ -125,6 +123,36 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 			$(".modal").show()
 		})
 		
+		$("#close").on("click",function(e){
+			$(".modal").hide()
+		})
+		var today=new Date()
+		modalRgBtn.on("click",function(e){
+			console.log("추가 버튼 눌림")
+			var form={
+				qno:${get.qno},
+				r_writer:modalReplyer.val(),
+				r_content:modalReply.val(),
+				r_reg_date:today,
+					
+			}
+			console.log(form)
+			$.ajax({
+				url:"/reply/insert",
+				type:"post",
+				data:JSON.stringify(form),
+				contentType:"application/json; charset=utf-8",
+				dataType:"text",
+				success:function(result){
+					$("#modal").hide()
+					alert(result);
+				},
+				error:function(){
+					alert("실패")
+				}
+			})
+			
+		})
 	})
 	
 </script>

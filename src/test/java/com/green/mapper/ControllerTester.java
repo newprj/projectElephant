@@ -13,6 +13,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.green.service.QnaService;
 import com.green.vo.QnaVO;
+import com.green.vo.ReplyVO;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -42,8 +43,23 @@ public class ControllerTester {
 		service.list();
 	}
 	
-	@Test
+	//@Test
 	public void get() {
 		service.get(2L);
+	}
+	
+	//@Test
+	public void insert() {
+		ReplyVO vo=new ReplyVO();
+		vo.setR_content("댓글");
+		vo.setR_reg_date(date);
+		vo.setR_up_date(null);
+		vo.setR_writer("사용자");
+		vo.setQno(2L);
+		service.register(vo);
+	}
+	@Test
+	public void replySelect() {
+		service.replyList();
 	}
 }
