@@ -36,7 +36,7 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 			<tr>
 				<td>${i.qno}</td>
 				<td>${i.p_group}</td>
-				<td><a class='detail' href='${i.qno}'>${i.title}</a></td>
+				<td><a class='detail' href='detail?qno=${i.qno}'>${i.title}</a></td>
 				<td>${i.writer}</td>
 				<td><fmt:formatDate value="${i.reg_date}" pattern="yyyy-MM-dd a hh:mm" /></td>
 			</tr>

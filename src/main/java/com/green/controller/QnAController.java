@@ -28,7 +28,7 @@ public class QnAController {
 	@GetMapping("/write")
 	public void write() {
 		System.out.println("QnA 새글 쓰기");
-		System.out.println("로그인 정보 가지고 와야함");
+		System.out.println("로그인 정보 가지고 와야함/write로 할것인가 register로 할것인가");
 	}
 	@PostMapping("/write")
 	public String writepost(QnaVO vo,RedirectAttributes rttr) {
@@ -36,9 +36,10 @@ public class QnAController {
 		service.insertQna(vo);
 		return "redirect:/qna/list";
 	}
-	@GetMapping({"/detail","/{qno}"})
-	public String detail(Long qno) {
+	@GetMapping("/detail")
+	public String detail(Model model,Long qno) {
 		System.out.println("QnA 세부내용 들어옴"+qno);
+		model.addAttribute("get",service.get(qno));
 		return "/qna/detail";
 	}
 }
