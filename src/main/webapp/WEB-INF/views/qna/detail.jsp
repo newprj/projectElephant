@@ -36,7 +36,7 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <body>
 	<h1>Q&A 상세 페이지 입니다.</h1>
 	<form>
-		<h3>수정,삭제 페이지 만들기, 댓글 추가 누르면 새로운 댓글 update바로 출력</h3>
+		<h3>댓글 수정,삭제 페이지 만들기 / 로그인 되면 내가 작성한 댓글만 수정,삭제 버튼 보이도록</h3>
 		<h4>Q & N 게시글</h4>
 		<div>
 			<label for="qno">게시물 번호</label>
@@ -65,22 +65,24 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 	<div>
 	<h4>댓글  <button type="button" id="addReply">댓글 달기</button></h4>
 	
-	<div>
-		<c:forEach items="${reply}" var="i">
-			<table style="border: 1px solid #dddddd;">
+	<div id="replyDiv">
+		<c:forEach items="${reply}" var="i" >
 			
-				<tbody>
-					<tr style="background-color: gray">
-						<td align="left">${i.r_writer}</td>
-						<td colspan="2"></td>
-						<td align="right">${i.r_reg_date}</td>
-					</tr>	
-					<tr>
-						<td colspan="5">${i.r_content}</td>
-					</tr>
-				</tbody>		
+				<table  style="border: 1px solid #dddddd;"  id="replyTable${i.rno}">
+					<tbody >
+						<tr style="background-color:gray">
+							<td align="left" id="r_writer" >${i.r_writer}</td>
+							<td align="right" id="r_reg_date"><fmt:formatDate value="${i.r_reg_date}" pattern="yyyy/MM/dd a hh:mm" /></td>
+							<td><button  id="reReply">댓글</button></td>
+							<td><button data-rno="${i.rno}"  id="replymodify${i.rno}">수정</button> </td>
+							<td><button id="replyRemove${i.rno}">삭제</button> </td>
+						</tr>	
+						<tr>
+							<td colspan="5" id="r_content">${i.r_content}</td>
+						</tr>
+					</tbody>		
+				</table>
 			
-			</table>
 		</c:forEach>
 	</div>
 	
@@ -89,8 +91,8 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 	<div class="modal" id="modal" >
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close">X</button>
-					<h4 class="modal-title">댓글 등록 창 </h4>
+					<button type="button" class="close" >X</button>
+					<h4 class="modal-title">댓글 창 </h4>
 				</div>
 				<div class="modal-body">
 					<div class="modal-group">
@@ -109,9 +111,8 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 				</div><br/>
 				<div class="modal-footer">
 					<button type="button" id="modify">수정</button>
-					<button type="button" id="remove">삭제</button>
 					<button type="button" id="register">등록</button>
-					<button type="button" id="close">닫기</button>
+					<button type="button" class="close">닫기</button>
 				</div>
 				
 		</div>
@@ -119,9 +120,8 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 	
 </body>
 <script type="text/javascript">
+
 	$(document).ready(function () {
-		
-		
 		
 		var modal=$(".modal")
 		
@@ -136,21 +136,24 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 	
 		$("#modal").hide()
 		
+		/* 댓글 등록 버튼 누름 */
 		$("#addReply").on("click",function(e){
 			console.log("등록버튼 눌림")
 			modal.find("input").val("")
 			modal.find("textarea").val("")
 			modalReplyDate.closest('div').hide()
-			modal.find("button[id != 'close']").hide()
+			/* modal.find("button[id != 'close']").hide() */
 			modalRgBtn.show()
 			
 			$(".modal").show()
 		})
 		
-		$("#close").on("click",function(e){
+		$(".close").on("click",function(e){
 			$(".modal").hide()
 		})
 		var today=new Date()
+		
+		/* 댓글 추가 */
 		modalRgBtn.on("click",function(e){
 			console.log("추가 버튼 눌림")
 			var form={
@@ -168,8 +171,8 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 				contentType:"application/json; charset=utf-8",
 				dataType:"text",
 				success:function(result){
-					$("#modal").hide()
-					alert(result);
+					$("#modal").hide();
+					$("#replyDiv").load(location.href + ' #replyDiv');
 				},
 				error:function(){
 					alert("실패")
@@ -177,6 +180,66 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 			})
 			
 		})
+		
+		/* 댓글 클릭  1. 리댓 없다면 사용  */
+		/* $("#replyTable tr").on("click",function(){
+			$(".modal").show()
+			modalRgBtn.hide()
+			
+			console.log($(this))
+			modalReply.val($(this).next("tr").find("#r_content").text())
+			modalReplyer.val($(this).find("#r_writer").text())
+			modalReplyDate.val($(this).find("#r_reg_date").text()).attr("readonly","readonly")
+			 
+			var rno=$(this).find("td").data("rno")
+			console.log(rno)
+		})  */
+		
+		
+		/* 댓글 수정 버튼눌림-> 댓글 수정 창 띄움 */
+		$("button[id^='replymodify']").on("click",function(){
+			$(".modal").show()
+			modalRgBtn.hide()
+			
+			console.log($(this))
+			
+			var rno=$(this).data("rno")
+			console.log(rno)
+			
+			console.log($("#replyTable"+rno).find("#r_writer").text())
+			
+			modalReply.val($("#replyTable"+rno).find("#r_content").text())
+			modalReplyer.val($("#replyTable"+rno).find("#r_writer").text())
+			modalReplyDate.val($("#replyTable"+rno).find("#r_reg_date").text()).attr("readonly","readonly")
+			 
+			
+		}) 
+		
+		
+		/* 댓글 삭제 버튼눌림-> 댓글 수정 창 띄움 */
+		$("button[id^='replyRemove']").on("click",function(){
+			var rno=$(this).parent().prev().find("button").data("rno")
+			console.log($(this).parent().prev().find("button").data("rno"))
+			form={'rno':rno}
+			$.ajax({
+				url:"/reply/delete",
+				type:"post",
+				data:JSON.stringify(form),
+				contentType:"application/json; charset=utf-8",
+				dataType:"text",
+				success:function(result){
+					$("#modal").hide();
+					$("#replyDiv").load(location.href + ' #replyDiv');
+				},
+				error:function(){
+					alert("실패")
+				}
+			})
+			
+			 
+			
+		}) 
+		
 	})
 	
 </script>

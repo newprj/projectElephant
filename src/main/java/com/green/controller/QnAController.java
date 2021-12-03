@@ -46,7 +46,6 @@ public class QnAController {
 
 	@PostMapping("/modify")
 	public String modifyPost(QnaVO vo) {
-		//RedirectAttributes rttr
 		System.out.println("수정된 데이터"+vo);
 		service.update(vo);		
 		return "redirect:/qna/list";

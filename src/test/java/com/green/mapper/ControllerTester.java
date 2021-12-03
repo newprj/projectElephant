@@ -13,7 +13,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.green.service.QnaService;
 import com.green.vo.QnaVO;
-import com.green.vo.ReplyVO;
+import com.green.vo.QnaReplyVO;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -50,7 +50,7 @@ public class ControllerTester {
 	
 	//@Test
 	public void insert() {
-		ReplyVO vo=new ReplyVO();
+		QnaReplyVO vo=new QnaReplyVO();
 		vo.setR_content("댓글");
 		vo.setR_reg_date(date);
 		vo.setR_up_date(null);

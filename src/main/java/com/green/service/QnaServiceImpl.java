@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.green.mapper.QnaMapper;
-import com.green.mapper.ReplyMapper;
+import com.green.mapper.QnaReplyMapper;
 import com.green.vo.QnaVO;
-import com.green.vo.ReplyVO;
+import com.green.vo.QnaReplyVO;
 
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +21,7 @@ public class QnaServiceImpl implements QnaService{
 	private QnaMapper mapper;
 	
 	@Setter(onMethod_=@Autowired)
-	private ReplyMapper replyMapper;
+	private QnaReplyMapper replyMapper;
 	
 	@Override
 	public List<QnaVO> list() {
@@ -42,13 +42,13 @@ public class QnaServiceImpl implements QnaService{
 	}
 
 	@Override
-	public int register(ReplyVO vo) {
+	public int register(QnaReplyVO vo) {
 		log.info("2) 서비스에서 reply insert ");
 		return replyMapper.register(vo);
 	}
 
 	@Override
-	public List<ReplyVO> replyList(Long qno) {
+	public List<QnaReplyVO> replyList(Long qno) {
 		log.info("2) 서비스에서 reply 목록 ");
 		return replyMapper.replyList(qno);
 	}
@@ -64,6 +64,12 @@ public class QnaServiceImpl implements QnaService{
 		log.info("2) 서비스에서 qna 삭제");
 		return mapper.deleteByQno(qno);
 		
+	}
+
+	@Override
+	public int replyDelete(Long rno) {
+		log.info("2) 서비스에서 reply 삭제");
+		return replyMapper.replyDelete(rno);
 	}
 
 

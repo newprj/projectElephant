@@ -35,9 +35,9 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
               <th></th>
 			</tr>
 		</thead>
-		<c:forEach items="${list}" var="i">
+		<c:forEach items="${list}" var="i" varStatus="status">
 			<tr>
-				<td>${i.qno}</td>
+				<td>${status.count}</td>
 				<td>${i.p_group}</td>
 				<td><a class='detail' href='detail?qno=${i.qno}'>${i.title}</a></td>
 				<td>${i.writer}</td>

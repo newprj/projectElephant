@@ -3,7 +3,7 @@ package com.green.service;
 import java.util.List;
 
 import com.green.vo.QnaVO;
-import com.green.vo.ReplyVO;
+import com.green.vo.QnaReplyVO;
 
 public interface QnaService {
 	//QnA
@@ -14,6 +14,7 @@ public interface QnaService {
 	public int deleteByQno(Long qno);
 	
 	//reply
-	public int register(ReplyVO vo);
-	public List<ReplyVO> replyList(Long qno);
+	public int register(QnaReplyVO vo);
+	public List<QnaReplyVO> replyList(Long qno);
+	public int replyDelete(Long rno);
 }
