@@ -35,7 +35,7 @@ import lombok.extern.slf4j.Slf4j;
 public class GRestController {
 	
 	@Setter(onMethod_=@Autowired)
-	GroupService groupservice;
+	GroupService groupService;
 	
 	@Setter(onMethod_=@Autowired)
 	GUserService groupUserService;
@@ -46,11 +46,35 @@ public class GRestController {
 	@Setter(onMethod_=@Autowired)
 	CalendarService calendarService;
 	
+	
+	// 메인 페이지
+	@GetMapping("/")
+	public ModelAndView main(Model model) {
+		model.addAttribute("group", groupService.showAll());
+		return new ModelAndView("/group/main");
+	}
+	
+	// 그룹 모집 페이지
+	@GetMapping("/{group_name}")
+	public ModelAndView groupDetail(@PathVariable("group_name") String group_name, Model model) {
+		model.addAttribute("one", groupService.showOne(group_name));
+		return new ModelAndView("/group/detail");
+	}
+	
+	//그룹 이름 중복체크
+	@PostMapping("/duplicateCheck")
+	public String groupNameCheck(String group_name) {
+		int result = groupService.groupNameCheck(group_name);
+		if(result >=1)
+			return "duplicated";
+		else return "unduplicated";
+	}
+	
+	
 	// 스터디 그룹 삭제
 	@DeleteMapping("/{group_name}")
 	public void delete(@PathVariable("group_name") String group_name) {
-		
-		groupservice.deleteGroup(group_name);
+		groupService.deleteGroup(group_name);
 		 		
 	}
 	
@@ -65,39 +89,41 @@ public class GRestController {
 		return new ResponseEntity<String>("success", HttpStatus.OK);
 	}
 	
+	// 그룹별 게시판 페이지
+	@GetMapping("/board/{group_name}")
+	public ModelAndView tempGroupPage(Model model, @PathVariable("group_name") String group_name) {
+		model.addAttribute("name", group_name);
+		model.addAttribute("board", boardService.showList(group_name));
+		return new ModelAndView("/group/board");
+	}
+
 	// 게시글 조회
-	@GetMapping(value="/temp/{bno}",  produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@GetMapping(value="/board/{bno}",  produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseEntity<BoardVO> readOne(@RequestParam("bno") Long bno){
 		BoardVO board = boardService.read(bno);
 		return new ResponseEntity<BoardVO>(board, HttpStatus.OK);
 	}
 	
 	//게시글 삭제d
-	@DeleteMapping(value="/temp/{bno}")
+	@DeleteMapping(value="/board/{bno}")
 	public void boardDelete(@PathVariable("bno") Long bno) {
 		boardService.delete(bno);
 	}
 	
 	// 게시글 수정
-	@PutMapping(value="/temp/{bno}",
+	@PutMapping(value="/board/{bno}",
 			consumes= "application/json")
 	public void boardUpdate(@RequestBody BoardVO board) {
 		boardService.update(board);
 	}
 	
 	// 게시글 입력 
-	
-	@PostMapping(value="/temp", consumes= "application/json")
+	@PostMapping(value="/board", consumes= "application/json")
 	public void boardCreate(@RequestBody BoardVO board) {
 		boardService.register(board);
 	}
 	
-//	@GetMapping("/model")
-//	public ModelAndView testView(Model model) {
-//		model.addAttribute("abc" , boardService.showList("테스트"));
-//		return new ModelAndView("/group/abc");
-//	}
-	
+	//캘린더 그룹별
 	@GetMapping("/test/{group_name}")
 	public ModelAndView test(Model model, @PathVariable String group_name) {
 		System.out.println(" 들어오니 ?" + group_name);
@@ -106,6 +132,7 @@ public class GRestController {
 		return new ModelAndView("/group/test");
 	}
 	
+	// 그룹별 이벤트 가져오기
 	@GetMapping(value= "/event/{group}",
 			produces =MediaType.APPLICATION_JSON_UTF8_VALUE )
 	public ResponseEntity<List<CalendarVO>> getEvents(@PathVariable String group){
@@ -114,30 +141,32 @@ public class GRestController {
 		return new ResponseEntity<List<CalendarVO>>(calendarService.showEventByGroup(group), HttpStatus.OK );
 	}
 	
-	@GetMapping("/model")
-	public ModelAndView testView(Model model) {
-		return new ModelAndView("/abc");
-	}
-	
+	// 이벤트 등록
 	@PostMapping("/test")
 	public void createEvent(@RequestBody CalendarVO vo) {
 		calendarService.createEvent(vo);
 	}
 	
+	//이벤트 수정
 	@PutMapping(value="/test/{cid}",
 			consumes= "application/json")
 	public void eventUpdate(@RequestBody CalendarVO vo) {
-		System.out.println(" 풋매핑");
-		System.out.println(vo);
+		
 		calendarService.updateEvent(vo);
 	}
 	
+	// 이벤트 삭제 
 	@DeleteMapping(value = "/test/{cid}")
 	public void eventDelete(@PathVariable("cid") Long cid) {
 		calendarService.deleteEvent(cid);
 	}
 	
 
+	@GetMapping("/model")
+	public ModelAndView testView(Model model) {
+		return new ModelAndView("/abc");
+	}
+	
 	
 
 }

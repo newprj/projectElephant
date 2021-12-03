@@ -16,14 +16,14 @@
       </form>
     </div>
     <div>
-   		<form  action="/group/temp" method="get">
-   			<input type="text" name="group_name" value="${one.group_name}"/>
-   			<button> 가보자고 </button>
+   		<a href="board/${one.group_name}">
    			
+   			 게시판 
+   			</a>
    		</form>
     </div>
     <button class="a"> 일정 </button>
-	<p> <a href="/group/main"> 메인 </a></p>
+	<p> <a href="/group/"> 메인 </a></p>
 	
     ${one}
     <button class="delete">삭제</button>
@@ -39,14 +39,15 @@
         contentType: 'application/json; charset=utf-8',
         success: (res) => console.log(res),
         error: (xhr, status, er) => {
-          console.log(status)
+          
           console.log(xhr)
-          console.log(er)
+          
         },
       })
     }
 
     $(document).ready(function (e) {
+      
       $('.a').click(function(e){
         location.href = '/group/test/' + '${one.group_name}'
       })
@@ -56,7 +57,7 @@
           type: 'delete',
           url: '/group/' + '${one.group_name}',
           success: () => {
-            location.href = '/group/main'
+            location.href = '/group/'
           },
           error: (xhr, status, er) => {
             console.log(status)

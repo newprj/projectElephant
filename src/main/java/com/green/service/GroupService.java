@@ -9,4 +9,5 @@ public interface GroupService {
 	public List<GroupVO> showAll();
 	public GroupVO showOne(String group_name);
 	public int deleteGroup (String group_name);
+	public int groupNameCheck(String group_name);
 }

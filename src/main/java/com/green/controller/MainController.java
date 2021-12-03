@@ -28,12 +28,7 @@ public class MainController {
 	@Setter(onMethod_=@Autowired)
 	BoardService boardService;
 	
-	@GetMapping("/main")
-	public void main(Model model) {
-		model.addAttribute("group", groupService.showAll());
-		log.info(" 여기는 메인 페이지 " );
-		
-	}
+	
 	
 	
 	@GetMapping("/make")
@@ -44,22 +39,12 @@ public class MainController {
 	
 	@PostMapping("/make")
 	public String createGroup(GroupVO vo){
-		System.out.println("컨트롤러 vo post " + vo);
+		
 		int res = groupService.makeGroup(vo);
-		System.out.println(res );
-		return "redirect:main";
+
+		return "redirect:/group/";
 	}
 	
-	@GetMapping("/detail")
-	public void getDetail(String group_name, Model model){
-		model.addAttribute("one", groupService.showOne(group_name));
-	}
-	
-	@GetMapping("/temp")
-	public void tempGroupPage(Model model, String group_name) {
-		model.addAttribute("name", group_name);
-		model.addAttribute("board", boardService.showList(group_name));
-	}
 	
 	
 

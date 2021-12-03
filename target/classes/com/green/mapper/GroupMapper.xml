@@ -16,6 +16,10 @@
 		select * from tbl_group
 	</select>
 	
+	<select id="groupNameCheck" resultType="int">
+		select count(*) from tbl_group where group_name=#{group_name}
+	</select>
+	
 	<select id="showOne" resultType="com.green.vo.GroupVO">
 		select * from tbl_group where group_name = #{group_name}
 	</select>

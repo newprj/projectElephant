@@ -9,7 +9,7 @@ prefix="c" %>
     <title>Insert title here</title>
   </head>
   <body>
-  <a href="/group/main"> 메인 </a>
+  <a href="/group/"> 메인 </a>
     <c:forEach items="${board}" var="board">
       <div class="list" data="${board.bno}">${board.title}</div>
     </c:forEach>
@@ -52,7 +52,7 @@ prefix="c" %>
         $('.list').click(function (e) {
          
           bno = $(this).attr('data')
-          $.getJSON('/group/temp/' + bno, { bno }, (res) => {
+          $.getJSON('/group/board/' + bno, { bno }, (res) => {
             showOne(res)
             board = res
           }) //getJson
@@ -68,7 +68,7 @@ prefix="c" %>
 			}
 			$.ajax({
 				type:'post',
-				url : "/group/temp/",
+				url : "/group/board/",
 				data : JSON.stringify(board),
 				contentType: 'application/json; charset=utf-8',
 				success : () => location.reload(),
@@ -83,7 +83,7 @@ prefix="c" %>
           e.preventDefault()
           $.ajax({
             type: 'delete',
-            url: '/group/temp/' + bno,
+            url: '/group/board/' + bno,
             success: () => {
               location.reload()
             },
@@ -102,7 +102,7 @@ prefix="c" %>
           }
           $.ajax({
             type: 'PUT',
-            url: '/group/temp/' + bno,
+            url: '/group/board/' + bno,
             data: JSON.stringify(modified),
             contentType: 'application/json; charset=utf-8',
             success: () => {

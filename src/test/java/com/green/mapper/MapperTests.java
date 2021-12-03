@@ -31,6 +31,13 @@ public class MapperTests {
 	
 	@Setter(onMethod_=@Autowired)
 	public BoardMapper bMapper;
+	
+	@Test
+	public void getDuplicated() {
+//		gMapper.groupNameCheck("테스트");
+		gMapper.groupNameCheck("중복검사");
+		
+	}
 
 //	@Test
 	public void getUser() {
@@ -110,7 +117,7 @@ public class MapperTests {
 		guMapper.groupSignUp(vo);
 	}
 	
-	@Test
+//	@Test
 	public void groupuserList() {
 		guMapper.listByGroup("테스트");
 	}

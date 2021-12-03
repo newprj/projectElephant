@@ -41,6 +41,12 @@ public class GroupServiceImpl implements GroupService{
 		return mapper.deleteGroup(group_name);
 	}
 
+	@Override
+	public int groupNameCheck(String group_name) {
+		// TODO Auto-generated method stub
+		return mapper.groupNameCheck(group_name);
+	}
+
 	
 
 }

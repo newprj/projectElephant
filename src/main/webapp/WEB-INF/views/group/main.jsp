@@ -60,9 +60,10 @@
 		$(document).ready(function(e){
 
 			$('.group_name').click(function(e){
-				console.log(e.target.innerText)
-				$('input').val(e.target.innerText)
-				$('form').submit()
+				const group_name = e.target.innerText
+			
+        		location.href = "/group/" + group_name
+      
 			})
 		})
 	</script>
