@@ -9,4 +9,5 @@ public interface QnaMapper {
 	public int insertQna(QnaVO vo);
 	public QnaVO get(Long qno);
 	public int update(QnaVO vo);
+	public int deleteByQno(Long qno);
 }

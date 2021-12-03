@@ -16,7 +16,7 @@ create table qna_tbl
     pwd varchar2(10) null,
     p_group varchar2(10) default 'public' constraint group_ch check (p_group in ('public','private'))
 );
-
+alter table qna_tbl add up_date timestamp;
 create sequence qna_seq;
 
 create table reply_tbl(
@@ -35,3 +35,4 @@ select * from qna_tbl ;
 grant connect ,dba  to spring ;
 select writer from qna_tbl where qno=1 ;
 select * from qna_tbl where qno=1;
+select*from reply_tbl where qno=1 order by rno;

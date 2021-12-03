@@ -21,4 +21,8 @@
 			up_date=#{up_date},pwd=#{pwd, jdbcType=TIMESTAMP},p_group=#{p_group}
 				where qno=#{qno}
 	</update>
+	
+	<delete id="deleteByQno">
+		delete from qna_tbl where qno=#{qno}
+	</delete>
 </mapper>

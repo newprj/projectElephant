@@ -59,5 +59,13 @@ public class QnaServiceImpl implements QnaService{
 		return mapper.update(vo);
 	}
 
+	@Override
+	public int deleteByQno(Long qno) {
+		log.info("2) 서비스에서 qna 삭제");
+		return mapper.deleteByQno(qno);
+		
+	}
+
+
 	
 }

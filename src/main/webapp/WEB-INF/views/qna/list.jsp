@@ -43,7 +43,7 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 				<td>${i.writer}</td>
 				<td><fmt:formatDate value="${i.reg_date}" pattern="yyyy-MM-dd a hh:mm" /></td>
 				<td><button onclick="location='/qna/modify?qno=${i.qno}'" id="writeMod">수정</button></td>
-				<td><button onclick="location='/qna/remove'" id="writeRemove">삭제</button></td>
+				<td><button onclick="location='/qna/remove?qno=${i.qno}'" id="writeRemove">삭제</button></td>
 			</tr>
 		</c:forEach>
 	</table>
@@ -54,11 +54,7 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 	$(document).ready(function () {
 		
 		
-		$("#writeRemove").on("click",function(e){
-			e.preventDefault();
-			console.log("게시글 삭제 버튼눌림 / 나중에 아이디일치한지 확인")
-			
-		})
+		
 	})
 
 </script>

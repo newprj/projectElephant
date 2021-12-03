@@ -11,6 +11,7 @@ public interface QnaService {
 	public int insertQna(QnaVO vo);
 	public QnaVO get(Long qno);
 	public int update(QnaVO vo);
+	public int deleteByQno(Long qno);
 	
 	//reply
 	public int register(ReplyVO vo);

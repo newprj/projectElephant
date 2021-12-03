@@ -43,18 +43,18 @@ public class QnAController {
 		model.addAttribute("reply",service.replyList(qno));
 		
 	}
-//	@GetMapping("/modify")
-//	public String modify(Model model,Long) {
-//		System.out.println("QnA 수정 페이지 ");
-//		model.addAttribute("get");
-//		return "/qna/modify";
-//	}
-//	
+
 	@PostMapping("/modify")
 	public String modifyPost(QnaVO vo) {
 		//RedirectAttributes rttr
 		System.out.println("수정된 데이터"+vo);
 		service.update(vo);		
+		return "redirect:/qna/list";
+	}
+	
+	@GetMapping("/remove")
+	public String removeQno(Long qno) {
+		service.deleteByQno(qno);
 		return "redirect:/qna/list";
 	}
 }
