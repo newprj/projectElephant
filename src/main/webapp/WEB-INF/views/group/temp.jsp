@@ -74,8 +74,7 @@ prefix="c" %>
 				success : () => location.reload(),
 				error:(xhr, staturs, er) =>{
 					console.log(xhr)
-					console.log(status)
-					console.log(er)
+
 				}
 
 			})//ajax

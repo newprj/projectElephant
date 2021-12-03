@@ -14,7 +14,7 @@ import lombok.ToString;
 public class GUserVO {
 	
 	  private Long cno;
-	  private boolean authorized;
+	  private char authorized;
 	  private String user_id;
 	  private String group_name;
 	

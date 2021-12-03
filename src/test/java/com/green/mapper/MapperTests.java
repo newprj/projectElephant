@@ -31,6 +31,11 @@ public class MapperTests {
 	
 	@Setter(onMethod_=@Autowired)
 	public BoardMapper bMapper;
+
+//	@Test
+	public void getUser() {
+		guMapper.listByGroup("테스트");
+	}
 	
 //	@Test
 	public void resgisterTest() {
@@ -100,9 +105,14 @@ public class MapperTests {
 //	@Test
 	public void groupsignup() {
 		GUserVO vo = new GUserVO();
-		vo.setGroup_name("테스트1");
+		vo.setGroup_name("테스트");
 		vo.setUser_id("bbb");
 		guMapper.groupSignUp(vo);
+	}
+	
+	@Test
+	public void groupuserList() {
+		guMapper.listByGroup("테스트");
 	}
 	
 //	@Test

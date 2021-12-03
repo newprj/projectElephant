@@ -11,4 +11,8 @@
 		insert into tbl_groupuser (cno, user_id, group_name)
 			values(#{cno}, #{user_id}, #{group_name})
 	</insert>
+	
+	<select id="listByGroup" resultType="com.green.vo.GUserVO">
+		select * from tbl_groupuser where group_name= #{group_name}
+	</select>
 </mapper>

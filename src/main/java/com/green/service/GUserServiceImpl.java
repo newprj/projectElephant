@@ -10,7 +10,7 @@ import com.green.mapper.GUserMapper;
 import com.green.vo.GUserVO;
 import com.green.vo.GroupVO;
 
-import jdk.internal.org.jline.utils.Log;
+
 import lombok.Setter;
 
 
@@ -23,7 +23,14 @@ public class GUserServiceImpl implements GUserService {
 	@Override
 	public int groupSignUp(GUserVO vo) {
 		System.out.println("서비스 group Signup" + vo);
+
 		return mapper.groupSignUp(vo);
+	}
+
+	@Override
+	public List<GUserVO> listByGroup(String group_name) {
+		// TODO Auto-generated method stub
+		return mapper.listByGroup(group_name);
 	}
 
 

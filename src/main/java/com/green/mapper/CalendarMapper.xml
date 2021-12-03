@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.green.mapper.CalendarMapper">
+	<insert id="createEvent">
+		<selectKey keyProperty="cid" order="BEFORE" resultType="long">
+			select seq_cid.nextval from dual
+		</selectKey>
+		insert into tbl_calendar (cid, title, startDate, endDate, 
+			editable, color, description_, location, group_, user_, member_ )
+			values(#{cid}, #{title}, #{startDate}, #{endDate, jdbcType=VARCHAR}, 
+			#{editable}, #{color}, #{description_, jdbcType=VARCHAR}, 
+			#{location, jdbcType=VARCHAR}, #{group_}, #{user_}, #{member_, jdbcType=VARCHAR})
+	</insert>
+	
+	<select id="showEventByGroup" resultType="com.green.vo.CalendarVO">
+		select * from tbl_calendar where group_ = #{group}
+	</select>
+	
+	<update id="updateEvent">
+		update tbl_calendar set cid =#{cid}, title=#{title}, startDate=#{startDate} , endDate=#{endDate, jdbcType=VARCHAR}, 
+			editable=#{editable}, color=#{color}, description_= #{description_, jdbcType=VARCHAR}, 
+			location=#{location, jdbcType=VARCHAR}, group_=#{group_}, user_=#{user_}, member_=#{member_, jdbcType=VARCHAR} 
+			where cid=#{cid}
+	
+	</update>
+	
+	<select id="showEventOne" resultType="com.green.vo.CalendarVO">
+		select * from tbl_calendar where cid = #{cid}
+	</select>
+	
+	<select id="showEventByDay" resultType="com.green.vo.CalendarVO">
+		select * from tbl_calendar where startDate = #{startDate}
+	</select>
+	
+	<delete id="deleteEvent">
+		delete from tbl_calendar where cid = #{cid}
+	</delete>
+	
+	
+</mapper>

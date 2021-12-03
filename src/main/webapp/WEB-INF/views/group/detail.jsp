@@ -16,11 +16,13 @@
       </form>
     </div>
     <div>
-   		<form action="/group/temp" method="get">
+   		<form  action="/group/temp" method="get">
    			<input type="text" name="group_name" value="${one.group_name}"/>
    			<button> 가보자고 </button>
+   			
    		</form>
     </div>
+    <button class="a"> 일정 </button>
 	<p> <a href="/group/main"> 메인 </a></p>
 	
     ${one}
@@ -45,6 +47,10 @@
     }
 
     $(document).ready(function (e) {
+      $('.a').click(function(e){
+        location.href = '/group/test/' + '${one.group_name}'
+      })
+      
       $('.delete').click(function (e) {
         $.ajax({
           type: 'delete',
@@ -54,6 +60,7 @@
           },
           error: (xhr, status, er) => {
             console.log(status)
+            
           },
         }) //ajax
       }) //delete button
