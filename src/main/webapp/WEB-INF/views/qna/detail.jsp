@@ -130,9 +130,8 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 		var modalReplyDate=modal.find("input[name='replyDate']")
 	
 		var modalModBtn=$("#modify")
-		var modalRmvBtn=$("#remove")
 		var modalRgBtn=$("#register")
-		var modalCloBtn=$("#close")
+		var modalCloBtn=$(".close")
 	
 		$("#modal").hide()
 		
@@ -142,13 +141,16 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 			modal.find("input").val("")
 			modal.find("textarea").val("")
 			modalReplyDate.closest('div').hide()
-			/* modal.find("button[id != 'close']").hide() */
+
+			modalModBtn.hide()
 			modalRgBtn.show()
+			modalCloBtn.show()
 			
 			$(".modal").show()
 		})
 		
 		$(".close").on("click",function(e){
+			
 			$(".modal").hide()
 		})
 		var today=new Date()
@@ -161,9 +163,9 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 				r_writer:modalReplyer.val(),
 				r_content:modalReply.val(),
 				r_reg_date:today,
-					
 			}
 			console.log(form)
+			
 			$.ajax({
 				url:"/reply/insert",
 				type:"post",
@@ -172,7 +174,8 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 				dataType:"text",
 				success:function(result){
 					$("#modal").hide();
-					$("#replyDiv").load(location.href + ' #replyDiv');
+					/* $("#replyDiv").load(location.href + ' #replyDiv'); */
+					location.reload();
 				},
 				error:function(){
 					alert("실패")
@@ -196,40 +199,70 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 		})  */
 		
 		
-		/* 댓글 수정 버튼눌림-> 댓글 수정 창 띄움 */
+		/* detail에서 댓글 수정 버튼눌림-> 댓글 수정 창 띄움 */
 		$("button[id^='replymodify']").on("click",function(){
 			$(".modal").show()
 			modalRgBtn.hide()
 			
-			console.log($(this))
+			/* console.log($(this)) */
 			
 			var rno=$(this).data("rno")
-			console.log(rno)
+			/* console.log(rno) */
 			
-			console.log($("#replyTable"+rno).find("#r_writer").text())
+			/* console.log($("#replyTable"+rno).find("#r_writer").text()) */
 			
 			modalReply.val($("#replyTable"+rno).find("#r_content").text())
 			modalReplyer.val($("#replyTable"+rno).find("#r_writer").text())
 			modalReplyDate.val($("#replyTable"+rno).find("#r_reg_date").text()).attr("readonly","readonly")
 			 
-			
+			/* modal창에서 수정버튼 누름  */
+			modalModBtn.off("click").on("click",function(e){
+				console.log("수정버튼 눌림")
+				var form={
+					rno:rno,
+					r_writer:modalReplyer.val(),
+					r_content:modalReply.val(),
+					r_up_date:today,
+				}
+				console.log(form)
+				
+				$.ajax({
+					url:"/reply/modify",
+					type:"post",
+					data:JSON.stringify(form),
+					contentType:"application/json; charset=utf-8",
+					dataType:"text",
+					success:function(result){
+						$("#modal").hide();
+						/* $("#replyDiv").load(location.href + ' #replyDiv'); */
+						location.reload();
+					},
+					error:function(){
+						alert("실패")
+					}
+				})  
+			})
 		}) 
 		
 		
-		/* 댓글 삭제 버튼눌림-> 댓글 수정 창 띄움 */
+	
+	
+		/* 댓글 삭제 버튼눌림 */
 		$("button[id^='replyRemove']").on("click",function(){
 			var rno=$(this).parent().prev().find("button").data("rno")
 			console.log($(this).parent().prev().find("button").data("rno"))
-			form={'rno':rno}
+			form={rno:rno}
+			console.log(form)
 			$.ajax({
 				url:"/reply/delete",
 				type:"post",
 				data:JSON.stringify(form),
 				contentType:"application/json; charset=utf-8",
-				dataType:"text",
+				
 				success:function(result){
 					$("#modal").hide();
-					$("#replyDiv").load(location.href + ' #replyDiv');
+					/* $("#replyDiv").load(location.href + ' #replyDiv'); */
+					location.reload();
 				},
 				error:function(){
 					alert("실패")

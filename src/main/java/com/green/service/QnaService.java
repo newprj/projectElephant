@@ -17,4 +17,5 @@ public interface QnaService {
 	public int register(QnaReplyVO vo);
 	public List<QnaReplyVO> replyList(Long qno);
 	public int replyDelete(Long rno);
+	public int replyUpdate(QnaReplyVO vo);
 }

@@ -72,6 +72,12 @@ public class QnaServiceImpl implements QnaService{
 		return replyMapper.replyDelete(rno);
 	}
 
+	@Override
+	public int replyUpdate(QnaReplyVO vo) {
+		log.info("2) 서비스에서 reply 수정");
+		return replyMapper.replyUpdate(vo);
+	}
+
 
 	
 }
