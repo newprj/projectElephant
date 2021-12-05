@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.green.mapper.QnaMapper;
 import com.green.mapper.QnaReplyMapper;
 import com.green.vo.QnaVO;
+import com.green.vo.Criteria;
 import com.green.vo.QnaReplyVO;
 
 import lombok.Setter;
@@ -76,6 +77,12 @@ public class QnaServiceImpl implements QnaService{
 	public int replyUpdate(QnaReplyVO vo) {
 		log.info("2) 서비스에서 reply 수정");
 		return replyMapper.replyUpdate(vo);
+	}
+
+	@Override
+	public int totalCount(Criteria cri) {
+		log.info("2) 서비스에서 전체 게시물 갯수 조회");
+		return mapper.totalCount(cri);
 	}
 
 

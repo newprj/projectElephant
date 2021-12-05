@@ -13,8 +13,8 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 </head>
 <body>
 	<h1>QnA 등록</h1>
-	<h3>첨부파일(db 추가), 임시저장</h3>
-	<form action="/qna/write" id="register" method="post">
+	<h3>첨부파일(db 추가), 임시저장,private public 비밀번호</h3>
+	<form action="/qna/write" method="post" name="write">
 		<div>
 			<label for="p_select">구분</label>
 			<select id="p_select" onchange="selectOption(this.value);">
@@ -25,7 +25,7 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 		</div>
 		<div>
 			<label for="pwd">비밀번호</label>
-			<input type="password" name="pwd"/> 
+			<input type="password" id="pwd" name="pwd"/> 
 		</div>
 		<div>
 			<label for="title">제목</label>
@@ -52,19 +52,37 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 	
 	console.log(today)	
 	var choice=''
+	var p=''
 	var selectOption=function(value){
-		console.log(value)
-		choice="<input type='hidden' name='p_group' value='"+value+"'/>"
+		if(value=='private')
+			$("#pwd").attr("disabled",false)
+		else
+			$("#pwd").attr("disabled",true)
+		p=value
+		choice="<input type='hidden' name='p_group' id='p_group' value='"+value+"'/>"
 		console.log(choice)
+		console.log(p)
+		console.log($("#pwd").val())
 	}
 	
 	
 	$(document).ready(function () {
+		
+		
+		
 		$("#sbtn").click(function(e){
-			e.preventDefault();
-			$("form").append(choice);
-			$("form").append("<input type='hidden' name='reg_date' pattern ='yy/MM/dd hh:mm' value='"+today+"'>");
-			$("form").submit()
+			if(p=='private' && $("#pwd").val()==''){
+				e.preventDefault();
+				alert('비밀번호를 입력하세요')
+				$("#pwd").focus()
+			}
+			else{
+				e.preventDefault();
+				$("form").append(choice);
+				$("form").append("<input type='hidden' name='reg_date' pattern ='yy/MM/dd hh:mm' value='"+today+"'>");
+				$("form").submit()
+			}
+			
 		})
 		
 	})

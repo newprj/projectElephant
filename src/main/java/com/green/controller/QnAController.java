@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.green.service.QnaService;
+import com.green.vo.Criteria;
+import com.green.vo.PageDTO;
 import com.green.vo.QnaVO;
 
 import lombok.Setter;
@@ -20,9 +22,11 @@ public class QnAController {
 	QnaService service;
 	
 	@GetMapping("/list")
-	public void list(Model model) {
+	public void list(Model model,Criteria cri) {
 		System.out.println("QnA 게시판 리스트");
+		int total=service.totalCount(cri);
 		model.addAttribute("list",service.list());
+		model.addAttribute("pageMarker",new PageDTO(cri, total));
 		
 	}
 	@GetMapping("/write")

@@ -3,6 +3,7 @@ package com.green.service;
 import java.util.List;
 
 import com.green.vo.QnaVO;
+import com.green.vo.Criteria;
 import com.green.vo.QnaReplyVO;
 
 public interface QnaService {
@@ -12,6 +13,7 @@ public interface QnaService {
 	public QnaVO get(Long qno);
 	public int update(QnaVO vo);
 	public int deleteByQno(Long qno);
+	public int totalCount(Criteria cri);
 	
 	//reply
 	public int register(QnaReplyVO vo);

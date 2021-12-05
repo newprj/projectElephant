@@ -38,4 +38,4 @@ select writer from qna_tbl where qno=1 ;
 select * from qna_tbl where qno=1;
 select*from reply_tbl where qno=1 order by rno;
 delete from qna_reply_tbl where rno=5;
-update qna_reply_tbl set r_content='수정되나' where rno=8;
+update qna_reply_tbl set r_content='수정되나' where rno=1;
