@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.green.vo.Criteria;
 import com.green.vo.ReviewVO;
+import com.green.vo.SearchCriteria;
 
 public interface ReviewMapper {
 		public int insert(ReviewVO vo);
@@ -12,8 +13,8 @@ public interface ReviewMapper {
 		public int update (ReviewVO vo);
 		public int rnoRead ();
 		public List<ReviewVO> getList();
-		public List<ReviewVO> listPage(Criteria cri);
-		public int listCount();
+		public List<ReviewVO> list(SearchCriteria scri);
+		public int listCount(SearchCriteria scri);
 		
 	}
 

@@ -10,17 +10,19 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.green.service.AttachFileService;
+import com.green.service.ReplyService;
 import com.green.service.ReviewService;
 import com.green.vo.AttachFileDTO;
-import com.green.vo.Criteria;
 import com.green.vo.PageMaker;
 import com.green.vo.ReviewVO;
+import com.green.vo.SearchCriteria;
 
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -34,6 +36,8 @@ public class ReviewController {
 	ReviewService service;
 	@Setter(onMethod_=@Autowired)
 	AttachFileService aService;
+	@Setter(onMethod_=@Autowired)
+	ReplyService rService;
 	
 	/*
 	 * @GetMapping("/list") public void list(Model model) {
@@ -65,6 +69,7 @@ public class ReviewController {
 	public void update(Model model,long no) {
 		System.out.println("update 접근................."+ no);
 		model.addAttribute("read", service.get(no));
+		model.addAttribute("attachFile", aService.getList(no));
 	}
 	
 	@PostMapping("/modify")
@@ -95,18 +100,13 @@ public class ReviewController {
 	}
 	
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public String list(Model model, Criteria cri) throws Exception{
+	public void list(Model model, @ModelAttribute("scri") SearchCriteria scri){
 		log.info("list");
-		
-		model.addAttribute("list", service.listPage(cri));
-		
+		model.addAttribute("list", service.list(scri));
 		PageMaker pageMaker = new PageMaker();
-		pageMaker.setCri(cri);
-		pageMaker.setTotalCount(service.listCount());
-		
+		pageMaker.setCri(scri);
+		pageMaker.setTotalCount(service.listCount(scri));
 		model.addAttribute("pageMaker", pageMaker);
-		
-		return "review/list";
 		
 	}
 }

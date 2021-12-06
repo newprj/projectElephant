@@ -28,17 +28,23 @@
 		select max(rno) from tbl_review
 	</select>  
 	
-	<select id="listPage" resultType="com.green.vo.ReviewVO" parameterType="com.green.vo.Criteria">
+	<select id="list" resultType="com.green.vo.ReviewVO" parameterType="com.green.vo.SearchCriteria">
 		select rno, group_name, title, content, writer, regdate 
-        from (select rno, group_name,title,content,writer,regdate,row_number() over(order by rno desc) as rNum from tbl_review) 
+        from (select rno, group_name,title,content,writer,regdate,row_number() over(order by rno desc) as rNum from tbl_review
+        where 1=1 <include refid="search"></include>) 
         review where rNum between #{rowStart} and #{rowEnd} order by rno desc
 	</select> 
 	
-	<select id="listCount" resultType="int">
-	<![CDATA[
-		select count(rno) from tbl_review where rno > 0
-	]]>
+	<select id="listCount" parameterType="com.green.vo.SearchCriteria" resultType="int">
+		select count(rno) from tbl_review where 1=1 <include refid="search"></include> and rno > 0
 	</select>
-	
+	<sql id="search">
+		<if test="searchType != null">
+			<if test="searchType == 't'.toString()">AND TITLE LIKE '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'c'.toString()">AND CONTENT LIKE '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'w'.toString()">AND WRITER LIKE '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'tc'.toString()">AND (TITLE LIKE '%' || #{keyword} || '%') or (CONTENT LIKE '%' || #{keyword} || '%')</if>
+		</if>
+	</sql>
 	
 </mapper>

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.green.mapper.ReviewMapper;
 import com.green.vo.Criteria;
 import com.green.vo.ReviewVO;
+import com.green.vo.SearchCriteria;
 
 import lombok.AllArgsConstructor;
 import lombok.Setter;
@@ -57,15 +58,17 @@ public class ReviewServiceImpl implements ReviewService{
 		return mapper.rnoRead();
 	}
 
+
 	@Override
-	public List<ReviewVO> listPage(Criteria cri) {
-		
-		return mapper.listPage(cri);
+	public List<ReviewVO> list(SearchCriteria scri) {
+		System.out.println("2 서비스에서 리스트 search 가져옴");
+		return mapper.list(scri);
 	}
 
 	@Override
-	public int listCount() {
-		return mapper.listCount();
+	public int listCount(SearchCriteria scri) {
+		System.out.println("2 서비스에서 리스트 count 가져옴");
+		return mapper.listCount(scri);
 	}
 
 }

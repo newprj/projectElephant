@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.green.vo.Criteria;
 import com.green.vo.ReviewVO;
+import com.green.vo.SearchCriteria;
 
 
 public interface ReviewService {
@@ -12,7 +13,7 @@ public interface ReviewService {
 	public void modify(ReviewVO vo);
 	public void remove(ReviewVO vo);
 	public List<ReviewVO> getList();
-	public List<ReviewVO> listPage(Criteria cri);
-	public int listCount();
+	public List<ReviewVO> list(SearchCriteria scri);
+	public int listCount(SearchCriteria scri);
 	public int rnoRead ();
 }

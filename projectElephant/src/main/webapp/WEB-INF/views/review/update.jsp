@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,7 +16,55 @@
 		제목 <input type="text" name="title" value="${read.title}"/><br>
 		내용 <input type="text" name="content" value="${read.content}"/><br>
 		작성자 <input type="text" name="writer" value="${read.writer}" />	<br>
-		<button type="submit">수정완료</button>
+		 <input type="file" name="uploadFile" multiple="multiple" /><br>
+    <br>
+		첨부파일 : <c:forEach items="${attachFile}" var="attachFile">${attachFile.fileName} /
+		</c:forEach> <br>
+		 <button type="submit" id="uploadBtn">수정완료</button>
+		 <button type="button" id="back">홈으로</button>
 	</form>
 </body>
+  <script>
+    var regex = new RegExp('(.*?)\.(exe|sh|zip|alz)$') //정규 표현식
+    var maxSize = 10485760 // 10MB 제한
+
+    //파일 사이즈 10MB 초과 또는 파일형식이 정규표현식이 아닌것을 업로드 시 alert창 띄우는 메서드
+    function checkExtension(fileName, fileSize) {
+      if (fileSize >= maxSize) {
+        alert('파일 사이즈 초과')
+        return false
+      }
+      if (regex.test(fileName)) {
+        alert('해당 종류의 파일은 업로드 할 수 없습니다. ')
+        return false
+      }
+      return true
+    }
+
+    $(document).ready(function (e) {
+      $('#uploadBtn').click(function (e) {
+        var formData = new FormData()
+        var inputFile = $("input[name='uploadFile']")
+        var files = inputFile[0].files
+        console.log(files)
+        for (let i = 0; i < files.length; i++) {
+          if (!checkExtension(files[i].name, files[i].size)) return false
+          formData.append('uploadFile', files[i])
+        }
+        $.ajax({
+          url: '/uploadModify',
+          processData: false,
+          contentType: false,
+          data: {formData}, 
+          type: 'POST',
+          dataType: 'json',
+          success: function (result) {
+          },
+        })
+      }) 
+ 		$('#back').click(function () {
+ 		    self.location = '/review/list'
+    	}) 
+    })
+  </script>
 </html>

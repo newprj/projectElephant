@@ -19,7 +19,7 @@ public class ReviewMapperTests {
 	@Setter(onMethod_=@Autowired)
 	private ReviewMapper mapper;
 	
-	@Test
+	//@Test
 	public void insertTest() {
 		
 		ReviewVO vo = new ReviewVO();
@@ -53,7 +53,7 @@ public class ReviewMapperTests {
 		mapper.delete(3l);
 	}
 	
-	//@Test
+	@Test
 	public void getList() {
 		mapper.getList();
 	}

@@ -86,4 +86,5 @@ public class UploadController {
 		return new ResponseEntity<>(list, HttpStatus.OK);
 	}
 	
+	
 }

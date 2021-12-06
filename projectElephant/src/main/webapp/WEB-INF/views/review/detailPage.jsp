@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <!DOCTYPE html>
 <html>
@@ -15,7 +16,8 @@
 	제목 : ${detail.title}<br>
 	내용 : ${detail.content}<br>
 	작성자 : ${detail.writer}<br>
-	작성일 : ${detail.regdate}<br>
+	작성일 : <fmt:formatDate pattern="yyyy-MM-dd" value="${detail.regdate}"/><br>
+	
 	첨부파일 : <c:forEach items="${attachFile}" var="attachFile">
 		 <a href="download?uuid=${attachFile.uuid}">${attachFile.fileName}</a> / 
 	</c:forEach> <br>
@@ -62,7 +64,17 @@
 			success: function(data){
 				var str='';
 				$.each(data,function(key,val){
-					str += '<div class="replyInfo'+val.cno+'">'+'no.'+val.cno+' / 작성자 : '+val.writer+"/";
+					var timestamp = val.regdate;
+					var date = new Date(timestamp);
+					var year = date.getFullYear();
+					var month = ('0' + (date.getMonth() + 1)).slice(-2);
+					var day = ('0' + date.getDate()).slice(-2);
+					var dateString = year + '-' + month  + '-' + day; 
+					var hours = ('0' + date.getHours()).slice(-2); 
+					var minutes = ('0' + date.getMinutes()).slice(-2);
+					var seconds = ('0' + date.getSeconds()).slice(-2); 
+					var timeString = hours + ':' + minutes  + ':' + seconds;
+					str += '<div class="replyInfo'+val.cno+'">'+'no.'+val.cno+' / 작성자 : '+val.writer+"/" +'작성일: '+dateString+" "+timeString+ " /";
 					str += '<a onclick="updateForm('+val.cno+',\''+val.content+'\');"> 수정 / </a>';
 					str += '<a onclick="remove('+val.cno+');"> 삭제 </a> </div>';
 					str += '<div class="replyContent'+val.cno+'"> <p> 내용 : '+val.content +'</p>';

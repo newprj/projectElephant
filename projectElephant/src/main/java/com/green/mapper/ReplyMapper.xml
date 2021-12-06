@@ -24,6 +24,9 @@
 		delete from review_reply where cno = #{cno}
 	</delete> 
 	
+	<select id="getCount" resultType="com.green.vo.ReplyVO"> 
+		select count(rno) from review_reply ;
+	</select>
 	
 	
 	
