@@ -24,6 +24,14 @@ li {
     background-color: #1f75d9;
     color:#fff;
 }
+.paginate_btn.previous a ,.paginate_btn.next a {
+	display:block;
+    width:70px;
+    line-height:30px;
+    text-align:center;
+    background-color: #1f75d9;
+    color:#fff;
+}
  
 
 </style>
@@ -31,7 +39,7 @@ li {
 </head>
 <body>
 	<h1>Q&A 페이지 입니다.</h1>
-	<h3>로그인 연결되면 수정,삭제 작성자에게만 보이기/ 수정일 있으면 작성일 수정일로 보이게하기</h3>
+	<h3>로그인 연결되면 수정,삭제 작성자에게만 보이기</h3>
 	<form method="get" action="/qna/list" id="searchForm">
 		<select name="type">
 			<option value="" <c:out value="${pageMaker.cri.type==null?'selected':''}"/>>선택</option>
@@ -53,7 +61,7 @@ li {
 			  <th>구분</th>
               <th>제목</th>
               <th>작성자</th>
-              <th>작성일</th>
+              <th>수정일</th>
               <th></th>
               <th></th>
 			</tr>
@@ -64,7 +72,12 @@ li {
 				<td>${i.p_group}</td>
 				<td><a class='detail' href='${i.qno}' data-password='${i.pwd}'>${i.title}</a></td>
 				<td>${i.writer}</td>
-				<td><fmt:formatDate value="${i.reg_date}" pattern="yyyy-MM-dd a hh:mm" /></td>
+				<td>
+				<c:choose>
+					<c:when test="${i.up_date == null}"><fmt:formatDate value="${i.reg_date}" pattern="yyyy-MM-dd a hh:mm" /></c:when>
+					<c:otherwise><fmt:formatDate value="${i.up_date}" pattern="yyyy-MM-dd a hh:mm" /></c:otherwise>
+				</c:choose>
+				</td>
 				<td><button data-qno='${i.qno}' id="writeMod">수정</button></td>
 				<td><button onclick="location='/qna/remove?qno=${i.qno}'" id="writeRemove">삭제</button></td>
 			</tr>
@@ -74,7 +87,7 @@ li {
 	<div>
 		<ul class="pagination">
 			<c:if test="${pageMarker.prev}">
-				<li><button>이전</button>
+				<li class="paginate_btn previous"><a href="${pageMarker.startPage -1}">이전</a>
 				</li>
 			</c:if>
 			
@@ -85,7 +98,7 @@ li {
 			</c:forEach>
 			
 			<c:if test="${pageMarker.next}">
-				<li><button>다음</button></li>
+				<li class="paginate_btn next"><a href="${pageMarker.endPage +1}">다음</a></li>
 			</c:if>
 		</ul>
 	</div>

@@ -27,16 +27,19 @@ public class ControllerTester {
 	private QnaService service;
 	Date date=new Date();
 	
-	//@Test
+	@Test
 	public void test() {
-		QnaVO vo =new QnaVO();
-		vo.setP_group("public");
-		vo.setQ_content("내용");
-		vo.setReg_date(date);
-		vo.setTitle("제목5");
-		vo.setWriter("사용자");
-		vo.setPwd(null);
-		service.insertQna(vo);
+		for (int i = 0; i < 100; i++) {
+			QnaVO vo =new QnaVO();
+			vo.setP_group("public");
+			vo.setQ_content("내용"+i);
+			vo.setReg_date(date);
+			vo.setTitle("제목"+i);
+			vo.setWriter("사용자"+i);
+			vo.setPwd(null);
+			service.insertQna(vo);
+		}
+		
 	}
 	
 	//@Test
@@ -63,7 +66,7 @@ public class ControllerTester {
 	public void replySelect() {
 		service.replyList(2L);
 	}
-	@Test
+	//@Test
 	public void testPaging() {
 		Criteria cri=new Criteria();
 		List<QnaVO> list =service.listqnaWithPaging(cri);
