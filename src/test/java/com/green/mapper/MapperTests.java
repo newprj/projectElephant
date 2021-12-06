@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.green.vo.BoardReplyVO;
 import com.green.vo.BoardVO;
 import com.green.vo.GUserVO;
 import com.green.vo.GroupVO;
@@ -32,7 +33,18 @@ public class MapperTests {
 	@Setter(onMethod_=@Autowired)
 	public BoardMapper bMapper;
 	
-	@Test
+	@Setter(onMethod_=@Autowired)
+	public ReplyMapper replyMapper;
+	
+	
+	//@Test
+	public void replyupdateTest() {
+		BoardReplyVO vo = replyMapper.getReplyOne(22L);
+		
+		replyMapper.updateReply(vo);
+	}
+	
+//	@Test
 	public void getDuplicated() {
 //		gMapper.groupNameCheck("테스트");
 		gMapper.groupNameCheck("중복검사");

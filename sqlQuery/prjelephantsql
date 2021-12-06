@@ -1,3 +1,25 @@
+SELECT  'DROP TABLE ' || object_name || ' CASCADE CONSTRAINTS;'
+  FROM    user_objects
+WHERE   object_type = 'TABLE';
+
+-- spring database에서 모든 table을 삭제 했습니다
+
+drop table tbl_group;
+create table tbl_group(
+    gno number,
+    group_name varchar2(100),
+    leader varchar2(30),
+    subject varchar2(30),
+    description varchar2(500),
+    member_number number);
+delete from tbl_group;
+select * from tbl_group;
+select count(*) from tbl_group where group_name='테스트';
+create sequence seq_gno;
+drop sequence seq_gno;
+delete from tbl_group where gno=81;
+commit;
+
 create table tbl_calendar(
     cid number,
     title varchar2(50),
@@ -20,11 +42,7 @@ update tbl_calendar set color='#9775fa';
 commit;
 
 
-SELECT  'DROP TABLE ' || object_name || ' CASCADE CONSTRAINTS;'
-  FROM    user_objects
-WHERE   object_type = 'TABLE';
 
--- spring database에서 모든 table을 삭제 했습니다
 drop table tbl_user;
 
 
@@ -108,5 +126,13 @@ select * from user_sequences;
 select * from tbl_group;
 
 
+create table board_reply(
+    rno number,
+    bno number,
+    reply varchar2(500),
+    replyer varchar2(100),
+    replydate date default sysdate);
 
+create sequence board_rno;
+select * from board_reply;
 

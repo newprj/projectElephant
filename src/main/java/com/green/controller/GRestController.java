@@ -18,16 +18,20 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.green.mapper.ReplyMapper;
 import com.green.service.BoardService;
 import com.green.service.CalendarService;
 import com.green.service.GUserService;
 import com.green.service.GroupService;
+import com.green.service.ReplyService;
+import com.green.vo.BoardReplyVO;
 import com.green.vo.BoardVO;
 import com.green.vo.CalendarVO;
 import com.green.vo.GUserVO;
 
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+
 
 @RestController
 @RequestMapping("/group/*")
@@ -46,6 +50,9 @@ public class GRestController {
 	@Setter(onMethod_=@Autowired)
 	CalendarService calendarService;
 	
+	@Setter(onMethod_=@Autowired)
+	ReplyService replyService;
+	
 	
 	// 메인 페이지
 	@GetMapping("/")
@@ -57,8 +64,9 @@ public class GRestController {
 	// 그룹 모집 페이지
 	@GetMapping("/{group_name}")
 	public ModelAndView groupDetail(@PathVariable("group_name") String group_name, Model model) {
-		model.addAttribute("one", groupService.showOne(group_name));
-		return new ModelAndView("/group/detail");
+		ModelAndView mv = new ModelAndView("/group/detail");
+		mv.addObject("one", groupService.showOne(group_name));
+		return mv;
 	}
 	
 	//그룹 이름 중복체크
@@ -91,18 +99,38 @@ public class GRestController {
 	
 	// 그룹별 게시판 페이지
 	@GetMapping("/board/{group_name}")
-	public ModelAndView tempGroupPage(Model model, @PathVariable("group_name") String group_name) {
-		model.addAttribute("name", group_name);
-		model.addAttribute("board", boardService.showList(group_name));
-		return new ModelAndView("/group/board");
+	public ModelAndView tempGroupPage( @PathVariable("group_name") String group_name) {
+		ModelAndView mv = new ModelAndView("/group/board");
+		mv.addObject("name", group_name);
+		mv.addObject("board", boardService.showList(group_name));
+		return mv;
 	}
 
 	// 게시글 조회
-	@GetMapping(value="/board/{bno}",  produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public ResponseEntity<BoardVO> readOne(@RequestParam("bno") Long bno){
+	@GetMapping(value="/board/{group_name}/{bno}",  produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public ModelAndView readOne(@PathVariable("bno") Long bno, @PathVariable("group_name") String group_name){
 		BoardVO board = boardService.read(bno);
-		return new ResponseEntity<BoardVO>(board, HttpStatus.OK);
+		List<BoardReplyVO> replies = replyService.getReplysByBno(bno);
+		ModelAndView mv = new ModelAndView("/group/boardDetail");
+		mv.addObject("replies", replies);
+		mv.addObject("board",board);
+		
+		return mv;
 	}
+	
+	@GetMapping(value="/board/{group_name}/write")
+	public ModelAndView boardWrite(@PathVariable("group_name")String group_name) {
+		ModelAndView mv = new ModelAndView("/group/write");
+		return mv;
+	}
+	// 게시글 입력 
+	@PostMapping(value="/board", consumes= "application/json")
+	public void boardCreate(@RequestBody BoardVO board) {
+		boardService.register(board);
+	}
+	
+	
+	
 	
 	//게시글 삭제d
 	@DeleteMapping(value="/board/{bno}")
@@ -117,19 +145,46 @@ public class GRestController {
 		boardService.update(board);
 	}
 	
-	// 게시글 입력 
-	@PostMapping(value="/board", consumes= "application/json")
-	public void boardCreate(@RequestBody BoardVO board) {
-		boardService.register(board);
+	// 리플 1개 읽기
+	@GetMapping(value="reply/{rno}", produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public ResponseEntity<BoardReplyVO> getReply(@PathVariable("rno") Long rno) {
+		System.out.println(" 리플 하나 읽기");
+		System.out.println(rno);
+		return new ResponseEntity<>(replyService.getReplyOne(rno), HttpStatus.OK);
 	}
+
+	// 리플 등록
+	@PostMapping(value="/reply", consumes= "application/json")
+	public void registerReply(@RequestBody BoardReplyVO vo) {
+		System.out.println("리플라이 포스트 방식");
+		System.out.println(vo);
+		replyService.registerReply(vo);
+	}
+	
+	// 리플 수정
+	@PutMapping(value="/reply/{rno}", consumes= "application/json")
+	public void replyModify(@PathVariable("rno") Long rno, @RequestBody BoardReplyVO vo) {
+		System.out.println(" 리플라이 풋매핑");
+		System.out.println(rno);
+		replyService.updateReply(vo);
+	}
+
+	//리플 삭제 
+	@DeleteMapping(value="/reply/{rno}")
+	public void ReplyDelete(@PathVariable("rno") Long rno) {
+		System.out.println(" 리플라이 삭제");
+		System.out.println(rno);
+		replyService.deleteReply(rno);
+	}
+	
 	
 	//캘린더 그룹별
 	@GetMapping("/test/{group_name}")
-	public ModelAndView test(Model model, @PathVariable String group_name) {
-		System.out.println(" 들어오니 ?" + group_name);
-		model.addAttribute("group", group_name);
-		model.addAttribute("member", groupUserService.listByGroup(group_name));
-		return new ModelAndView("/group/test");
+	public ModelAndView test(@PathVariable String group_name) {
+		ModelAndView mv = new ModelAndView("/group/test");
+		mv.addObject("group", group_name);
+		mv.addObject("member", groupUserService.listByGroup(group_name));
+		return mv;
 	}
 	
 	// 그룹별 이벤트 가져오기
