@@ -64,6 +64,9 @@
     <script>
       var regex = new RegExp('(.*?)\.(exe|sh|zip|alz)$') //정규 표현식
       var maxSize = 5242880 // 5MB 제한
+      
+      
+      //파일 사이즈 5MB 초과 또는 파일형식이 정규표현식이 아닌것을 업로드 시 alert창 띄우는 메서드 
       function checkExtension(fileName, fileSize) {
         //확장자 체크함수 정의
         if (fileSize >= maxSize) {
@@ -76,11 +79,17 @@
         }
         return true
       }
-      function showImage(fileCallPath) {
-        //파일호출 경로
+      
+      
+      function showImage(fileCallPath) {//파일호출 경로 
         console.log('여기 함수 showImage 호출')
         $('.bigPictureWrapper').css('display', 'flex').show()
-        $('.bigPicture').html("<img src='/display?fileName=" + encodeURI(fileCallPath) + "'>")
+        $('.bigPicture')
+          .html("<img src='/display?fileName=" + encodeURI(fileCallPath) + "'>")
+          .animate({ width: '100%', height: '100%' }, 1000)
+        setTimeout(() => {
+          $(this).hide()
+        }, 1000)
       }
 
       $(document).ready(function (e) {
@@ -102,12 +111,11 @@
             data: formData,
             type: 'POST',
             dataType: 'json',
-            success: function (result) {
-              //첨부파일의 배열
+            success: function (result) { //첨부파일의 배열
               //alert('uploaded')
               console.log(result)
               showUploadFile(result) // uploadAjaxAction 전달하고 성공하면 controller에서
-              // result에 파일 배열을 전달
+              // result에 파일 배열을 전달 
               $('.uploadDiv').html(cloneObj.html())
             },
           }) // $.ajax p503
@@ -115,14 +123,13 @@
 
         var uploadResult = $('.uploadResult ul')
 
-        const showUploadFile = (uploadResultArr) => {
-          //uploadResultArr에는 컨틀롤러에서 성공하면
-          //그때의 여러개의 배열 이미지 파일이 담긴다
+        const showUploadFile = (uploadResultArr) => {//uploadResultArr에는 컨틀롤러에서 성공하면
+        	//그때의 여러개의 배열 이미지 파일이 담긴다 
           //ajax 결과를 화면에 출력하는 함수 정의
           var str = ''
           $(uploadResultArr).each(function (i, obj) {
             if (!obj.image) {
-              var fileCallPath = encodeURIComponent(obj.uploadPath + '/' + obj.uuid + '_' + obj.fileName)
+              var fileCallPath = encodeURIComponent(obj.uploadPath + '/' +  obj.uuid+ '_' + obj.fileName)
               var fileLink = fileCallPath.replace(new RegExp(/\\/g), '/')
               str +=
                 "<li><div><a href='/download?fileName=" +
@@ -135,8 +142,7 @@
                 fileCallPath +
                 "' data-type='file'> x </span>" +
                 '<div></li>'
-            } else {
-              //이미지 일때
+            } else { //이미지 일때 
               var fileCallPath = encodeURIComponent(obj.uploadPath + '/s_' + obj.uuid + '_' + obj.fileName)
               var originPath = obj.uploadPath + '\\' + obj.uuid + '_' + obj.fileName
               originPath = originPath.replace(new RegExp(/\\/g), '/')
@@ -155,21 +161,20 @@
           })
           uploadResult.append(str)
         }
-
         $('.uploadResult').on('click', 'span', function (e) {
           console.log('여기가 왜 안눌려?')
-          var targetFile = $(this).data('file') // data-file="fileCallPath"
+          var targetFile = $(this).data('file') // data-file="fileCallPath" 
           var type = $(this).data('type') //dat-type="여기 정보가져오기"
           console.log(targetFile)
-          $.ajax({
-            url: '/deleteFile',
-            data: { fileName: targetFile, type: type },
-            dataType: 'text',
-            type: 'POST',
-            success: (result) => {
-              alert(result)
-            },
-          })
+           $.ajax({
+        		url:'/deleteFile',
+        		data:{fileName:targetFile, type:type},
+        		dataType:'text',
+        		type:'POST',
+        		success:(result)=>{
+        			alert(result);
+        		}
+        	}) 
         })
       })
     </script>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	<mapper namespace="com.green.mapper.ReviewMapper">
+	
+	<insert id="insert">
+		insert into tbl_review values(seq_rno.nextval, #{group_name},#{title},#{content},#{writer},sysdate)
+	</insert>
+	
+	<select id="read" resultType="com.green.vo.ReviewVO">
+		select * from tbl_review where rno=#{rno}
+	</select> 
+	
+	<update id="update">
+		update tbl_review set group_name=#{group_name},title=#{title},content=#{content}, writer=#{writer} where rno=#{rno}
+
+	</update>
+	<select id="getList" resultType="com.green.vo.ReviewVO"> 
+		select * from tbl_review order by rno asc 
+	</select>
+
+	<delete id="delete">
+		delete from tbl_review where rno = #{rno}
+	</delete> 
+	
+	<select id="rnoRead" resultType="int">
+		select max(rno) from tbl_review
+	</select>  
+	
+	<select id="listPage" resultType="com.green.vo.ReviewVO" parameterType="com.green.vo.Criteria">
+		select rno, group_name, title, content, writer, regdate 
+        from (select rno, group_name,title,content,writer,regdate,row_number() over(order by rno desc) as rNum from tbl_review) 
+        review where rNum between #{rowStart} and #{rowEnd} order by rno desc
+	</select> 
+	
+	<select id="listCount" resultType="int">
+	<![CDATA[
+		select count(rno) from tbl_review where rno > 0
+	]]>
+	</select>
+	
+	
+</mapper>
