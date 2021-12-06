@@ -3,10 +3,27 @@
 	PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.green.mapper.QnaMapper">
+
+	
 	<select id="listqna" resultType="com.green.vo.QnaVO" >
 		select * from qna_tbl order by qno
 	</select>
 
+	<select id="listqnaWithPaging" resultType="com.green.vo.QnaVO">
+		<![CDATA[
+			select qno, title, writer,q_content,reg_date,up_date,pwd,p_group
+			from (
+			    select /*+ index_desc(qna_tbl pk_qna) */
+				    rownum rn, qno, title, writer,q_content,reg_date,up_date,pwd,p_group
+				    	from qna_tbl
+				    where 
+			    rownum <=#{pageNum} * #{amount}
+		    )
+		    where rn> (#{pageNum}-1) * #{amount}
+		]]>
+	</select> 
+
+	
 	<insert id="insertQna">
 		insert into qna_tbl(qno, title, writer,q_content,reg_date,up_date,pwd,p_group) 
 			values(qna_seq.nextval, #{title},#{writer},#{q_content},#{reg_date},#{up_date, jdbcType=VARCHAR},#{pwd, jdbcType=TIMESTAMP},#{p_group})

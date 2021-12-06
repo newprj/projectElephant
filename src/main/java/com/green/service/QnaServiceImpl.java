@@ -85,6 +85,12 @@ public class QnaServiceImpl implements QnaService{
 		return mapper.totalCount(cri);
 	}
 
+	@Override
+	public List<QnaVO> listqnaWithPaging(Criteria cri) {
+		log.info("2) 서비스에서 전체 게시물 조회");
+		return mapper.listqnaWithPaging(cri);
+	}
+
 
 	
 }

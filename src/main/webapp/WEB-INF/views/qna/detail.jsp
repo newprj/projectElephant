@@ -36,7 +36,7 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <body>
 	<h1>Q&A 상세 페이지 입니다.</h1>
 	<form>
-		<h3>댓글 수정,삭제 페이지 만들기 / 로그인 되면 내가 작성한 댓글만 수정,삭제 버튼 보이도록</h3>
+		<h3>로그인 되면 내가 작성한 댓글만 수정,삭제 버튼 보이도록</h3>
 		<h4>Q & N 게시글</h4>
 		<div>
 			<label for="qno">게시물 번호</label>
@@ -60,7 +60,7 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 			<textarea name="q_content"  readonly="readonly" >${get.q_content}</textarea>
 		</div>
 		
-		<button type="button" onclick="location.href='/qna/list'">목록</button>
+		<button type="button" id="goList">목록</button>
 	</form>
 	<div>
 	<h4>댓글  <button type="button" id="addReply">댓글 달기</button></h4>
@@ -85,7 +85,10 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 			
 		</c:forEach>
 	</div>
-	
+	<form id='operForm' action="/qna/list" method="get">
+		<input type='hidden' name='pageNum' value='${cri.pageNum}'>
+		<input type='hidden' name='amount' value='${cri.amount}'>
+	</form>
 	
 	</div>
 	<div class="modal" id="modal" >
@@ -122,6 +125,10 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <script type="text/javascript">
 
 	$(document).ready(function () {
+		
+		$("#goList").click(function(e){
+			$("#operForm").submit()
+		})
 		
 		var modal=$(".modal")
 		

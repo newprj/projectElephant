@@ -7,6 +7,8 @@ import com.green.vo.QnaVO;
 
 public interface QnaMapper {
 	public List<QnaVO> listqna();
+	public List<QnaVO> listqnaWithPaging(Criteria cri);
+	
 	public int insertQna(QnaVO vo);
 	public QnaVO get(Long qno);
 	public int update(QnaVO vo);

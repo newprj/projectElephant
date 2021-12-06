@@ -14,6 +14,7 @@ public interface QnaService {
 	public int update(QnaVO vo);
 	public int deleteByQno(Long qno);
 	public int totalCount(Criteria cri);
+	public List<QnaVO> listqnaWithPaging(Criteria cri);
 	
 	//reply
 	public int register(QnaReplyVO vo);

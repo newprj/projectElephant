@@ -4,8 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.green.service.QnaService;
@@ -25,7 +27,7 @@ public class QnAController {
 	public void list(Model model,Criteria cri) {
 		System.out.println("QnA 게시판 리스트");
 		int total=service.totalCount(cri);
-		model.addAttribute("list",service.list());
+		model.addAttribute("list",service.listqnaWithPaging(cri));
 		model.addAttribute("pageMarker",new PageDTO(cri, total));
 		
 	}
@@ -41,7 +43,7 @@ public class QnAController {
 		return "redirect:/qna/list";
 	}
 	@GetMapping({"/detail","/modify"})
-	public void detail(Model model,Long qno) {
+	public void detail(@RequestParam("qno") Long qno,Model model,@ModelAttribute("cri") Criteria cri) {
 		System.out.println("QnA 세부내용 들어옴"+qno);
 		model.addAttribute("get",service.get(qno));
 		model.addAttribute("reply",service.replyList(qno));
@@ -49,9 +51,11 @@ public class QnAController {
 	}
 
 	@PostMapping("/modify")
-	public String modifyPost(QnaVO vo) {
+	public String modifyPost(QnaVO vo,@ModelAttribute("cri") Criteria cri, RedirectAttributes rttr) {
 		System.out.println("수정된 데이터"+vo);
 		service.update(vo);		
+		rttr.addAttribute("pageNum",cri.getPageNum());
+		rttr.addAttribute("amount",cri.getAmount());
 		return "redirect:/qna/list";
 	}
 	

@@ -13,6 +13,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.green.service.QnaService;
 import com.green.vo.QnaVO;
+import com.green.vo.Criteria;
 import com.green.vo.QnaReplyVO;
 
 import lombok.Setter;
@@ -58,8 +59,14 @@ public class ControllerTester {
 		vo.setQno(2L);
 		service.register(vo);
 	}
-	@Test
+	//@Test
 	public void replySelect() {
 		service.replyList(2L);
+	}
+	@Test
+	public void testPaging() {
+		Criteria cri=new Criteria();
+		List<QnaVO> list =service.listqnaWithPaging(cri);
+		list.forEach(qna->log.info(qna));
 	}
 }
