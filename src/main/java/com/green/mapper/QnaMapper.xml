@@ -4,6 +4,22 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.green.mapper.QnaMapper">
 
+	<sql id="criteria">
+		<trim prefix="(" suffix=") and " prefixOverrides="OR">
+			    	<foreach item="type" collection="typeArr">
+			    		<trim prefix="OR">
+			    			<choose>
+			    				<when test="type== 'T'.toString()">
+			    					title like '%'||#{keyword}||'%'
+			    				</when>
+			    				<when test="type== 'W'.toString()">
+			    					writer like '%'||#{keyword}||'%'
+			    				</when>
+			    			</choose>
+			    		</trim>
+			    	</foreach>
+		    </trim>
+	</sql>
 	
 	<select id="listqna" resultType="com.green.vo.QnaVO" >
 		select * from qna_tbl order by qno
@@ -17,6 +33,9 @@
 				    rownum rn, qno, title, writer,q_content,reg_date,up_date,pwd,p_group
 				    	from qna_tbl
 				    where 
+		]]>
+		<include refid="criteria"></include>
+	    <![CDATA[
 			    rownum <=#{pageNum} * #{amount}
 		    )
 		    where rn> (#{pageNum}-1) * #{amount}

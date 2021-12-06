@@ -32,13 +32,17 @@ li {
 <body>
 	<h1>Q&A 페이지 입니다.</h1>
 	<h3>로그인 연결되면 수정,삭제 작성자에게만 보이기/ 수정일 있으면 작성일 수정일로 보이게하기</h3>
-	<form method="post" action="">
-		<select class="searchField">
-			<option value="0">선택</option>
-			<option value="title">제목</option>
-			<option value="writer">작성자</option>			
+	<form method="get" action="/qna/list" id="searchForm">
+		<select name="type">
+			<option value="" <c:out value="${pageMaker.cri.type==null?'selected':''}"/>>선택</option>
+			<option value="T" <c:out value="${pageMaker.cri.type eq 'T' ?'selected':''}"/> >제목</option>
+			<option value="W" <c:out value="${pageMaker.cri.type eq 'W' ?'selected':''}"/>>작성자</option>			
+			<option value="TW" <c:out value="${pageMaker.cri.type eq 'TW'?'selected':''}"/>>제목 또는 작성자</option>			
 		</select>
-		<input type="text" placeholder="검색어 입력" class="searchText"> 
+		<input type="text" placeholder="검색어 입력" name="keyword"> 
+		<input type="hidden" name="pageNum" value='${pageMarker.cri.pageNum}'>
+        <input type="hidden" name="amount" value='${pageMarker.cri.amount}'>
+              
 		<button id="search">검색</button>
 	</form>
 	
@@ -89,6 +93,8 @@ li {
 	<form id='actionForm' action="/qna/list" method="get" >
 		<input type="hidden" name='pageNum' value='${pageMarker.cri.pageNum}'/>
 		<input type="hidden" name='amount' value='${pageMarker.cri.amount}'/>
+		<input type="hidden" name='type' value='${pageMarker.cri.type}'/>
+		<input type="hidden" name='keyword' value='${pageMarker.cri.keyword}'/>
 	</form>
 </body>
 <script type="text/javascript">
@@ -136,6 +142,23 @@ li {
 			$("#actionForm").submit()
 		})
 		
+		/* 검색 */
+		$("#searchForm button").click(function(e){
+			if(!$("#searchForm").find("option:selected").val()){
+				alert("검색 종류를 선택하세요")
+				return false
+			}
+			if(!$("#searchForm").find("input[name='keyword']").val()){
+				alert("검색어를 입력하세요")
+				return false
+			}
+			/* 검색시 무조건 1페이지로  */
+			$("#searchForm").find("input[name='pageNum']").val("1")
+			
+			 e.preventDefault();
+			$("#searchForm").submit()
+			
+		})
 	})
 
 </script>

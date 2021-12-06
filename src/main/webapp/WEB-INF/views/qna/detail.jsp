@@ -88,6 +88,8 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 	<form id='operForm' action="/qna/list" method="get">
 		<input type='hidden' name='pageNum' value='${cri.pageNum}'>
 		<input type='hidden' name='amount' value='${cri.amount}'>
+		<input type="hidden" name='type' value='${pageMarker.cri.type}'/>
+		<input type="hidden" name='keyword' value='${pageMarker.cri.keyword}'/>
 	</form>
 	
 	</div>
