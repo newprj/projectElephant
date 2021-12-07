@@ -48,7 +48,10 @@ prefix="c" %>
 		<p class="reply" data-rno="${reply.rno}"><span > ${reply.reply} </span><span> ${reply.replyer}</span> <p>
 	</c:forEach>
 </div>
+<button class="go_modify">글수정</button>
 <button class="delete">글삭제</button>
+<button class="go_board"> 목록</button>
+
 <button class="reply"> 모달을 띄우자  </button>
 </div>
 
@@ -80,7 +83,7 @@ $('.content > .delete').click(function (e) {
       type: 'delete',
       url: '/group/board/${bno}',
       success: () => {
-        location.href = "/group/board/${group_name}"
+        location.href = "/group/board/${cri.group_name}"
       },
       error: (xhr, status, er) => {
         console.log(status)
@@ -91,6 +94,11 @@ $('.content > .delete').click(function (e) {
 	$('.reply').click(function(e){
 		// 여기 모달 
 	})
+	
+	$('.go_board').click((e)=>{
+	  e.preventDefault()
+	  location.href = "/group/board/${cri.group_name}/${cri.pageNum}/${cri.amount}"
+  })
 	
 	const getReplyData = () => ({
 		rno : $('input[name="rno"]').val(),
@@ -108,7 +116,7 @@ $('.content > .delete').click(function (e) {
 			data : JSON.stringify(data),
 			contentType: 'application/json; charset=utf-8',
 			success : () => {
-				let str = "<p class='reply'><span>"+ data.reply + "</span><span>" + data.replyer +"</span> <p>"
+				let str = "<p class='reply' data-rno='${data.rno}'><span>"+ data.reply + "</span><span>" + data.replyer +"</span> <p>"
 				$('div.reply').append(str)
 				$('button[type="reset"]').trigger('click')
 			},
@@ -128,6 +136,12 @@ $('.content > .delete').click(function (e) {
 		)//getJSON
 	})//reply click
 	
+	$('.go_modify').click(function(e){
+		e.preventDefault()
+		location.href = "/group/modify/${cri.group_name}/${cri.bno}/${cri.pageNum}/${cri.amount}"
+
+	})//modify
+	
 	$('.modify').click(function(e){
 		e.preventDefault()
 		let data = getReplyData()
@@ -135,13 +149,14 @@ $('.content > .delete').click(function (e) {
 		let rno =$('input[name="rno"]').val()
 		$.ajax({
 			type:'put',
-			url:'/group/reply/'+rno,
-			data : JSON.stringify(data),
-			contentType: 'application/json; charset=utf-8',
-			success : ()=> console.log('succeed'),
-			error : (xhr, status, er) => console.log(xhr)
+				url:'/group/reply/'+rno,
+				data : JSON.stringify(data),
+				contentType: 'application/json; charset=utf-8',
+				success : ()=> console.log('succeed'),
+				error : (xhr, status, er) => console.log(xhr)
 		})
 	})//modify
+	
 	$('.delete').click(function(e){
 		e.preventDefault()
 		let rno = $('input[name="rno"]').val()

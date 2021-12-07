@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.green.mapper.BoardMapper;
 import com.green.mapper.FileMapper;
 import com.green.vo.BoardVO;
+import com.green.vo.Criteria;
 import com.green.vo.FileVO;
 
 import lombok.Setter;
@@ -59,6 +60,18 @@ public class BoardServiceImpl implements BoardService{
 	public List<FileVO> getFileListByBno(Long bno) {
 		
 		return fileMapper.filesByBno(bno);
+	}
+
+	@Override
+	public List<BoardVO> getListWithPaging(Criteria cri) {
+		// TODO Auto-generated method stub
+		return mapper.getListWithPaging(cri);
+	}
+
+	@Override
+	public int getTotalCount(Criteria cri) {
+		
+		return mapper.getTotalCount(cri);
 	}
 
 }

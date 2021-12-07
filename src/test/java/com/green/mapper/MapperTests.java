@@ -1,5 +1,7 @@
 package com.green.mapper;
 
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.green.vo.BoardReplyVO;
 import com.green.vo.BoardVO;
+import com.green.vo.Criteria;
 import com.green.vo.GUserVO;
 import com.green.vo.GroupVO;
 import com.green.vo.UserVO;
@@ -37,6 +40,19 @@ public class MapperTests {
 	public ReplyMapper replyMapper;
 	
 	
+	@Test
+	public void testPaging() {
+		Criteria cri = new Criteria();
+		cri.setPageNum(3);
+		cri.setAmount(10);
+		cri.setGroup_name("코끼리");
+		
+		List<BoardVO> list = bMapper.getListWithPaging(cri);
+		list.forEach(BoardVO -> System.out.println(BoardVO));
+		
+	}
+	
+	
 	//@Test
 	public void replyupdateTest() {
 		BoardReplyVO vo = replyMapper.getReplyOne(22L);
@@ -59,10 +75,10 @@ public class MapperTests {
 //	@Test
 	public void resgisterTest() {
 		BoardVO vo = new BoardVO();
-		for(int i=0; i<10; i++) {
+		for(int i=0; i<100; i++) {
 			vo.setTitle("타이틀"+i );
 			vo.setContent("내용은 조금더 길게 ");
-			vo.setGroup_name("테스트");
+			vo.setGroup_name("그룹이름");
 			vo.setWriter("테스트유저");
 			bMapper.register(vo);
 		}

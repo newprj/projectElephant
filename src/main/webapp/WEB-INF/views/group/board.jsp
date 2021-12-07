@@ -10,59 +10,55 @@ prefix="c" %>
   </head>
   <body>
   <a href="/group/"> 메인 </a>
- 	<a href="/group/board/${group_name}/write"><button class="create">입력</button></a>
+  <a href="/group/board/${group_name}/write"><button class="create">입력</button></a>
     
     
     
     <c:forEach items="${board}" var="board">
-      <div class="list" data="${board.bno}">
+      <div class="list"  data="${board.bno}">
       ${board.title}
       </div>
-   
+   	 	<div>
+   <form id="actionForm" action="/group/board/${group_name}" method="get">
+   		<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">
+   		<input type="hidden" name="amount" value="${pageMaker.cri.amount}">
+   		
+   </form>
+   	
+   </div>
    
     </c:forEach>
-   
+   <ul class="pagination">
+   		<c:if test="${pageMaker.prev}">
+   			<li class="pagenate prev"> <a href="${pageMaker.startPage-1}"> prev </a> </li>
+   		</c:if>
+   		<c:forEach var="num" begin="${pageMaker.startPage}"
+   		end="${pageMaker.endPage}">
+   		<li class="pagenate"><a href="${num}">${num}</a></li>
+   		</c:forEach>
+   		<c:if test="${pageMaker.next }">
+   			<li class="pagenate next"><a href="${pageMaker.endPage+1}"> next </a></li>
+   		</c:if>
+   	</ul>
 
     <script>
-      const showOne = (res) => {
-        $('textarea[name="content"]').val(res.content)
-        $('input[name="bno"]').val(res.bno)
-        $('input[name="writer"]').val(res.writer)
-        $('input[name="title"]').val(res.title)
-      }
+      
       
       $(document).ready(function () {
-    	
-        let board = {}
-        let bno = -1
+    	 let actionForm = $('#actionForm')
+        let pageNum = actionForm.find('input[name="pageNum"]').val()
+        let amount = actionForm.find('input[name="amount"]').val()
         $('.list').click(function (e) {
-          bno = $(this).attr('data')
-          location.href = "/group/board/${group_name}/"+bno
+          bno = $(this).attr('data')          
+          location.href = "/group/board/${name}/"+bno+"/" +pageNum + "/" +amount
         }) //list.click
-		
         
-
-        $('.modify').click(function (e) {
-          e.preventDefault()
-          let modified = {
-            ...board,
-            title: $('input[name="title"]').val(),
-            content: $('textarea[name="content"]').val(),
-          }
-          $.ajax({
-            type: 'PUT',
-            url: '/group/board/' + bno,
-            data: JSON.stringify(modified),
-            contentType: 'application/json; charset=utf-8',
-            success: () => {
-              //$('button[type="reset"]').trigger('click')
-              location.reload()
-            },
-            error: (xhr, status, er) => {
-              console.log(status)
-            }, //error
-          }) //ajax
-        }) // modify c
+        $('.pagenate a').click(function(e){
+        	e.preventDefault()
+        	
+        	let pageNum =$(this).attr('href')
+        	location.href = "/group/board/${name}/"+pageNum + "/" +amount
+        })
       }) //docu
     </script>
   </body>

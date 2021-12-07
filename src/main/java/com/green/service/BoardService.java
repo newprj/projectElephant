@@ -3,6 +3,7 @@ package com.green.service;
 import java.util.List;
 
 import com.green.vo.BoardVO;
+import com.green.vo.Criteria;
 import com.green.vo.FileVO;
 
 public interface BoardService {
@@ -14,6 +15,8 @@ public interface BoardService {
 	public int delete(Long bno);
 	
 	public List<FileVO> getFileListByBno(Long bno);
-
+	
+	public List<BoardVO> getListWithPaging(Criteria cri);
+	public int getTotalCount(Criteria cri);
 
 }

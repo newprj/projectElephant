@@ -2,6 +2,7 @@ package com.green.controller;
 
 import java.util.List;
 
+import org.apache.ibatis.javassist.expr.NewArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -18,8 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.green.mapper.FileMapper;
-import com.green.mapper.ReplyMapper;
+
 import com.green.service.BoardService;
 import com.green.service.CalendarService;
 import com.green.service.GUserService;
@@ -28,12 +29,14 @@ import com.green.service.ReplyService;
 import com.green.vo.BoardReplyVO;
 import com.green.vo.BoardVO;
 import com.green.vo.CalendarVO;
+import com.green.vo.Criteria;
 import com.green.vo.FileVO;
 import com.green.vo.GUserVO;
+import com.green.vo.PageDTO;
 
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import oracle.net.aso.i;
+
 
 
 @RestController
@@ -102,17 +105,34 @@ public class GRestController {
 	}
 	
 	// 그룹별 게시판 페이지
-	@GetMapping("/board/{group_name}")
-	public ModelAndView tempGroupPage( @PathVariable("group_name") String group_name) {
+	@GetMapping("/board/{group_name}/{pageNum}/{amount}")
+	public ModelAndView tempGroupPage(@ModelAttribute("cri") Criteria cri ) {
 		ModelAndView mv = new ModelAndView("/group/board");
+		int total = boardService.getTotalCount(cri);
+		mv.addObject("name", cri.getGroup_name());
+		mv.addObject("board", boardService.getListWithPaging(cri));
+		mv.addObject("pageMaker" , new PageDTO(cri, total));
+		return mv;
+	}
+	
+	
+	@GetMapping("/board/{group_name}")
+	public ModelAndView tempGroupPage( @PathVariable("group_name") String group_name, 
+			Criteria cri) {
+		ModelAndView mv = new ModelAndView("/group/board");
+		cri.setGroup_name(group_name);
+		int total = boardService.getTotalCount(cri);
 		mv.addObject("name", group_name);
-		mv.addObject("board", boardService.showList(group_name));
+		mv.addObject("board", boardService.getListWithPaging(cri));
+		mv.addObject("pageMaker" , new PageDTO(cri, total));
 		return mv;
 	}
 
 	// 게시글 조회
-	@GetMapping(value="/board/{group_name}/{bno}",  produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public ModelAndView readOne(@PathVariable("bno") Long bno, @PathVariable("group_name") String group_name){
+	@GetMapping(value="/board/{group_name}/{bno}/{pageNum}/{amount}",  
+			produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public ModelAndView readOne(@ModelAttribute("cri") Criteria cri){
+		Long bno = cri.getBno();
 		BoardVO board = boardService.read(bno);
 		List<BoardReplyVO> replies = replyService.getReplysByBno(bno);
 		List<FileVO> files = boardService.getFileListByBno(bno);
@@ -144,6 +164,19 @@ public class GRestController {
 		boardService.delete(bno);
 	}
 	
+	@GetMapping("/modify/{group_name}/{bno}/{pageNum}/{amount}")
+	public ModelAndView boardModify(@ModelAttribute("cri") Criteria cri ) {
+		Long bno = cri.getBno();
+		ModelAndView mv = new ModelAndView("/group/modifyForm");
+		BoardVO board = boardService.read(bno);
+		List<FileVO> files = boardService.getFileListByBno(bno);
+		
+		
+		mv.addObject("board",board);
+		mv.addObject("files", files);
+		
+		return mv;
+	}
 	// 게시글 수정
 	@PutMapping(value="/board/{bno}",
 			consumes= "application/json")
