@@ -10,6 +10,8 @@ public interface QnaMapper {
 	public List<QnaVO> listqnaWithPaging(Criteria cri);
 	
 	public int insertQna(QnaVO vo);
+	public int insertQnaKey(QnaVO vo);
+
 	public QnaVO get(Long qno);
 	public int update(QnaVO vo);
 	public int deleteByQno(Long qno);

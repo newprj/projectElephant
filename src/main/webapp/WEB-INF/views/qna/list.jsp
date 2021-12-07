@@ -78,7 +78,7 @@ li {
 					<c:otherwise><fmt:formatDate value="${i.up_date}" pattern="yyyy-MM-dd a hh:mm" /></c:otherwise>
 				</c:choose>
 				</td>
-				<td><button data-qno='${i.qno}' id="writeMod">수정</button></td>
+				<td><button data-qno='${i.qno}' class="writeMod">수정</button></td>
 				<td><button onclick="location='/qna/remove?qno=${i.qno}'" id="writeRemove">삭제</button></td>
 			</tr>
 		</c:forEach>
@@ -147,9 +147,11 @@ li {
 			$("#actionForm").attr("action","/qna/detail")
 			$("#actionForm").submit()
 			
-			
 		})
-		$("#writeMod").click(function(e){
+		
+		
+		$(".writeMod").click(function(e){
+			console.log("수정 버튼 눌림")
 			$("#actionForm").append("<input type='hidden' name='qno' value='"+$(this).data("qno")+"'>")
 			$("#actionForm").attr("action","/qna/modify")
 			$("#actionForm").submit()

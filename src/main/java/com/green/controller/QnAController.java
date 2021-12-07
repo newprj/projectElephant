@@ -16,16 +16,20 @@ import com.green.vo.PageDTO;
 import com.green.vo.QnaVO;
 
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @RequestMapping("/qna/*")
+@Slf4j
 public class QnAController {
 	@Setter(onMethod_=@Autowired)
 	QnaService service;
 	
 	@GetMapping("/list")
 	public void list(Model model,Criteria cri) {
-		System.out.println("QnA 게시판 리스트");
+		log.info("QnA 게시판 리스트");
+		log.info("===============");
+		
 		int total=service.totalCount(cri);
 		model.addAttribute("list",service.listqnaWithPaging(cri));
 		model.addAttribute("pageMarker",new PageDTO(cri, total));
@@ -37,9 +41,13 @@ public class QnAController {
 		System.out.println("로그인 정보 가지고 와야함/write로 할것인가 register로 할것인가");
 	}
 	@PostMapping("/write")
-	public String writepost(QnaVO vo) {
-		System.out.println("받은 게시글 내용"+vo);
+	public String writepost(QnaVO vo,RedirectAttributes rttr) {
+		
+		log.info("받은 게시글 내용"+vo);
+		if(vo.getAttachList()!=null) vo.getAttachList().forEach(i->log.info(""+i));
+		
 		service.insertQna(vo);
+		rttr.addFlashAttribute("result",vo.getQno());
 		return "redirect:/qna/list";
 	}
 	@GetMapping({"/detail","/modify"})
@@ -53,7 +61,7 @@ public class QnAController {
 	@PostMapping("/modify")
 	public String modifyPost(QnaVO vo,@ModelAttribute("cri") Criteria cri, RedirectAttributes rttr) {
 		System.out.println("수정된 데이터"+vo);
-		service.update(vo);		
+		if(service.update(vo)) rttr.addFlashAttribute("result","success");		
 		rttr.addAttribute("pageNum",cri.getPageNum());
 		rttr.addAttribute("amount",cri.getAmount());
 		rttr.addAttribute("type",cri.getType());

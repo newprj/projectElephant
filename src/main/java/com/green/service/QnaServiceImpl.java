@@ -4,11 +4,14 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.green.mapper.QnaAttachMapper;
 import com.green.mapper.QnaMapper;
 import com.green.mapper.QnaReplyMapper;
 import com.green.vo.QnaVO;
 import com.green.vo.Criteria;
+import com.green.vo.QnaAttachDTO;
 import com.green.vo.QnaReplyVO;
 
 import lombok.Setter;
@@ -24,16 +27,29 @@ public class QnaServiceImpl implements QnaService{
 	@Setter(onMethod_=@Autowired)
 	private QnaReplyMapper replyMapper;
 	
+	@Setter(onMethod_=@Autowired)
+	private QnaAttachMapper attachMapper;
+	
 	@Override
 	public List<QnaVO> list() {
 		log.info("2) 서비스에서 리스트 가져오기 ");
 		return mapper.listqna();
 	}
-
+	
+	@Transactional
 	@Override
-	public int insertQna(QnaVO vo) {
-		log.info("2) 서비스에서 insert 하기 ");
-		return mapper.insertQna(vo);
+	public void insertQna(QnaVO vo) {
+		log.info("2) 서비스에서 insert 하기 "+vo);
+		mapper.insertQnaKey(vo);
+		
+		if(vo.getAttachList()==null || vo.getAttachList().size()<=0) {
+			return;
+		}
+		vo.getAttachList().forEach(attach->{
+			attach.setQno(vo.getQno());
+			attachMapper.insert(attach);
+		});
+	
 	}
 
 	@Override
@@ -42,6 +58,7 @@ public class QnaServiceImpl implements QnaService{
 		return mapper.get(qno);
 	}
 
+	
 	@Override
 	public int register(QnaReplyVO vo) {
 		log.info("2) 서비스에서 reply insert ");
@@ -55,9 +72,18 @@ public class QnaServiceImpl implements QnaService{
 	}
 
 	@Override
-	public int update(QnaVO vo) {
-		log.info("2) 서비스에서 qna 수정");
-		return mapper.update(vo);
+	public boolean update(QnaVO vo) {
+		log.info("2) 서비스에서 qna 수정"+vo);
+		attachMapper.deleteAll(vo.getQno());
+		
+		boolean modifyResult=mapper.update(vo)==1;
+		if(modifyResult && vo.getAttachList() !=null && vo.getAttachList().size()>0) {
+			vo.getAttachList().forEach(i->{
+				i.setQno(vo.getQno());
+				attachMapper.insert(i);
+			});
+		}
+		return modifyResult;
 	}
 
 	@Override
@@ -90,6 +116,14 @@ public class QnaServiceImpl implements QnaService{
 		log.info("2) 서비스에서 전체 게시물 조회");
 		return mapper.listqnaWithPaging(cri);
 	}
+
+	@Override
+	public List<QnaAttachDTO> getAttachList(Long qno) {
+		log.info("2) 서비스에서 첨부파일 조회");
+		return attachMapper.findByQno(qno);
+	}
+
+	
 
 
 	

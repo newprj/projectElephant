@@ -48,6 +48,14 @@
 			values(qna_seq.nextval, #{title},#{writer},#{q_content},#{reg_date},#{up_date, jdbcType=VARCHAR},#{pwd, jdbcType=TIMESTAMP},#{p_group})
 	</insert>
 	
+	<insert id="insertQnaKey">
+		<selectKey keyProperty="qno" order="BEFORE" resultType="Long">
+			select qna_seq.nextval from dual
+		</selectKey>
+		insert into qna_tbl(qno, title, writer,q_content,reg_date,up_date,pwd,p_group) 
+			values(#{qno}, #{title},#{writer},#{q_content},#{reg_date},#{up_date, jdbcType=VARCHAR},#{pwd, jdbcType=TIMESTAMP},#{p_group})
+	</insert>
+	
 	<select id="get" resultType="com.green.vo.QnaVO" >
 		select * from qna_tbl where qno=#{qno}
 	</select>

@@ -1,6 +1,7 @@
 package com.green.vo;
 
 import java.util.Date;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,4 +23,6 @@ public class QnaVO {
     private Date up_date;
     private String pwd;
     private String p_group;
+    
+    private List<QnaAttachDTO> attachList;
 }

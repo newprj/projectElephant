@@ -9,27 +9,28 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <head>
 <meta charset="UTF-8">
 <style>
-	.modal {
-		display:none;
-		position: fixed;
-		z-index: 1;
-		left: 0;
-		top:0;
-		width: 100%;
-		height:100%;
-		overflow:auto;
-		background-color:rgb(0,0,0);
-		background-color:rgba(0,0,0,0.4);
-	}
-	
-	.modal-content{
-		background-color:#fefefe;
-		margin:15% auto;
-		padding: 20px;
-		border: 1px solid #888;
-        width: 30%;
+.modal {
+	display:none;
+	position: fixed;
+	z-index: 1;
+	left: 0;
+	top:0;
+	width: 100%;
+	height:100%;
+	overflow:auto;
+	background-color:rgb(0,0,0);
+	background-color:rgba(0,0,0,0.4);
+}
 
-	}
+.modal-content{
+	background-color:#fefefe;
+	margin:15% auto;
+	padding: 20px;
+	border: 1px solid #888;
+       width: 30%;
+
+}
+
 </style>
 <title>Q & A 목록</title>
 </head>
@@ -59,7 +60,22 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 			<label for="q_content">내용</label>
 			<textarea name="q_content"  readonly="readonly" >${get.q_content}</textarea>
 		</div>
-		
+		<!-- 첨부파일 사진 -->
+		<div class="row col-lg-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">첨부파일</div>
+				<div class="panel-body">
+					<div class="uploadResult">
+						<ul></ul>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+		<div class="bigPictureWrapper">
+			<div class="bigPicture">
+			</div>
+		</div>
 		<button type="button" id="goList">목록</button>
 	</form>
 	<div>
@@ -282,6 +298,35 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 			
 		}) 
 		
+		var qno='<c:out value="${get.qno}"/>';
+		$.getJSON("/upload/getAttachList",{qno:qno},function(arr){
+			console.log(arr)
+			
+			var str=""
+			$(arr).each(function(i,attach){
+				if(attach.fileType){
+					var fileCallPath=encodeURIComponent(attach.uploadPath+"/s_"+attach.uuid+"_"+attach.fileName)
+					str+="<li data-path='"+attach.uploadPath+"'"
+					str+=" data-uuid='"+attach.uuid+"' data-filename='"+attach.fileName+"' data-type='"+attach.fileType+"'"
+					str+="><div>"
+					str+="<span> "+attach.fileName+"</span>"
+					str+="</br><img src='/upload/display?fileName="+fileCallPath+"'>"
+					str+="</div>"	
+					str+="</li>"
+				}else{
+					var fileCallPath=encodeURIComponent(attach.uploadPath+"/"+attach.uuid+"_"+attach.fileName)
+					var fileLink=fileCallPath.replace(new RefExp(/\\/g),"/")
+					str+="<li >"
+					str+="data-path='"+attach.uploadPath+"' data-uuid='"+attach.uuid+"' data-filename='"+attach.fileName+"' data-type='"+attach.fileType+"' ><div>"
+					str+="<span> "+attach.fileName+"</span>"
+					str+="</br><img src='/resources/img/attach.png'></a>"
+					str+="</div>"	
+					str+="</li>"
+				}
+			})
+			$(".uploadResult ul").html(str)
+		})
+		 
 	})
 	
 </script>
