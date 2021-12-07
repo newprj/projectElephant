@@ -16,6 +16,10 @@
 	<delete id="delete">
 		delete from board_file where uuid = #{uuid}
 	</delete>
+	
+	<delete id="deleteAllByBno">
+		delete from board_file where bno=#{bno}
+	</delete>
 
 </mapper>
 

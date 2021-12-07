@@ -69,7 +69,7 @@ public class GRestController {
 	}
 	
 	// 그룹 모집 페이지
-	@GetMapping("/{group_name}")
+	@GetMapping("/gather/{group_name}")
 	public ModelAndView groupDetail(@PathVariable("group_name") String group_name, Model model) {
 		ModelAndView mv = new ModelAndView("/group/detail");
 		mv.addObject("one", groupService.showOne(group_name));
@@ -77,13 +77,22 @@ public class GRestController {
 	}
 	
 	//그룹 이름 중복체크
-	@PostMapping("/duplicateCheck")
-	public String groupNameCheck(String group_name) {
-		int result = groupService.groupNameCheck(group_name);
-		if(result >=1)
-			return "duplicated";
-		else return "unduplicated";
-	}
+		@PostMapping("/duplicateCheck")
+		public String groupNameCheck(String group_name) {
+			int result = groupService.groupNameCheck(group_name);
+			if(result >=1)
+				return "duplicated";
+			else return "unduplicated";
+		}
+		
+	
+	// 그룹별 페이지 = 일정, 게시판
+	@GetMapping("/{group_name}")
+	public ModelAndView gatherGroup(@PathVariable String group_name) {
+		ModelAndView mv = new ModelAndView("/group/study");
+		return mv;
+	}		
+	
 	
 	
 	// 스터디 그룹 삭제
@@ -104,6 +113,8 @@ public class GRestController {
 		return new ResponseEntity<String>("success", HttpStatus.OK);
 	}
 	
+	
+	
 	// 그룹별 게시판 페이지
 	@GetMapping("/board/{group_name}/{pageNum}/{amount}")
 	public ModelAndView tempGroupPage(@ModelAttribute("cri") Criteria cri ) {
@@ -114,6 +125,7 @@ public class GRestController {
 		mv.addObject("pageMaker" , new PageDTO(cri, total));
 		return mv;
 	}
+	
 	
 	
 	@GetMapping("/board/{group_name}")
@@ -136,7 +148,7 @@ public class GRestController {
 		BoardVO board = boardService.read(bno);
 		List<BoardReplyVO> replies = replyService.getReplysByBno(bno);
 		List<FileVO> files = boardService.getFileListByBno(bno);
-		ModelAndView mv = new ModelAndView("/group/boardDetail");
+		ModelAndView mv = new ModelAndView("/group/getBoardForm");
 		mv.addObject("replies", replies);
 		mv.addObject("board",board);
 		mv.addObject("files", files);
@@ -153,6 +165,15 @@ public class GRestController {
 	public void boardCreate(@RequestBody BoardVO board) {
 		boardService.register(board);
 		
+	}
+	
+	@GetMapping(value="/getFileList" ,
+			produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public ResponseEntity<List<FileVO>> getAttachList(Long bno){
+		System.out.println(" 파일 리스트 가져오기 ");
+		System.out.println(bno);
+		
+		return new ResponseEntity<List<FileVO>>(boardService.getFileListByBno(bno), HttpStatus.OK);
 	}
 	
 	

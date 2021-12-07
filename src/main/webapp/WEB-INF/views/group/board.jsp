@@ -3,14 +3,24 @@ prefix="c" %>
 <!DOCTYPE html>
 
 <html>
-  <script src="//code.jquery.com/jquery-3.6.0.js"></script>
+  
   <head>
     <meta charset="UTF-8" />
     <title>Insert title here</title>
+    <script src="//code.jquery.com/jquery-3.6.0.js"></script>
+    <style>
+    	.pagination{
+    		display:flex;
+    	}
+      .pagenate{
+        margin: 4px;
+      }
+    </style>
   </head>
   <body>
+  <h1> 스터디별 게시판 페이지 </h1>
   <a href="/group/"> 메인 </a>
-  <a href="/group/board/${group_name}/write"><button class="create">입력</button></a>
+  <button class="create">입력</button>
     
     
     
@@ -28,26 +38,31 @@ prefix="c" %>
    </div>
    
     </c:forEach>
-   <ul class="pagination">
+   <div class="pagination">
    		<c:if test="${pageMaker.prev}">
-   			<li class="pagenate prev"> <a href="${pageMaker.startPage-1}"> prev </a> </li>
+   			<div class="pagenate prev"> <a href="${pageMaker.startPage-1}"> prev </a> </div>
    		</c:if>
    		<c:forEach var="num" begin="${pageMaker.startPage}"
    		end="${pageMaker.endPage}">
-   		<li class="pagenate"><a href="${num}">${num}</a></li>
+   		<div class="pagenate"><a href="${num}">${num}</a></div>
    		</c:forEach>
    		<c:if test="${pageMaker.next }">
-   			<li class="pagenate next"><a href="${pageMaker.endPage+1}"> next </a></li>
+   			<div class="pagenate next"><a href="${pageMaker.endPage+1}"> next </a></div>
    		</c:if>
-   	</ul>
+   	</div>
 
     <script>
       
       
       $(document).ready(function () {
-    	 let actionForm = $('#actionForm')
+    	let actionForm = $('#actionForm')
         let pageNum = actionForm.find('input[name="pageNum"]').val()
         let amount = actionForm.find('input[name="amount"]').val()
+        
+        $('.create').click(function(e){
+        	let group_name = '${cri}' ? "${cri.group_name}" : "${group_name}"
+        	location.href="/group/board/"+group_name+"/write"
+        })
         $('.list').click(function (e) {
           bno = $(this).attr('data')          
           location.href = "/group/board/${name}/"+bno+"/" +pageNum + "/" +amount

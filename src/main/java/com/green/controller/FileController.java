@@ -123,4 +123,6 @@ public class FileController {
 		}
 		return new ResponseEntity<String>(" delete " , HttpStatus.OK);
 	}
+	
+	
 }

@@ -9,4 +9,5 @@ public interface FileMapper {
 	public void register(FileVO vo);
 	public void delete(String uuid);
 	public List<FileVO> filesByBno(Long bno);
+	public void deleteAllByBno(Long bno);
 }

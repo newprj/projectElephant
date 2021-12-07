@@ -12,10 +12,14 @@ pageEncoding="UTF-8"%>
 		<title>Insert title here</title>
 	</head>
 	<body>
+	<h1> 일정 캘린더 </h1>
+	<div>
 		<div id="reload">
 			<div id="calendar"></div>
 		</div>
+	</div>
 		<div>
+		
 			<form action="/group/test/" method="post">
 				<div>
 					<label for=""> cid </label>
@@ -36,6 +40,7 @@ pageEncoding="UTF-8"%>
 						<option value="#495057" style="color: #495057">검정색</option>
 					</select>
 				</div>
+		
 				<div>
 					<label> title </label>
 					<input type="text" name="title" />
@@ -45,7 +50,7 @@ pageEncoding="UTF-8"%>
 					<input type="date" name="startDate" />
 				</div>
 				<div>
-					<labe> 종료일자 </labe>
+					<label> 종료일자 </label>
 					<input type="date" name="endDate" />
 				</div>
 				<div>
@@ -60,17 +65,21 @@ pageEncoding="UTF-8"%>
 					<label> group </label>
 					<input type="text" name="group_" value="${group}" />
 				</div>
-				<label> 유저 </label>
+				<div>
+				<label> 스터디장 </label>
 				<input type="text" name="user_" />
+				</div>
 				<div>
 					<c:forEach items="${member}" var="member">
 						<label><input type="checkbox" value="${member.user_id}"> ${member.user_id}</label>
 					</c:forEach>
 				</div>
+			<div>
 				<button type="submit">전송</button>
 				<button type="reset">리셋</button>
 				<button class="modify">수정</button>
 				<button class="delete">삭제</button>
+			</div>
 			</form>
 		</div>
 		<script>

@@ -6,6 +6,7 @@ pageEncoding="UTF-8"%>
 		<meta charset="UTF-8" />
 		<title>Insert title here</title>
 		<script src="//code.jquery.com/jquery-3.6.0.js"></script>
+		<script src="/resources/js/fileUpload.js" type="text/javascript"></script>
 	</head>
 	<body>
 		${group_name}
@@ -36,72 +37,12 @@ pageEncoding="UTF-8"%>
 
 		<script>
 			$(document).ready(function (e) {
-				const MAX_SIZE = 5242880;
-				const REGEX = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
-				let attachList = [];
+				
 
-				const checkExtension = (fileName, fileSize) => {
-					if (fileSize >= MAX_SIZE) {
-						alert("파일 사이즈 초과");
-						return false;
-					}
-					if (REGEX.test(fileName)) {
-						alert("해당 파일 타입은 업로드 할 수 없습니다");
-						return false;
-					}
-					return true;
-				};
-
-				const addAttachlist = (file) => {
-					attach = {
-						fileName: file.fileName,
-						uploadPath: file.uploadPath,
-						uuid: file.uuid,
-						fileType: file.image,
-					};
-					attachList.push(attach);
-				};
-
-				const showUploadFile = (arr) => {
-					if (!arr || arr.length === 0) return;
-					var str = "";
-					arr.map((file) => {
-						addAttachlist(file);
-						console.log("1)");
-						console.log(file);
-						if (file.image) {
-							let fileCallpath = encodeURIComponent(
-								file.uploadPath + "/_s" + file.uuid + "_" + file.fileName
-							);
-							str += "<li><div><span>" + file.fileName + "</span>";
-							str +=
-								"<button data-uuid=" +
-								file.uuid +
-								" data-file='" +
-								fileCallpath +
-								"' data-type='image' class='deleteFile'> 삭제 </button><br>";
-							str += "<img src='/display?fileName=";
-							str += fileCallpath + "'></div></li>";
-						} else {
-							let fileCallpath = encodeURIComponent(
-								file.uploadPath + "/" + file.uuid + "_" + file.fileName
-							);
-							str += "<li><div><span>" + file.fileName + "</span>";
-							str +=
-								"<button data-uuid=" +
-								file.uuid +
-								" data-file='" +
-								fileCallpath +
-								"' data-type='file' class='deleteFile'> 삭제 </button></div></li>";
-						}
-					});
-					console.log("3)");
-					console.log(attachList);
-					$(".uploadResult > ul").append(str);
-				};
-
+				getFileList('${cri.bno}')
 				const uploadClone = $(".file").clone();
 
+				// input file이 변할때
 				$('input[type="file"]').change(function (e) {
 					let formData = new FormData();
 					let uploadFiles = $('input[name="file"]')[0].files;
@@ -119,14 +60,13 @@ pageEncoding="UTF-8"%>
 						data: formData,
 						dataType: "json",
 						success: (res) => {
-							console.log("2)");
-							console.log(res);
 							$(".file").html(uploadClone.html());
 							showUploadFile(res);
 						},
 						error: (xhr, status, er) => console.log(xhr),
 					}); //upload ajax
 
+					// 업로드한 파일 삭제할경우
 					$(".uploadResult").on("click", "button", function (e) {
 						e.preventDefault();
 						let fileName = $(this).data("file");
@@ -149,6 +89,7 @@ pageEncoding="UTF-8"%>
 					}); //uploadResult click
 				}); //file
 
+				// 글 작성
 				$(".create").click(function (e) {
 					e.preventDefault();
 					board = {

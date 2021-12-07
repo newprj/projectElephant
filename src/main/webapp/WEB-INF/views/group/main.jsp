@@ -34,6 +34,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+<h1> 메인 페이지 </h1>
 <a href="/group/make">
 	<button> create </button>
 	</a>
@@ -62,7 +63,7 @@
 			$('.group_name').click(function(e){
 				const group_name = e.target.innerText
 			
-        		location.href = "/group/" + group_name
+        		location.href = "/group/gather/"+group_name
       
 			})
 		})

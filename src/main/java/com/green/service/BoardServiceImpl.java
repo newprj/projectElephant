@@ -46,13 +46,22 @@ public class BoardServiceImpl implements BoardService{
 
 	@Override
 	public int update(BoardVO vo) {
-		// TODO Auto-generated method stub
-		return mapper.update(vo);
+		fileMapper.deleteAllByBno(vo.getBno());
+		int modifyResult = mapper.update(vo);
+		if( modifyResult==1 && vo.getAttachList() != null && vo.getAttachList().size()>0) {
+			vo.getAttachList().forEach(file -> {
+				file.setBno(vo.getBno());
+				fileMapper.register(file);
+			});
+		}
+		
+		return modifyResult;
 	}
 
 	@Override
 	public int delete(Long bno) {
 		// TODO Auto-generated method stub
+		fileMapper.deleteAllByBno(bno);
 		return mapper.delete(bno);
 	}
 

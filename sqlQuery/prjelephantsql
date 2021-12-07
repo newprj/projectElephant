@@ -20,6 +20,8 @@ drop sequence seq_gno;
 delete from tbl_group where gno=81;
 commit;
 
+
+
 create table tbl_calendar(
     cid number,
     title varchar2(50),
@@ -106,6 +108,10 @@ create table tbl_board(
     content varchar2(2000),
     writer varchar2(30),
     regdate date default sysdate );  
+
+alter table tbl_board add constraint pk_board primary key(bno);
+select * from tbl_board;
+delete from tbl_board where title is null;
 
 create sequence seq_bno;
 drop sequence seq_bno;    
