@@ -1,6 +1,7 @@
 package com.green.vo;
 
 import java.sql.Date;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,4 +24,5 @@ public class BoardVO {
     private String writer;
     private Date regdate;
 
+    private List<FileVO> attachList;
 }

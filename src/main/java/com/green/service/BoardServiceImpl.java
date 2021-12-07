@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.green.mapper.BoardMapper;
+import com.green.mapper.FileMapper;
 import com.green.vo.BoardVO;
+import com.green.vo.FileVO;
 
 import lombok.Setter;
 
@@ -15,11 +17,18 @@ public class BoardServiceImpl implements BoardService{
 	
 	@Setter(onMethod_=@Autowired)
 	BoardMapper mapper;
+	
+	@Setter(onMethod_=@Autowired)
+	FileMapper fileMapper;
 
 	@Override
-	public int register(BoardVO vo) {
-		// TODO Auto-generated method stub
-		return mapper.register(vo);
+	public void register(BoardVO vo) {
+		mapper.register(vo);
+		if(vo.getAttachList() == null || vo.getAttachList().size() <=0 ) return;
+		vo.getAttachList().forEach(file -> {
+			file.setBno(vo.getBno());
+			fileMapper.register(file);
+		});
 	}
 
 	@Override
@@ -44,6 +53,12 @@ public class BoardServiceImpl implements BoardService{
 	public int delete(Long bno) {
 		// TODO Auto-generated method stub
 		return mapper.delete(bno);
+	}
+
+	@Override
+	public List<FileVO> getFileListByBno(Long bno) {
+		
+		return fileMapper.filesByBno(bno);
 	}
 
 }

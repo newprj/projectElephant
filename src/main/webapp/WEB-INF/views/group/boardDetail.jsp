@@ -10,23 +10,51 @@ prefix="c" %>
 <title>Insert title here</title>
 </head>
 <body>
-<div class='content'> 
-${board.title}
-${board.group_name}
-${board.content}
-${board.writer}
+<div class='content'>
+<form>
+<div>
+<label for="title"> 제목 </label>
+<input type="text" value="${board.title}" />
+</div>
+<div>
+<label for="group_name"> 그룹 이름 </label>
+<input type="text" value="${board.group_name}" />
+</div>
+<div>
+<label for="content"> 내용 </label>
+<input type="text" value="${board.content}" />
+</div>
+<div>
+<label for="writer"> 저자 </label>
+<input type="text" value="${board.writer}" />
+</div>
+<div>
+<div class="uploadResult"> 
+<h5> 첨부파일 </h5>
+	<ul>
+	<c:forEach items="${files}" var="file">
+		<li>
+		   <span> ${file.fileName} </span>
+		</li>
+	</c:forEach>
+	</ul>
+</div>
+</div>
+</form>
+<h5> 댓글 </h5>
 
 <div class="reply">
 	<c:forEach items="${replies}" var="reply">
 		<p class="reply" data-rno="${reply.rno}"><span > ${reply.reply} </span><span> ${reply.replyer}</span> <p>
 	</c:forEach>
 </div>
-<button class="delete">삭제</button>
-<button class="reply"> 댓글입력 </button>
+<button class="delete">글삭제</button>
+<button class="reply"> 모달을 띄우자  </button>
 </div>
 
 
 <div>
+<h5> 이거 모달 </h5>
 	<form>
 	<div>
 		<label for="reply">댓글 내용</label>
@@ -45,6 +73,7 @@ ${board.writer}
 </div>
 <script>
 
+
 $('.content > .delete').click(function (e) {
     e.preventDefault()
     $.ajax({
@@ -60,7 +89,7 @@ $('.content > .delete').click(function (e) {
   }) //delete click
   
 	$('.reply').click(function(e){
-		
+		// 여기 모달 
 	})
 	
 	const getReplyData = () => ({

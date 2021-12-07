@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.green.mapper.FileMapper;
 import com.green.mapper.ReplyMapper;
 import com.green.service.BoardService;
 import com.green.service.CalendarService;
@@ -27,10 +28,12 @@ import com.green.service.ReplyService;
 import com.green.vo.BoardReplyVO;
 import com.green.vo.BoardVO;
 import com.green.vo.CalendarVO;
+import com.green.vo.FileVO;
 import com.green.vo.GUserVO;
 
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import oracle.net.aso.i;
 
 
 @RestController
@@ -52,6 +55,7 @@ public class GRestController {
 	
 	@Setter(onMethod_=@Autowired)
 	ReplyService replyService;
+
 	
 	
 	// 메인 페이지
@@ -111,10 +115,11 @@ public class GRestController {
 	public ModelAndView readOne(@PathVariable("bno") Long bno, @PathVariable("group_name") String group_name){
 		BoardVO board = boardService.read(bno);
 		List<BoardReplyVO> replies = replyService.getReplysByBno(bno);
+		List<FileVO> files = boardService.getFileListByBno(bno);
 		ModelAndView mv = new ModelAndView("/group/boardDetail");
 		mv.addObject("replies", replies);
 		mv.addObject("board",board);
-		
+		mv.addObject("files", files);
 		return mv;
 	}
 	
@@ -127,6 +132,7 @@ public class GRestController {
 	@PostMapping(value="/board", consumes= "application/json")
 	public void boardCreate(@RequestBody BoardVO board) {
 		boardService.register(board);
+		
 	}
 	
 	
