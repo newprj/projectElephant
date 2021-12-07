@@ -111,9 +111,10 @@ prefix="c" %>
 					e.preventDefault();
 					console.log(attachList)
 					let modified = getForm();
+					console.log(modified)
 					modified = {...modified, attachList}
 					console.log(modified);
-					$.ajax({
+					 $.ajax({
 						type: "PUT",
 						url: "/group/board/${cri.bno}",
 						data: JSON.stringify(modified),
@@ -124,7 +125,7 @@ prefix="c" %>
 						error: (xhr, status, er) => {
 							console.log(status);
 						}, //error
-					}); //ajax  
+					}); //ajax   
 				}); // modify c
 
 				$(".delete").click(function (e) {

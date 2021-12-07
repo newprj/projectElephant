@@ -46,11 +46,14 @@ public class BoardServiceImpl implements BoardService{
 
 	@Override
 	public int update(BoardVO vo) {
+		vo.getAttachList();
 		fileMapper.deleteAllByBno(vo.getBno());
 		int modifyResult = mapper.update(vo);
 		if( modifyResult==1 && vo.getAttachList() != null && vo.getAttachList().size()>0) {
 			vo.getAttachList().forEach(file -> {
+				
 				file.setBno(vo.getBno());
+				System.out.println(file);
 				fileMapper.register(file);
 			});
 		}

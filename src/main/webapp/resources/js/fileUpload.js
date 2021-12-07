@@ -65,7 +65,7 @@ const showUploadFile = (arr) => {
 	if (!arr || arr.length === 0) return;
 	var str = "";
 	arr.map((file) => {
-		
+		addAttachlist(file)
 		console.log("1)");
 		console.log(file);
 		if (file.image) {
@@ -86,7 +86,7 @@ const getFileList = (bno) =>{
 		
 		let str =""
 		files.map( file => {
-			attachList.push(file)
+			attachList.push(file) // 수정할때 넣음
 			if(file.fileType){
 				str += getImgFileString(file)
 			}
