@@ -31,6 +31,7 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 }
 
+
 </style>
 <title>Q & A 목록</title>
 </head>
@@ -117,7 +118,7 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 				</div>
 				<div class="modal-body">
 					<div class="modal-group">
-						<label>작성자</label>
+						<label>작성자</label><br/>
 						<input name="replyer"/>
 					</div>
 					<div class="modal-group">
@@ -141,6 +142,7 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 	
 </body>
 <script type="text/javascript">
+
 
 	$(document).ready(function () {
 		
@@ -294,10 +296,9 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 				}
 			})
 			
-			 
-			
 		}) 
 		
+		/* 첨부파일 보기 */
 		var qno='<c:out value="${get.qno}"/>';
 		$.getJSON("/upload/getAttachList",{qno:qno},function(arr){
 			console.log(arr)
@@ -315,18 +316,48 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 					str+="</li>"
 				}else{
 					var fileCallPath=encodeURIComponent(attach.uploadPath+"/"+attach.uuid+"_"+attach.fileName)
-					var fileLink=fileCallPath.replace(new RefExp(/\\/g),"/")
-					str+="<li >"
-					str+="data-path='"+attach.uploadPath+"' data-uuid='"+attach.uuid+"' data-filename='"+attach.fileName+"' data-type='"+attach.fileType+"' ><div>"
+					var fileLink=fileCallPath.replace(new RegExp(/\\/g),"/")
+					str+="<li data-path='"+attach.uploadPath+"'"
+					str+=" data-uuid='"+attach.uuid+"' data-filename='"+attach.fileName+"' data-type='"+attach.fileType+"'"
+					str+="><div>"
 					str+="<span> "+attach.fileName+"</span>"
-					str+="</br><img src='/resources/img/attach.png'></a>"
+					str+="<img src='/resources/img/attach.png' style=' width:30px; height:30px; ' alt='클릭하면 download'/ >"
 					str+="</div>"	
 					str+="</li>"
 				}
 			})
 			$(".uploadResult ul").html(str)
 		})
-		 
+		
+		/* 사진 클릭->크게 보기 */
+		$(".uploadResult").on("click","li",function(e){
+			var liObj=$(this);
+			var path=encodeURIComponent(liObj.data("path")+"/"+liObj.data("uuid")+"_"+liObj.data("filename"))
+			if(liObj.data("type")){
+				//사진이면 확대
+				showImage(path.replace(new RegExp(/\\/g),"/"))
+			}
+			else{
+				//사진 아니면 다운로드
+				self.location="/upload/download?fileName="+path
+			}
+		}) 
+		
+		function showImage(fileCallPath){
+			$(".bigPictureWrapper").css('display','flex').show()
+			
+			$(".bigPicture")
+				.html("<img src='/upload/display?fileName="+fileCallPath+"'>")
+				.animate({width: '100%', height:'100%'},1000);
+		}
+		
+		/* 커진 사진 없애기 */
+		$(".bigPictureWrapper").on("click",function(e){
+			$(".bigPicture").animate({width: '100%', height:'100%'},1000)
+			setTimeout(() => {
+				$(".bigPictureWrapper").hide()
+			}, 1000);
+		})
 	})
 	
 </script>

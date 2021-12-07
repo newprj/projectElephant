@@ -78,7 +78,7 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 	
 	
 	var regex=new RegExp("(.*?)\.(exe|sh|zip|alz)$");
-	var maxSize=5242880
+	var maxSize=10485760
 	
 	function checkExtension(fileName,fileSize){
 		if(fileSize >= maxSize){
@@ -110,11 +110,13 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 				str+="<img src='/upload/display?fileName="+fileCallPath+"'>"
 				str+="</div>"	
 				str+="</li>"
-			}else{
+			}
+			else{
 				var fileCallPath=encodeURIComponent(obj.uploadPath+"/"+obj.uuid+"_"+obj.fileName)
 				var fileLink=fileCallPath.replace(new RegExp(/\\/g),"/")
-				str+="<li >"
-				str+="data-path='"+obj.uploadPath+"' data-uuid='"+obj.uuid+"' data-filename='"+obj.fileName+"' data-type='"+obj.fileType+"' ><div>"
+				str+="<li data-path='"+obj.uploadPath+"'"
+				str+=" data-uuid='"+obj.uuid+"' data-filename='"+obj.fileName+"' data-type='"+obj.fileType+"'"
+				str+="><div>"
 				str+="<span> "+obj.fileName+"</span>"
 				str+="<button type='button' data-file=\'"+fileCallPath+"\' data-type='file' class='btn-circle'><i>X</i></button></br>"
 				str+="<img src='/resources/img/attach.png'></a>"
@@ -125,14 +127,10 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 		uploadUL.append(str)
 	}
 	
-	function showImage(fileCallPath){
-		$(".bigPictureWrapper").css("display","flex").show();
-		$(".bigPicture")
-		.html("<img src='/upload/display?fileName=" +encodeURI(fileCallPath)+"'>")
-		.animate({width:'100%', height:'100%'},1000)
-	}
+	
 	$(document).ready(function () {
 		
+		/* 파일 등록 */
 		$("input[type='file']").change(function(e){
 			console.log("파일 등록")
 			var formData=new FormData()
@@ -154,11 +152,15 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 				type:'post',
 				dataType:'json',
 				success:function(result){
-					alert(result);
 					showUploadResult(result);
+				},
+				error:function(){
+					alert("실패")
 				}
 			})
 		})
+		
+		/* 파일 삭제 */
 		$(".uploadResult").on("click","button",function(e){
 			console.log('파일 삭제')
 			var targetFile=$(this).data("file")
@@ -178,6 +180,7 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 			})
 		})
 		
+		/* 등록 버튼 눌름 */
 		$("#sbtn").click(function(e){
 			if(p=='private' && $("#pwd").val()==''){
 				e.preventDefault();
@@ -201,19 +204,14 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 				$("form").append(str);
 				$("form").append(choice);
 				$("form").append("<input type='hidden' name='reg_date' pattern ='yy/MM/dd hh:mm' value='"+today+"'>");
-				$("form").submit()
+				$("form").submit() 
 				
 				
 			}
 			
 			
 		})
-		$(".bigPictureWrapper").on("cilck",function(e){
-				$(".bigPicture").animate({width:'0%',height:'0%'},1000)
-				setTimeout(() => {
-					$(this).hide()
-				}, 1000);
-		})
+		
 	})
 	
 </script>
