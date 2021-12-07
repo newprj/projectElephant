@@ -71,6 +71,7 @@ public class QnaServiceImpl implements QnaService{
 		return replyMapper.replyList(qno);
 	}
 
+	@Transactional
 	@Override
 	public boolean update(QnaVO vo) {
 		log.info("2) 서비스에서 qna 수정"+vo);

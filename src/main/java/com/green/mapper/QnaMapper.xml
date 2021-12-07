@@ -29,16 +29,16 @@
 		<![CDATA[
 			select qno, title, writer,q_content,reg_date,up_date,pwd,p_group
 			from (
-			    select /*+ index_desc(qna_tbl pk_qna) */
+			    select /*+ index_desc(qna_tbl pk_qno) */
 				    rownum rn, qno, title, writer,q_content,reg_date,up_date,pwd,p_group
-				    	from qna_tbl
+				    	from (select * from  qna_tbl order by up_date desc,reg_date desc)
 				    where 
 		]]>
 		<include refid="criteria"></include>
 	    <![CDATA[
-			    rownum <=#{pageNum} * #{amount} 
+			    rownum <=#{pageNum} * #{amount}
 		    )
-		    where rn> (#{pageNum}-1) * #{amount} order by qno asc
+		    where rn> (#{pageNum}-1) * #{amount}  
 		]]>
 	</select> 
 

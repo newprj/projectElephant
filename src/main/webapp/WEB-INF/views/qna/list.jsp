@@ -61,7 +61,7 @@ li {
 			  <th>구분</th>
               <th>제목</th>
               <th>작성자</th>
-              <th>수정일</th>
+              <th>작성일</th>
               <th></th>
               <th></th>
 			</tr>
