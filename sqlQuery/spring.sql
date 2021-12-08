@@ -53,4 +53,79 @@ select*from qna_attach_tbl;
 select count(*) from qna_reply_tbl where qno=1;
 
 select * from  qna_tbl where not up_date is null order by up_date desc, reg_date asc;
-select * from  qna_tbl order by up_date asc null ;
+select * from  qna_tbl order by up_date desc nulls LAST, reg_date desc;
+
+
+SELECT  'DROP TABLE ' || object_name || ' CASCADE CONSTRAINTS;'
+  FROM    user_objects
+WHERE   object_type = 'TABLE';
+
+-- spring database???? ??? table?? ???? ??????
+drop table tbl_user;
+
+create table tbl_user(
+    uno number,
+    user_id varchar2(30),
+    password varchar2(30),
+    name varchar2(30),
+    email varchar2(30));
+
+create sequence seq_uno;
+
+drop table tbl_group;
+create table tbl_group(
+    sno number primary key,
+    group_name varchar2(30),
+    leader varchar2(30),
+    subject varchar2(30),
+    description varchar2(30),
+    member_number number);
+create sequence seq_sno;
+
+create table tbl_groupuser(
+    cno number,
+    authorized varchar2(1),
+    user_id number(30),
+    group_name varchar2(30));
+
+create sequence seq_cno;
+
+create table tbl_review(
+    rno number,
+    group_name varchar2(30),
+    title varchar2(200),
+    content varchar2(2000),
+    writer varchar2(30),
+    regdate date default sysdate );    
+
+create sequence seq_rno;
+
+create table tbl_qanda(
+    qno number,
+    title varchar2(200),
+    content varchar2(2000),
+    writer varchar2(30),
+    regdate date default sysdate );    
+    
+create sequence seq_gno;
+
+desc tbl_board;
+drop table tbl_board  CASCADE CONSTRAINTS;;
+create table tbl_board(
+    bno number,
+    group_name varchar2(30),
+    title varchar2(200),
+    content varchar2(2000),
+    writer varchar2(30),
+    regdate date default sysdate );  
+
+create sequence seq_bno;
+    
+commit;
+
+    
+
+    
+
+    
+
