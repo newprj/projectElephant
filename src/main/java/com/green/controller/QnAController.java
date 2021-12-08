@@ -1,5 +1,7 @@
 package com.green.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,7 +30,6 @@ public class QnAController {
 	@GetMapping("/list")
 	public void list(Model model,Criteria cri) {
 		log.info("QnA 게시판 리스트");
-		log.info("===============");
 		
 		int total=service.totalCount(cri);
 		model.addAttribute("list",service.listqnaWithPaging(cri));

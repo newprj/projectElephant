@@ -58,10 +58,12 @@ li {
 		<thead>
 			<tr>
 			  <th>번호</th>
+			  <th>qno</th>
 			  <th>구분</th>
               <th>제목</th>
               <th>작성자</th>
               <th>작성일</th>
+              <th>첨부파일</th>
               <th></th>
               <th></th>
 			</tr>
@@ -69,8 +71,9 @@ li {
 		<c:forEach items="${list}" var="i" varStatus="status">
 			<tr>
 				<td>${status.count}</td>
+				<td>${i.qno}</td>
 				<td>${i.p_group}</td>
-				<td><a class='detail' href='${i.qno}' data-password='${i.pwd}'>${i.title}</a></td>
+				<td><a class='detail' id='detail${i.qno}' href='${i.qno}' data-password='${i.pwd}'>${i.title}</a></td>
 				<td>${i.writer}</td>
 				<td>
 				<c:choose>
@@ -78,11 +81,14 @@ li {
 					<c:otherwise><fmt:formatDate value="${i.up_date}" pattern="yyyy-MM-dd a hh:mm" /></c:otherwise>
 				</c:choose>
 				</td>
+				<td>${i.attachList}</td>
+
 				<td><button data-qno='${i.qno}' class="writeMod">수정</button></td>
 				<td><button onclick="location='/qna/remove?qno=${i.qno}'" id="writeRemove">삭제</button></td>
 			</tr>
 		</c:forEach>
 	</table>
+	
 	<button class="writeBtn" onclick="location='/qna/write'">글쓰기</button>
 	<div>
 		<ul class="pagination">
@@ -174,6 +180,18 @@ li {
 			$("#searchForm").submit()
 			
 		})
+		
+		/* 댓글 갯수 */
+		<c:forEach items="${list}" var="i" >
+			var qno='${i.qno}'
+			$.getJSON("/reply/count",{qno:qno},function(cnt){
+				var title='${i.title}'
+				var titleReply=title+' ('+cnt+')'
+				$("#detail${i.qno}").text(titleReply)
+			})
+			
+		</c:forEach>
+		
 	})
 
 </script>

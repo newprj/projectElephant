@@ -124,6 +124,12 @@ public class QnaServiceImpl implements QnaService{
 		return attachMapper.findByQno(qno);
 	}
 
+	@Override
+	public int replyCount(Long qno) {
+		log.info("2) 서비스에서 댓글 갯수 조회");
+		return replyMapper.count(qno);
+	}
+
 	
 
 
