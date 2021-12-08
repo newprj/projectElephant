@@ -25,5 +25,7 @@ public interface QnaService {
 	public int replyDelete(Long rno);
 	public int replyUpdate(QnaReplyVO vo);
 	public int replyCount(Long qno);
-
+	
+	//attach
+	public int attachCount(Long qno);
 }

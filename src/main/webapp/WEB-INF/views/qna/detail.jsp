@@ -9,6 +9,9 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <head>
 <meta charset="UTF-8">
 <style>
+li {
+	list-style-type:none;
+}
 .modal {
 	display:none;
 	position: fixed;
@@ -310,8 +313,8 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 					str+="<li data-path='"+attach.uploadPath+"'"
 					str+=" data-uuid='"+attach.uuid+"' data-filename='"+attach.fileName+"' data-type='"+attach.fileType+"'"
 					str+="><div>"
-					str+="<span> "+attach.fileName+"</span>"
 					str+="</br><img src='/upload/display?fileName="+fileCallPath+"'>"
+					str+="<span> "+attach.fileName+"</span>"
 					str+="</div>"	
 					str+="</li>"
 				}else{
@@ -320,8 +323,8 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 					str+="<li data-path='"+attach.uploadPath+"'"
 					str+=" data-uuid='"+attach.uuid+"' data-filename='"+attach.fileName+"' data-type='"+attach.fileType+"'"
 					str+="><div>"
-					str+="<span> "+attach.fileName+"</span>"
-					str+="<img src='/resources/img/attach.png' style=' width:30px; height:30px; ' alt='클릭하면 download'/ >"
+					str+="<img src='/resources/img/attach.png' style=' width:20px; height:20px; ' alt='클릭하면 download'/ >  "
+					str+="<span> "+attach.fileName +"</span>"
 					str+="</div>"	
 					str+="</li>"
 				}

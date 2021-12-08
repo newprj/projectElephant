@@ -204,6 +204,7 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 				$("form").append(str);
 				$("form").append(choice);
 				$("form").append("<input type='hidden' name='reg_date' pattern ='yy/MM/dd hh:mm' value='"+today+"'>");
+				$("form").append("<input type='hidden' name='up_date' pattern ='yy/MM/dd hh:mm' value='"+today+"'>");
 				$("form").submit() 
 				
 				

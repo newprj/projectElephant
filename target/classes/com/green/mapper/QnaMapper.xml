@@ -31,7 +31,10 @@
 			from (
 			    select /*+ index_desc(qna_tbl pk_qno) */
 				    rownum rn, qno, title, writer,q_content,reg_date,up_date,pwd,p_group
-				    	from (select * from  qna_tbl order by up_date desc,reg_date desc)
+				    	from 
+				    	(select * from  qna_tbl 
+					    	order by up_date desc nulls LAST
+					   	)
 				    where 
 		]]>
 		<include refid="criteria"></include>

@@ -39,3 +39,18 @@ select * from qna_tbl where qno=1;
 select*from reply_tbl where qno=1 order by rno;
 delete from qna_reply_tbl where rno=5;
 update qna_reply_tbl set r_content='수정되나' where rno=1;
+select *from qna_tbl order by reg_date desc;
+desc tbl_attach;
+create table qna_attach_tbl(
+    uuid varchar2(100) primary key,
+    uploadPath varchar2(200) not null,
+    fileName varchar2(100) not null,
+    fileType char(1) default 'I',
+    qno number(10,0),
+    constraint fk_attach_qno foreign key(qno) references qna_tbl(qno) on delete cascade
+);
+select*from qna_attach_tbl;
+select count(*) from qna_reply_tbl where qno=1;
+
+select * from  qna_tbl where not up_date is null order by up_date desc, reg_date asc;
+select * from  qna_tbl order by up_date asc null ;
