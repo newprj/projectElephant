@@ -60,7 +60,7 @@
 	</insert>
 	
 	<select id="get" resultType="com.green.vo.QnaVO" >
-		select * from qna_tbl where qno=#{qno}
+		select * from qna_tbl where qno=#{qno} order by up_date desc nulls LAST
 	</select>
 	
 	<update id="update">
