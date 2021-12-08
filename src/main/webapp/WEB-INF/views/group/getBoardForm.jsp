@@ -27,8 +27,7 @@ prefix="c" %>
 				display : felx;
 				justify-content:cneter;
 				align-items : center;
-				width : 40%;
-				height : 30%;
+				
 				top: 50%;
   				left: 50%;
   				transform: translate(-50%, -50%);
@@ -78,10 +77,10 @@ prefix="c" %>
 		<button class="go_board">목록</button>
 		<button class="reply">모달을 띄우자</button>
 
-		<h3>이거 모달</h3>
+		<h3> 댓글/ 등록/ 수정 / 삭제 후 특정 div 새로고침 이후로 모달 창 띄웠을때 값을 불러오지 못함 </h3>
 		<div class="modal">
 			<div class="modal_content">
-			
+				<span> X </span>
 				<form>
 					<div>
 						<label for="reply">댓글 내용</label>
@@ -110,8 +109,11 @@ prefix="c" %>
 		   $(document).ready(function(e){
 			 let attachList = [];
 			 getFileList('${cri.bno}')
-		    
-		
+		    $('div.modal > div > span').click(function(e){
+				$('.modal').hide()
+			})
+			
+			// 글삭제
 			$(".content > .delete").click(function (e) {
 				e.preventDefault();
 				$.ajax({
@@ -125,23 +127,29 @@ prefix="c" %>
 					},
 				}); //ajax
 			}); //delete click
-
+			
+			// 모달창 띄우기
 			$(".reply").click(function (e) {
+				$('button[type="reset"]').trigger("click");
 				$('.modal').show()
 			});
-
+			
+			// 목록 go 
 			$(".go_board").click((e) => {
 				e.preventDefault();
 				location.href =
 					"/group/board/${cri.group_name}/${cri.pageNum}/${cri.amount}";
 			});
-
+			
+			// 리플폼 데이터 얻기
 			const getReplyData = () => ({
 				rno: $('input[name="rno"]').val(),
 				bno: "${board.bno}",
 				reply: $('input[name="reply"]').val(),
 				replyer: $('input[name="replyer"]').val(),
 			});
+			
+			// 댓글 등록
 			$(".submit").click(function (e) {
 				e.preventDefault();
 				let data = getReplyData();
@@ -152,21 +160,18 @@ prefix="c" %>
 					data: JSON.stringify(data),
 					contentType: "application/json; charset=utf-8",
 					success: () => {
-						let str =
-							"<p class='reply' data-rno='${data.rno}'><span>" +
-							data.reply +
-							"</span><span>" +
-							data.replyer +
-							"</span> <p>";
-						$("div.reply").append(str);
+						
 						$('button[type="reset"]').trigger("click");
-						$('.modal').hide()
+						$('.modal').hide();
+						$('div.reply').load(window.location.href + ' div.reply')
 					},
 					error: (xhr, status, er) => console.log(xhr),
 				});
 			});
-
+			
+			// 댓글 클릭하면 모달에 채우기...
 			$("p.reply").click(function (e) {
+				console.log(e)
 				let rno = $(this).data("rno");
 				$.getJSON("/group/reply/" + rno, (res) => {
 					console.log(res);
@@ -175,13 +180,15 @@ prefix="c" %>
 					$('input[name="replyer"]').val(res.replyer);
 				}); //getJSON
 			}); //reply click
-
+			
+			// 글 수정하러가기
 			$(".go_modify").click(function (e) {
 				e.preventDefault();
 				location.href =
 					"/group/modify/${cri.group_name}/${cri.bno}/${cri.pageNum}/${cri.amount}";
 			}); //modify
-
+			
+			// 댓글 수정
 			$(".modify").click(function (e) {
 				e.preventDefault();
 				$('.modal').show()
@@ -193,11 +200,16 @@ prefix="c" %>
 					url: "/group/reply/" + rno,
 					data: JSON.stringify(data),
 					contentType: "application/json; charset=utf-8",
-					success: () => $('.modal').hide(),
+					success: () => {
+						$('.modal').hide();
+						$('button[type="reset"]').trigger("click");
+						$('div.reply').load(window.location.href + ' div.reply')
+					},
 					error: (xhr, status, er) => console.log(xhr),
 				});
 			}); //modify
-
+			
+			// 댓글삭제
 			$(".delete").click(function (e) {
 				e.preventDefault();
 				let rno = $('input[name="rno"]').val();
@@ -207,6 +219,7 @@ prefix="c" %>
 					success: () => {
 						$('button[type="reset"]').trigger("click");
 						$('.modal').hide()
+						$('div.reply').load(window.location.href + ' div.reply')
 					},
 					error: (xhr, status, er) => console.log(xhr),
 				});
