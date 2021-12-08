@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.green.mapper.QnaReplyMapper">
+
+	<insert id="register">
+		insert into qna_reply_tbl(rno, qno, r_writer,r_content,r_reg_date,r_up_date) 
+			values(reply_seq.nextval ,#{qno},#{r_writer},#{r_content},#{r_reg_date},#{r_up_date, jdbcType=TIMESTAMP })
+	</insert>
+
+	<select id="replyList" resultType="com.green.vo.QnaReplyVO" >
+		select * from qna_reply_tbl where qno=#{qno} order by rno 
+	</select>
+	
+	<delete id="replyDelete">
+		delete from qna_reply_tbl where rno=#{rno}
+	</delete>
+	
+	<update id="replyUpdate">
+			update qna_reply_tbl set r_writer=#{r_writer},r_content=#{r_content},r_up_date=#{r_up_date}
+				where rno = #{rno}
+	</update>
+	
+	<select id="count" resultType="int">
+		select count(*) from qna_reply_tbl where qno=#{qno}
+	</select>
+</mapper>
