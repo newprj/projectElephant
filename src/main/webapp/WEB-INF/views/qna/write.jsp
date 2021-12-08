@@ -13,7 +13,7 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 </head>
 <body>
 	<h1>QnA 등록</h1>
-	<h3>첨부파일(db 추가), 임시저장</h3>
+	<h3>로그인되면 임시저장 도전</h3>
 	<form action="/qna/write" method="post" name="write">
 		<div>
 			<label for="p_select">구분</label>
@@ -52,7 +52,7 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 				</div>
 			</div>
 		</div>
-		<button >임시저장(될까?)</button>
+		<button >임시저장(될까?sessionStorage사용)</button>
 		<button id="sbtn" type="submit">등록</button>
 		<button type="button" onclick="location.href='/qna/list'">취소</button>
 		

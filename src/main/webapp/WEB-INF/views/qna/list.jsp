@@ -186,7 +186,7 @@ li {
 			})
 			
 			$.getJSON("/upload/count",{qno:qno},function(cnt){
-				console.log(cnt)
+				
 				if(cnt>=1){
 					$("#detail${i.qno}").append("<img src='/resources/img/attach.png' style=' width:15px; height:15px;'/>")
 				}
