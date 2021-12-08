@@ -40,6 +40,11 @@ public class CalendarTests {
 		
 	}
 	
+	@Test
+	public void test2() {
+		mapper.getMaxCid();
+	}
+	
 //	@Test
 	public void deleteTest() {
 		mapper.deleteEvent(2L);
@@ -55,7 +60,7 @@ public class CalendarTests {
 		mapper.showEventByDay("2021-12-01");
 	}
 	
-	@Test
+	//@Test
 	public void updateEvent() {
 		CalendarVO vo = mapper.showEventOne(49L);
 		vo.setLocation("마산");

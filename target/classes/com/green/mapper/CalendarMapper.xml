@@ -38,5 +38,8 @@
 		delete from tbl_calendar where cid = #{cid}
 	</delete>
 	
+	<select id="getMaxCid" resultType="long">
+		select max(cid) from tbl_calendar
+	</select>
 	
 </mapper>

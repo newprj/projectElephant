@@ -17,9 +17,10 @@ public class CalendarServiceImpl implements CalendarService{
 	CalendarMapper mapper;
 
 	@Override
-	public int createEvent(CalendarVO calendar) {
+	public long createEvent(CalendarVO calendar) {
 		// TODO Auto-generated method stub
-		return mapper.createEvent(calendar);
+		 mapper.createEvent(calendar);
+		return mapper.getMaxCid();
 	}
 
 	@Override

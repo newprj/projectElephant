@@ -1,5 +1,6 @@
 package com.green.controller;
 
+import java.io.Console;
 import java.util.List;
 
 import org.apache.ibatis.javassist.expr.NewArray;
@@ -32,6 +33,7 @@ import com.green.vo.CalendarVO;
 import com.green.vo.Criteria;
 import com.green.vo.FileVO;
 import com.green.vo.GUserVO;
+import com.green.vo.GroupVO;
 import com.green.vo.PageDTO;
 
 import lombok.Setter;
@@ -147,11 +149,11 @@ public class GRestController {
 		Long bno = cri.getBno();
 		BoardVO board = boardService.read(bno);
 		List<BoardReplyVO> replies = replyService.getReplysByBno(bno);
-		List<FileVO> files = boardService.getFileListByBno(bno);
+		
 		ModelAndView mv = new ModelAndView("/group/getBoardForm");
 		mv.addObject("replies", replies);
 		mv.addObject("board",board);
-		mv.addObject("files", files);
+		
 		return mv;
 	}
 	
@@ -242,7 +244,8 @@ public class GRestController {
 	@GetMapping("/test/{group_name}")
 	public ModelAndView test(@PathVariable String group_name) {
 		ModelAndView mv = new ModelAndView("/group/test");
-		mv.addObject("group", group_name);
+		GroupVO vo = groupService.showOne(group_name);
+		mv.addObject("group", vo);
 		mv.addObject("member", groupUserService.listByGroup(group_name));
 		return mv;
 	}
@@ -258,21 +261,29 @@ public class GRestController {
 	
 	// 이벤트 등록
 	@PostMapping("/test")
-	public void createEvent(@RequestBody CalendarVO vo) {
-		calendarService.createEvent(vo);
+	public long createEvent(@RequestBody CalendarVO vo) {
+		long cid= calendarService.createEvent(vo);
+		System.out.println(cid);
+		return cid;
 	}
 	
 	//이벤트 수정
 	@PutMapping(value="/test/{cid}",
 			consumes= "application/json")
-	public void eventUpdate(@RequestBody CalendarVO vo) {
-		
-		calendarService.updateEvent(vo);
+	public void eventUpdate(@RequestBody CalendarVO vo,  @PathVariable Long cid) {
+		System.out.println("이벤트 수정");
+		System.out.println(vo);
+		CalendarVO calendar = calendarService.showEventOne(cid);
+		calendar.setStartDate(vo.getStartDate());
+		calendar.setEndDate(vo.getEndDate());
+		System.out.println(calendar);
+		calendarService.updateEvent(calendar);
 	}
 	
 	// 이벤트 삭제 
 	@DeleteMapping(value = "/test/{cid}")
 	public void eventDelete(@PathVariable("cid") Long cid) {
+		System.out.println(cid);
 		calendarService.deleteEvent(cid);
 	}
 	

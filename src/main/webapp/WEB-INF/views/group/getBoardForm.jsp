@@ -11,22 +11,31 @@ prefix="c" %>
 		<style>
 			.modal{
 				background: rgba(0,0,0,0.8); 
-				justify-content: center;
-				align-items: center;
 				display: none;
 				position: fixed;
 				width: 100%;
 				height:100%;
-				overflow: auto;
 				left :0;
 				right : 0;
 				right: 0;
 				bottom: 0;
 				z-index: 1;
+				
 			}
 			.modal_content{
-				width: 100%;
-				background-color:#264db5;
+				position: absolute;
+				display : felx;
+				justify-content:cneter;
+				align-items : center;
+				width : 40%;
+				height : 30%;
+				top: 50%;
+  				left: 50%;
+  				transform: translate(-50%, -50%);
+				background-color : white;
+			}
+			.modal_content *{
+				padding : 10px
 			}
 		</style>
 	</head>
@@ -69,9 +78,10 @@ prefix="c" %>
 		<button class="go_board">목록</button>
 		<button class="reply">모달을 띄우자</button>
 
-		<h5>이거 모달</h5>
+		<h3>이거 모달</h3>
 		<div class="modal">
 			<div class="modal_content">
+			
 				<form>
 					<div>
 						<label for="reply">댓글 내용</label>
@@ -88,9 +98,11 @@ prefix="c" %>
 						<button class="delete">삭제</button>
 						<button type="reset">리셋</button>
 					</div>
+					
 				</form>
-			</div>
-		</div>
+				
+			</div><!-- 모달 컨텐드 -->
+		</div> <!-- 모달  -->
 	</div>
 	
 		<script>

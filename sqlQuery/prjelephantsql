@@ -37,6 +37,7 @@ create table tbl_calendar(
 create sequence seq_cid;
 drop table tbl_calendar;
 select * from tbl_calendar;
+select max(cid) from tbl_calendar;
 delete from tbl_calendar;
 commit;
 select * from tbl_board;

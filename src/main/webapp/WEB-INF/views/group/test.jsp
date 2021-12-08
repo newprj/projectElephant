@@ -5,22 +5,61 @@ pageEncoding="UTF-8"%>
 <html>
 	<link href="/resources/static/fullcalendar/main.css" rel="stylesheet" />
 
+
 	<script src="/resources/static/fullcalendar/main.js"></script>
+	<script src="/resources/static/fullcalendar/moment.js"></script>
+<script src="https://unpkg.com/@popperjs/core@2"></script><!-- tippy 사용 위찬 연결-->
+<script src="https://unpkg.com/tippy.js@6"></script><!-- tippy 사용 위찬 연결-->
+	
 	<script src="//code.jquery.com/jquery-3.6.0.js"></script>
+	<style>
+		.modal{
+				background: rgba(0,0,0,0.8); 
+				display: none;
+				position: fixed;
+				width: 100%;
+				height:100%;
+				left :0;
+				right : 0;
+				right: 0;
+				bottom: 0;
+				z-index: 1;
+				
+			}
+			.modal_content{
+				position: absolute;
+				display : felx;
+				justify-content:cneter;
+				align-items : center;
+				
+				top: 50%;
+  				left: 50%;
+  				transform: translate(-50%, -50%);
+				background-color : white;
+			}
+			.modal_content *{
+				padding : 2px;
+			}
+			button[type=reset]{
+				display : none;			
+			}
+	</style>
 	<head>
 		<meta charset="UTF-8" />
 		<title>Insert title here</title>
 	</head>
 	<body>
 	<h1> 일정 캘린더 </h1>
-	<div>
+	<div> <!-- 캘린더 div  -->
 		<div id="reload">
 			<div id="calendar"></div>
 		</div>
 	</div>
-		<div>
+	<div class="modal">
+		<div class="modal_content">
 		
 			<form action="/group/test/" method="post">
+				<div><span>X</span></div>
 				<div>
 					<label for=""> cid </label>
 					<input type="text" name="cid" />
@@ -63,15 +102,15 @@ pageEncoding="UTF-8"%>
 				</div>
 				<div>
 					<label> group </label>
-					<input type="text" name="group_" value="${group}" />
+					<input type="text" name="group_" value="${group.group_name}" />
 				</div>
 				<div>
 				<label> 스터디장 </label>
-				<input type="text" name="user_" />
+				<input type="text" name="user_" value="${group.leader}"/>
 				</div>
 				<div>
 					<c:forEach items="${member}" var="member">
-						<label><input type="checkbox" value="${member.user_id}"> ${member.user_id}</label>
+						<label><input type="checkbox" name="member" value="${member.user_id}"> ${member.user_id}</label>
 					</c:forEach>
 				</div>
 			<div>
@@ -82,15 +121,17 @@ pageEncoding="UTF-8"%>
 			</div>
 			</form>
 		</div>
+		</div>
 		<script>
 			document.addEventListener("DOMContentLoaded", function () {
+				
+				const modal = $('.modal')
 				const Calendar = FullCalendar.Calendar
-				const group = "${group}";
-				console.log(group)
-				console.log('${member}')
-
+				const group = "${group.group_name}";
+				
+				
 				const getEvent = (data) => {
-					var result;
+					let result;
 					$.ajax({
 						type: "get",
 						url: "/group/event/" + data,
@@ -108,27 +149,35 @@ pageEncoding="UTF-8"%>
 				const calToEvent = (events) =>
 					events.map((event) => ({
 						...event,
+						id : event.cid,
 						start: event.startDate,
 						end: event.endDate,
+						editable: true,
 					}));
 			
-				const event = getEvent(group);
+				let event = getEvent(group);
 
-				const fn = (e) => console.log(e.dateStr);
-				const getFormData = () => ({
-					cid: $('input[name="cid"]').val(),
-					color: $('select[name="color"]').val(),
-					title: $('input[name="title"]').val(),
-					startDate: $('input[name="startDate"]').val(),
-					endDate: $('input[name="endDate"]').val(),
-					description_: $('input[name="description_"]').val(),
-					location: $('input[name="location"]').val(),
-					group_: $('input[name="group_"]').val(),
-					user_: $('input[name="user_"]').val(),
-				});
+				const getFormData = () => {
+					let members =[]
+					$('input[name="member"]:checked').map((idx, member) =>
+						members.push(member.value)
+					)
+
+					return{
+						cid: $('input[name="cid"]').val(),
+						color: $('select[name="color"]').val(),
+						title: $('input[name="title"]').val(),
+						startDate: $('input[name="startDate"]').val(),
+						endDate: $('input[name="endDate"]').val(),
+						description_: $('input[name="description_"]').val(),
+						location: $('input[name="location"]').val(),
+						group_: $('input[name="group_"]').val(),
+						user_: $('input[name="user_"]').val(),		
+						member_: members.join(",")
+					}	
+				};
 				
 				const setData = (eventData) => {
-					
 					$('select[name="color"]').val(eventData.color)
 					$('input[name="title"]').val(eventData.title)
 					$('input[name="cid"]').val(eventData.cid)
@@ -138,91 +187,187 @@ pageEncoding="UTF-8"%>
 					$('input[name="location"]').val(eventData.location)
 					$('input[name="group_"]').val(eventData.group_)
 					$('input[name="user_"]').val(eventData.user_)
+					if(eventData.member_) eventData.member_.split(",").map(member => 
+						$('input[name="member"][value='+member+']').prop("checked",true))
+				}
+				
+				
+				const eventClickHandler = (e) => {
+					modal.show()
+					$('button.modify').show()
+					$('button.delete').show()
+					$('button[type="submit"]').hide()
+					
+					let cid = e.event._def.extendedProps.cid
+					
+					event = getEvent(group);
+					let eventData = event.find(i=> i.cid === cid)
+					
+					setData(eventData)
 
 				}
 				
+				const dateClickHandler = (e) => {
+					console.log(e.dateStr)
+					$('input[name="startDate"]').val(e.dateStr)
+					$('button.modify').hide()
+					$('button.delete').hide()
+					$('button[type="submit"]').show()
+					modal.show()
+				}
 				
-				const evnetClickHandler = (e) => {
-					let cid = e.event._def.extendedProps.cid
-					eventData = event.find(i=> i.cid === cid)
-					console.log(eventData)
-					setData(eventData)
-					
+				const eventHoverHandeler = (info) => {
+					let desc = info.event._def.extendedProps.description_
+					tippy(info.el, {
+			                content: desc
+			            })
+				}
+
+				const eventMountHandler =() => {
 					
 				}
 				
+				const evnetDropAndResizeHandler = (e) =>{
+					
+					let cid = e.event._def.extendedProps.cid
+					let newDates= {
+					    startDate: e.event.startStr,
+					    endDate: e.event.endStr
+						  }
+					
+					
+					$.ajax({
+						type:'put',
+						url:'/group/test/'+cid,
+						data :JSON.stringify(newDates),
+						contentType: 'application/json; charset=utf-8',
+						success : () => {
+							modal.hide()
+
+						},
+						error:  (xhr, status, er) => {
+				              console.log(xhr)
+			            }
+					})//ajax 
+				}	
 				
 				
-				$('button[type="submit"]').click(function (e) {
-					e.preventDefault();
-					let eventForm = getFormData();
+				$('form span').click(() =>{
+					modal.hide()
+					$('button[type="reset"]').trigger("click")
+				})
+				
+				
+				// 이벤트 전송
+				const eventSubmit = (data) => {
+					
+					let resCid
 					$.ajax({
 						type: "post",
 						url: "/group/test/",
-						data: JSON.stringify(eventForm),
+						data: JSON.stringify(data),
+						async: false,
 						contentType: "application/json; charset=utf-8",
-						success: () => {
-							$('button[type="reset"]').trigger("click")
-
-
+						success: (res) => {
+							modal.hide();
+							resCid = res
 						},
 						error: (xhr, staturs, er) => {
 							console.log(xhr);
 						},
 					}); //ajax
-				});//submit click
-
-				$('button.modify').click(function(e){
-					e.preventDefault()
-					let eventForm = getFormData()
-					console.log(eventForm.cid)
-					$.ajax({
-						type:'put',
-						url:'/group/test/'+eventForm.cid,
-						data :JSON.stringify(eventForm),
-						contentType: 'application/json; charset=utf-8',
-						success : () => console.log( " yeah~~ "),
-						error:  (xhr, status, er) => {
-				              console.log(xhr)
-			            }
-					})//ajax
-				})//button modify click
+					
+					return resCid
+				}
 				
-				$('button.delete').click(function(e){
-					e.preventDefault()
-					let cid = getFormData().cid
+				const eventDelete = (cid) => {
+					
 			        $.ajax({
 			          type: 'delete',
 			          url: '/group/test/'+cid,
 			          success: () => {
-			            console.log('gigi')
+			        	 console.log( " delete ")
+			        	
 			          },
 			          error: (xhr, status, er) => {
 			            console.log(status)
-			            
 			          },
 			        }) //ajax
-					
-				})//delete click
-
-	
+				}
 				
+				// 이벤트 수정
+				$('button.modify').click(function(e){
+					e.preventDefault()
+					let eventForm = getFormData();
+					let cid = eventForm.cid
+					// 삭제
+					
+					
+					eventDelete(cid)
+					let ev = calendar.getEventById(cid)
+		        	ev.remove()
+		        	// 다시 전송
+					cid = eventSubmit(eventForm);
+					
+					calendar.addEventSource(calToEvent([{...eventForm, cid}]))
+					$('button[type="reset"]').trigger("click")
+					
+				})
+				
+				// 이벤트 삭제 
+				$('button.delete').click(function(e){
+					e.preventDefault()
+					modal.hide()
+					
+					let cid = getFormData().cid
+					
+					eventDelete(cid);
+					let ev = calendar.getEventById(cid)
+
+		        	ev.remove()
+		        	$('button[type="reset"]').trigger("click")
+				})//delete click
+				
+				//이벤트 전송
+				$('button[type="submit"]').click(function (e) {
+					
+					e.preventDefault();
+					let eventForm = getFormData();
+					
+					let cid = eventSubmit(eventForm);
+					let newEvent = calToEvent([{...eventForm, cid}])
+					calendar.addEventSource(newEvent) 
+					
+					$('button[type="reset"]').trigger("click")
+				});//submit click
+				
+
 				var calendarEl = document.getElementById("calendar");
 				var calendar = new FullCalendar.Calendar(calendarEl, {
 					headerToolbar: {
 						left: "prev,today,next",
 						center: "title",
-						right: "dayGridMonth,timeGridWeek,listMonth",
+						right: "dayGridMonth,listMonth",
 					},
-					dateClick: fn,
-					navLinks: true,
-					editable: true,
+					navLinks: true, // 세부 일정 보기 
+					
+					eventStartEditable : true ,
+					selectable: true,
+					dateClick :dateClickHandler,
 					dayMaxEvents: true,
+					progressiveEventRendering : true,
+					eventDidMount: eventMountHandler,
 					events:event,
-					eventClick: evnetClickHandler
+					eventResize : evnetDropAndResizeHandler,
+					eventClick: eventClickHandler,
+					eventMouseEnter: eventHoverHandeler,
+					eventDrop:evnetDropAndResizeHandler
+
 				}); //calender
 				calendar.render();
 			}); //event
 		</script>
 	</body>
 </html>
+
+

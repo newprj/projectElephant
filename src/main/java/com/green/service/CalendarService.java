@@ -6,7 +6,7 @@ import com.green.vo.CalendarVO;
 
 public interface CalendarService {
 	
-	public int createEvent(CalendarVO calendar);
+	public long createEvent(CalendarVO calendar);
 	public int updateEvent(CalendarVO calendar);
 	public List<CalendarVO> showEventByGroup(String Group);
 	public CalendarVO showEventOne(Long cno);
