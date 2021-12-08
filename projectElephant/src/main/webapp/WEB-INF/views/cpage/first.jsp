@@ -7,9 +7,12 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<form action="uploadFormAction" method="post" enctype="multipart/form-data">
-		<input type="file" name="uploadFile" multiple="multiple">
-		<button>전송</button>
+	<h1>그룹명</h1>
+	
+	<p>그룹명을 입력</p>
+	<form action="/cpage/list" method="post">
+		<input type="text" name = "input">
+		<button type="submit">확인</button>
 	</form>
 </body>
 </html>

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.green.service.ReplyService;
+import com.green.service.ReviewService;
 import com.green.vo.ReplyVO;
 
 import lombok.Setter;
@@ -20,15 +21,17 @@ import lombok.extern.slf4j.Slf4j;
 public class ReplyController {
 	@Setter(onMethod_=@Autowired)
 	ReplyService service;
+	@Setter(onMethod_=@Autowired)
+	ReviewService rService;
 	
-	@RequestMapping("/list") 
+	@RequestMapping("/list") //댓글 리스트 컨트롤러
     @ResponseBody
     private List<ReplyVO> ReplyList(long rno){
 		log.info("댓글 조회 컨트롤러 진입...................");
         return service.getList(rno);
     }
 	
-	@RequestMapping("/insert") 
+	@RequestMapping("/insert") //댓글 입력 컨트롤러
     @ResponseBody
     private int insert(int rno, String content){
 		log.info("댓글 인서트 컨트롤러 진입.............");
@@ -37,10 +40,11 @@ public class ReplyController {
 		vo.setWriter("홍길동");
 		vo.setContent(content);
 		service.register(vo);
+		rService.updateReplyCount((long)rno);
 		return 1;
     }
 	
-	@RequestMapping("/update") //댓글 수정  
+	@RequestMapping("/update") //댓글 수정 컨트롤러 
     @ResponseBody
     private int update(int cno, String content){
 		log.info("댓글 수정 컨트롤러 진입...........");
@@ -51,12 +55,14 @@ public class ReplyController {
         return 1;
     }
 
-	@RequestMapping("/delete/{cno}")
+	@RequestMapping("/delete/{cno}")//댓글 삭제 컨트롤러 
     @ResponseBody
     private int delete(@PathVariable Long cno){
-		log.info("삭제 컨트롤러 진입.............");
-		System.out.println(cno);
+		log.info("삭제 컨트롤러 진입............."+cno);
+		log.info("이것은?"+service.get(cno).getRno());
+		long a = service.get(cno).getRno();
         service.remove(cno);
+        rService.updateReplyCount(a);
         return 1;
     }
 

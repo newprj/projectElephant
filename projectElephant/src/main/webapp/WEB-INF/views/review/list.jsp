@@ -17,14 +17,16 @@
 <form role="form" method="get"></form>
 	<ul>
 		<c:forEach items="${list}" var="list">
-		번호 : ${list.rno} / 작성자 : ${list.writer}  / 제목 : <a href="detailPage?no=${list.rno}">${list.title}</a> / 작성일 : <fmt:formatDate pattern="yyyy-MM-dd" value="${list.regdate}"/>
+		번호 : ${list.rno} / 작성자 : ${list.writer}  / 
+		제목 : <a href="detailPage?no=${list.rno}">${list.title}</a>  [${list.reply_count}] / 작성일 : <fmt:formatDate pattern="yyyy-MM-dd" value="${list.regdate}"/>
+		/ 조회수 : ${list.view_count}
 		<br>
+		
 		</c:forEach>
 	</ul>
 	<button type="button" id="registerReview">후기등록</button>
   <div class="search">
     <select name="searchType">
-      <option value="n"<c:out value="${scri.searchType == null ? 'selected' : ''}"/>>-----</option>
       <option value="t"<c:out value="${scri.searchType eq 't' ? 'selected' : ''}"/>>제목</option>
       <option value="c"<c:out value="${scri.searchType eq 'c' ? 'selected' : ''}"/>>내용</option>
       <option value="w"<c:out value="${scri.searchType eq 'w' ? 'selected' : ''}"/>>작성자</option>
@@ -61,8 +63,11 @@ $(document).ready(function () {
 }) 
  $(function(){
         $('#searchBtn').click(function() {
+       	  if($('#keywordInput').val()=="") alert("검색어를 입력해 주세요")
+       	  else{
           self.location = "list" + '${pageMaker.makeQuery(1)}' + "&searchType=" + $("select option:selected").val() + "&keyword=" + encodeURIComponent($('#keywordInput').val());
-        });
+       	  } 
+       	});
       });   
 </script>
 </html>

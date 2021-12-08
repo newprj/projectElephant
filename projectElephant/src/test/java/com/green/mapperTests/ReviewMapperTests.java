@@ -53,7 +53,7 @@ public class ReviewMapperTests {
 		mapper.delete(3l);
 	}
 	
-	@Test
+	//@Test
 	public void getList() {
 		mapper.getList();
 	}
@@ -61,6 +61,13 @@ public class ReviewMapperTests {
 	//@Test
 	public void rnoRedTest() {
 		mapper.rnoRead();
+	}
+	
+	@Test
+	public void getReplyCount() {
+		for(long i=0;i<300;i++) {
+		mapper.updateReplyCount(i);
+		}
 	}
 	
 }

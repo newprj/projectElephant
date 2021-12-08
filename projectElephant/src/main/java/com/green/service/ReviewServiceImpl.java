@@ -71,4 +71,15 @@ public class ReviewServiceImpl implements ReviewService{
 		return mapper.listCount(scri);
 	}
 
+	@Override
+	public void updateReplyCount(Long rno) {
+		mapper.updateReplyCount(rno);
+		
+	}
+
+	@Override
+	public void viewCount(Long rno) {
+		mapper.viewCount(rno);
+
+	}
 }

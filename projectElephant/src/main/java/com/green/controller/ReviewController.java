@@ -36,8 +36,54 @@ public class ReviewController {
 	ReviewService service;
 	@Setter(onMethod_=@Autowired)
 	AttachFileService aService;
-	@Setter(onMethod_=@Autowired)
-	ReplyService rService;
+
+	
+	@RequestMapping(value = "/list", method = RequestMethod.GET)//리뷰 리스트 컨트롤러
+	public void list(Model model, @ModelAttribute("scri") SearchCriteria scri){
+		log.info("리뷰 컨트롤러 list 접근.................");
+		model.addAttribute("list", service.list(scri));
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(scri);
+		pageMaker.setTotalCount(service.listCount(scri));
+		model.addAttribute("pageMaker", pageMaker);
+	}
+
+	@RequestMapping("/detailPage") //상세 페이지 컨트롤러
+	public void detailPage(Model model, long no) {
+		System.out.println("리뷰 컨트롤러  detail 접근.................");
+		long rno = no;
+		service.viewCount(rno);
+		model.addAttribute("detail", service.get(no));
+		model.addAttribute("attachFile", aService.getList(no));
+	}
+	
+	@RequestMapping("/register")//리뷰생성 get 컨트롤러
+	public void register(Model model) {
+		System.out.println("리뷰 컨트롤러  register 접근.................");
+	}
+	
+	@PostMapping("/insert")//리뷰생성 post 컨트롤러
+	public String insert(ReviewVO vo) {
+		System.out.println("리뷰 컨트롤러  insert 접근.................");
+		service.register(vo);		
+		return "redirect:/review/list";
+	}
+	
+	@GetMapping("/update")//리뷰수정 get 컨트롤러
+	public void update(Model model,long no) {
+		System.out.println("리뷰 컨트롤러  update 접근................."+ no);
+		model.addAttribute("read", service.get(no));
+		model.addAttribute("attachFile", aService.getList(no));
+	}
+	
+	@PostMapping("/modify")//리뷰수정 post 컨트롤러
+	public String modify(ReviewVO vo) {
+		System.out.println("리뷰 컨트롤러  modify 접근................."+vo);
+		service.modify(vo);
+		return "redirect:/review/list";
+	}
+	
+	
 	
 	/*
 	 * @GetMapping("/list") public void list(Model model) {
@@ -46,68 +92,5 @@ public class ReviewController {
 	 * service.getList()); }
 	 */
 	
-	@RequestMapping("/detailPage")
-	public void detailPage(Model model, long no) {
-		System.out.println("detail 접근.................");
-		model.addAttribute("detail", service.get(no));
-		model.addAttribute("attachFile", aService.getList(no));
-	}
-	
-	@RequestMapping("/register")
-	public void register(Model model) {
-		System.out.println("register 접근.................");
-	}
-	
-	@PostMapping("/insert")
-	public String insert(ReviewVO vo) {
-		System.out.println("insert 접근.................");
-		service.register(vo);		
-		return "redirect:/review/list";
-	}
-	
-	@GetMapping("/update")
-	public void update(Model model,long no) {
-		System.out.println("update 접근................."+ no);
-		model.addAttribute("read", service.get(no));
-		model.addAttribute("attachFile", aService.getList(no));
-	}
-	
-	@PostMapping("/modify")
-	public String modify(ReviewVO vo) {
-		System.out.println("modify 접근................."+vo);
-		service.modify(vo);
-		return "redirect:/review/list";
-	}
-	
-
-	@GetMapping(value = "/download" ,produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
-	@ResponseBody 
-	public ResponseEntity<Resource> downloadFile(String uuid){
-		log.info("컨트롤러 파일 다운로드 uuid : " +  uuid);
-		AttachFileDTO dto = aService.read(uuid);
-		Resource resource = new FileSystemResource("c:\\upload\\"+dto.getUploadPath()+"\\"+uuid+"_"+dto.getFileName());
-		String resourceName = resource.getFilename();
-		log.info("resource: " +resource);
-		HttpHeaders headers = new HttpHeaders();
-		String downloadName = null;
-		try {
-			downloadName = new String(resourceName.getBytes("UTF8"),"ISO-8859-1");
-			headers.add("Content-Disposition" , "attachment; fileName=" + downloadName);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return new ResponseEntity<Resource>(resource,headers , HttpStatus.OK);
-	}
-	
-	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public void list(Model model, @ModelAttribute("scri") SearchCriteria scri){
-		log.info("list");
-		model.addAttribute("list", service.list(scri));
-		PageMaker pageMaker = new PageMaker();
-		pageMaker.setCri(scri);
-		pageMaker.setTotalCount(service.listCount(scri));
-		model.addAttribute("pageMaker", pageMaker);
-		
-	}
 }
 

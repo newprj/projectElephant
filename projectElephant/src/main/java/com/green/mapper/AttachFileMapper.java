@@ -6,7 +6,7 @@ import com.green.vo.AttachFileDTO;
 
 public interface AttachFileMapper {
 	public int insert(AttachFileDTO dto);
-	public int delete (Long rno);
+	public int delete (String uuid);
 	public List<AttachFileDTO> getList(long rno);
 	public AttachFileDTO read(String uuid);
 }

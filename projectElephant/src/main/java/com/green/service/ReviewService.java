@@ -16,4 +16,6 @@ public interface ReviewService {
 	public List<ReviewVO> list(SearchCriteria scri);
 	public int listCount(SearchCriteria scri);
 	public int rnoRead ();
+	public void updateReplyCount(Long rno);
+	public void viewCount(Long rno);
 }

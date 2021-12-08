@@ -20,6 +20,7 @@ public class ReviewVO {
 	private String content; //내용
 	private String writer; //작성자
 	private Date regdate; //작성일
-
-
+	private int reply_count; // 댓글 갯수
+	private int view_count; // 조회수
+	
 }

@@ -34,7 +34,7 @@ public class ReplyMapperTests {
 		mapper.read(1l);
 	}
 	
-	@Test
+	//@Test
 	public void updateTest() {
 		ReplyVO vo = new ReplyVO();
 		vo.setContent("고생했다");

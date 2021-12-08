@@ -14,7 +14,6 @@
 	
 	<update id="update">
 		update review_reply set content=#{content} where cno=#{cno}
-
 	</update>
 	<select id="getList" resultType="com.green.vo.ReplyVO"> 
 		select * from review_reply where rno = #{rno}

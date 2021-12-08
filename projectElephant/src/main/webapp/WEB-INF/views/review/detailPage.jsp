@@ -16,15 +16,15 @@
 	제목 : ${detail.title}<br>
 	내용 : ${detail.content}<br>
 	작성자 : ${detail.writer}<br>
-	작성일 : <fmt:formatDate pattern="yyyy-MM-dd" value="${detail.regdate}"/><br>
+	작성일 : <fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${detail.regdate}"/><br>
 	
 	첨부파일 : <c:forEach items="${attachFile}" var="attachFile">
-		 <a href="download?uuid=${attachFile.uuid}">${attachFile.fileName}</a> / 
+		 <a href="/upload/download?uuid=${attachFile.uuid}">${attachFile.fileName}</a> / 
 	</c:forEach> <br>
 	<button type="button" id="modifyBtn">수정</button>
 	<button type="button" id="homeBtn">후기 홈으로</button>
-	<br>
-<div class="container">
+	<hr>
+	<div class="container">
 		<label for="content">댓글</label>
 		<form name="replyInsertForm">
 			<input type="hidden" name="rno" value="${detail.rno}"/>
@@ -74,7 +74,7 @@
 					var minutes = ('0' + date.getMinutes()).slice(-2);
 					var seconds = ('0' + date.getSeconds()).slice(-2); 
 					var timeString = hours + ':' + minutes  + ':' + seconds;
-					str += '<div class="replyInfo'+val.cno+'">'+'no.'+val.cno+' / 작성자 : '+val.writer+"/" +'작성일: '+dateString+" "+timeString+ " /";
+					str += '<div>'+'no.'+val.cno+' / 작성자 : '+val.writer+" / " +'작성일: '+dateString+" "+timeString+ " /";
 					str += '<a onclick="updateForm('+val.cno+',\''+val.content+'\');"> 수정 / </a>';
 					str += '<a onclick="remove('+val.cno+');"> 삭제 </a> </div>';
 					str += '<div class="replyContent'+val.cno+'"> <p> 내용 : '+val.content +'</p>';
@@ -126,7 +126,7 @@
 	    });
 	}
 
-
+	//댓글삭제
 	function remove(cno){
 	    $.ajax({
 	        url : '/reply/delete/'+cno,

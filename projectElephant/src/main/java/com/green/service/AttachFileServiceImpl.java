@@ -26,8 +26,8 @@ public class AttachFileServiceImpl implements AttachFileService{
 
 
 	@Override
-	public void remove(Long rno) {
-		mapper.delete(rno);
+	public void remove(String uuid) {
+		mapper.delete(uuid);
 		
 	}
 

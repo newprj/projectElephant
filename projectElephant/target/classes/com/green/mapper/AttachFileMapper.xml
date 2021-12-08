@@ -17,7 +17,7 @@
 	</select> 
 	
 	<delete id="delete">
-		delete from attachFile where rno = #{rno}
+		delete from attachFile where uuid = #{uuid}
 	</delete> 
 
 </mapper>

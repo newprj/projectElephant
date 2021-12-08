@@ -9,5 +9,5 @@ public interface AttachFileService {
 	public void register(AttachFileDTO dto);
 	public List<AttachFileDTO> getList(long rno);
 	public AttachFileDTO read(String uuid);
-	public void remove(Long rno);
+	public void remove(String uuid);
 }

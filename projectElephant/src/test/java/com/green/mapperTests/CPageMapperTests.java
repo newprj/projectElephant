@@ -6,9 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.green.mapper.AttachFileMapper;
-import com.green.vo.AttachFileDTO;
-import com.green.vo.ReviewVO;
+import com.green.mapper.CPageMapper;
+import com.green.vo.CPageVO;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -16,29 +15,41 @@ import lombok.extern.log4j.Log4j;
 @RunWith(SpringRunner.class)
 @ContextConfiguration({"file:src/main/webapp/WEB-INF/spring/root-context.xml"})
 @Log4j
-public class AttachMapperTests {
+public class CPageMapperTests {
 	@Setter(onMethod_=@Autowired)
-	private AttachFileMapper mapper;
+	private CPageMapper mapper;
 	
 	//@Test
 	public void insertTest() {
-		AttachFileDTO dto = new AttachFileDTO();
-		dto.setFileName("file");
-		dto.setUploadPath("c드라이브");
-		dto.setUuid("1234");
-		dto.setFileSize(123l);
-		mapper.insert(dto);
+		CPageVO vo = new CPageVO();
+		vo.setCaptain("야호1");
+		vo.setGroup_name("야호");
+		vo.setMember("야호2");
+		vo.setRno(1);
+		mapper.insert(vo);
 	}
 	
 	//@Test
 	public void readTest() {
-		mapper.getList(43l);
+		
 	}
 	
+	//@Test
+	public void updateTest() {
+		
+	}
 	
 	//@Test
 	public void deleteTeset() {
-		//mapper.delete(3l);
-	}
+		mapper.delete(8l);
 		
+	}
+	
+	@Test
+	public void getList() {
+		mapper.getList("코끼리");
+	}
+	
+	
+	
 }

@@ -21,7 +21,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
     </form>
   </body>
   <script>
-    var regex = new RegExp('(.*?)\.(exe|sh|zip|alz)$') //정규 표현식
+    var regex = new RegExp('(.*?)\.(exe|sh|alz)$') //정규 표현식
     var maxSize = 10485760 // 10MB 제한
 
     //파일 사이즈 10MB 초과 또는 파일형식이 정규표현식이 아닌것을 업로드 시 alert창 띄우는 메서드
@@ -51,7 +51,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
           formData.append('uploadFile', files[i])
         }
         $.ajax({
-          url: '/uploadAjaxAction',
+          url: '/upload/uploadAjaxAction',
           processData: false,
           contentType: false,
           data: formData,
@@ -59,8 +59,8 @@ uri="http://java.sun.com/jsp/jstl/core"%>
           dataType: 'json',
           success: function (result) {
           },
-        })
-      }) 
+       })
+     }) 
  		$('#back').click(function () {
  		    self.location = '/review/list'
     	}) 
