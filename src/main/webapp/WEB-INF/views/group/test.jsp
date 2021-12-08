@@ -43,6 +43,8 @@ pageEncoding="UTF-8"%>
 			button[type=reset]{
 				display : none;			
 			}
+
+			
 	</style>
 	<head>
 		<meta charset="UTF-8" />
@@ -129,7 +131,7 @@ pageEncoding="UTF-8"%>
 				const Calendar = FullCalendar.Calendar
 				const group = "${group.group_name}";
 				
-				
+				// 이벤트 렌더 위해 가지고 옴 => 이거 클로저 가능할것같은데
 				const getEvent = (data) => {
 					let result;
 					$.ajax({
@@ -156,7 +158,9 @@ pageEncoding="UTF-8"%>
 					}));
 			
 				let event = getEvent(group);
-
+				
+				
+				// 이벤트 폼데이터 => 객체 반환을 위한 함수
 				const getFormData = () => {
 					let members =[]
 					$('input[name="member"]:checked').map((idx, member) =>
@@ -177,6 +181,7 @@ pageEncoding="UTF-8"%>
 					}	
 				};
 				
+				// 이벤트 클릭 했을 때 폼에 데이터 등록위한 함수
 				const setData = (eventData) => {
 					$('select[name="color"]').val(eventData.color)
 					$('input[name="title"]').val(eventData.title)
@@ -191,7 +196,7 @@ pageEncoding="UTF-8"%>
 						$('input[name="member"][value='+member+']').prop("checked",true))
 				}
 				
-				
+				//이벤트 클릭 핸들러 
 				const eventClickHandler = (e) => {
 					modal.show()
 					$('button.modify').show()
@@ -199,14 +204,13 @@ pageEncoding="UTF-8"%>
 					$('button[type="submit"]').hide()
 					
 					let cid = e.event._def.extendedProps.cid
-					
 					event = getEvent(group);
 					let eventData = event.find(i=> i.cid === cid)
-					
 					setData(eventData)
 
 				}
 				
+				//날짜 클릭 핸들러 => 모달 띄움
 				const dateClickHandler = (e) => {
 					console.log(e.dateStr)
 					$('input[name="startDate"]').val(e.dateStr)
@@ -216,17 +220,29 @@ pageEncoding="UTF-8"%>
 					modal.show()
 				}
 				
+				// 이벤트 호버했을 때 설명 띄움
 				const eventHoverHandeler = (info) => {
 					let desc = info.event._def.extendedProps.description_
+					let title = info.event._def.title
+					let member = info.event._def.extendedProps.member_
+				
+					let str = '<div class="tippy"><div><span>' +title+ '</span></div>'
+					str += '<div> <span>'+ desc+ '</span> </div><div>'
+					if(member) member.split(",").map( (mem) => str += '<span class="mem">'+mem+'</span>')
+					str += '</div></div>'
 					tippy(info.el, {
-			                content: desc
+			                content: str,
+			                allowHTML: true,
+			                
 			            })
 				}
-
+				
+				// 빈 함수 쓸려나?
 				const eventMountHandler =() => {
 					
 				}
 				
+				// 이벤트 드래그 , 리사이즈 했을때 날짜 수정
 				const evnetDropAndResizeHandler = (e) =>{
 					
 					let cid = e.event._def.extendedProps.cid
@@ -234,8 +250,6 @@ pageEncoding="UTF-8"%>
 					    startDate: e.event.startStr,
 					    endDate: e.event.endStr
 						  }
-					
-					
 					$.ajax({
 						type:'put',
 						url:'/group/test/'+cid,
@@ -243,7 +257,6 @@ pageEncoding="UTF-8"%>
 						contentType: 'application/json; charset=utf-8',
 						success : () => {
 							modal.hide()
-
 						},
 						error:  (xhr, status, er) => {
 				              console.log(xhr)
@@ -251,16 +264,15 @@ pageEncoding="UTF-8"%>
 					})//ajax 
 				}	
 				
-				
+				// 모달창 x버튼
 				$('form span').click(() =>{
 					modal.hide()
 					$('button[type="reset"]').trigger("click")
 				})
 				
 				
-				// 이벤트 전송
+				// 이벤트 전송함수
 				const eventSubmit = (data) => {
-					
 					let resCid
 					$.ajax({
 						type: "post",
@@ -275,13 +287,12 @@ pageEncoding="UTF-8"%>
 						error: (xhr, staturs, er) => {
 							console.log(xhr);
 						},
-					}); //ajax
-					
+					}); //ajax	
 					return resCid
 				}
 				
+				//이벤트 삭제 함수
 				const eventDelete = (cid) => {
-					
 			        $.ajax({
 			          type: 'delete',
 			          url: '/group/test/'+cid,
@@ -295,26 +306,23 @@ pageEncoding="UTF-8"%>
 			        }) //ajax
 				}
 				
-				// 이벤트 수정
+				// 이벤트 수정 핸들러
 				$('button.modify').click(function(e){
 					e.preventDefault()
 					let eventForm = getFormData();
 					let cid = eventForm.cid
 					// 삭제
-					
-					
 					eventDelete(cid)
 					let ev = calendar.getEventById(cid)
 		        	ev.remove()
 		        	// 다시 전송
 					cid = eventSubmit(eventForm);
-					
 					calendar.addEventSource(calToEvent([{...eventForm, cid}]))
 					$('button[type="reset"]').trigger("click")
 					
 				})
 				
-				// 이벤트 삭제 
+				// 이벤트 삭제 핸들러
 				$('button.delete').click(function(e){
 					e.preventDefault()
 					modal.hide()
@@ -328,7 +336,7 @@ pageEncoding="UTF-8"%>
 		        	$('button[type="reset"]').trigger("click")
 				})//delete click
 				
-				//이벤트 전송
+				//이벤트 전송 핸들러
 				$('button[type="submit"]').click(function (e) {
 					
 					e.preventDefault();
@@ -341,7 +349,7 @@ pageEncoding="UTF-8"%>
 					$('button[type="reset"]').trigger("click")
 				});//submit click
 				
-
+				// 캘린더 렌더
 				var calendarEl = document.getElementById("calendar");
 				var calendar = new FullCalendar.Calendar(calendarEl, {
 					headerToolbar: {
@@ -349,20 +357,18 @@ pageEncoding="UTF-8"%>
 						center: "title",
 						right: "dayGridMonth,listMonth",
 					},
+					events:event,
 					navLinks: true, // 세부 일정 보기 
-					
 					eventStartEditable : true ,
 					selectable: true,
-					dateClick :dateClickHandler,
 					dayMaxEvents: true,
 					progressiveEventRendering : true,
+					dateClick :dateClickHandler,
 					eventDidMount: eventMountHandler,
-					events:event,
 					eventResize : evnetDropAndResizeHandler,
 					eventClick: eventClickHandler,
 					eventMouseEnter: eventHoverHandeler,
 					eventDrop:evnetDropAndResizeHandler
-
 				}); //calender
 				calendar.render();
 			}); //event
