@@ -1,6 +1,6 @@
 package com.green.vo;
 
-import java.sql.Date;
+import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -27,3 +27,4 @@ public class UserVO {
 	private Date regDate;
 
 }
+

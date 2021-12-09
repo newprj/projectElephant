@@ -10,4 +10,5 @@ public interface UserMapper {
 	public UserVO login(UserVO vo);
 	public UserVO idCheck(String user_id);
 
+
 }

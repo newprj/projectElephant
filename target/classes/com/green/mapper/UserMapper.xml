@@ -4,6 +4,7 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.green.mapper.UserMapper">
 
+
 	<insert id="register">
 		insert into tbl_user(uno, user_id, password, name,  email) 
 			values(seq_uno.nextval,#{user_id},#{password},#{name},#{email})
@@ -26,3 +27,4 @@
 	</select>
 
 </mapper>
+

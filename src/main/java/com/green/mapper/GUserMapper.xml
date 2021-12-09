@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.green.mapper.GUserMapper">
+	
+	<insert id="groupSignUp">
+		<selectKey keyProperty="cno" order="BEFORE" resultType="long">
+			select seq_cno.nextval from dual
+		</selectKey>
+		insert into tbl_groupuser (cno, user_id, group_name)
+			values(#{cno}, #{user_id}, #{group_name})
+	</insert>
+	
+	<select id="listByGroup" resultType="com.green.vo.GUserVO">
+		select * from tbl_groupuser where group_name= #{group_name}
+	</select>
+</mapper>

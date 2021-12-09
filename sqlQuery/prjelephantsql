@@ -1,0 +1,156 @@
+SELECT  'DROP TABLE ' || object_name || ' CASCADE CONSTRAINTS;'
+  FROM    user_objects
+WHERE   object_type = 'TABLE';
+
+-- spring database에서 모든 table을 삭제 했습니다
+
+drop table tbl_group;
+create table tbl_group(
+    gno number,
+    group_name varchar2(100),
+    leader varchar2(30),
+    subject varchar2(30),
+    description varchar2(500),
+    member_number number);
+delete from tbl_group;
+select * from tbl_group;
+select count(*) from tbl_group where group_name='테스트';
+create sequence seq_gno;
+drop sequence seq_gno;
+delete from tbl_group where gno=81;
+commit;
+
+
+
+create table tbl_calendar(
+    cid number,
+    title varchar2(50),
+    startDate varchar2(50),
+    endDate varchar2(50),
+    editable varchar2(1) default 'N',
+    color varchar2(50),
+    description_ varchar2(500),
+    location varchar2(100),
+    group_ varchar2(500),
+    user_ varchar2(50),
+    member_ varchar2(50));
+create sequence seq_cid;
+drop table tbl_calendar;
+select * from tbl_calendar;
+select max(cid) from tbl_calendar;
+delete from tbl_calendar;
+commit;
+select * from tbl_board;
+update tbl_calendar set color='#9775fa';
+commit;
+
+
+
+drop table tbl_user;
+
+
+create table tbl_user(
+    uno number,
+    user_id varchar2(30),
+    password varchar2(30),
+    name varchar2(30),
+    email varchar2(30));
+
+create sequence seq_uno;
+drop sequence seq_uno;
+
+drop table tbl_group;
+create table tbl_group(
+    gno number,
+    group_name varchar2(100),
+    leader varchar2(30),
+    subject varchar2(30),
+    description varchar2(500),
+    member_number number);
+delete from tbl_group;
+select * from tbl_group;
+create sequence seq_gno;
+drop sequence seq_gno;
+
+drop table tbl_groupuser;
+create table tbl_groupuser(
+    cno number,
+    authorized varchar2(1) default 'N',
+    user_id varchar2(30),
+    group_name varchar2(30));
+
+select * from tbl_groupuser;
+create sequence seq_cno;
+drop sequence seq_cno;
+create table tbl_review(
+    rno number,
+    group_name varchar2(30),
+    title varchar2(200),
+    content varchar2(2000),
+    writer varchar2(30),
+    regdate date default sysdate );    
+
+create sequence seq_rno;
+
+drop sequence seq_rno;
+create table tbl_qanda(
+    qno number,
+    title varchar2(200),
+    content varchar2(2000),
+    writer varchar2(30),
+    regdate date default sysdate );    
+    
+create sequence seq_qno;
+drop sequence seq_qno;    
+create table tbl_board(
+    bno number,
+    group_name varchar2(30),
+    title varchar2(200),
+    content varchar2(2000),
+    writer varchar2(30),
+    regdate date default sysdate );  
+
+alter table tbl_board add constraint pk_board primary key(bno);
+select * from tbl_board;
+delete from tbl_board where title is null;
+
+create sequence seq_bno;
+drop sequence seq_bno;    
+commit;
+
+select * from tbl_user;
+select * from tbl_group;
+
+
+create table board_file(
+    uuid varchar2(100),
+    uploadPath varchar2(200),
+    fileName varchar2(100),
+    fileType char(1) default '1',
+    bno number);
+
+drop table board_file;
+select * from board_file;
+select * from tbl_board;
+commit;
+    
+CREATE DATABASE spring CHARACTER SET utf8 COLLATE utf8_general_ci;
+    
+insert into tbl_group(group_name) values('한글');
+select * from tbl_group;
+
+select * from user_sequences;
+select * from tbl_group;
+
+
+create table board_reply(
+    rno number,
+    bno number,
+    reply varchar2(500),
+    replyer varchar2(100),
+    replydate date default sysdate);
+
+create sequence board_rno;
+select * from board_reply;
+
+commit;

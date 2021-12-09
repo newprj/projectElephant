@@ -6,9 +6,7 @@ import org.springframework.stereotype.Service;
 import com.green.mapper.UserMapper;
 import com.green.vo.UserVO;
 
-import lombok.Getter;
 import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -40,7 +38,6 @@ public class UserServiceImpl implements UserService {
 	public UserVO idCheck(String user_id) {
 		return usermapper.idCheck(user_id);
 	}
-
 
 
 }
