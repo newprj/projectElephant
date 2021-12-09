@@ -31,4 +31,10 @@ public class UserServiceImpl implements UserService{
 		return mapper.userInsert(vo);
 	}
 
+	@Override
+	public int userSusp(UserVO vo) {
+		log.info("2) 서비스에서 사용자 계정 정지, 해제");
+		return mapper.susp(vo);
+	}
+
 }

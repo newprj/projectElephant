@@ -52,7 +52,7 @@ public class ControllerTester {
 		
 	}
 	
-	//@Test
+	@Test
 	public void usertest() {
 		for (int i = 0; i <10; i++) {
 			UserVO vo=new UserVO();
@@ -65,7 +65,7 @@ public class ControllerTester {
 		
 	}
 	
-	@Test
+	//@Test
 	public void studytest() {
 		for (int i = 0; i <10; i++) {
 			StudyVO vo=new StudyVO();

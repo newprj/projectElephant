@@ -13,4 +13,9 @@
 		insert into tbl_user(uno, user_id, password,name,email) 
 			values(seq_uno.nextval, #{user_id},#{password},#{name},#{email})
 	</insert>
+	
+	<update id="susp">
+		update tbl_user set suspension=#{suspension}, suspContent=#{suspContent},suspDate=#{suspDate}
+			where user_id=#{user_id}
+	</update>
 </mapper>

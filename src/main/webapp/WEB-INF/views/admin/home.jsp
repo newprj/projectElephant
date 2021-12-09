@@ -25,6 +25,28 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 }
 
 
+.modal {
+	display:none;
+	position: fixed;
+	z-index: 1;
+	left: 0;
+	top:0;
+	width: 100%;
+	height:100%;
+	overflow:auto;
+	background-color:rgb(0,0,0);
+	background-color:rgba(0,0,0,0.4);
+}
+
+.modal-content{
+	background-color:#fefefe;
+	margin:15% auto;
+	padding: 20px;
+	border: 1px solid #888;
+       width: 30%;
+
+}
+
 
 </style>
 <title>Admin 페이지</title>
@@ -37,7 +59,7 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 	
 	<div class='userList'>
 		<h3>회원 리스트</h3>
-		<h5>회원에게 쪽지, 정지기능</h5>
+		<h5>회원에게 쪽지</h5>
 		<table>
 			<thead>
 				<tr>
@@ -52,11 +74,16 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 			<c:forEach items="${list}" var="i" varStatus="status"  begin="0" end='9'>
 				<tr>
 					<td>${status.count}</td>
-					<td>${i.user_id}</td>
+					<td id='userId${status.index}'>${i.user_id}</td>
 					<td>${i.name}</td>
 					<td></td>
-					<td><button>쪽지</button></td>
-					<td><button>정지</button></td>
+					<td><button id='letter'>쪽지 보내기</button></td>
+					<td><button class='susp' >
+						<c:choose>
+							<c:when test="${i.suspension eq 'Y'}">해제 하기</c:when>
+							<c:otherwise>정지 하기</c:otherwise>
+						</c:choose>	
+					</button></td>
 				</tr>
 			</c:forEach>
 		</table>
@@ -91,6 +118,9 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 		</table>
 	</div>
 	
+	
+	
+	
 	<div class='qna'>
 	<h3><a href='/qna/list'>Q&A 리스트</a></h3>
 	
@@ -122,13 +152,82 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 		
 	</div>
 	
+	
+	<div class="modal" id="modal" >
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" style='float:right;'>X</button>
+					<h4 class="modal-title">댓글 창 </h4>
+				</div>
+				<div class="modal-body">
+					<div class="modal-group">
+						<label>ID</label><br/>
+						<input name="modelId"/>
+					</div>
+					<div class="modal-group">
+						<label>정지 이유</label><br/>
+						<textarea name="modalContent"></textarea>
+						
+					</div>
+					<div class="modal-group">
+						<label>날짜</label><br/>
+						<input name="modalDate"/>
+					</div>
+				</div><br/>
+				<div class="modal-footer">
+					<button type="button" id="register">등록</button>
+					<button type="button" class="close">닫기</button>
+				</div>
+				
+		</div>
+	</div>
 </body>
 <script type="text/javascript">
 	
 	$(document).ready(function () {
 		
+		var modal=$(".modal")
+		var modalContent=modal.find("textarea[name='modalContent']")
+		var modalId=modal.find("input[name='modelId']")
+		var modalDate=modal.find("input[name='modalDate']")
+		var today=new Date()
+		$(".susp").click(function(){
+			console.log('회원정지 버튼 눌림')
+			modalDate.closest('div').hide()
+			$(".modal").show()
+			var idx=$(".susp").index(this)
+			var uid=$("#userId"+idx).text()
+			modalId.val(uid)
+
+			var form={
+				user_id:modalId.val(),
+				suspension:'Y',
+				suspContent:modalContent.val(),
+				suspDate:today,
+			}
+			
+			
+			$("#register").off('click').on('click',function(){
+				$.ajax({
+					url:"/admin/susp",
+					type:"post",
+					data:JSON.stringify(form),
+					contentType:"application/json; charset=utf-8",
+					dataType:"text",
+					success:function(result){
+						$("#modal").hide();
+						location.reload();
+					},
+					error:function(){
+						alert("실패")
+					}
+				})
+			})
+		})
 		
-		
+		$(".close").click(function(){
+			$(".modal").hide()
+		})
 	})
 
 </script>

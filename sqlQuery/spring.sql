@@ -71,6 +71,10 @@ create table tbl_user(
     email varchar2(30));
 
 create sequence seq_uno;
+alter table tbl_user add suspension varchar2(50) check(suspension in('Y','N'))
+alter table qna_tbl add up_date timestamp;
+
+
 
 drop table tbl_group;
 create table tbl_group(

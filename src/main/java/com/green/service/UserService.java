@@ -7,4 +7,5 @@ import com.green.vo.UserVO;
 public interface UserService {
 	public List<UserVO> allList();
 	public int insert(UserVO vo);
+	public int userSusp(UserVO vo);
 }

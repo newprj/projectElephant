@@ -20,4 +20,10 @@ public class UserVO {
 	private String password;
 	private String name;
 	private String email;
+	
+	//정지 
+	private String suspension;
+	private String suspContent;
+	private Date suspDate;
+	
 }
