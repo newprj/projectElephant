@@ -3,12 +3,28 @@
 	PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.green.mapper.UserMapper">
-	<insert id="signUp">
-		<selectKey keyProperty="uno" order="BEFORE" resultType="long">
-			select seq_uno.nextval from dual
-		</selectKey>
-		insert into tbl_user (uno, user_id, password, name, email)
-			values(#{uno}, #{user_id}, #{password}, #{name}, #{email} )
+
+
+	<insert id="register">
+		insert into tbl_user(uno, user_id, password, name,  email) 
+			values(seq_uno.nextval,#{user_id},#{password},#{name},#{email})
 	</insert>
+	
+	<update id="modify">
+		update tbl_user set password = #{password}, name = #{name}, email = #{email} where user_id = #{user_id}
+	</update>
+	
+	<delete id="delete">
+		delete from tbl_user where user_id = #{user_id} and password = #{password}
+	</delete>
+
+	<select id="login" resultType="com.green.vo.UserVO">
+		select * from tbl_user where user_id = #{user_id} and password = #{password}
+	</select>
+	
+	<select id="idCheck" resultType="com.green.vo.UserVO">
+		select user_id from tbl_user where user_id = #{user_id}
+	</select>
+
 </mapper>
 
