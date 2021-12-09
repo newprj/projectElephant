@@ -6,6 +6,7 @@ import lombok.ToString;
 @Getter
 @ToString
 public class PageDTO {
+
 	private int startPage;// 시작 페이지
 	private int endPage;// 끝 페이지
 	private boolean prev,next;// 이전 다음 페이지가 있는가? 

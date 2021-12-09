@@ -3,6 +3,8 @@ package com.green.vo;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,6 +22,9 @@ public class UserVO {
 	private String password;
 	private String name;
 	private String email;
+	
+	@JsonFormat(pattern="yyyy-MM-dd")
+	private Date regDate;
 	
 	//정지 
 	private String suspension;

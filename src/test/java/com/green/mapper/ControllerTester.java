@@ -52,19 +52,7 @@ public class ControllerTester {
 		
 	}
 	
-	@Test
-	public void usertest() {
-		for (int i = 0; i <10; i++) {
-			UserVO vo=new UserVO();
-			vo.setUser_id("id"+i);
-			vo.setEmail("user"+i+"@email.com");
-			vo.setPassword("1234"+i);
-			vo.setName("user"+i);
-			userService.insert(vo);
-		}
 		
-	}
-	
 	//@Test
 	public void studytest() {
 		for (int i = 0; i <10; i++) {
