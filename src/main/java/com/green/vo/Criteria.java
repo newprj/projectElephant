@@ -8,11 +8,16 @@ import lombok.ToString;
 @Setter
 @ToString
 public class Criteria {
+
 	
 	private int pageNum;
 	private int amount;
 	private String group_name;
 	private Long bno;
+	
+	//검색을 위한 변수
+	private String type;
+	private String keyword;
 	
 	public Criteria() {
 		this(1, 10);
@@ -42,6 +47,9 @@ public class Criteria {
 		this.bno = bno;
 	}
 	
+	public String[] getTypeArr() { //mybatis에서  typeArr을 사용 
+		return type==null? new String[] {} : type.split("");//문자열을 공백으로 분리 
+	}
 	
-	
+
 }

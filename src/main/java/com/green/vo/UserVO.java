@@ -1,6 +1,7 @@
 package com.green.vo;
 
 import java.util.Date;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -12,11 +13,10 @@ import lombok.ToString;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
 @Setter
+@Getter
 @ToString
 public class UserVO {
-
 	private Long uno;
 	private String user_id;
 	private String password;
@@ -25,6 +25,10 @@ public class UserVO {
 	
 	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date regDate;
-
+	
+	//정지 
+	private String suspension;
+	private String suspContent;
+	private Date suspDate;
+	
 }
-

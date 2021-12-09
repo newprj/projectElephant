@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.green.mapper.QnaMapper">
+
+	<sql id="criteria">
+		<trim prefix="(" suffix=") and " prefixOverrides="OR">
+			    	<foreach item="type" collection="typeArr">
+			    		<trim prefix="OR">
+			    			<choose>
+			    				<when test="type== 'T'.toString()">
+			    					title like '%'||#{keyword}||'%'
+			    				</when>
+			    				<when test="type== 'W'.toString()">
+			    					writer like '%'||#{keyword}||'%'
+			    				</when>
+			    			</choose>
+			    		</trim>
+			    	</foreach>
+		    </trim>
+	</sql>
+	
+	<select id="listqna" resultType="com.green.vo.QnaVO" >
+		select * from qna_tbl order by qno desc
+	</select>
+
+	<select id="listqnaWithPaging" resultType="com.green.vo.QnaVO">
+		<![CDATA[
+			select qno, title, writer,q_content,reg_date,up_date,pwd,p_group
+			from (
+			    select /*+ index_desc(qna_tbl pk_qno) */
+				    rownum rn, qno, title, writer,q_content,reg_date,up_date,pwd,p_group
+				    	from 
+				    	(select * from  qna_tbl 
+					    	order by up_date desc nulls LAST
+					   	)
+				    where 
+		]]>
+		<include refid="criteria"></include>
+	    <![CDATA[
+			    rownum <=#{pageNum} * #{amount}
+		    )
+		    where rn> (#{pageNum}-1) * #{amount}  
+		]]>
+	</select> 
+
+	
+	<insert id="insertQna">
+		insert into qna_tbl(qno, title, writer,q_content,reg_date,up_date,pwd,p_group) 
+			values(qna_seq.nextval, #{title},#{writer},#{q_content},#{reg_date},#{up_date, jdbcType=VARCHAR},#{pwd, jdbcType=TIMESTAMP},#{p_group})
+	</insert>
+	
+	<insert id="insertQnaKey">
+		<selectKey keyProperty="qno" order="BEFORE" resultType="Long">
+			select qna_seq.nextval from dual
+		</selectKey>
+		insert into qna_tbl(qno, title, writer,q_content,reg_date,up_date,pwd,p_group) 
+			values(#{qno}, #{title},#{writer},#{q_content},#{reg_date},#{up_date},#{pwd, jdbcType=TIMESTAMP},#{p_group})
+	</insert>
+	
+	<select id="get" resultType="com.green.vo.QnaVO" >
+		select * from qna_tbl where qno=#{qno} order by up_date desc nulls LAST
+	</select>
+	
+	<update id="update">
+		update qna_tbl set title=#{title},writer=#{writer},q_content=#{q_content},
+			up_date=#{up_date},pwd=#{pwd, jdbcType=TIMESTAMP},p_group=#{p_group}
+				where qno=#{qno}
+	</update>
+	
+	<delete id="deleteByQno">
+		delete from qna_tbl where qno=#{qno}
+	</delete>
+	
+	<select id="totalCount" resultType="int">
+		select count(*) from qna_tbl where qno>0
+	</select>
+</mapper>
