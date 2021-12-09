@@ -5,9 +5,16 @@ prefix="c" %>
 <html>
 	<head>
 		<meta charset="UTF-8" />
-		<title>Insert title here</title>
+		
+		 <link
+			href="https://cdn.quilljs.com/1.3.6/quill.snow.css"
+			rel="stylesheet"
+		/>
+		<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 		<script src="//code.jquery.com/jquery-3.6.0.js"></script>
-		<script src="/resources/js/fileUpload.js" type="text/javascript"></script>
+    <script src="/resources/js/fileUpload.js" type="text/javascript"></script>
+    <title>Insert title here</title>
+	
 	</head>
 	<body>
 		<form>
@@ -20,13 +27,13 @@ prefix="c" %>
 				<input name="group_name" type="text" value="${board.group_name}" />
 			</div>
 			<div>
-				<label for="content"> 내용 </label>
-				<textarea name="content">${board.content}</textarea>
-			</div>
-			<div>
 				<label for="writer"> 저자 </label>
 				<input name="writer" type="text" value="${board.writer}" />
 			</div>
+			<div>
+				<div id="editor" style="max-height: 400px; overflow: auto"></div>
+			</div>
+			
 			<div class="file">
 				<input type="file" name="file" multiple />
 			</div>
@@ -45,17 +52,54 @@ prefix="c" %>
 		
 			$(document).ready(function (e) {
 				const uploadClone = $(".file").clone();
+				var myEditor = document.querySelector('#editor')
+				let content = '${board.content}'
+				
 				getFileList('${cri.bno}')
+				
+				const imageHandler = (e) => {
+					console.log(e)
+					let input = $('<input type="file" accept="image/*">')
+					input.click()
+					$(input).change(function(e){
+						let formData = new FormData();
+						let uploadFile = $(input)[0].files[0];
+					
+						formData.append("uploadFile", uploadFile );
+						
+						$.ajax({
+							type: "post",
+							url: "/upload",
+							processData: false,
+							contentType: false,
+							data: formData,
+							dataType: "json",
+							
+							success: (res) => {
+								console.log("2)");
+								console.log(res);
+								const IMG_URL = "/display?fileName="+ encodeURIComponent(
+								res[0].uploadPath + "/" + res[0].uuid + "_" + res[0].fileName
+								);
+								
+								let range = quill.getSelection()
+								console.log(range)
+								quill.insertEmbed(range, 'image', IMG_URL); 
+								},
+							error: (xhr, status, er) => console.log(xhr),
+						})// ajax
+					})// click
+				}//imageHandletr
+				
+				
 				
 				$('input[type="file"]').change(function (e) {
 					let formData = new FormData();
 					let uploadFiles = $('input[name="file"]')[0].files;
-
 					let files = Object.values(uploadFiles);
 					files
 						.filter((file) => checkExtension(file.name, file.size))
 						.map((file) => formData.append("uploadFile", file));
-
 					$.ajax({
 						type: "post",
 						url: "/upload",
@@ -75,6 +119,7 @@ prefix="c" %>
 					
 				}); //file
 				
+				
 				$(".uploadResult").on("click", "button", function (e) {
 					e.preventDefault();
 					
@@ -85,7 +130,6 @@ prefix="c" %>
 					let data = { fileName, fileType };
 					attachList = attachList.filter((i) => i.uuid !== uuid);
 					console.log(data)
-
 					$.ajax({
 						url: "/delete",
 						type: "post",
@@ -100,12 +144,11 @@ prefix="c" %>
 				
 				const getForm = () => ({
 					bno: "${cri.bno}",
-					content: $('textarea[name="content"]').val(),
+					content: myEditor.children[0].innerHTML,
 					group_name: $('input[name="group_name"]').val(),
 					writer: $('input[name="writer"]').val(),
 					title: $('input[name="title"]').val(),
 				});
-
 				
 				$(".modify").click(function (e) {
 					e.preventDefault();
@@ -127,7 +170,6 @@ prefix="c" %>
 						}, //error
 					}); //ajax   
 				}); // modify c
-
 				$(".delete").click(function (e) {
 					e.preventDefault();
 					$.ajax({
@@ -142,13 +184,39 @@ prefix="c" %>
 						},
 					}); //ajax
 				}); //delete click
-
 				$(".go_board").click((e) => {
 					e.preventDefault();
 					location.href =
 						"/group/board/${cri.group_name}/${cri.pageNum}/${cri.amount}";
 				});
+				
+				const toolbarOptions = [
+					[{ header: [1, 2, 3, 4, 5, 6, false] }],
+	        		[{ 'list': 'ordered'}, { 'list': 'bullet' }],
+					["bold", "italic", "underline", "strike"],
+					[{ color: [] }, { background: [] }],
+					[{ align: [] }],
+					[ "image"],
+					["clean"],
+				];
+		let quill = new Quill("#editor", {
+			theme: "snow",
+			modules: {
+				toolbar: toolbarOptions,
+				
+			},
+			
+		});
+		
+		
+		
+	let toolbar = quill.getModule('toolbar')
+	toolbar.addHandler('image', imageHandler)
+	quill.clipboard.dangerouslyPasteHTML(content);
+	
 			});
+			
+			
 		</script>
 	</body>
 </html>

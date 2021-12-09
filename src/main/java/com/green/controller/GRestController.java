@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-
+import com.green.mapper.BoardMapper;
 import com.green.service.BoardService;
 import com.green.service.CalendarService;
 import com.green.service.GUserService;
@@ -291,6 +291,23 @@ public class GRestController {
 	@GetMapping("/model")
 	public ModelAndView testView(Model model) {
 		return new ModelAndView("/abc");
+	}
+	
+	@GetMapping("/model2")
+	public ModelAndView testView2() {
+		ModelAndView mv = new ModelAndView("/quillTestBoard");
+		mv.addObject("bb" , boardService.showList("퀼테스트") );
+		
+		return mv;
+	}
+	
+	
+	
+	
+	@GetMapping(value="/temp/{bno}",  produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public ResponseEntity<BoardVO> readOne(@RequestParam("bno") Long bno){
+		BoardVO board = boardService.read(bno);
+		return new ResponseEntity<BoardVO>(board, HttpStatus.OK);
 	}
 	
 	

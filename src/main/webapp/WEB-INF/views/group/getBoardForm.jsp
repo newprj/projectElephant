@@ -51,13 +51,14 @@ prefix="c" %>
 				<input type="text" value="${board.group_name}" />
 			</div>
 			<div>
-				<label for="content"> 내용 </label>	
-				<textarea >${board.content}</textarea>
-			</div>
-			<div>
 				<label for="writer"> 저자 </label>
 				<input type="text" value="${board.writer}" />
 			</div>
+			<div>
+				<div class="content"> ${board.content} </div>	
+			
+			</div>
+			
 			<div>
 				<div class="uploadResult">
 					<h5>첨부파일</h5>
@@ -113,14 +114,18 @@ prefix="c" %>
 				$('.modal').hide()
 			})
 			
+			
+			
 			// 글삭제
-			$(".content > .delete").click(function (e) {
+			$("div > button.delete").click(function (e) {
+				
 				e.preventDefault();
 				$.ajax({
 					type: "delete",
-					url: "/group/board/${bno}",
+					url: "/group/board/${cri.bno}",
 					success: () => {
-						location.href = "/group/board/${cri.group_name}";
+						location.href =
+							"/group/board/${cri.group_name}/${cri.pageNum}/${cri.amount}";
 					},
 					error: (xhr, status, er) => {
 						console.log(status);
