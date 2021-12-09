@@ -77,7 +77,7 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 	}
 	
 	
-	var regex=new RegExp("(.*?)\.(exe|sh|zip|alz)$");
+	var regex=new RegExp("(.*?)\.(exe|sh|alz)$");
 	var maxSize=10485760
 	
 	function checkExtension(fileName,fileSize){
@@ -119,7 +119,7 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 				str+="><div>"
 				str+="<span> "+obj.fileName+"</span>"
 				str+="<button type='button' data-file=\'"+fileCallPath+"\' data-type='file' class='btn-circle'><i>X</i></button></br>"
-				str+="<img src='/resources/img/attach.png'></a>"
+				str+="<img src='/resources/img/attach.png' style=' width:15px; height:15px;'></a>"
 				str+="</div>"	
 				str+="</li>"
 			}

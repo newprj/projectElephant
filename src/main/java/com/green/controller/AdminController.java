@@ -20,7 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class AdminController {
 	@Setter(onMethod_=@Autowired)
-	UserService service;
+	UserService userService;
 	
 	@Setter(onMethod_=@Autowired)
 	StudyService studyService;
@@ -31,7 +31,7 @@ public class AdminController {
 	@GetMapping("/home")
 	public void adminHome(Model model) {
 		log.info("admin page");
-		model.addAttribute("list",service.allList());
+		model.addAttribute("list",userService.allList());
 		model.addAttribute("group",studyService.allList());
 		model.addAttribute("qna",qnaService.list());
 		

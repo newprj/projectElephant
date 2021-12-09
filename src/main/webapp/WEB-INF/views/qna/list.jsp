@@ -73,10 +73,7 @@ li {
 				<td><a class='detail' id='detail${i.qno}' href='${i.qno}' data-password='${i.pwd}'>${i.title}</a></td>
 				<td>${i.writer}</td>
 				<td>
-				<c:choose>
-					<c:when test="${i.up_date == null}"><fmt:formatDate value="${i.reg_date}" pattern="yyyy-MM-dd a hh:mm" /></c:when>
-					<c:otherwise><fmt:formatDate value="${i.up_date}" pattern="yyyy-MM-dd a hh:mm" /></c:otherwise>
-				</c:choose>
+					<fmt:formatDate value="${i.up_date}" pattern="yyyy-MM-dd a hh:mm" />
 				</td>
 				<td><button data-qno='${i.qno}' class="writeMod">수정</button></td>
 				<td><button onclick="location='/qna/remove?qno=${i.qno}'" id="writeRemove">삭제</button></td>

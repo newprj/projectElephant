@@ -12,7 +12,11 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.green.service.QnaService;
+import com.green.service.StudyService;
+import com.green.service.UserService;
 import com.green.vo.QnaVO;
+import com.green.vo.StudyVO;
+import com.green.vo.UserVO;
 import com.green.vo.Criteria;
 import com.green.vo.QnaReplyVO;
 
@@ -25,11 +29,17 @@ import lombok.extern.log4j.Log4j;
 public class ControllerTester {
 	@Setter(onMethod_=@Autowired)
 	private QnaService service;
+	
+	@Setter(onMethod_=@Autowired)
+	private UserService userService;
+	
+	@Setter(onMethod_=@Autowired)
+	private StudyService studyService;
 	Date date=new Date();
 	
-	@Test
+	//@Test
 	public void test() {
-		for (int i = 0; i < 100; i++) {
+		for (int i = 0; i <50; i++) {
 			QnaVO vo =new QnaVO();
 			vo.setP_group("public");
 			vo.setQ_content("내용"+i);
@@ -42,6 +52,32 @@ public class ControllerTester {
 		
 	}
 	
+	//@Test
+	public void usertest() {
+		for (int i = 0; i <10; i++) {
+			UserVO vo=new UserVO();
+			vo.setUser_id("id"+i);
+			vo.setEmail("user"+i+"@email.com");
+			vo.setPassword("1234"+i);
+			vo.setName("user"+i);
+			userService.insert(vo);
+		}
+		
+	}
+	
+	@Test
+	public void studytest() {
+		for (int i = 0; i <10; i++) {
+			StudyVO vo=new StudyVO();
+			vo.setDescription("설명"+i);
+			vo.setGroup_name("g_name"+i);
+			vo.setLeader("leader"+i);
+			vo.setMember_number(i+1);
+			vo.setSubject("주제"+i);
+			studyService.insert(vo);
+		}
+		
+	}
 	//@Test
 	public void sele() {
 		service.list();

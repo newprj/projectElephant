@@ -2,8 +2,9 @@
     pageEncoding="UTF-8"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core"
 prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %> 
-<script
-  src="https://code.jquery.com/jquery-3.6.0.js"></script>
+
+<jsp:useBean id="today" class="java.util.Date" />
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,17 +16,15 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 	text-align:right;
 }
 
-.userList {
+.userList, .study,.qna , .letter{
 	width:50%;
 	height:500px;
 	float:left;
+	overflow:auto;
+	
 }
 
-.study {
-	width:50%;
-	height:500px;
-	float:left;
-}
+
 
 </style>
 <title>Admin 페이지</title>
@@ -33,8 +32,8 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 </head>
 <body>
 	<h1>Admin page</h1>
-	<h3>타이틀 누르면 해당 페이지로 이동,받은 쪽지 리스트도 보이도록, 방문자 평균 그래프로 보이게</h3>
-	<h5 id='today'>Today : 방문자수(가능하면)</h5>
+	<h3>받은 쪽지 리스트도 보이도록, 방문자 평균 그래프로 보이게</h3>
+	<h5 id='today'><fmt:formatDate value="<%= today %>" pattern="yyyy-MM-dd" /> : 방문자수(가능하면)</h5>
 	
 	<div class='userList'>
 		<h3>회원 리스트</h3>
@@ -45,15 +44,19 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 				  <th>no.</th>
 				  <th>아이디</th>
 	              <th>이름</th>
-	              <th>이메일</th>
+	              <th>가입일</th>
+	              <th>쪽지</th>
+	              <th>회원 정지</th>
 				</tr>
 			</thead>
-			<c:forEach items="${list}" var="i" varStatus="status"  begin="1" end='10'>
+			<c:forEach items="${list}" var="i" varStatus="status"  begin="0" end='9'>
 				<tr>
 					<td>${status.count}</td>
 					<td>${i.user_id}</td>
 					<td>${i.name}</td>
-					<td>${i.email}</td>
+					<td></td>
+					<td><button>쪽지</button></td>
+					<td><button>정지</button></td>
 				</tr>
 			</c:forEach>
 		</table>
@@ -69,56 +72,59 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 				  <th>스터디명</th>
 	              <th>주제</th>
 	              <th>스터디장</th>
-	              <th>내용</th>
-	              <th>인원</th>
+	              <th>인원수</th>
+	              <th>내용확인</th>
+	              <th>승인여부</th>
 				</tr>
 			</thead>
-			<c:forEach items="${group}" var="i" varStatus="status"  begin="1" end='10'>
+			<c:forEach items="${group}" var="i" varStatus="status"  begin="0" end='9'>
 				<tr>
 					<td>${status.count}</td>
 					<td>${i.group_name}</td>
 					<td>${i.subject}</td>
 					<td>${i.leader}</td>
-					<td>${i.description}</td>
-					<td>${i.member_number}</td>
+					<td>${i.member_number}명</td>
+					<td><a href='#'>확인</a></td>
+					<td>Y/N</td>
 				</tr>
 			</c:forEach>
 		</table>
 	</div>
 	
 	<div class='qna'>
-	<h3>Q&A 리스트</h3>
-	<h5>a태그로 게시물로 가서 답변 달수 있도록/ admin은 private pwd 보이게 하기(작성자가 잊어버릴 경우를 위해)</h5>
+	<h3><a href='/qna/list'>Q&A 리스트</a></h3>
+	
 		<table>
 			<thead>
 				<tr>
 				  <th>no.</th>
 	              <th>제목</th>
-				  <th>공개유무</th>
+				  <th>비밀번호</th>
 	              <th>아이디</th>
 	              <th>등록일</th>
+	              <th>조회수</th>
 				</tr>
 			</thead>
-			<c:forEach items="${qna}" var="i" varStatus="status" begin="1" end='10'>
+			<c:forEach items="${qna}" var="i" varStatus="status" begin="0" end='9'>
 				<tr>
 					<td>${status.count}</td>
-					<td>${i.title}</td>
-					<td>${i.p_group}</td>
+					<td><a href="/qna/detail?qno=${i.qno}">${i.title}</a></td>
+					<td>${i.pwd}</td>
 					<td>${i.writer}</td>
-					<td>
-						<c:choose>
-							<c:when test="${i.up_date == null}"><fmt:formatDate value="${i.reg_date}" pattern="yyyy-MM-dd a hh:mm" /></c:when>
-							<c:otherwise><fmt:formatDate value="${i.up_date}" pattern="yyyy-MM-dd a hh:mm" /></c:otherwise>
-						</c:choose>
-					</td>
+					<td><fmt:formatDate value="${i.up_date}" pattern="yyyy-MM-dd a hh:mm" /></td>
+					<td>만들기</td>
 				</tr>
 			</c:forEach>
 		</table>
 	</div>
-	
+	<div class="letter">
+		<h3>받은 쪽지</h3>
+		
+	</div>
 	
 </body>
 <script type="text/javascript">
+	
 	$(document).ready(function () {
 		
 		

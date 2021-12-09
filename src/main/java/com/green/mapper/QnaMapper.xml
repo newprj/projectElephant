@@ -22,7 +22,7 @@
 	</sql>
 	
 	<select id="listqna" resultType="com.green.vo.QnaVO" >
-		select * from qna_tbl order by qno
+		select * from qna_tbl order by qno desc
 	</select>
 
 	<select id="listqnaWithPaging" resultType="com.green.vo.QnaVO">

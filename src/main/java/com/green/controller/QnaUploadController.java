@@ -40,7 +40,7 @@ import oracle.jdbc.proxy.annotation.Post;
 @RestController
 @RequestMapping("/upload/*")
 @Slf4j
-public class UploadController {
+public class QnaUploadController {
 	
 	@Setter(onMethod_=@Autowired)
 	private QnaService service;

@@ -88,7 +88,7 @@ li {
 		console.log(choice)
 	}
 	
-	var regex=new RegExp("(.*?)\.(exe|sh|zip|alz)$");
+	var regex=new RegExp("(.*?)\.(exe|sh|alz)$");
 	var maxSize=5242880
 	function checkExtension(fileName,fileSize){
 		if(fileSize >= maxSize){
