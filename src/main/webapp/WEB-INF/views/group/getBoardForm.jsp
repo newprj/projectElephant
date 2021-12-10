@@ -110,13 +110,11 @@ prefix="c" %>
 		
 		   $(document).ready(function(e){
 			 let attachList = [];
-			 getFileList('${cri.bno}')
+			 getFileListAtRead('${cri.bno}')
 		    $('div.modal > div > span').click(function(e){
 				$('.modal').hide()
 			})
-			
-			
-			
+
 			// 글삭제
 			$(".deleteBoard").click(function (e) {
 				

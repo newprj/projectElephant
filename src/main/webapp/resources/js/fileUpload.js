@@ -48,8 +48,6 @@ const getImgFileString = (file) => {
 
 
 
-
-
 const getFileString = (file) =>{
 	let str = "";
 	let fileCallpath = encodeURIComponent(
@@ -98,6 +96,30 @@ const getFileList = (bno) =>{
 			}
 			else{
 				str += getFileString(file)
+			}
+		})//map
+		$('.uploadResult ul').html(str)
+	}) //getJSON
+}
+
+const getFileListAtRead = (bno) => {
+	$.getJSON("/group/getFileList", {bno} , (files) =>{
+		let str =""
+		files.map( file => {
+			attachList.push(file) // 수정할때 넣음
+			if(file.fileType){
+				let fileCallpath = encodeURIComponent(
+						file.uploadPath + "/_s" + file.uuid + "_" + file.fileName
+					);
+				str += "<li><div><span>" + file.fileName + "</span>";
+				str += "<img src='/display?fileName=";
+				str += fileCallpath + "'></div></li>";
+			}
+			else{
+				let fileCallpath = encodeURIComponent(
+						file.uploadPath + "/" + file.uuid + "_" + file.fileName
+					);
+				str += "<li><div><span>" + file.fileName + "</span></div></li>";
 			}
 		})//map
 		$('.uploadResult ul').html(str)

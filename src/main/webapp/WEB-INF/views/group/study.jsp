@@ -16,11 +16,9 @@ pageEncoding="UTF-8"%>
 		<a href="/group/test/${group_name}"> 일정 </a>
 		<p><a href="/group/"> 메인 </a></p>
 	</body>
-	
+
 	<script>
-		console.log(" group name ${group_name}")
-		console.log("cri ${cri.group_name}")
-	
+		console.log(" group name ${group_name}");
+		console.log("cri ${cri.group_name}");
 	</script>
-	
 </html>
