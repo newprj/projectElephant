@@ -39,7 +39,6 @@ li {
 </head>
 <body>
 	<h1>Q&A 페이지 입니다.</h1>
-	<h3>로그인 연결되면 수정,삭제 작성자에게만 보이기</h3>
 	<form method="get" action="/qna/list" id="searchForm">
 		<select name="type">
 			<option value="" <c:out value="${pageMaker.cri.type==null?'selected':''}"/>>선택</option>
@@ -71,12 +70,12 @@ li {
 				<td>${status.count}</td>
 				<td>${i.p_group}</td>
 				<td><a class='detail' id='detail${i.qno}' href='${i.qno}' data-password='${i.pwd}'>${i.title}</a></td>
-				<td>${i.writer}</td>
+				<td id='writer${i.qno}'>${i.writer}</td>
 				<td>
 					<fmt:formatDate value="${i.up_date}" pattern="yyyy-MM-dd a hh:mm" />
 				</td>
-				<td><button data-qno='${i.qno}' class="writeMod">수정</button></td>
-				<td><button onclick="location='/qna/remove?qno=${i.qno}'" id="writeRemove">삭제</button></td>
+				<td><button data-qno='${i.qno}' class="writeMod" id="writeMod${i.qno}">수정</button></td>
+				<td><button onclick="location='/qna/remove?qno=${i.qno}'" id="writeRemove${i.qno}">삭제</button></td>
 			</tr>
 		</c:forEach>
 	</table>
@@ -110,6 +109,10 @@ li {
 </body>
 <script type="text/javascript">
 	$(document).ready(function () {
+		
+		/* 로그인 정보 */
+		var loginId='${loginId}'
+		
 		
 		$(".paginate_btn a").click(function(e){
 			e.preventDefault();
@@ -173,10 +176,13 @@ li {
 			
 		})
 		
+	
+		
+		
 		/* 댓글 갯수, 첨부파일 여부표시 */
 		<c:forEach items="${list}" var="i" >
 			var qno='${i.qno}'
-						
+			
 			$.getJSON("/reply/count",{qno:qno},function(cnt){
 				
 				$("#detail${i.qno}").append('('+cnt+')')
@@ -188,6 +194,15 @@ li {
 					$("#detail${i.qno}").append("<img src='/resources/img/attach.png' style=' width:15px; height:15px;'/>")
 				}
 			})
+			if(loginId==$("#writer${i.qno}").text()){
+				
+				$('#writeMod${i.qno}').show()
+				$('#writeRemove${i.qno}').show()
+			} else{
+				$('#writeMod${i.qno}').hide()
+				$('#writeRemove${i.qno}').hide()
+			}
+			 
 		</c:forEach>
 		
 	})

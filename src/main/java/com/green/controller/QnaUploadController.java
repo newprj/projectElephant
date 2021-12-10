@@ -48,9 +48,9 @@ public class QnaUploadController {
 	
 	@GetMapping(value="/count", produces= {MediaType.TEXT_PLAIN_VALUE})
 	public ResponseEntity<String> replyCnt(Long qno){
-		log.info("1)reply qno"+qno);
+		//log.info("1)reply qno"+qno);
 		String cnt=Integer.toString(service.attachCount(qno));
-		log.info("1)reply 갯수"+cnt);
+		//log.info("1)reply 갯수"+cnt);
 		
 		return new ResponseEntity<>(cnt,HttpStatus.OK);
 	}

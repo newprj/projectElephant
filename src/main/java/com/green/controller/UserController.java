@@ -77,15 +77,20 @@ public class UserController {
 	public String loginPost(UserVO vo, HttpServletRequest req, RedirectAttributes rttr) {
 		HttpSession session = req.getSession();
 		UserVO login = userservice.login(vo);
-		
+		String result="";
 		if(login == null) {
 			session.setAttribute("user", null);
 			rttr.addFlashAttribute("msg", false);
 		}
+		else if(login.getUser_id().equals("admin")){
+			session.setAttribute("user", login);
+			result= "redirect:/admin/home";
+		}
 		else {
 			session.setAttribute("user", login);
+			result= "redirect:/user/login";
 		}
-		return "redirect:/user/login";
+		return result;
 	}
 
 	@GetMapping("/logout")

@@ -35,9 +35,7 @@
 </head>
 <body>
 <h1> 메인 페이지 </h1>
-<a href="/group/make">
-	<button> create </button>
-	</a>
+	<a href="/group/make"><button> create </button></a>
 	<button> 내 그룹 보기 </button>
 	<span> 모집 중인 그룹 </span>
 	<div class="container">

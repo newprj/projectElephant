@@ -33,7 +33,7 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 		</div>
 		<div>
 			<label for="writer">글쓴이</label>
-			<input type="text" name="writer"/> 
+			<input type="text" name="writer" value='${id}' readonly="readonly"/> 
 		</div>
 		<div>
 			<label for="q_content">내용</label>
