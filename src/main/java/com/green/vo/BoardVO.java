@@ -25,4 +25,5 @@ public class BoardVO {
     private Date regdate;
 
     private List<FileVO> attachList;
+    private int replyCnt;
 }

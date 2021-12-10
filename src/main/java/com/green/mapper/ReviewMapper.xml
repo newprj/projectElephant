@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	<mapper namespace="com.green.mapper.ReviewMapper">
+	
+	
+	<!-- 리뷰 등록  -->
+	<insert id="insert">
+		insert into tbl_review values(seq_rno.nextval, #{group_name},#{title},#{content},#{writer},sysdate,null,0)
+	</insert>
+	
+	
+	<!-- 리뷰 조회  -->
+	<select id="read" resultType="com.green.vo.ReviewVO">
+		select * from tbl_review where rno=#{rno}
+	</select> 
+	
+	<!-- 리뷰 수정  -->
+	<update id="update">
+		update tbl_review set group_name=#{group_name},title=#{title},content=#{content}, writer=#{writer} where rno=#{rno}
+	</update>
+	
+	<!-- 리뷰 전체 목록 조회  -->
+	<select id="getList" resultType="com.green.vo.ReviewVO"> 
+		select * from tbl_review order by rno asc 
+	</select>
+	
+	<!-- 리뷰 삭제  -->
+	<delete id="delete">
+		delete from tbl_review where rno = #{rno}
+	</delete> 
+	
+	<!-- 리뷰 번호 맥스값 조회  -->
+	<select id="rnoRead" resultType="int">
+		select max(rno) from tbl_review
+	</select>  
+	
+	
+	<!-- 리뷰 전체 게시물 페이징 처리 조회  -->
+	<select id="list" resultType="com.green.vo.ReviewVO" parameterType="com.green.vo.SearchCriteria">
+		select rno, group_name, title, content, writer, regdate,reply_count,view_count
+        from (select rno, group_name,title,content,writer,regdate,reply_count,view_count,row_number() over(order by rno desc) as rNum from tbl_review
+        where 1=1 <include refid="search"></include>) 
+        review where rNum between #{rowStart} and #{rowEnd} order by rno desc
+	</select> 
+	
+	<!-- 페이지 카운트 처리  -->
+	<select id="listCount" parameterType="com.green.vo.SearchCriteria" resultType="int">
+		select count(rno) from tbl_review where 1=1 <include refid="search"></include> and rno > 0
+	</select>
+	
+	<!-- 검색 처리를 위한 쿼리문  -->
+	<sql id="search">
+		<if test="searchType != null">
+			<if test="searchType == 't'.toString()">AND TITLE LIKE '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'c'.toString()">AND CONTENT LIKE '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'w'.toString()">AND WRITER LIKE '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'tc'.toString()">AND (TITLE LIKE '%' || #{keyword} || '%') or (CONTENT LIKE '%' || #{keyword} || '%')</if>
+		</if>
+	</sql>
+	
+	<!-- 리플 갯수   -->
+	<update id="updateReplyCount" parameterType="long">
+		update tbl_review b
+		set reply_count = (select count(cno) from review_reply where rno=#{rno})
+		where b.rno =#{rno}
+	</update>
+	
+	
+	<!-- 조회수   -->
+	<update id="viewCount" parameterType="long"> 
+		update tbl_review
+		set view_count = view_count+1
+		where rno = #{rno}
+	</update>
+	
+</mapper>

@@ -31,26 +31,29 @@ import lombok.extern.slf4j.Slf4j;
 public class QnAController {
 	@Setter(onMethod_=@Autowired)
 	QnaService service;
- 	
-	
+
+	//일단 로그인해야 접속하게 함, 나중에 form 으로 로그인 정보 전송해서 id만 받아서 쓸수있도록 -> qna/list는 비회원도 진입가능하도록
+	//글쓰기는 로그인 정보 필요 다른 것들은 비회원도 접속 가능하도록 구현하기
 	@GetMapping("/list")
-	public void list(Model model,Criteria cri,HttpSession session) {
+	public void list(Model model,Criteria cri,HttpServletRequest req ) {
 		log.info("QnA 게시판 리스트");
-			
+		
+		HttpSession session=req.getSession();
 		UserVO login= (UserVO) session.getAttribute("user");
 		
 		int total=service.totalCount(cri);
-		model.addAttribute("loginId",login.getUser_id());
+		model.addAttribute("loginId", login.getUser_id());
 		model.addAttribute("list",service.listqnaWithPaging(cri));
 		model.addAttribute("pageMarker",new PageDTO(cri, total));
 	}
 	
 	
 	@GetMapping("/write")
-	public void write(Model model,HttpSession session) {
+	public void write(Model model,HttpServletRequest req) {
 		System.out.println("QnA 새글 쓰기");
 		System.out.println("로그인 정보 가지고 와야함/write로 할것인가 register로 할것인가");
 		
+		HttpSession session=req.getSession();
 		UserVO login= (UserVO) session.getAttribute("user");
 		
 		model.addAttribute("id",login.getUser_id());
@@ -68,9 +71,10 @@ public class QnAController {
 	
 	
 	@GetMapping({"/detail","/modify"})
-	public void detail(@RequestParam("qno") Long qno,Model model,@ModelAttribute("cri") Criteria cri,HttpSession session) {
+	public void detail(@RequestParam("qno") Long qno,Model model,@ModelAttribute("cri") Criteria cri,HttpServletRequest req) {
 		System.out.println("QnA 세부내용 들어옴"+qno);
 		
+		HttpSession session=req.getSession();
 		UserVO login= (UserVO) session.getAttribute("user");
 		
 		model.addAttribute("get",service.get(qno));

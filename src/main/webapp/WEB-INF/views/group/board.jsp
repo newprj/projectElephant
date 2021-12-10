@@ -8,6 +8,7 @@ prefix="c" %>
     <meta charset="UTF-8" />
     <title>Insert title here</title>
     <script src="//code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://kit.fontawesome.com/eab4c34ae3.js" crossorigin="anonymous"></script>
     <style>
     	.pagination{
     		display:flex;
@@ -26,7 +27,11 @@ prefix="c" %>
     
     <c:forEach items="${board}" var="board">
       <div class="list"  data="${board.bno}">
-      ${board.title}
+      	<span> ${board.title} </span>
+      	<c:if test="${board.attachList !=null && board.attachList.size()>0 }">
+      		<i class="fas fa-paperclip"></i>
+      	</c:if>
+      	<span>[ ${board.replyCnt} ]</span>
       </div>
    	 	<div>
    <form id="actionForm" action="/group/board/${group_name}" method="get">

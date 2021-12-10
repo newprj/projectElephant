@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import com.green.mapper.BoardMapper;
 import com.green.mapper.FileMapper;
+import com.green.mapper.ReplyMapper;
+import com.green.vo.BoardReplyVO;
 import com.green.vo.BoardVO;
 import com.green.vo.Criteria;
 import com.green.vo.FileVO;
@@ -21,7 +23,10 @@ public class BoardServiceImpl implements BoardService{
 	
 	@Setter(onMethod_=@Autowired)
 	FileMapper fileMapper;
-
+	
+	@Setter(onMethod_=@Autowired)
+	ReplyMapper replyMapper;
+	
 	@Override
 	public void register(BoardVO vo) {
 		mapper.register(vo);
@@ -76,8 +81,14 @@ public class BoardServiceImpl implements BoardService{
 
 	@Override
 	public List<BoardVO> getListWithPaging(Criteria cri) {
-		// TODO Auto-generated method stub
-		return mapper.getListWithPaging(cri);
+		List<BoardVO> voList = mapper.getListWithPaging(cri);
+		voList.forEach(vo -> {
+			List<FileVO> files =fileMapper.filesByBno(vo.getBno());
+			List<BoardReplyVO> replies = replyMapper.getReplysByBno(vo.getBno());
+			vo.setAttachList(files);
+			vo.setReplyCnt(replies.size());
+		});
+		return voList;
 	}
 
 	@Override

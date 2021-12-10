@@ -77,7 +77,7 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 					<td id='userId${status.index}'>${i.user_id}</td>
 					<td>${i.name}</td>
 					<td>${i.regDate}</td>
-					<td><button id='letter'>쪽지 보내기</button></td>
+					<td><button id='chat'>채팅</button></td>
 					<td><button class='susp' >
 						<c:choose>
 							<c:when test="${i.suspension eq 'Y'}">정지</c:when>

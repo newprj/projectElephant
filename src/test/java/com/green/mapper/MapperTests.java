@@ -111,17 +111,7 @@ public class MapperTests {
 	
 	
 	
-//	@Test
-	public void signUptest() {
-		for( int i=0; i<10; i++) {
-			UserVO userVO = new UserVO();
-			userVO.setEmail("bbb"+i+"@aaa.com");
-			userVO.setName("userB"+i);
-			userVO.setPassword("pass");
-			userVO.setUser_id("bbb"+i);
-			//uMapper.signUp(userVO);
-		}
-	}
+
 //	
 //	@Test
 	public void makegroupTest() {
