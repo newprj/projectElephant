@@ -4,6 +4,7 @@ import java.io.Console;
 import java.util.List;
 
 import org.apache.ibatis.javassist.expr.NewArray;
+import org.springframework.aop.aspectj.annotation.LazySingletonAspectInstanceFactoryDecorator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -121,6 +122,7 @@ public class GRestController {
 	@GetMapping("/board/{group_name}/{pageNum}/{amount}")
 	public ModelAndView tempGroupPage(@ModelAttribute("cri") Criteria cri ) {
 		ModelAndView mv = new ModelAndView("/group/board");
+		
 		int total = boardService.getTotalCount(cri);
 		mv.addObject("name", cri.getGroup_name());
 		mv.addObject("board", boardService.getListWithPaging(cri));

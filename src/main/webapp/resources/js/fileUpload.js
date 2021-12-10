@@ -1,6 +1,7 @@
 const MAX_SIZE = 5242880;
 const REGEX = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
 let attachList = [];
+console.log("파일업로드 js 파일과 연결")
 
 
 const checkExtension = (fileName, fileSize) => {
@@ -32,6 +33,7 @@ const getImgFileString = (file) => {
 			file.uploadPath + "/_s" + file.uuid + "_" + file.fileName
 		);
 	let str ="";
+	
 	str += "<li><div><span>" + file.fileName + "</span>";
 	str +=
 		"<button data-uuid=" +
@@ -43,6 +45,10 @@ const getImgFileString = (file) => {
 	str += fileCallpath + "'></div></li>";
 	return str;
 }
+
+
+
+
 
 const getFileString = (file) =>{
 	let str = "";
