@@ -12,7 +12,6 @@ import com.green.vo.CalendarVO;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
-import oracle.net.aso.i;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
