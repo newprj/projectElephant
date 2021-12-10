@@ -25,7 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @RequestMapping("/admin/*")
 @Slf4j
-public class AdminController {
+public class AdminController {//z
 	@Setter(onMethod_=@Autowired)
 	UserService userService;
 	
