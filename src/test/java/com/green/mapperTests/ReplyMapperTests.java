@@ -6,9 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.green.mapper.ReplyMapper;
+import com.green.mapper.ReviewReplyMapper;
 import com.green.vo.ReplyVO;
-import com.green.vo.ReviewVO;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -18,7 +17,7 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 public class ReplyMapperTests {
 	@Setter(onMethod_=@Autowired)
-	private ReplyMapper mapper;
+	private ReviewReplyMapper mapper;
 	
 	@Test
 	public void insertTest() {

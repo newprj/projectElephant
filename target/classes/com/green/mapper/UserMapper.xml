@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.green.mapper.UserMapper">
+
+	<insert id="register">
+		insert into tbl_user(uno, user_id, password, name,  email) 
+			values(seq_uno.nextval,#{user_id},#{password},#{name},#{email})
+	</insert>
+	
+	<update id="modify">
+		update tbl_user set password = #{password}, name = #{name}, email = #{email} where user_id = #{user_id}
+	</update>
+	
+	<delete id="delete">
+		delete from tbl_user where user_id = #{user_id} and password = #{password}
+	</delete>
+
+	<select id="login" resultType="com.green.vo.UserVO">
+		select * from tbl_user where user_id = #{user_id} and password = #{password}
+	</select>
+	
+	<select id="idCheck" resultType="com.green.vo.UserVO">
+		select user_id from tbl_user where user_id = #{user_id}
+	</select>
+
+	
+	<select id="userSelect" resultType="com.green.vo.UserVO" >
+		select * from tbl_user order by uno desc
+	</select>
+
+	
+	<update id="susp">
+		update tbl_user set suspension=#{suspension}, suspContent=#{suspContent},suspDate=#{suspDate}
+			where user_id=#{user_id}
+	</update>
+</mapper>
+

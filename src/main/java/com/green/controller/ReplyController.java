@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.green.service.ReplyService;
+import com.green.service.ReviewReplyService;
 import com.green.service.ReviewService;
 import com.green.vo.ReplyVO;
 
@@ -20,7 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/reply")
 public class ReplyController {
 	@Setter(onMethod_=@Autowired)
-	ReplyService service;
+	ReviewReplyService service;
 	@Setter(onMethod_=@Autowired)
 	ReviewService rService;
 	

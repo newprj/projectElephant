@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.green.mapper.QnaAttachMapper">
+
+	
+	<insert id="insert">
+		insert into qna_attach_tbl(uuid, uploadPath, fileName,fileType,qno) 
+			values(#{uuid},#{uploadPath},#{fileName},#{fileType},#{qno})
+	</insert>
+	
+	<select id="findByQno" resultType="com.green.vo.QnaAttachDTO" >
+		select * from qna_attach_tbl where qno=#{qno}
+	</select>
+	
+	
+	<delete id="delete">
+		delete from qna_attach_tbl where uuid=#{uuid}
+	</delete>
+	
+	<delete id="deleteAll">
+		delete from qna_attach_tbl where qno=#{qno}
+	</delete>
+	
+	<select id="cnt" resultType="int">
+		select count(*) from qna_attach_tbl where qno=#{qno}
+	</select>
+</mapper>

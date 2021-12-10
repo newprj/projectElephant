@@ -6,46 +6,45 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.green.mapper.ReplyMapper;
-import com.green.vo.ReplyVO;
+import com.green.vo.BoardReplyVO;
 
-import lombok.AllArgsConstructor;
 import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Service
-@AllArgsConstructor
 public class ReplyServiceImpl implements ReplyService{
-	@Setter(onMethod_=@Autowired)
-	private ReplyMapper mapper;
 	
+	@Setter(onMethod_=@Autowired)
+	ReplyMapper mapper;
+
 	@Override
-	public void register(ReplyVO vo) {
-		mapper.insert(vo);
-		
+	public List<BoardReplyVO> getReplysByBno(Long bno) {
+		// TODO Auto-generated method stub
+		return mapper.getReplysByBno(bno);
 	}
 
 	@Override
-	public ReplyVO get(Long cno) {
-		
-		return mapper.read(cno);
+	public BoardReplyVO getReplyOne(Long rno) {
+		// TODO Auto-generated method stub
+		return mapper.getReplyOne(rno);
 	}
 
 	@Override
-	public void modify(ReplyVO vo) {
-		mapper.update(vo);
-		
+	public int registerReply(BoardReplyVO vo) {
+		// TODO Auto-generated method stub
+		return mapper.registerReply(vo);
 	}
 
 	@Override
-	public void remove(Long cno) {
-		mapper.delete(cno);
-		
+	public int updateReply(BoardReplyVO vo) {
+		// TODO Auto-generated method stub
+		return mapper.updateReply(vo);
 	}
 
 	@Override
-	public List<ReplyVO> getList(Long rno) {
-		return mapper.getList(rno);
+	public int deleteReply(Long rno) {
+		// TODO Auto-generated method stub
+		return mapper.deleteReply(rno);
+
 	}
 
 }

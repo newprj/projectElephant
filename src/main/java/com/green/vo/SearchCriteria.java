@@ -1,6 +1,6 @@
 package com.green.vo;
 
-public class SearchCriteria extends Criteria{
+public class SearchCriteria extends CriteriaVO{
 
 	private String searchType = "";
 	private String keyword = "";

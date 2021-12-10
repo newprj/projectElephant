@@ -13,7 +13,6 @@ pageEncoding="UTF-8"%>
 		<script src="//code.jquery.com/jquery-3.6.0.js"></script>
 	</head>
 	<body>
-	<h1> quill 게시판 테스트 페이지 </h1>
 		<div class="board">
 			<form>
 				<div>
@@ -42,12 +41,10 @@ pageEncoding="UTF-8"%>
 		<input type="file" accept="image/*" />
 
 		<script>
-		
-			  
-			  
+
 			const toolbarOptions = [
 							[{ header: [1, 2, 3, 4, 5, 6, false] }],
-			        		[{ 'list': 'ordered'}, { 'list': 'bullet' }],
+			        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
 							["bold", "italic", "underline", "strike"],
 							[{ color: [] }, { background: [] }],
 							[{ align: [] }],
@@ -55,27 +52,29 @@ pageEncoding="UTF-8"%>
 							["clean"],
 						];
 
-				let quill = new Quill("#editor", {
+				var quill = new Quill("#editor", {
 					theme: "snow",
 					modules: {
 						toolbar: toolbarOptions,
 					},
 				});
-				
 
-
-				let form = $('form')
-				// 폼데이터 얻기 
+				var form = $('form')
 				const getData = () => {
 					let content = $('input[name="content"]')
 					content.val(JSON.stringify(quill.getContents()))
 					console.log(content.val())
 				}
-		
+				$('button.ql-image').click(function(e){
+					e.preventDefault
+					console.log(' 눌렸어 ')
+					getImage()
+				}) 
 				const getImage = () => {
 					let input = $('<input type="file" accept="image/*">')
 					input.click()
 					$(input).change(function(e){
+						
 						let formData = new FormData();
 						let uploadFiles = $(input)[0].files;
 						let files = Object.values(uploadFiles);
@@ -83,7 +82,7 @@ pageEncoding="UTF-8"%>
 							.map((file) => formData.append("uploadFile", file));
 						$.ajax({
 							type: "post",
-							url: "/updload/uploadAjaxAction",
+							url: "/upload",
 							processData: false,
 							contentType: false,
 							data: formData,
@@ -98,20 +97,14 @@ pageEncoding="UTF-8"%>
 								// const editor = $('#editor')
 								// const range = editor.getSelection()
 								// editor.insertEmbed(range, 'image', IMG_URL);
+
+
 								},
 							error: (xhr, status, er) => console.log(xhr),
-					})// ajax
-				}) // input
-			}// getImage
-				
-				// 
-				$('button.ql-image').click(function(e){
-					console.log(e)
-					e.preventDefault()
-					console.log(' 눌렸어 ')
-					getImage() 
-				}) 
-				
+					})
+				})
+			}
+
 				$('.create').click(function(e){
 					e.preventDefault();
 					getData()

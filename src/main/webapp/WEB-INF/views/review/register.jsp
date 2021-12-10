@@ -70,7 +70,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
         formData.append('rno', rno)
         $.ajax({
           type: 'post',
-          url: '/upload/uploadAjaxAction',
+          url: '/reviewUpload/uploadAjaxAction',
           processData: false,
           contentType: false,
           data: formData,
@@ -79,7 +79,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
           success: (res) => {
             console.log('2)')
             console.log(res)
-            const IMG_URL = '/upload/display?fileName=' + encodeURIComponent(res[0].uploadPath + '/' + res[0].uuid + '_' + res[0].fileName)
+            const IMG_URL = '/reviewUpload/display?fileName=' + encodeURIComponent(res[0].uploadPath + '/' + res[0].uuid + '_' + res[0].fileName)
 
             let range = quill.getSelection()
             console.log(range)
@@ -123,7 +123,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
         formData.append('rno', rno)
       }
       $.ajax({
-        url: '/upload/uploadAjaxAction',
+        url: '/reviewUpload/uploadAjaxAction',
         processData: false,
         contentType: false,
         data: formData,

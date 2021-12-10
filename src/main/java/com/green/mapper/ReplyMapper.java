@@ -2,12 +2,14 @@ package com.green.mapper;
 
 import java.util.List;
 
-import com.green.vo.ReplyVO;
+import com.green.vo.BoardReplyVO;
 
 public interface ReplyMapper {
-	public int insert(ReplyVO vo);
-	public ReplyVO read(Long cno);
-	public int delete (Long cno);
-	public int update (ReplyVO vo);
-	public List<ReplyVO> getList(Long rno);
+	
+	public List<BoardReplyVO> getReplysByBno(Long bno);
+	public BoardReplyVO getReplyOne(Long rno);
+	public int registerReply(BoardReplyVO vo);
+	public int updateReply(BoardReplyVO vo);
+	public int deleteReply(Long rno);
+
 }

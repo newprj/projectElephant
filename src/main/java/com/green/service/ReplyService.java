@@ -2,12 +2,14 @@ package com.green.service;
 
 import java.util.List;
 
-import com.green.vo.ReplyVO;
+import com.green.vo.BoardReplyVO;
 
 public interface ReplyService {
-	public void register(ReplyVO vo);
-	public ReplyVO get(Long cno);
-	public void modify(ReplyVO vo);
-	public void remove(Long cno);
-	public List<ReplyVO> getList(Long rno);
+	
+	public List<BoardReplyVO> getReplysByBno(Long bno);
+	public BoardReplyVO getReplyOne(Long rno);
+	public int registerReply(BoardReplyVO vo);
+	public int updateReply(BoardReplyVO vo);
+	public int deleteReply(Long rno);
+
 }

@@ -56,7 +56,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
            formData.append('rno', rno)
          }
          $.ajax({
-           url: '/upload/uploadAjaxAction',
+           url: '/reviewUpload/uploadAjaxAction',
            processData: false,
            contentType: false,
            data: formData,
@@ -72,7 +72,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
            var uuid = $(this).attr('name')
            console.log(uuid)
             $.ajax({
-         		url:'/upload/delete',
+         		url:'/reviewUpload/delete',
          		data:{'uuid':uuid},
          		dataType:'text',
          		type:'POST',

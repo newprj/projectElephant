@@ -13,9 +13,9 @@ public class PageMaker {
 	private boolean prev;
 	private boolean next;
 	private int displayPageNum = 10;
-	private Criteria cri;
+	private CriteriaVO cri;
 	
-	public void setCri(Criteria cri) {
+	public void setCri(CriteriaVO cri) {
 		this.cri = cri;
 	}
 	
@@ -48,7 +48,7 @@ public class PageMaker {
 		return displayPageNum;
 	}
 	
-	public Criteria getCri() {
+	public CriteriaVO getCri() {
 		return cri;
 	}
 	 
