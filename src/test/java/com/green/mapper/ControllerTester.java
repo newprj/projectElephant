@@ -12,10 +12,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.green.service.QnaService;
-import com.green.service.StudyService;
 import com.green.service.UserService;
 import com.green.vo.QnaVO;
-import com.green.vo.StudyVO;
 import com.green.vo.UserVO;
 import com.green.vo.Criteria;
 import com.green.vo.QnaReplyVO;
@@ -33,8 +31,8 @@ public class ControllerTester {
 	@Setter(onMethod_=@Autowired)
 	private UserService userService;
 	
-	@Setter(onMethod_=@Autowired)
-	private StudyService studyService;
+	
+	
 	Date date=new Date();
 	
 	//@Test
@@ -56,13 +54,7 @@ public class ControllerTester {
 	//@Test
 	public void studytest() {
 		for (int i = 0; i <10; i++) {
-			StudyVO vo=new StudyVO();
-			vo.setDescription("설명"+i);
-			vo.setGroup_name("g_name"+i);
-			vo.setLeader("leader"+i);
-			vo.setMember_number(i+1);
-			vo.setSubject("주제"+i);
-			studyService.insert(vo);
+		
 		}
 		
 	}

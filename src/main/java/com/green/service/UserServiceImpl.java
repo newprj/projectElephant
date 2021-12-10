@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.green.mapper.UserMapper;
-import com.green.vo.StudyVO;
 import com.green.vo.UserVO;
 
 import lombok.Setter;

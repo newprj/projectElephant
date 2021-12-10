@@ -11,6 +11,7 @@ public interface UserMapper {
 	public UserVO login(UserVO vo);
 	public UserVO idCheck(String user_id);
 
+	//admin 페이지에서 보려고 만든 것입니다.
 	public List<UserVO> userSelect();
 	public int susp(UserVO vo);
 

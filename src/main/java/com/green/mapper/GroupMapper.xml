@@ -13,7 +13,7 @@
 	</insert>
 	
 	<select id="showAll" resultType="com.green.vo.GroupVO">
-		select * from tbl_group
+		select * from tbl_group order by gno desc
 	</select>
 	
 	<select id="groupNameCheck" resultType="int">
