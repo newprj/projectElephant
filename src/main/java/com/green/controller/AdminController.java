@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.green.service.GroupService;
 import com.green.service.QnaService;
-import com.green.service.StudyService;
 import com.green.service.UserService;
 import com.green.vo.UserVO;
 
@@ -30,7 +30,7 @@ public class AdminController {
 	UserService userService;
 	
 	@Setter(onMethod_=@Autowired)
-	StudyService studyService;
+	GroupService gService;
 
 	@Setter(onMethod_=@Autowired)
 	QnaService qnaService;
@@ -39,7 +39,7 @@ public class AdminController {
 	public void adminHome(Model model) {
 		log.info("admin page");
 		model.addAttribute("list",userService.allList());
-		model.addAttribute("group",studyService.allList());
+		model.addAttribute("group",gService.showAll());
 		model.addAttribute("qna",qnaService.list());
 		
 	}
