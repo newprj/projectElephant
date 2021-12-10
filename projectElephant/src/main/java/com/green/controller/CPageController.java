@@ -19,7 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
-@RequestMapping("/cpage")
+@RequestMapping("/cpage")//1
 public class CPageController {
 	@Setter(onMethod_=@Autowired)
 	CPageService service;
