@@ -119,7 +119,7 @@ public class MapperTests {
 			userVO.setName("userB"+i);
 			userVO.setPassword("pass");
 			userVO.setUser_id("bbb"+i);
-			uMapper.signUp(userVO);
+			
 		}
 	}
 //	

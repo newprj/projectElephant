@@ -73,12 +73,13 @@ prefix="c" %>
 				<p class="reply" data-rno="${reply.rno}"><span > ${reply.reply} </span><span> ${reply.replyer}</span> <p>
 			</c:forEach>
 		</div>
+		
 		<button class="go_modify">글수정</button>
-		<button class="delete">글삭제</button>
+		<button class="deleteBoard">글삭제</button>
 		<button class="go_board">목록</button>
 		<button class="reply">모달을 띄우자</button>
-
-		<h3> 댓글/ 등록/ 수정 / 삭제 후 특정 div 새로고침 이후로 모달 창 띄웠을때 값을 불러오지 못함 </h3>
+		
+		<h3> 댓글/ 등록/ 수정 / 삭제 후 location reload => element 삽입, 삭제로 바꿔보기  </h3>
 		<div class="modal">
 			<div class="modal_content">
 				<span> X </span>
@@ -117,7 +118,7 @@ prefix="c" %>
 			
 			
 			// 글삭제
-			$("div > button.delete").click(function (e) {
+			$(".deleteBoard").click(function (e) {
 				
 				e.preventDefault();
 				$.ajax({
@@ -158,17 +159,17 @@ prefix="c" %>
 			$(".submit").click(function (e) {
 				e.preventDefault();
 				let data = getReplyData();
-				console.log(data);
+				
 				$.ajax({
 					type: "post",
 					url: "/group/reply",
 					data: JSON.stringify(data),
 					contentType: "application/json; charset=utf-8",
 					success: () => {
-						
 						$('button[type="reset"]').trigger("click");
 						$('.modal').hide();
-						$('div.reply').load(window.location.href + ' div.reply')
+						location.reload()
+						/* $('div.reply').load(window.location.href + ' div.reply') */
 					},
 					error: (xhr, status, er) => console.log(xhr),
 				});
@@ -208,7 +209,8 @@ prefix="c" %>
 					success: () => {
 						$('.modal').hide();
 						$('button[type="reset"]').trigger("click");
-						$('div.reply').load(window.location.href + ' div.reply')
+						/* $('div.reply').load(window.location.href + ' div.reply') */
+						location.reload()
 					},
 					error: (xhr, status, er) => console.log(xhr),
 				});
@@ -224,7 +226,8 @@ prefix="c" %>
 					success: () => {
 						$('button[type="reset"]').trigger("click");
 						$('.modal').hide()
-						$('div.reply').load(window.location.href + ' div.reply')
+						/* $('.reply[data-rno="${rno}"]').remove() */
+						location.reload()
 					},
 					error: (xhr, status, er) => console.log(xhr),
 				});

@@ -12,6 +12,8 @@ prefix="c" %>
 		/>
 		<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 		<script src="//code.jquery.com/jquery-3.6.0.js"></script>
+		<script src="/resources/image-resize.min.js"></script>
+		<script src="/resources/image-drop.min.js"></script>
     <script src="/resources/js/fileUpload.js" type="text/javascript"></script>
     <title>Insert title here</title>
 	
@@ -203,6 +205,10 @@ prefix="c" %>
 			theme: "snow",
 			modules: {
 				toolbar: toolbarOptions,
+				imageDrop: true,
+		  			imageResize: {
+		  				displaySize: true,
+		  				},
 				
 			},
 			
