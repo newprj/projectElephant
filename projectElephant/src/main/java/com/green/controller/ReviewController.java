@@ -1,25 +1,17 @@
 package com.green.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.FileSystemResource;
-import org.springframework.core.io.Resource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.green.service.AttachFileService;
-import com.green.service.ReplyService;
 import com.green.service.ReviewService;
-import com.green.vo.AttachFileDTO;
 import com.green.vo.PageMaker;
 import com.green.vo.ReviewVO;
 import com.green.vo.SearchCriteria;
@@ -63,7 +55,8 @@ public class ReviewController {
 	}
 	
 	@PostMapping("/insert")//리뷰생성 post 컨트롤러
-	public String insert(ReviewVO vo) {
+	
+	public String insert(@RequestBody ReviewVO vo) {
 		System.out.println("리뷰 컨트롤러  insert 접근.................");
 		service.register(vo);		
 		return "redirect:/review/list";

@@ -5,7 +5,7 @@
 	<mapper namespace="com.green.mapper.AttachFileMapper">
 	
 	<insert id="insert" >
-		insert into attachFile values(#{rno}, #{fileName},#{uploadPath},#{uuid},#{fileSize})
+		insert into attachFile values(#{rno,  jdbcType=INTEGER}, #{fileName},#{uploadPath},#{uuid},#{fileSize})
 	</insert>
 	
 	<select id="getList" resultType="com.green.vo.AttachFileDTO">

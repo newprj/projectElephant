@@ -25,6 +25,7 @@
 		</c:forEach>
 	</ul>
 	<button type="button" id="registerReview">후기등록</button>
+	<button type="button" id="refresh">새로고침</button>
   <div class="search">
     <select name="searchType">
       <option value="t"<c:out value="${scri.searchType eq 't' ? 'selected' : ''}"/>>제목</option>
@@ -60,6 +61,9 @@ $(document).ready(function () {
 		console.log("버튼이 눌림")
 	    self.location = '/review/register'
 	 })
+	 $('#refresh').click(function () {
+		location.href = '/review/list'
+	})
 }) 
  $(function(){
         $('#searchBtn').click(function() {
@@ -69,5 +73,7 @@ $(document).ready(function () {
        	  } 
        	});
       });   
+      
+      
 </script>
 </html>

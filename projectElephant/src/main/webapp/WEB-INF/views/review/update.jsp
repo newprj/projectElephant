@@ -56,7 +56,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
            formData.append('rno', rno)
          }
          $.ajax({
-           url: '/upload/uploadModify',
+           url: '/upload/uploadAjaxAction',
            processData: false,
            contentType: false,
            data: formData,
@@ -78,6 +78,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
          		type:'POST',
          		success:(result)=>{
          			alert(result);
+         			location.reload();  
          		}
          	})
          })
