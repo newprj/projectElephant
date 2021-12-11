@@ -2,6 +2,10 @@ package com.green.vo;
 
 
 
+import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,8 +21,10 @@ public class CalendarVO {
 
 	private Long cid;
 	private String title;
-	private String startDate;
-	private String endDate;
+	@JsonFormat(pattern="yyyy-MM-dd")
+	private Date startDate;
+	@JsonFormat(pattern="yyyy-MM-dd")
+	private Date endDate;
 	private boolean editable;
 	private String color;
 	private String description_;

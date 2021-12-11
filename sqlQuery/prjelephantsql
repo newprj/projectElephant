@@ -20,21 +20,8 @@ create table tbl_group(
 drop sequence seq_gno;
 create sequence seq_gno;
 
-drop table tbl_calendar;
-create table tbl_calendar(
-    cid number,
-    title varchar2(50),
-    startDate varchar2(50),
-    endDate varchar2(50),
-    editable varchar2(1) default 'N',
-    color varchar2(50),
-    description_ varchar2(500),
-    location varchar2(100),
-    group_ varchar2(500),
-    user_ varchar2(50),
-    member_ varchar2(50));
 
-create sequence seq_cid;
+
 
 drop table tbl_user;
 create table tbl_user(
@@ -122,5 +109,26 @@ select * from tbl_calendar;
 select * from user_sequences;
 commit;
 
+
 --- 쿼리 문서 수정 /공유 시 수정한 부분 주석으로 달아주세요 
 --- select, update 등 테스트를 위한 쿼리문은 공유 X
+
+---- 12/11 컬럼 날짜를 varchar로 받던 것을 timestmap로 수정했습니다
+
+drop table tbl_calendar;
+create table tbl_calendar(
+    cid number,
+    title varchar2(50),
+    startDate timestamp,
+    endDate timestamp,
+    editable varchar2(1) default 'N',
+    color varchar2(50),
+    description_ varchar2(500),
+    location varchar2(100),
+    group_ varchar2(500),
+    user_ varchar2(50),
+    member_ varchar2(50));
+create sequence seq_cid;
+
+
+
