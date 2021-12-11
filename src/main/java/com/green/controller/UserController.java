@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -45,6 +46,7 @@ public class UserController {
 	public String modifyPost(UserVO vo, HttpSession session) {
 		userservice.modify(vo);
 		logout(session);
+		// 회원정보 수정 후 로그아웃?
 		return "redirect:/user/login";
 	}
 
@@ -88,6 +90,7 @@ public class UserController {
 		}
 		return "redirect:/user/login";
 	}
+	
 
 	@GetMapping("/logout")
 	public String logout(HttpSession session) {
@@ -106,6 +109,8 @@ public class UserController {
 		}
 		return result;
 	}
+	
+	
 }
 
 

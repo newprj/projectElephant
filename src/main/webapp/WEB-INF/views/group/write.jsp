@@ -27,7 +27,7 @@ pageEncoding="UTF-8"%>
 				</div>
 				<div>
 					<label>writer</label>
-					<input name="writer" />
+					<input name="writer" value="${user}"/>
 				</div>
 				<div>
 					<label> content </label>
@@ -47,8 +47,25 @@ pageEncoding="UTF-8"%>
 		<script>
 			$(document).ready(function (e) {
 				var myEditor = document.querySelector("#editor");
-
 				const uploadClone = $(".file").clone();
+				let loginUser= "${user}"
+			  	if(! loginUser){
+					console.log('로그인안됨')
+					alert("로그인 해야 접근 가능합니다")
+					location.href="/group/"
+				}else{
+					console.log('로그인됨')
+					$.getJSON(
+						"/group/getMemberlistByGroup/${group_name}", (list) =>{
+							console.log(list)
+							console.log(loginUser)
+							let joinCheck = list.find( user => user.user_id === loginUser)
+							if(!joinCheck){
+								alert("그룹 회원만 접근 가능한 페이지입니다")
+								location.href="/group/"
+							} 
+						})
+				}
 
 				// input file이 변할때
 				$('input[type="file"]').change(function (e) {

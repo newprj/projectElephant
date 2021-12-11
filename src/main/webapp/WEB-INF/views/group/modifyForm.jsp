@@ -51,6 +51,29 @@ prefix="c" %>
 
 		<script>
 			$(document).ready(function (e) {
+				
+				let loginUser= "${user}"
+			  	if(! loginUser){
+					console.log('로그인안됨')
+					alert("로그인 해야 접근 가능합니다")
+					location.href="/group/"
+				}else{
+					console.log("로그인됨")
+					$.getJSON(
+						"/group/getMemberlistByGroup/${cri.group_name}", (list) =>{
+							console.log(list)
+							console.log(loginUser)
+							let joinCheck = list.find( user => user.user_id === loginUser)
+							if(!joinCheck){
+								alert("그룹 회원만 접근 가능한 페이지입니다")
+								location.href="/group/"
+							}else if(loginUser !== "${board.writer}"){
+								alert(" 글 작성자만 수정할 수 있습니다")
+								history.back()
+							}
+						})
+				}
+				
 				const uploadClone = $(".file").clone();
 				var myEditor = document.querySelector("#editor");
 				let content = "${board.content}";

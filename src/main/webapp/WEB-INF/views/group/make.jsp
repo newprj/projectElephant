@@ -33,7 +33,7 @@ pageEncoding="UTF-8"%>
 			</div>
 			<div>
 				<label for=""> 리더 </label>
-				<input type="text" name="leader" />
+				<input type="text" name="leader" value="${user.user_id}" />
 			</div>
 			<div>
 				<label for=""> 주제 </label>
@@ -56,6 +56,11 @@ pageEncoding="UTF-8"%>
 
 	<script>
 		$(document).ready(function (e) {
+			let user = "${user}"
+			if(!user){
+				alert("로그인 된 사용자만 그룹을 만들수 있습니다")
+				location.href="/group/"
+			}
 			let result;
 			let myEditor = document.querySelector("#editor");
 			$('input[name="group_name"]').on(

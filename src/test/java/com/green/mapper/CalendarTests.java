@@ -27,7 +27,6 @@ public class CalendarTests {
 		CalendarVO vo = new CalendarVO();
 		vo.setColor("black");
 		vo.setTitle("testTitle2");
-		vo.setStartDate("2021-12-03");
 //		vo.setEndDate("21-12-02");
 		vo.setEditable(true);
 //		vo.setLocation("서울");

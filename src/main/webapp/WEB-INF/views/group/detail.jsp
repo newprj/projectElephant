@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core"
+prefix="c" %>
 <!DOCTYPE html>
 <html>
   <head>
@@ -29,14 +31,20 @@
     <div>
       <form>
         <div>
-          <label>아이디 </label>
-          <input type="text" name="user_id" />
+         <p>
+          <input type="hidden" name="user_id" value="${user.user_id}"/>
+          </p>
         </div>
       </form>
     </div>
+    <c:if test="${user != null}">
     <button class="signup">지원하기</button>
+    </c:if>
   </body>
   <script>
+  
+
+
     const signupGroup = (data) => {
       $.ajax({
         type: 'post',
