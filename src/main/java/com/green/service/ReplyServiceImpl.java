@@ -44,6 +44,7 @@ public class ReplyServiceImpl implements ReplyService{
 	public int deleteReply(Long rno) {
 		// TODO Auto-generated method stub
 		return mapper.deleteReply(rno);
+
 	}
 
 }

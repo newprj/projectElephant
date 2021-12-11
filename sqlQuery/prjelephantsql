@@ -20,6 +20,7 @@ create table tbl_group(
 drop sequence seq_gno;
 create sequence seq_gno;
 
+drop table tbl_calendar;
 create table tbl_calendar(
     cid number,
     title varchar2(50),
@@ -116,6 +117,7 @@ select * from tbl_user;
 select * from tbl_group;
 select * from board_file;
 select * from board_reply;
+select * from tbl_calendar;
 
 select * from user_sequences;
 commit;
