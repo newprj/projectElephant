@@ -1,4 +1,4 @@
-package com.green.mapper;
+package com.green.mapperTests;
 
 import java.util.ArrayList;
 import java.util.Date;

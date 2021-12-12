@@ -129,6 +129,3 @@ create table tbl_calendar(
     user_ varchar2(50),
     member_ varchar2(50));
 create sequence seq_cid;
-
-
-

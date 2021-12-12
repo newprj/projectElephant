@@ -1,4 +1,4 @@
-package com.green.mapper;
+package com.green.mapperTests;
 
 import org.apache.ibatis.binding.MapperRegistry;
 import org.junit.Test;
@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-
+import com.green.mapper.CalendarMapper;
 import com.green.vo.CalendarVO;
 
 import lombok.Setter;
@@ -38,9 +38,15 @@ public class CalendarTests {
 		
 	}
 	
-	@Test
+//	@Test
 	public void test2() {
 		mapper.getMaxCid();
+	}
+
+	
+	@Test 
+	public void testAfterToday() {
+		mapper.eventsAfterToday("그룹이름");
 	}
 	
 //	@Test
@@ -48,9 +54,9 @@ public class CalendarTests {
 		mapper.deleteEvent(2L);
 	}
 
-//	@Test
+	@Test
 	public void showBYGRoup() {
-		mapper.showEventByGroup("테스트").forEach(i -> System.out.println(i));
+		mapper.showEventByGroup("그룹이름").forEach(i -> System.out.println(i));
 	}
 	
 //	@Test

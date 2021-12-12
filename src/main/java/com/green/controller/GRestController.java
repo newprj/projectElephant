@@ -49,6 +49,7 @@ import lombok.extern.slf4j.Slf4j;
 
 
 
+
 @RestController
 @RequestMapping("/group/*")
 @Slf4j
@@ -360,12 +361,16 @@ public class GRestController {
 		calendarService.deleteEvent(cid);
 	}
 	
-
-	
-	@GetMapping("/model")
-	public ModelAndView testView(Model model) {
-		return new ModelAndView("/abc");
+	// 최근 이벤트 가져오기
+	@GetMapping(value = "/getLatestEvent/{group_name}")
+	public ResponseEntity<List<CalendarVO>> getLatestEvent (@PathVariable("group_name") String group){
+		List<CalendarVO> eventsList = calendarService.eventsAfterToday(group);
+		log.info(group);
+		//eventsList.forEach(i -> log.info(i+""));
+		return new ResponseEntity<>(eventsList, HttpStatus.OK);
 	}
+	
+	
 	
 
 

@@ -10,8 +10,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import javax.annotation.Resource;
+import javax.sound.midi.MidiDevice.Info;
+
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -117,6 +122,7 @@ public class FileController {
 				String Largefile = file.getAbsolutePath().replace("_s", "");
 				file = new File(Largefile);
 				file.delete();
+			
 			}
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -124,6 +130,7 @@ public class FileController {
 		}
 		return new ResponseEntity<String>(" delete " , HttpStatus.OK);
 	}
+	
 	
 	
 }

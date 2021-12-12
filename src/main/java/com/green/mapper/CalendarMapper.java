@@ -14,5 +14,7 @@ public interface CalendarMapper {
 	public List<CalendarVO> showEventByDay(String startDate);
 	public int deleteEvent(Long cno);
 	public Long getMaxCid();
+	
+	public List<CalendarVO> eventsAfterToday(String group);
 
 }
