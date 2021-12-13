@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.green.service.UserService;
@@ -77,18 +78,17 @@ public class UserController {
 	
 	
 	@PostMapping("/login")
-	public String loginPost(UserVO vo, HttpServletRequest req, RedirectAttributes rttr) {
+	public void loginPost(UserVO vo, HttpServletRequest req, RedirectAttributes rttr) {
 		HttpSession session = req.getSession();
 		UserVO login = userservice.login(vo);
 		
 		if(login == null) {
 			session.setAttribute("user", null);
-			rttr.addFlashAttribute("msg", false);
+			return;
 		}
 		else {
 			session.setAttribute("user", login);
 		}
-		return "redirect:/user/login";
 	}
 	
 

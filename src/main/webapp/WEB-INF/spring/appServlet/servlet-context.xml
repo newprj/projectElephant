@@ -21,6 +21,30 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
+	
+	<beans:bean id="logininterceptor" 
+            class="com.green.interceptor.LoginInterceptor"/>
+  <beans:bean id="authinterceptor" 
+            class="com.green.interceptor.AhthInterceptor"/>
+
+	<interceptors>
+	  <interceptor>
+	    <mapping path="/user/login"/>
+	    <beans:ref bean="logininterceptor"/>
+	  </interceptor>
+	    <interceptor>
+		    <!-- login 인증이 필요한 URI 들 -->
+		    <mapping path="/group/gather/{group_name"/>
+		    <mapping path="/group/{group_name}"/>
+		    <mapping path="/group/board/{group_name}"/>
+		    <mapping path="/group/test/{group_name}"/>
+		    <beans:ref bean="authinterceptor"/>
+ 	 </interceptor>
+	</interceptors>
+
+		
+	
+	
 	<context:component-scan base-package="com.green.controller" />
 
 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver"></beans:bean>

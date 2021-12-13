@@ -42,12 +42,21 @@ public class HomeController {
 		return "home";
 	}
 	
-	@GetMapping("/aaa")
-	public ModelAndView testView(Model model) {
-		return new ModelAndView("/abc");
+//	@GetMapping("/aaa")
+//	public ModelAndView testView(Model model) {
+//		return new ModelAndView("/abc");
+//	}
+	
+	
+	@GetMapping("/doA")
+	public String doAString () {
+		return "/abc";
 	}
 	
-	
+	@GetMapping("/doB")
+	public String doBString() {
+		return "/abc";
+	}
 	
 	
 }
