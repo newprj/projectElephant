@@ -137,7 +137,30 @@ prefix="c" %>
 			}
 	   
 			 let attachList = [];
-			 getFileListAtRead('${cri.bno}')
+		
+			 // 파일 표시 (다운로드 )
+			 let bno = "${cri.bno}"
+			 $.getJSON("/group/getFileList", {bno} , (files) =>{
+					let str =""
+					files.map( file => {
+						attachList.push(file) // 수정할때 넣음
+						if(file.fileType){
+							let fileCallpath = encodeURIComponent(
+									file.uploadPath + "/_s" + file.uuid + "_" + file.fileName
+								);
+							str += `<li><div><a href='/download?fileName=\${fileCallpath}'><span>\${file.fileName}</span></a>`;
+							str += `<img src='/display?fileName=\${fileCallpath}'></div></li>`
+						}
+						else{
+							let fileCallpath = encodeURIComponent(
+									file.uploadPath + "/" + file.uuid + "_" + file.fileName
+								);
+							str += `<li><div><a href='/download?fileName=\${fileCallpath}'><span>\${file.fileName}</span></a></div></li>`;
+						}
+					})//map
+					$('.uploadResult ul').html(str)
+				}) //getJSON
+			 
 		    $('div.modal > div > span').click(function(e){
 				$('.modal').hide()
 			})
