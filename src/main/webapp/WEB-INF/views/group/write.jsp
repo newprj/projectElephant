@@ -156,15 +156,8 @@ pageEncoding="UTF-8"%>
 							success: (res) => {
 								console.log("2)");
 								console.log(res);
-								const IMG_URL =
-									"/display?fileName=" +
-									encodeURIComponent(
-										res[0].uploadPath +
-											"/" +
-											res[0].uuid +
-											"_" +
-											res[0].fileName
-									);
+								const encodURL = encodeURIComponent(`\${res[0].uploadPath}/\${res[0].uuid}_\${res[0].fileName}`)
+								const IMG_URL =  `/display?fileName=\${encodURL}`
 
 								let range = quill.getSelection();
 								console.log(range);

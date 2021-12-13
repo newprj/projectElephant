@@ -18,6 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -218,8 +219,7 @@ public class GRestController {
 	}
 
 	// 게시글 조회
-	@GetMapping(value="/board/{group_name}/{bno}/{pageNum}/{amount}",  
-			produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@GetMapping(value="/board/{group_name}/{bno}/{pageNum}/{amount}")
 	public ModelAndView readOne(@ModelAttribute("cri") Criteria cri, HttpSession session){
 		ModelAndView mv = new ModelAndView("/group/getBoardForm");
 
@@ -239,6 +239,14 @@ public class GRestController {
 
 		return mv;
 	}
+	
+	@GetMapping("/getBoard/{bno}")
+	public ResponseEntity<BoardVO> readContent(@PathVariable("bno") Long bno){
+		return new ResponseEntity<BoardVO>(boardService.read(bno), HttpStatus.OK);
+	}
+	
+
+	
 	
 	@GetMapping(value="/board/{group_name}/write")
 	public ModelAndView boardWrite(@PathVariable("group_name")String group_name, 

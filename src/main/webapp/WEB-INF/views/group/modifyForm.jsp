@@ -76,7 +76,7 @@ prefix="c" %>
 				
 				const uploadClone = $(".file").clone();
 				var myEditor = document.querySelector("#editor");
-				let content = "${board.content}";
+				
 				getFileList("${cri.bno}");
 
 				$('input[type="file"]').change(function (e) {
@@ -193,15 +193,8 @@ prefix="c" %>
 							success: (res) => {
 								console.log("2)");
 								console.log(res);
-								const IMG_URL =
-									"/display?fileName=" +
-									encodeURIComponent(
-										res[0].uploadPath +
-											"/" +
-											res[0].uuid +
-											"_" +
-											res[0].fileName
-									);
+								const encodURL = encodeURIComponent(`\${res[0].uploadPath}/\${res[0].uuid}_\${res[0].fileName}`)
+								const IMG_URL =  `/display?fileName=\${encodURL}`
 
 								let range = quill.getSelection();
 								console.log(range);
@@ -232,9 +225,16 @@ prefix="c" %>
 					},
 				});
 
+				$.getJSON("/group/getBoard/${board.bno}", (res) =>{
+					let content = res.content;
+					quill.container.firstChild.innerHTML = content 
+				})
+				
 				let toolbar = quill.getModule("toolbar");
 				toolbar.addHandler("image", imageHandler);
-				quill.clipboard.dangerouslyPasteHTML(content);
+				
+			
+				
 			}); // docu ready
 		</script>
 	</body>
