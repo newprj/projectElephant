@@ -33,5 +33,11 @@ public class GUserServiceImpl implements GUserService {
 		return mapper.listByGroup(group_name);
 	}
 
+	@Override
+	public List<GUserVO> listByUSer(String user) {
+		
+		return mapper.listByUSer(user);
+	}
+
 
 }

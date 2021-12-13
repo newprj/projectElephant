@@ -69,18 +69,18 @@ pageEncoding="UTF-8"%>
 				$('ul.today').append(todayLi)
 			})
 			
-			const latest_3event = list.filter(i => i.startDate !== today).sort( (a, b)=>{
+			const latestEvent = list.filter(i => i.startDate !== today).sort( (a, b)=>{
 				let aDate = new Date(a.startDate)
 				let bDate = new Date(b.startDate)
 				return aDate-bDate
-			}).slice(0, 3)
+			}).slice(0, 10)
 			
-			if(latest_3event.length==0 || latest_3event ==null){
+			if(latestEvent.length==0 || latestEvent ==null){
 				let noEvent = $('<li> 다가오는 일정이 없습니다 </li>')
 				$('ul.latest').append(noEvent)
 			}
 			
-			latest_3event.map( event => {
+			latestEvent.map( event => {
 				const { title, description_} = event
 				let eventLi = $(`<li> <strong> \${title} </strong> <span>\${description_} </span>  </li>`)
 				$('ul.latest').append(eventLi)

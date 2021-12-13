@@ -68,6 +68,15 @@ prefix="c" %>
           </c:if>
           <c:if test="${user!=null}">
           	<div class="item"> <a href="/user/logout"> 로그아웃 </a></div>
+          	<div class="mygroup">
+          	<select name="group_name">
+          	
+          		<c:forEach items="${myGroup}" var="mine">	
+							<option value="${mine.group_name}" >${mine.group_name}</option>
+          	</c:forEach>
+          	</select>
+          	<button > go </button>
+          	</div>
           </c:if>
         </div>
       </div>
@@ -103,6 +112,12 @@ prefix="c" %>
 
 				location.href = "/group/gather/" + group_name;
 			});
+			
+			$('div.mygroup button').click(function(e){
+				e.preventDefault()
+			 	let group_name = $('select[name="group_name"]').val()
+			 	location.href = `/group/\${group_name}`
+			})
 		});
 	</script>
 </html>

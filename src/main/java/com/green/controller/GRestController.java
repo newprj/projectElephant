@@ -50,6 +50,7 @@ import lombok.extern.slf4j.Slf4j;
 
 
 
+
 @RestController
 @RequestMapping("/group/*")
 @Slf4j
@@ -75,12 +76,37 @@ public class GRestController {
 	// 메인 페이지
 	@GetMapping("/")
 	public ModelAndView main(Model model, HttpSession session) {
-		UserVO user = (UserVO) session.getAttribute("user");
+		
 		ModelAndView mv =  new ModelAndView("/group/main");
-		mv.addObject("user", user);
-		mv.addObject("group", groupService.showAll());
+		try {
+			UserVO user = (UserVO) session.getAttribute("user");
+			List<GUserVO> groupList = groupUserService.listByUSer(user.getUser_id());
+			
+			mv.addObject("myGroup", groupList);
+			mv.addObject("user", user);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			mv.addObject("group", groupService.showAll());
+		}
 		return mv;
 	}
+	
+	
+	// 내가 가입한 그룹 가지고 오기
+	@GetMapping(value = "/getGroupByUSer/{user_id}")
+	public ResponseEntity<List<GUserVO>> getGroupByUser(@PathVariable("user_id") String user){
+		List<GUserVO> groupList = groupUserService.listByUSer(user);
+		log.info(user);
+		groupList.forEach(i -> {
+			log.info("==========================================");
+			log.info(i.getGroup_name());
+		});
+		return new ResponseEntity<List<GUserVO>>(groupList, HttpStatus.OK);
+	}
+	
+	
+	
 	
 	// 그룹별 가입 유저 가지고 오기 
 	@GetMapping(value ="/getMemberlistByGroup/{group_name}")
@@ -369,9 +395,6 @@ public class GRestController {
 		//eventsList.forEach(i -> log.info(i+""));
 		return new ResponseEntity<>(eventsList, HttpStatus.OK);
 	}
-	
-	
-	
 
 
 }
