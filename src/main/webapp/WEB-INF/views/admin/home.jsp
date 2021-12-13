@@ -43,7 +43,7 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 	margin:15% auto;
 	padding: 20px;
 	border: 1px solid #888;
-       width: 30%;
+    width: 30%;
 
 }
 
@@ -57,7 +57,7 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 	<h5 id='today'><fmt:formatDate value="<%= today %>" pattern="yyyy-MM-dd" /> : 방문자수(가능하면)</h5>
 	<h3>받은 쪽지 리스트도 보이도록, 방문자 평균 그래프로 보이게</h3>
 	
-	<h3>회원 리스트</h3>
+	<h3 id='a'>회원 리스트</h3>
 	<div class='userList'>
 		<h5>회원에게 쪽지, 버튼 크기 맞추기,정지된 회원은 로그인 안되게 하기</h5>
 		<table>
@@ -89,7 +89,7 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 		</table>
 	</div>
 	
-	<h3><a href='/group/'>스터디 승인 리스트</a></h3>
+	<h3 id='a'><a href='/group/'>스터디 승인 리스트</a></h3>
 	<div class='study'>
 	<h5>스터디 a태그로 누르면 전제 내용 띄우고 승인 버튼 스터디 테이블에 승인 컬럼 만들기</h5>
 		<table>

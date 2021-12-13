@@ -7,6 +7,8 @@ GRANT CONNECT TO spring;
 GRANT RESOURCE TO spring;
 GRANT DBA TO spring;
 grant connect ,dba  to spring ;
+
+-------------------------qna 구현하면서 필요한 테이블
 create table qna_tbl
 (
     qno number(10,0) primary key,
@@ -85,6 +87,8 @@ create table tbl_group(
     description varchar2(30),
     member_number number);
 create sequence seq_sno;
+
+select*from tbl_group;
 
 create table tbl_groupuser(
     cno number,
