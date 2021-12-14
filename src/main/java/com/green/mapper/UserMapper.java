@@ -15,5 +15,7 @@ public interface UserMapper {
 	public List<UserVO> userSelect();
 	public int susp(UserVO vo);
 
+	//chatting
+	public UserVO selectMaster(String user_id);
 	
 }

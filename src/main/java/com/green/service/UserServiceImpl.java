@@ -59,6 +59,12 @@ public class UserServiceImpl implements UserService {
 		return usermapper.susp(vo);
 	}
 
+	@Override
+	public UserVO selectMaster(String user_id) {
+		log.info("2) 서비스에서 마스터 사용자 검색");
+		return usermapper.selectMaster(user_id);
+	}
+
 	
 	
 	

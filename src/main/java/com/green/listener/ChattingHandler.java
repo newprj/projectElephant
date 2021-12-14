@@ -2,17 +2,28 @@ package com.green.listener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.green.mapper.ChatMapper;
+import com.green.service.ChatService;
+import com.green.service.UserService;
+import com.green.vo.ChatRoomVO;
+import com.green.vo.ChatVO;
+
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class ChattingHandler extends TextWebSocketHandler{
-	
+
 private List<WebSocketSession> sessionList = new ArrayList<WebSocketSession>();
 	
 	
