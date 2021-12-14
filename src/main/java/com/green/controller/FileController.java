@@ -10,8 +10,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -117,6 +120,7 @@ public class FileController {
 				String Largefile = file.getAbsolutePath().replace("_s", "");
 				file = new File(Largefile);
 				file.delete();
+			
 			}
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -124,6 +128,27 @@ public class FileController {
 		}
 		return new ResponseEntity<String>(" delete " , HttpStatus.OK);
 	}
+	
+	@GetMapping(value="/download" , produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+	public ResponseEntity<Resource> fileDownload(String fileName){
+	
+		Resource resource=new FileSystemResource("c:\\upload\\"+fileName);
+		if(resource.exists()==false) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		
+		String resourceName=resource.getFilename();
+		HttpHeaders headers=new HttpHeaders();
+		String downloadName=null;
+		
+		try {
+			downloadName=new String(resourceName.getBytes("UTF-8"),"ISO-8859-1");
+			headers.add("Content-Disposition","attachment; fileName="+downloadName);
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new ResponseEntity<Resource>(resource,headers,HttpStatus.OK);
+	}
+	
 	
 	
 }

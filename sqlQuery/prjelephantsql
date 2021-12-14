@@ -20,20 +20,8 @@ create table tbl_group(
 drop sequence seq_gno;
 create sequence seq_gno;
 
-create table tbl_calendar(
-    cid number,
-    title varchar2(50),
-    startDate varchar2(50),
-    endDate varchar2(50),
-    editable varchar2(1) default 'N',
-    color varchar2(50),
-    description_ varchar2(500),
-    location varchar2(100),
-    group_ varchar2(500),
-    user_ varchar2(50),
-    member_ varchar2(50));
 
-create sequence seq_cid;
+
 
 drop table tbl_user;
 create table tbl_user(
@@ -54,15 +42,8 @@ create table tbl_groupuser(
     group_name varchar2(30));
     
 
-
-create table tbl_review(
-    rno number,
-    group_name varchar2(30),
-    title varchar2(200),
-    content varchar2(2000),
-    writer varchar2(30),
-    regdate date default sysdate );  
-
+drop table tbl_review;
+-------------- 치원님 쿼리 이용
 drop table board_file;   
 create table board_file(
     uuid varchar2(100),
@@ -71,34 +52,36 @@ create table board_file(
     fileType char(1) default '1',
     bno number);
 
-create table tbl_qanda(
-    qno number,
-    title varchar2(200),
-    content varchar2(2000),
-    writer varchar2(30),
-    regdate date default sysdate );   
-    
+drop table tbl_qanda;
+-- -----------------희주님 쿼리 이용 
 create sequence seq_qno;
 drop sequence seq_qno;  
-    
+
+------------ 테이블 컬럼 속성 변경
+drop table tbl_board;
 create table tbl_board(
     bno number,
     group_name varchar2(30),
     title varchar2(200),
     content varchar2(2000),
     writer varchar2(30),
-    regdate date default sysdate );  
+    regdate timestamp default sysdate,
+    updatedate timestamp);  
+
 create sequence seq_bno;
 drop sequence seq_bno; 
-alter table tbl_board add constraint pk_board primary key(bno)
+alter table tbl_board add constraint pk_board primary key(bno);
 
 
+----------- 테이블 컬럼 속성 변경 
+drop table board_reply;
 create table board_reply(
     rno number,
     bno number,
     reply varchar2(500),
     replyer varchar2(100),
-    replydate date default sysdate);    
+    replydate date default sysdate,
+    updatedate timestamp);    
 create sequence board_rno;  
 create sequence seq_rno;
 drop sequence seq_rno;
@@ -116,9 +99,28 @@ select * from tbl_user;
 select * from tbl_group;
 select * from board_file;
 select * from board_reply;
+select * from tbl_calendar;
 
 select * from user_sequences;
 commit;
 
+
 --- 쿼리 문서 수정 /공유 시 수정한 부분 주석으로 달아주세요 
 --- select, update 등 테스트를 위한 쿼리문은 공유 X
+
+---- 12/11 컬럼 날짜를 varchar로 받던 것을 timestmap로 수정했습니다
+
+drop table tbl_calendar;
+create table tbl_calendar(
+    cid number,
+    title varchar2(50),
+    startDate timestamp,
+    endDate timestamp,
+    editable varchar2(1) default 'N',
+    color varchar2(50),
+    description_ varchar2(500),
+    location varchar2(100),
+    group_ varchar2(500),
+    user_ varchar2(50),
+    member_ varchar2(50));
+create sequence seq_cid;

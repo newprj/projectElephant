@@ -1,7 +1,7 @@
 const MAX_SIZE = 5242880;
 const REGEX = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
 let attachList = [];
-console.log("파일업로드 js 파일과 연결")
+console.log("파일업로드 js 파일과 연결ㅇㅇㅇ")
 
 
 const checkExtension = (fileName, fileSize) => {
@@ -45,8 +45,6 @@ const getImgFileString = (file) => {
 	str += fileCallpath + "'></div></li>";
 	return str;
 }
-
-
 
 
 
@@ -103,3 +101,28 @@ const getFileList = (bno) =>{
 		$('.uploadResult ul').html(str)
 	}) //getJSON
 }
+
+/*const getFileListAtRead = (bno) => {
+	console.log(" 리드 함수 ")
+	$.getJSON("/group/getFileList", {bno} , (files) =>{
+		let str =""
+		files.map( file => {
+			attachList.push(file) // 수정할때 넣음
+			if(file.fileType){
+				let fileCallpath = encodeURIComponent(
+						file.uploadPath + "/_s" + file.uuid + "_" + file.fileName
+					);
+				str += `<li><div><a href='/download?fileName=${fileCallpath} ><span>${file.fileName}</span></a>`;
+				str += "<img src='/display?fileName=";
+				str += fileCallpath + "'></div></li>";
+			}
+			else{
+				let fileCallpath = encodeURIComponent(
+						file.uploadPath + "/" + file.uuid + "_" + file.fileName
+					);
+				str += `<li><div><a href='/download?fileName=${fileCallpath} ><span>${file.fileName}</span></a></div></li>`;
+			}
+		})//map
+		$('.uploadResult ul').html(str)
+	}) //getJSON
+}*/

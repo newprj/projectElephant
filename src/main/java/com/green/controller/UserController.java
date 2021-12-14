@@ -4,12 +4,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.green.service.UserService;
@@ -47,6 +49,7 @@ public class UserController {
 	public String modifyPost(UserVO vo, HttpSession session) {
 		userservice.modify(vo);
 		logout(session);
+		// 회원정보 수정 후 로그아웃?
 		return "redirect:/user/login";
 	}
 
@@ -83,7 +86,6 @@ public class UserController {
 		String result="";
 		if(login == null) {
 			session.setAttribute("user", null);
-			rttr.addFlashAttribute("msg", false);
 		}
 		else if(login.getUser_id().equals("admin")){
 			log.info("admin 로그인하면 admin 페이지로 넘어가기");
@@ -95,7 +97,9 @@ public class UserController {
 			result= "redirect:/user/login";
 		}
 		return result;
+
 	}
+	
 
 	@GetMapping("/logout")
 	public String logout(HttpSession session) {
@@ -114,6 +118,8 @@ public class UserController {
 		}
 		return result;
 	}
+	
+	
 }
 
 

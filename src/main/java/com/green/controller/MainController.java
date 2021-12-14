@@ -1,5 +1,7 @@
 package com.green.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Controller;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.green.service.BoardService;
 import com.green.service.GroupService;
 import com.green.vo.GroupVO;
+import com.green.vo.UserVO;
 
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -32,8 +35,9 @@ public class MainController {
 	
 	
 	@GetMapping("/make")
-	public void createGroup() {
-		System.out.println("get make group ");
+	public void createGroup(Model model, HttpSession session) {
+		UserVO user = (UserVO) session.getAttribute("user");
+		model.addAttribute("user", user);
 		
 	}
 	

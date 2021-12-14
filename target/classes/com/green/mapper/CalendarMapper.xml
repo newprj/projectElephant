@@ -9,7 +9,7 @@
 		</selectKey>
 		insert into tbl_calendar (cid, title, startDate, endDate, 
 			editable, color, description_, location, group_, user_, member_ )
-			values(#{cid}, #{title}, #{startDate}, #{endDate, jdbcType=VARCHAR}, 
+			values(#{cid}, #{title}, #{startDate}, #{endDate, jdbcType=TIMESTAMP}, 
 			#{editable}, #{color}, #{description_, jdbcType=VARCHAR}, 
 			#{location, jdbcType=VARCHAR}, #{group_}, #{user_}, #{member_, jdbcType=VARCHAR})
 	</insert>
@@ -19,7 +19,7 @@
 	</select>
 	
 	<update id="updateEvent">
-		update tbl_calendar set cid =#{cid}, title=#{title}, startDate=#{startDate} , endDate=#{endDate, jdbcType=VARCHAR}, 
+		update tbl_calendar set cid =#{cid}, title=#{title}, startDate=#{startDate} , endDate=#{endDate, jdbcType=TIMESTAMP}, 
 			editable=#{editable}, color=#{color}, description_= #{description_, jdbcType=VARCHAR}, 
 			location=#{location, jdbcType=VARCHAR}, group_=#{group_}, user_=#{user_}, member_=#{member_, jdbcType=VARCHAR} 
 			where cid=#{cid}
@@ -42,4 +42,12 @@
 		select max(cid) from tbl_calendar
 	</select>
 	
+	
+	<select id="eventsAfterToday" resultType="com.green.vo.CalendarVO">
+	<![CDATA[ 
+		select * from 
+			(select * from tbl_calendar where startdate < add_months(sysdate, +1)  and group_ = #{group_})  
+			where startdate >= to_char(sysdate, 'yyyy-mm-dd') or enddate >= to_char(sysdate, 'yyyy-mm-dd')
+			]]>
+	</select>
 </mapper>

@@ -60,10 +60,29 @@ prefix="c" %>
       
       
       $(document).ready(function () {
+    	
     	let actionForm = $('#actionForm')
         let pageNum = actionForm.find('input[name="pageNum"]').val()
         let amount = actionForm.find('input[name="amount"]').val()
         
+        let loginUser= "${user}"
+        if(! loginUser){
+			console.log('로그인안됨')
+			alert("로그인 해야 접근 가능합니다")
+			location.href="/group/"
+		}else{
+			$.getJSON(
+				"/group/getMemberlistByGroup/${group_name}", (list) =>{
+					console.log(list)
+					console.log(loginUser)
+					let joinCheck = list.find( user => user.user_id === loginUser)
+					if(!joinCheck){
+						alert("그룹 회원만 접근 가능한 페이지입니다")
+						location.href="/group/"
+					} 
+				})
+		}
+		
         $('.create').click(function(e){
         	let group_name = '${cri}' ? "${cri.group_name}" : "${group_name}"
         	location.href="/group/board/"+group_name+"/write"

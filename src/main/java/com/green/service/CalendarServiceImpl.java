@@ -53,4 +53,10 @@ public class CalendarServiceImpl implements CalendarService{
 		return mapper.deleteEvent(cno);
 	}
 
+	@Override
+	public List<CalendarVO> eventsAfterToday(String group) {
+		// TODO Auto-generated method stub
+		return mapper.eventsAfterToday(group);
+	}
+
 }
