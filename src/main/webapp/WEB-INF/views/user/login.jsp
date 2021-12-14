@@ -25,6 +25,7 @@
           <label for="password">비밀번호</label>
           <input type="password" class="form-control" name="password" />
         </div>
+   
         <button class="btn btn-primary">로그인</button>
         <button class="btn btn-success" type="button" onclick="location.href='register' ">회원가입</button>
       </form>
@@ -32,7 +33,7 @@
       <c:if test="${msg == false}">
       	<p>로그인에 실패했습니다.</p>
       </c:if>
-      <c:if test="${user != null}">
+     <c:if test="${user != null}">
       	<p>${user.name}님 환영합니다</p>
       	<button class="btn btn-primary" type="button" onclick="location.href='logout' ">로그아웃</button>
       	<button class="btn btn-info" type="button" onclick="location.href='modify' ">회원정보 수정</button>

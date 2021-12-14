@@ -6,7 +6,8 @@ pageEncoding="UTF-8"%>
 	<head>
 		<meta charset="UTF-8" />
 		<title>Insert title here</title>
-		<script src="//code.jquery.com/jquery-3.6.0.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.js"></script>
 	</head>
 	<body>
 		<h1>스터디별 페이지</h1>
@@ -30,16 +31,27 @@ pageEncoding="UTF-8"%>
 			</div>
 			<a href="/group/test/${group_name}"> ... 일정 더보기 </a>
 		</div>
+		
+		<div>
+		<div class="message">
+		
+			</div>
+	
+			<div>
+		<input class="message" type ="text">
+			<div>
+				<button> 전송</button>
+			</div>
+		</div>			
+		</div>
+		
+		
+
 	</body>
 
 	<script>
 		let loginUser = "${user}"
-		
-		if(! loginUser){
-			console.log('로그인안됨')
-			alert("로그인 해야 접근 가능합니다")
-			location.href="/group/"
-		}else{
+	
 			$.getJSON(
 				"/group/getMemberlistByGroup/${group_name}", (list) =>{
 					let joinCheck = list.find( user => user.user_id === loginUser)
@@ -48,7 +60,6 @@ pageEncoding="UTF-8"%>
 						location.href="/group/"
 					} 
 				})
-		}
 		
 
 		const today = new Date().toISOString().split("T")[0]
@@ -88,6 +99,54 @@ pageEncoding="UTF-8"%>
 			
 		})// getJSON
 		
+		// 채팅 
+		let socket = new SockJS('http://localhost:8080/chat/{group_name}')
+
+
+		let msg = $('input.message')
+		const sendMessage = () => {
+			socket.send(`\${loginUser} : \${msg.val()}`)
+		}
+
+		const onMessage = ( message ) => {
+			
+			let data = message.data;
+			let sessionId
+			let messages
+			
+			let arr = data.split(':')
+			arr.map(console.log)
+			
+			sessionId =  arr[0]
+			messages = arr[1]
+			
+
+			let msgElement = $(`<div><div><b>\${sessionId}</b> \${messages}</div></div>`)
+			$('div.message').append(msgElement)
+
+		}
+		const onClose = (e) =>{
+			// 채팅창 닫기 등..?? 
+			socket.send(`\${loginUser} : 님이 퇴장했습니다 `)
+		}
+
+		const onOpen = (e) =>{
+			socket.send(`\${loginUser} : 님이 입장했습니다 `)
+		}
+
+			
+
+			$('button').click(function(e){
+				sendMessage()
+				msg.val("")
+			})
+			
+
+		console.log(socket)
+			
+		socket.onmessage = onMessage;
+		socket.onclose = onClose;
+		socket.onopen = onOpen
 	
 	
 		

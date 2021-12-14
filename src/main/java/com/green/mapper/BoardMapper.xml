@@ -22,7 +22,7 @@
 	
 	<update id="update">
 		update tbl_board 
-			set group_name=#{group_name}, title=#{title}, content=#{content}, writer=#{writer}
+			set group_name=#{group_name}, title=#{title}, content=#{content}, writer=#{writer}, updateDate = sysdate
 				where bno=#{bno}
 	</update>
 	

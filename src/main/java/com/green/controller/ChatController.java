@@ -36,6 +36,9 @@ public class ChatController{
 		model.addAttribute("userid" , user.getUser_id() );
 	}
 	
-	
+	@GetMapping("/chat/{group_name}")
+	public void groupChat(Model model, HttpServletRequest req) {
+		
+	}
 	
 }

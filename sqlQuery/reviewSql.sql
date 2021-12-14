@@ -26,12 +26,15 @@ create sequence seq_cno;
 
 
 
-    create table cpage( /*소모임장 페이지에 대한 테이블*/ 
+
+create table cpage( /*소모임장 페이지에 대한 테이블*/ 
+
     rno number,
     group_name varchar2(30),
     member varchar2(50),
     captain varchar2(2)default 'N',
     Membership varchar2(2) default 'N'
-    );    
+
+);    
 
  create sequence seq_cpno;

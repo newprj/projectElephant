@@ -21,7 +21,7 @@
 	</insert>
 	
 	<update id="updateReply">
-		update board_reply set reply=#{reply} where rno=#{rno}
+		update board_reply set reply=#{reply}, updatedate = sysdate where rno=#{rno}
 	</update>
 
 	<delete id="deleteReply">

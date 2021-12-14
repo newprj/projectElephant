@@ -80,24 +80,17 @@ public class UserController {
 	
 	
 	@PostMapping("/login")
-	public String loginPost(UserVO vo, HttpServletRequest req, RedirectAttributes rttr) {
+	public void loginPost(UserVO vo, HttpServletRequest req, RedirectAttributes rttr) {
 		HttpSession session = req.getSession();
 		UserVO login = userservice.login(vo);
-		String result="";
+		/* String result=""; */
 		if(login == null) {
-			session.setAttribute("user", null);
-		}
-		else if(login.getUser_id().equals("admin")){
-			log.info("admin 로그인하면 admin 페이지로 넘어가기");
-			session.setAttribute("user", login);
-			result= "redirect:/admin/home";
+			rttr.addFlashAttribute("msg", false);
 		}
 		else {
 			session.setAttribute("user", login);
-			result= "redirect:/user/login";
 		}
-		return result;
-
+		
 	}
 	
 
