@@ -18,7 +18,7 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 .userList, .study,.qna , .letter{
 	width:50%;
-	height:500px;
+	height:400px;
 	float:left;
 	overflow:auto;
 	
@@ -43,7 +43,7 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 	margin:15% auto;
 	padding: 20px;
 	border: 1px solid #888;
-       width: 30%;
+    width: 30%;
 
 }
 
@@ -54,12 +54,12 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 </head>
 <body>
 	<h1>Admin page</h1>
-	<h3>받은 쪽지 리스트도 보이도록, 방문자 평균 그래프로 보이게</h3>
 	<h5 id='today'><fmt:formatDate value="<%= today %>" pattern="yyyy-MM-dd" /> : 방문자수(가능하면)</h5>
+	<h3>받은 쪽지 리스트도 보이도록, 방문자 평균 그래프로 보이게</h3>
 	
+	<h3 id='a'>회원 리스트</h3>
 	<div class='userList'>
-		<h3>회원 리스트</h3>
-		<h5>회원에게 쪽지</h5>
+		<h5>회원에게 쪽지, 버튼 크기 맞추기,정지된 회원은 로그인 안되게 하기</h5>
 		<table>
 			<thead>
 				<tr>
@@ -76,12 +76,12 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 					<td>${status.count}</td>
 					<td id='userId${status.index}'>${i.user_id}</td>
 					<td>${i.name}</td>
-					<td></td>
-					<td><button id='letter'>쪽지 보내기</button></td>
+					<td>${i.regDate}</td>
+					<td><button id='chat'>채팅</button></td>
 					<td><button class='susp' >
 						<c:choose>
-							<c:when test="${i.suspension eq 'Y'}">해제 하기</c:when>
-							<c:otherwise>정지 하기</c:otherwise>
+							<c:when test="${i.suspension eq 'Y'}">정지</c:when>
+							<c:otherwise>활동중</c:otherwise>
 						</c:choose>	
 					</button></td>
 				</tr>
@@ -89,8 +89,8 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 		</table>
 	</div>
 	
+	<h3 id='a'><a href='/group/'>스터디 승인 리스트</a></h3>
 	<div class='study'>
-	<h3>스터디 승인 리스트</h3>
 	<h5>스터디 a태그로 누르면 전제 내용 띄우고 승인 버튼 스터디 테이블에 승인 컬럼 만들기</h5>
 		<table>
 			<thead>
@@ -111,7 +111,7 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 					<td>${i.subject}</td>
 					<td>${i.leader}</td>
 					<td>${i.member_number}명</td>
-					<td><a href='#'>확인</a></td>
+					<td><a href='/group/gather/${i.group_name}'>확인</a></td>
 					<td>Y/N</td>
 				</tr>
 			</c:forEach>
@@ -121,9 +121,8 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 	
 	
 	
-	<div class='qna'>
 	<h3><a href='/qna/list'>Q&A 리스트</a></h3>
-	
+	<div class='qna'>
 		<table>
 			<thead>
 				<tr>
@@ -147,8 +146,9 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 			</c:forEach>
 		</table>
 	</div>
+	
+	<h3>받은 쪽지</h3>
 	<div class="letter">
-		<h3>받은 쪽지</h3>
 		
 	</div>
 	
@@ -165,7 +165,7 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 						<input name="modelId"/>
 					</div>
 					<div class="modal-group">
-						<label>정지 이유</label><br/>
+						<label>이유</label><br/>
 						<textarea name="modalContent"></textarea>
 						
 					</div>
@@ -198,16 +198,20 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 			var idx=$(".susp").index(this)
 			var uid=$("#userId"+idx).text()
 			modalId.val(uid)
-
-			var form={
-				user_id:modalId.val(),
-				suspension:'Y',
-				suspContent:modalContent.val(),
-				suspDate:today,
-			}
 			
+			var suspension=''
+			if($(this).text()=='정지') suspension='Y'
+			else suspension='N'
 			
 			$("#register").off('click').on('click',function(){
+				
+				var form={
+						user_id:modalId.val(),
+						suspension:suspension,
+						suspContent:modalContent.val(),
+						suspDate:today,
+				}
+				console.log(form)
 				$.ajax({
 					url:"/admin/susp",
 					type:"post",
@@ -221,7 +225,7 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 					error:function(){
 						alert("실패")
 					}
-				})
+				}) 
 			})
 		})
 		

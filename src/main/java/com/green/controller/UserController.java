@@ -18,10 +18,12 @@ import com.green.service.UserService;
 import com.green.vo.UserVO;
 
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 
 
 @Controller
 @RequestMapping("/user/*")
+@Slf4j
 public class UserController {
 
 	@Setter(onMethod_ = @Autowired)
@@ -78,16 +80,27 @@ public class UserController {
 	
 	
 	@PostMapping("/login")
-	public void loginPost(UserVO vo, HttpServletRequest req, RedirectAttributes rttr) {
+	public String loginPost(UserVO vo, HttpServletRequest req, RedirectAttributes rttr) {
 		HttpSession session = req.getSession();
 		UserVO login = userservice.login(vo);
-		
+		String result="";
 		if(login == null) {
+
 			rttr.addFlashAttribute("msg", false);
+
+			session.setAttribute("user", null);
+		}
+		else if(login.getUser_id().equals("admin")){
+			log.info("admin 로그인하면 admin 페이지로 넘어가기");
+			session.setAttribute("user", login);
+			result= "redirect:/admin/home";
 		}
 		else {
 			session.setAttribute("user", login);
+			result= "";
 		}
+		return result;
+
 	}
 	
 

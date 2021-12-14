@@ -184,6 +184,13 @@
 			<version>4.12</version>
 			<scope>test</scope>
 		</dependency> 
+		
+		<!-- 채팅을 하기 위해 -->
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-websocket</artifactId>
+	    	<version>${org.springframework-version}</version>
+		</dependency>
 		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
 		<dependency>
 	  	  <groupId>com.fasterxml.jackson.core</groupId>

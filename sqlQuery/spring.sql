@@ -7,11 +7,14 @@ GRANT CONNECT TO spring;
 GRANT RESOURCE TO spring;
 GRANT DBA TO spring;
 grant connect ,dba  to spring ;
+
+-------------------------qna ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸é¼­ ï¿½Ê¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½
 create table qna_tbl
 (
     qno number(10,0) primary key,
     title varchar2(50) not null,
     writer varchar2(100) not null,
+    q_content varchar2(100) not null,
     reg_date timestamp not null,
     pwd varchar2(10) null,
     p_group varchar2(10) default 'public' constraint group_ch check (p_group in ('public','private'))
@@ -38,7 +41,7 @@ select writer from qna_tbl where qno=1 ;
 select * from qna_tbl where qno=1;
 select*from reply_tbl where qno=1 order by rno;
 delete from qna_reply_tbl where rno=5;
-update qna_reply_tbl set r_content='¼öÁ¤µÇ³ª' where rno=1;
+update qna_reply_tbl set r_content='ï¿½ï¿½ï¿½ï¿½ï¿½Ç³ï¿½' where rno=1;
 select *from qna_tbl order by reg_date desc;
 desc tbl_attach;
 create table qna_attach_tbl(
@@ -85,6 +88,8 @@ create table tbl_group(
     description varchar2(30),
     member_number number);
 create sequence seq_sno;
+
+select*from tbl_group;
 
 create table tbl_groupuser(
     cno number,

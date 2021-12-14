@@ -26,7 +26,7 @@ public class UserVO {
 	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date regDate;
 	
-	//정지 
+	//admin이 회원정지 
 	private String suspension;
 	private String suspContent;
 	private Date suspDate;
