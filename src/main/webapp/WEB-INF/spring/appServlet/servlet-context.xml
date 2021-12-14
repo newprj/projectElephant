@@ -7,13 +7,8 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
-<<<<<<< HEAD
 		http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.3.xsd">
-		
-=======
-		http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket.xsd">
 
->>>>>>> 625ce4f35cb1601389d85d574f16ee48ed294486
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	
 	<!-- Enables the Spring MVC @Controller programming model -->
@@ -47,9 +42,8 @@
 		    <beans:ref bean="authinterceptor"/>
  	 </interceptor>
 	</interceptors>
-	
 
-<<<<<<< HEAD
+<!-- 채팅  -->
 	<websocket:handlers>
 		<websocket:mapping handler="chattingHandler" path="/chatting"/>
 		<websocket:mapping handler="groupchatHandler" path="/chat/{group_name}"/>
@@ -58,20 +52,10 @@
 	
 	<beans:bean id="chattingHandler" class="com.green.handler.ChattingHandler"/>
 	<beans:bean id="groupchatHandler" class="com.green.handler.GroupChatHandler"/>
-	
-	
-=======
-		
->>>>>>> 625ce4f35cb1601389d85d574f16ee48ed294486
+
 	<context:component-scan base-package="com.green.controller" />
 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver"></beans:bean>
-<!-- 채팅을 위한 등록 -->
-	<websocket:handlers>
-		<websocket:mapping handler="chattingHandler" path="/chatting"/>
-		<websocket:sockjs></websocket:sockjs>
-	</websocket:handlers>
-	
-	<beans:bean id="chattingHandler" class="com.green.listener.ChattingHandler"/>
+
 	
 			
 </beans:beans>
