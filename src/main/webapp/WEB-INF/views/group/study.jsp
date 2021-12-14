@@ -51,6 +51,7 @@ pageEncoding="UTF-8"%>
 
 	<script>
 		let loginUser = "${user}"
+		let group = "${group_name}"
 	
 			$.getJSON(
 				"/group/getMemberlistByGroup/${group_name}", (list) =>{
@@ -105,7 +106,11 @@ pageEncoding="UTF-8"%>
 
 		let msg = $('input.message')
 		const sendMessage = () => {
-			socket.send(`\${loginUser} : \${msg.val()}`)
+			let data = {
+					loginUser, group, msg: msg.val()
+			}
+			let jsonMSG = JSON.stringify(data)
+			socket.send(jsonMSG)
 		}
 
 		const onMessage = ( message ) => {
@@ -114,7 +119,9 @@ pageEncoding="UTF-8"%>
 			let sessionId
 			let messages
 			
-			let arr = data.split(':')
+			
+			
+		  let arr = data.split(':')
 			arr.map(console.log)
 			
 			sessionId =  arr[0]
@@ -126,12 +133,19 @@ pageEncoding="UTF-8"%>
 
 		}
 		const onClose = (e) =>{
-			// 채팅창 닫기 등..?? 
-			socket.send(`\${loginUser} : 님이 퇴장했습니다 `)
+			let data = {
+					loginUser, group, msg : " 님이 퇴장했습니다 "
+			}
+			let jsonMSG = JSON.stringify(data)
+			socket.send(jsonMSG)
 		}
 
 		const onOpen = (e) =>{
-			socket.send(`\${loginUser} : 님이 입장했습니다 `)
+			let data = {
+					loginUser, group, msg : " 님이 입장했습니다 "
+			}
+			let jsonMSG = JSON.stringify(data)
+			socket.send(jsonMSG)
 		}
 
 			
@@ -148,6 +162,14 @@ pageEncoding="UTF-8"%>
 		socket.onclose = onClose;
 		socket.onopen = onOpen
 	
+	
+
+	/* 	let now = new Date().toISOString().split("T") */
+		console.log(now)
+		console.log('${pageContext.request.serverName}') // localhost
+		console.log('${pageContext.request.serverPort}') //8080
+		
+		console.log('${pageContext.request.contextPath}')
 	
 		
 	</script>

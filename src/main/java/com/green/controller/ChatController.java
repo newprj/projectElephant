@@ -7,15 +7,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import com.green.service.UserService;
+import com.green.vo.MessageDTO;
 import com.green.vo.UserVO;
 
 import lombok.Setter;
@@ -38,7 +41,7 @@ public class ChatController{
 	
 	@GetMapping("/chat/{group_name}")
 	public void groupChat(Model model, HttpServletRequest req) {
-		
+
 	}
 	
 }
