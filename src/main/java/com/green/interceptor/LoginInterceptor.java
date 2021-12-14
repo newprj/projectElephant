@@ -7,7 +7,8 @@ import javax.servlet.http.HttpSession;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-
+import com.green.controller.AdminController;
+import com.green.vo.UserVO;
 
 import lombok.extern.log4j.Log4j;
 
@@ -15,6 +16,8 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 public class LoginInterceptor extends HandlerInterceptorAdapter{
 	
+
+
 	@Override
 	public boolean preHandle(
 			HttpServletRequest request,
@@ -29,6 +32,8 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 			response.sendRedirect(dest != null? (String) dest : "/group/");
 		}
 		return true;
+
+	
 	}
 	
 	@Override
@@ -39,10 +44,17 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 		HttpSession session = request.getSession();
 		Object userVO = session.getAttribute("user");
 		if(userVO !=null) {
-			log.info(" login success ");
-			Object dest = session.getAttribute("dest");
-			response.sendRedirect(dest != null? (String) dest : "/group/");
+			UserVO user = (UserVO) userVO;
+			if(user.getUser_id().equals("admin")) {
+				response.sendRedirect("/admin/home");
+			}else {
+				log.info(" login success ");
+				Object dest = session.getAttribute("dest");
+				response.sendRedirect(dest != null? (String) dest : "/group/");
+			}
+			
 		}
+		
 	}
 
 }

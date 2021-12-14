@@ -39,7 +39,7 @@ public class AhthInterceptor extends HandlerInterceptorAdapter{
 		if(session.getAttribute("user") == null ) {
 			response.sendRedirect("/user/login");
 			saveDestination(request);
-			log.info(" 로그인 안한 사용자..... 거꾸로 맞지? ");
+			log.info(" 로그인 안한 사용자");
 			return false;
 		}
 		
