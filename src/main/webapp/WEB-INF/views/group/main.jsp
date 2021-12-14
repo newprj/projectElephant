@@ -62,22 +62,33 @@ prefix="c" %>
           <h1 class="logo"> 코끼리 </h1>
         </div>
         <div class="right">
+    		
     		<c:if test="${user==null}">
           <div class="item"><a href="/user/register"> 가입</a>  </div>
           <div class="item"><a href="/user/login">로그인</a>  </div>
           </c:if>
           <c:if test="${user!=null}">
-          	<div class="item"> <a href="/user/logout"> 로그아웃 </a></div>
           	<div class="mygroup">
-          	<select name="group_name">
+          	<c:choose>
+          	<c:when test="${empty myGroup}">>
+          			<span> 가입한 그룹이 없습니다 </span>
+          	</c:when>
           	
+          	<c:otherwise>
+          	<select name="group_name">
           		<c:forEach items="${myGroup}" var="mine">	
-							<option value="${mine.group_name}" >${mine.group_name}</option>
-          	</c:forEach>
+								<option value="${mine.group_name}" >${mine.group_name}</option>
+          		</c:forEach>
           	</select>
           	<button > go </button>
+          	</c:otherwise>
+          </c:choose>
           	</div>
+          	<button class="btn btn-primary" type="button" onclick="location.href='/user/logout' ">로그아웃</button>
+      			<button class="btn btn-info" type="button" onclick="location.href='/user/modify' ">회원정보 수정</button>
+      			<button class="btn btn-danger" type="button" onclick="location.href='/user/delete' ">회원탈퇴</button>
           </c:if>
+          
         </div>
       </div>
     </div>
@@ -91,14 +102,16 @@ prefix="c" %>
 		<button>내 그룹 보기</button>
 		<span> 모집 중인 그룹 </span>
 		<div class="container">
-			<c:forEach items="${group}" var="group">
-				<div class="box">
-					<span class="group_name"> ${group.group_name} </span>
-					<span> ${group.leader}</span>
-					<span> ${group.subject }</span>
-					<span> ${group.member_number}</span>
-				</div>
-			</c:forEach>
+			
+				<c:forEach items="${group}" var="group">
+					<div class="box">
+						<span class="group_name"> ${group.group_name} </span>
+						<span> ${group.leader}</span>
+						<span> ${group.subject }</span>
+						<span> ${group.member_number}</span>
+					</div>
+				</c:forEach>
+			
 			<form method="get" action="./detail">
 				<input type="hidden" name="group_name" />
 			</form>

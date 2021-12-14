@@ -3,10 +3,12 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:websocket="http://www.springframework.org/schema/websocket"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
-
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.3.xsd">
+		
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	
 	<!-- Enables the Spring MVC @Controller programming model -->
@@ -38,11 +40,19 @@
 		    <mapping path="/group/{group_name}"/>
 		    <mapping path="/group/board/{group_name}"/>
 		    <mapping path="/group/test/{group_name}"/>
+		     <mapping path="/chatting"/>
 		    <beans:ref bean="authinterceptor"/>
  	 </interceptor>
 	</interceptors>
 
-		
+	<websocket:handlers>
+		<websocket:mapping handler="chattingHandler" path="/chatting"/>
+		<websocket:mapping handler="groupchatHandler" path="/chat/{group_name}"/>
+		 <websocket:sockjs websocket-enabled="true" />
+	</websocket:handlers>
+	
+	<beans:bean id="chattingHandler" class="com.green.handler.ChattingHandler"/>
+	<beans:bean id="groupchatHandler" class="com.green.handler.GroupChatHandler"/>
 	
 	
 	<context:component-scan base-package="com.green.controller" />

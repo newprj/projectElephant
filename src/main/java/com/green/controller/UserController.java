@@ -83,8 +83,7 @@ public class UserController {
 		UserVO login = userservice.login(vo);
 		
 		if(login == null) {
-			session.setAttribute("user", null);
-			return;
+			rttr.addFlashAttribute("msg", false);
 		}
 		else {
 			session.setAttribute("user", login);

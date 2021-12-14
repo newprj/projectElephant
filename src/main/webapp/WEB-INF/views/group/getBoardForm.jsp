@@ -136,14 +136,14 @@ prefix="c" %>
 					})
 			}
 	   
-			 let attachList = [];
+//			 let attachList = [];
 		
 			 // 파일 표시 (다운로드 )
 			 let bno = "${cri.bno}"
 			 $.getJSON("/group/getFileList", {bno} , (files) =>{
 					let str =""
 					files.map( file => {
-						attachList.push(file) // 수정할때 넣음
+						//attachList.push(file) // 수정할때 넣음
 						if(file.fileType){
 							let fileCallpath = encodeURIComponent(
 									file.uploadPath + "/_s" + file.uuid + "_" + file.fileName
