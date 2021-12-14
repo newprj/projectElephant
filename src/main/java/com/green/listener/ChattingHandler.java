@@ -16,14 +16,14 @@ public class ChattingHandler extends TextWebSocketHandler{
 private List<WebSocketSession> sessionList = new ArrayList<WebSocketSession>();
 	
 	
-
+	private static int i=0;
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception{
-		
+		i++;
 		log.info(" chatiing 을 위해 해당 페이지에 들어옴 " );
 		sessionList.add(session);
 		for(WebSocketSession s : sessionList ) {
-			s.sendMessage(new TextMessage(session.getId() +": 입장 "));
+			s.sendMessage(new TextMessage(session.getId() +": 입장,  총인원:"+i+"명"));
 		}
 		
 		
@@ -43,10 +43,10 @@ private List<WebSocketSession> sessionList = new ArrayList<WebSocketSession>();
 	// 연결 끊음
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception{
-		
+		i--;
 		sessionList.remove(session);
 		for(WebSocketSession s : sessionList) {
-			s.sendMessage(new TextMessage( session.getId() + ": 님 퇴장 "));
+			s.sendMessage(new TextMessage( session.getId() + ": 님 퇴장,  총인원:"+i+"명"));
 		}
 		log.info(" 퇴장" );
 	}

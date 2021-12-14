@@ -77,7 +77,7 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 					<td id='userId${status.index}'>${i.user_id}</td>
 					<td>${i.name}</td>
 					<td>${i.regDate}</td>
-					<td><button id='chat'>채팅</button></td>
+					<td><button onclick="location='/chatting'">채팅</button></td>
 					<td><button class='susp' >
 						<c:choose>
 							<c:when test="${i.suspension eq 'Y'}">정지</c:when>
@@ -200,8 +200,17 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 			modalId.val(uid)
 			
 			var suspension=''
-			if($(this).text()=='정지') suspension='Y'
-			else suspension='N'
+			
+			console.log($(this).text().trim())
+			if($(this).text().trim()=='정지'){
+				$("#register").text('정지 해제')
+				suspension='Y'
+			}
+			else if($(this).text().trim()=='활동중'){
+				$("#register").text('정지')
+				suspension='N'
+			}
+			
 			
 			$("#register").off('click').on('click',function(){
 				
