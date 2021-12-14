@@ -3,7 +3,6 @@ package com.green.listener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Component;
@@ -24,12 +23,10 @@ public class GroupChatHandler extends TextWebSocketHandler{
 	private Map<String, ArrayList<WebSocketSession>> roomList = new HashMap<>();
 	private Map<WebSocketSession, String> sessionList = new HashMap<>();
 
-
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception{
 		
 		log.info(" chatiing 을 위해 해당 페이지에 들어옴 " );
-
 	}
 	
 	
@@ -38,6 +35,7 @@ public class GroupChatHandler extends TextWebSocketHandler{
 	public void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception{
 		ObjectMapper objectMapper = new ObjectMapper();
 		MessageDTO msg = objectMapper.readValue(message.getPayload(), MessageDTO.class);
+		//json을 객체로 저장함 
 		
 		if(roomList.get(msg.getGroup()) == null) {
 			ArrayList<WebSocketSession> sList = new ArrayList<WebSocketSession>();
@@ -50,7 +48,7 @@ public class GroupChatHandler extends TextWebSocketHandler{
 		}
 		
 		for(WebSocketSession s : roomList.get(msg.getGroup())) {
-			s.sendMessage(new TextMessage(msg.getLoginUser() + ":" +msg.getMsg()));
+			s.sendMessage(new TextMessage(msg.getLoginUser() + ":" +msg.getMsg() +":"+msg.getSendTime()));
 		}
 	}
 	

@@ -32,18 +32,18 @@ pageEncoding="UTF-8"%>
 			<a href="/group/test/${group_name}"> ... 일정 더보기 </a>
 		</div>
 		
-		<div>
-		<div class="message">
 		
-			</div>
-	
-			<div>
+		<div style="overflow-y:auto; width:350px; height:200px;" class="chatContainer">
+			<div class="message"></div>
+		</div>
+		
+		<div>
 		<input class="message" type ="text">
 			<div>
 				<button> 전송</button>
 			</div>
 		</div>			
-		</div>
+		
 		
 		
 
@@ -106,47 +106,51 @@ pageEncoding="UTF-8"%>
 
 		let msg = $('input.message')
 		const sendMessage = () => {
-			let data = {
-					loginUser, group, msg: msg.val()
+			const sendTime = new Date().toLocaleTimeString();
+			const data = {
+					loginUser, group, msg: msg.val(), sendTime 
 			}
 			let jsonMSG = JSON.stringify(data)
 			socket.send(jsonMSG)
-		}
+
+		} // sendMsg
 
 		const onMessage = ( message ) => {
 			
-			let data = message.data;
+			const data = message.data;
 			let sessionId
 			let messages
-			
-			
-			
+			let time 
+		
 		  let arr = data.split(':')
-			arr.map(console.log)
 			
 			sessionId =  arr[0]
 			messages = arr[1]
-			
+			time = arr.slice(-3).join(":")
 
-			let msgElement = $(`<div><div><b>\${sessionId}</b> \${messages}</div></div>`)
+			let msgElement = $(`<div><div><b>\${sessionId}</b> \${messages} <br/> \${time}</div></div>`)
 			$('div.message').append(msgElement)
-
-		}
+			$('div.chatContainer').scrollTop($('div.chatContainer')[0].scrollHeight)
+		
+		} //onMessage
+		
 		const onClose = (e) =>{
-			let data = {
-					loginUser, group, msg : " 님이 퇴장했습니다 "
+			const sendTime = new Date().toLocaleTimeString();
+			const data = {
+					loginUser, group, msg : " 님이 퇴장했습니다 ", sendTime
 			}
 			let jsonMSG = JSON.stringify(data)
 			socket.send(jsonMSG)
-		}
+		}// onClose
 
 		const onOpen = (e) =>{
-			let data = {
-					loginUser, group, msg : " 님이 입장했습니다 "
+			const sendTime = new Date().toLocaleTimeString();
+			const data = {
+					loginUser, group, msg : " 님이 입장했습니다 ", sendTime
 			}
 			let jsonMSG = JSON.stringify(data)
 			socket.send(jsonMSG)
-		}
+		}//open
 
 			
 
@@ -155,20 +159,18 @@ pageEncoding="UTF-8"%>
 				msg.val("")
 			})
 			
-
-		console.log(socket)
+			$('input').keyup((e) =>{
+				if(e.keyCode ===13) $('button').trigger('click')				
+			})
 			
+
 		socket.onmessage = onMessage;
 		socket.onclose = onClose;
 		socket.onopen = onOpen
 	
-	
-
-	/* 	let now = new Date().toISOString().split("T") */
-		console.log(now)
+	// 나중에 쓸꺼야
 		console.log('${pageContext.request.serverName}') // localhost
-		console.log('${pageContext.request.serverPort}') //8080
-		
+		console.log('${pageContext.request.serverPort}') //8080		
 		console.log('${pageContext.request.contextPath}')
 	
 		

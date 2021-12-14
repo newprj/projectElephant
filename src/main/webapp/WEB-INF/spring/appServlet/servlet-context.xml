@@ -25,7 +25,8 @@
 	
 	
 	<beans:bean id="logininterceptor" class="com.green.interceptor.LoginInterceptor"/>
-  	<beans:bean id="authinterceptor"  class="com.green.interceptor.AhthInterceptor"/>
+  <beans:bean id="authinterceptor"  class="com.green.interceptor.AhthInterceptor"/>
+  
 
 	<interceptors>
 	  <interceptor>
@@ -34,17 +35,16 @@
 	  </interceptor>
 	    <interceptor>
 		    <!-- login 인증이 필요한 URI 들 -->
-		    
 		    <mapping path="/group/{group_name}"/>
 		    <mapping path="/group/board/{group_name}"/>
 		    <mapping path="/group/test/{group_name}"/>
-		     
 		    <beans:ref bean="authinterceptor"/>
  	 </interceptor>
+ 	
 	</interceptors>
 
 <!-- 채팅  -->
-	<websocket:handlers>
+	<websocket:handlers allowed-origins="*">
 		<websocket:mapping handler="chattingHandler" path="/chatting"/>
 		<websocket:mapping handler="groupchatHandler" path="/chat/{group_name}"/>
 		 <websocket:sockjs websocket-enabled="true" />
