@@ -3,6 +3,10 @@ package com.green.service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import com.green.vo.UserVO;
 
 public interface UserService {
@@ -15,5 +19,4 @@ public interface UserService {
 
 	public List<UserVO> allList();
 	public int userSusp(UserVO vo);
-
 }

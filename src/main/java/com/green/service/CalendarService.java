@@ -12,5 +12,7 @@ public interface CalendarService {
 	public CalendarVO showEventOne(Long cno);
 	public List<CalendarVO> showEventByDay(String startDate);
 	public int deleteEvent(Long cno);
+	
+	public List<CalendarVO> eventsAfterToday(String group);
 
 }

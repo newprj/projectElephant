@@ -1,4 +1,4 @@
-package com.green.mapper;
+package com.green.mapperTests;
 
 import java.util.List;
 
@@ -8,6 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.green.mapper.BoardMapper;
+import com.green.mapper.GUserMapper;
+import com.green.mapper.GroupMapper;
+import com.green.mapper.ReplyMapper;
+import com.green.mapper.UserMapper;
 import com.green.vo.BoardReplyVO;
 import com.green.vo.BoardVO;
 import com.green.vo.Criteria;
@@ -40,7 +45,7 @@ public class MapperTests {
 	public ReplyMapper replyMapper;
 	
 	
-	@Test
+	//@Test
 	public void testPaging() {
 		Criteria cri = new Criteria();
 		cri.setPageNum(3);
@@ -84,9 +89,9 @@ public class MapperTests {
 		}
 	}
 	
-//	@Test
+	@Test
 	public void showAllTest() {
-		bMapper.showList("테스트");
+		bMapper.showList("그룹이름");
 	}
 	
 //	@Test

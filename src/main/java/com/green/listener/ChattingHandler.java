@@ -13,35 +13,41 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ChattingHandler extends TextWebSocketHandler{
 	
-	private List<WebSocketSession> sessionList=new ArrayList<>();
+private List<WebSocketSession> sessionList = new ArrayList<WebSocketSession>();
 	
+	
+
 	@Override
-	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
+	public void afterConnectionEstablished(WebSocketSession session) throws Exception{
 		
-		log.info("#ChattingHandler, afterConnectionEstablished");
+		log.info(" chatiing 을 위해 해당 페이지에 들어옴 " );
 		sessionList.add(session);
+		for(WebSocketSession s : sessionList ) {
+			s.sendMessage(new TextMessage(session.getId() +": 입장 "));
+		}
 		
-		log.info(session.getPrincipal().getName() + "님이 입장하셨습니다.");
+		
 	}
 	
+	// 전송했을 때 
 	@Override
-	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
+	public void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception{
 		
-		log.info("#ChattingHandler, handleMessage");
-		log.info(session.getId() + ": " + message);
-		
+		log.info(" 메시지 전송~~ ");
 		for(WebSocketSession s : sessionList) {
-			s.sendMessage(new TextMessage(session.getPrincipal().getName() + ":" + message.getPayload()));
+			s.sendMessage(new TextMessage( session.getId() + ":" +message.getPayload()));
 		}
 	}
 	
+	
+	// 연결 끊음
 	@Override
-	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
+	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception{
 		
-		log.info("#ChattingHandler, afterConnectionClosed");
-
 		sessionList.remove(session);
-		
-		log.info(session.getPrincipal().getName() + "님이 퇴장하셨습니다.");
+		for(WebSocketSession s : sessionList) {
+			s.sendMessage(new TextMessage( session.getId() + ": 님 퇴장 "));
+		}
+		log.info(" 퇴장" );
 	}
 }

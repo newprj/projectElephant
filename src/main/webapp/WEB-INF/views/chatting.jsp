@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>채팅</title>
 </head>
 <body>
 <div class="container">
@@ -32,14 +32,13 @@
 </body>
 
 <script type="text/javascript">
-
 	//전송 버튼 누르는 이벤트
 	$("#button-send").on("click", function(e) {
 		sendMessage();
 		$('#msg').val('')
 	});
 	
-	var sock = new SockJS('http://localhost:8080/chat');
+	var sock = new SockJS('http://localhost:8080/chatting');
 	sock.onmessage = onMessage;
 	sock.onclose = onClose;
 	sock.onopen = onOpen;
@@ -90,7 +89,7 @@
 	//채팅창에서 나갔을 때
 	function onClose(evt) {
 		
-		var user = '${pr.username}';
+		var user = '${userid}';
 		var str = user + " 님이 퇴장하셨습니다.";
 		
 		$("#msgArea").append(str);
@@ -98,11 +97,9 @@
 	//채팅창에 들어왔을 때
 	function onOpen(evt) {
 		
-		var user = '${pr.username}';
+		var user = '${userid}';
 		var str = user + "님이 입장하셨습니다.";
-		
 		$("#msgArea").append(str);
 	}
-
 </script>
 </html>

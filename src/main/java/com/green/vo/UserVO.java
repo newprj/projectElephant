@@ -31,4 +31,7 @@ public class UserVO {
 	private String suspContent;
 	private Date suspDate;
 	
+	
+	// 로그인 유지
+	private boolean useCookie;
 }
