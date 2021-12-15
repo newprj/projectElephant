@@ -20,11 +20,10 @@ import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.green.service.ReviewAttachFileService;
+import com.green.mapper.ReviewAttachFileMapper;
 import com.green.service.ReviewService;
 import com.green.vo.ReviewAttachFileDTO;
 
@@ -36,9 +35,9 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/reviewUpload/*")
 public class ReviewUploadController {
 	@Setter(onMethod_=@Autowired)
-	ReviewAttachFileService aService;
+	ReviewAttachFileMapper attachMapper;
 	@Setter(onMethod_=@Autowired)
-	ReviewService service;
+	ReviewService reviewService;
 	
 	
 	private String getFolder() { //오늘날짜를 이용하여 폴더를 생성하는 함수
@@ -71,9 +70,6 @@ public class ReviewUploadController {
 			log.info("UUID"+uuid );
 			String originalFileName = uploadFileName;
 			uploadFileName= uuid.toString()+"_" + uploadFileName; //실제 저장할 파일명 = UUID _ 원본파일명 결합
-			/*
-			 * if(rno==null) { rno = service.rnoRead(); }
-			 */
 			try {
 				File saveFile = new File(uploadPath,uploadFileName);
 				i.transferTo(saveFile); 
@@ -81,11 +77,6 @@ public class ReviewUploadController {
 				attachDTO.setUploadPath(uploadFolderPath); 
 				attachDTO.setFileSize(i.getSize());
 				attachDTO.setFileName(originalFileName); 
-				/* if(rno==99999999) attachDTO.setRno(0l); */
-				/*
-				 * else if(rno > 0) { attachDTO.setRno(rno); service.attachedFile(rno); } else {
-				 * rno = service.rnoRead(); attachDTO.setRno(rno); } attachDTO.setRno(rno);
-				 */
 				list.add(attachDTO);
 			} catch (Exception e) {
 				log.error(e.getMessage());
@@ -98,7 +89,7 @@ public class ReviewUploadController {
 	@ResponseBody 
 	public ResponseEntity<Resource> downloadFile(String uuid){ //다운로드 컨트롤러
 		log.info("컨트롤러 파일 다운로드 uuid : " +  uuid);
-		ReviewAttachFileDTO dto = aService.read(uuid);
+		ReviewAttachFileDTO dto = attachMapper.read(uuid);
 		Resource resource = new FileSystemResource("c:\\upload\\"+dto.getUploadPath()+"\\"+uuid+"_"+dto.getFileName());
 		String resourceName = resource.getFilename();
 		log.info("resource: " +resource);
@@ -117,19 +108,19 @@ public class ReviewUploadController {
 	@ResponseBody
 	public ResponseEntity<String> deleteFile(String uuid){
 		log.info("deletFile: " + uuid);
-		ReviewAttachFileDTO dto = aService.read(uuid);
+		ReviewAttachFileDTO dto = attachMapper.read(uuid);
 		String uuidSql = uuid;
 		File file;
 		try {
 			 file = new File("c:\\upload\\"+dto.getUploadPath()+"\\"+uuid+"_"+dto.getFileName());
 			 file.delete(); 
-			 aService.remove(uuidSql);
-			 service.attachedFile(dto.getRno());
+			 attachMapper.delete(uuidSql);
+			 reviewService.attachedFile(dto.getRno());
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<String>("삭제되었습니다.", HttpStatus.OK);
+		return new ResponseEntity<String>("deleted.", HttpStatus.OK);
 	}
 	
 	@GetMapping("/display")

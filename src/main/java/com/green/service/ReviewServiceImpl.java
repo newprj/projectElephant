@@ -22,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 @AllArgsConstructor
 public class ReviewServiceImpl implements ReviewService{
 	@Setter(onMethod_=@Autowired)
-	private ReviewMapper mapper;
+	private ReviewMapper reviewMapper;
 	@Setter(onMethod_=@Autowired)
 	private ReviewAttachFileMapper attachMapper;
 	
@@ -30,32 +30,35 @@ public class ReviewServiceImpl implements ReviewService{
 	@Transactional
 	@Override
 	public void register(ReviewVO vo) {
-		System.out.println("2) 서비스에서 insert 하기 "+vo);
-		System.out.println("2) 서비스에서 vo 가져옴????????????????????????"+vo.getGetAttachFile());
-		mapper.insert(vo);
+		reviewMapper.insert(vo);
 		
-		if(vo.getGetAttachFile()==null || vo.getGetAttachFile().size()<=0) {
+		if(vo.getAttachList()==null || vo.getAttachList().size()<=0) {
 			return;
 		}
-		vo.getGetAttachFile().forEach(i->{
+		vo.getAttachList().forEach(i->{
 			i.setRno(vo.getRno());
 			attachMapper.insert(i);
-			System.out.println("2) 서비스에서 vo 가져옴????????????????????????"+i);
 		});
-		mapper.attachedFile(vo.getRno());
-		
+		reviewMapper.attachedFile(vo.getRno());
 	}
 
 	@Override
 	public ReviewVO get(Long rno) {
 		System.out.println("2 서비스에서 데이터 하나 가져오기"+rno);
-		return mapper.read(rno);
+		return reviewMapper.read(rno);
 	}
 
 	@Override
 	public void modify(ReviewVO vo) {
-		System.out.println("2 서비스에서 수정"+vo);
-		mapper.update(vo);
+		vo.getAttachList();
+		int modifyResult = reviewMapper.update(vo);
+		if( modifyResult==1 && vo.getAttachList() != null && vo.getAttachList().size()>0) {
+			vo.getAttachList().forEach(i -> {
+				i.setRno(vo.getRno());
+				attachMapper.insert(i);			
+			});
+		}
+		reviewMapper.attachedFile(vo.getRno());
 	}
 
 	@Override
@@ -67,51 +70,50 @@ public class ReviewServiceImpl implements ReviewService{
 	@Override
 	public List<ReviewVO> getList() {
 		System.out.println("2 서비스에서 리스트 가져옴");
-		return mapper.getList();
+		return reviewMapper.getList();
 	}
 
 	@Override
 	public int rnoRead() {
 		System.out.println("2 서비스에서 rno max값 가져옴");
-		return mapper.rnoRead();
+		return reviewMapper.rnoRead();
 	}
 
 
 	@Override
 	public List<ReviewVO> list(SearchCriteria scri) {
 		System.out.println("2 서비스에서 리스트  가져옴");
-		List<ReviewVO> voList = mapper.list(scri);
-		System.out.println(mapper.list(scri));
+		List<ReviewVO> voList = reviewMapper.list(scri);
 		voList.forEach(vo->{
 			List<ReviewAttachFileDTO> files = attachMapper.getList(vo.getRno());
-			vo.setGetAttachFile(files);
+			vo.setAttachList(files);
+			reviewMapper.attachedFile(vo.getRno());
 		});
-		
-		return mapper.list(scri);
+		return reviewMapper.list(scri);
 	}
 
 	@Override
 	public int listCount(SearchCriteria scri) {
 		System.out.println("2 서비스에서 리스트 count 가져옴");
-		return mapper.listCount(scri);
+		return reviewMapper.listCount(scri);
 	}
 
 	@Override
 	public void updateReplyCount(Long rno) {
-		mapper.updateReplyCount(rno);
+		reviewMapper.updateReplyCount(rno);
 		
 	}
 
 	@Override
 	public void viewCount(Long rno) {
-		mapper.viewCount(rno);
+		reviewMapper.viewCount(rno);
 
 	}
 
 	@Override
 	public void attachedFile(Long rno) {
 		// TODO Auto-generated method stub
-		mapper.attachedFile(rno);
+		reviewMapper.attachedFile(rno);
 		
 	}
 

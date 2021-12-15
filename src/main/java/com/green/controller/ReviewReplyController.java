@@ -20,15 +20,15 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/reply")
 public class ReviewReplyController {
 	@Setter(onMethod_=@Autowired)
-	ReviewReplyService service;
+	ReviewReplyService replyService;
 	@Setter(onMethod_=@Autowired)
-	ReviewService rService;
+	ReviewService reviewService;
 	
 	@RequestMapping("/list") //댓글 리스트 컨트롤러
     @ResponseBody
     private List<ReviewReplyVO> ReplyList(long rno){
 		log.info("댓글 조회 컨트롤러 진입...................");
-        return service.getList(rno);
+        return replyService.getList(rno);
     }
 	
 	@RequestMapping("/insert") //댓글 입력 컨트롤러
@@ -39,8 +39,8 @@ public class ReviewReplyController {
 		vo.setRno(rno);
 		vo.setWriter("홍길동");
 		vo.setContent(content);
-		service.register(vo);
-		rService.updateReplyCount((long)rno);
+		replyService.register(vo);
+		reviewService.updateReplyCount((long)rno);
 		return 1;
     }
 	
@@ -51,7 +51,7 @@ public class ReviewReplyController {
 		ReviewReplyVO vo = new ReviewReplyVO();
 		vo.setCno(cno);
 		vo.setContent(content);
-		service.modify(vo);
+		replyService.modify(vo);
         return 1;
     }
 
@@ -59,10 +59,10 @@ public class ReviewReplyController {
     @ResponseBody
     private int delete(@PathVariable Long cno){
 		log.info("삭제 컨트롤러 진입............."+cno);
-		log.info("이것은?"+service.get(cno).getRno());
-		long a = service.get(cno).getRno();
-        service.remove(cno);
-        rService.updateReplyCount(a);
+		log.info("이것은?"+replyService.get(cno).getRno());
+		long a = replyService.get(cno).getRno();
+		replyService.remove(cno);
+		reviewService.updateReplyCount(a);
         return 1;
     }
 

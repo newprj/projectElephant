@@ -3,6 +3,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet" />
 <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+<script src="/resources/js/fileUpload.js" type="text/javascript"></script>
 <!DOCTYPE html>
 <html>
   <head>
@@ -16,7 +17,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
       제목 <input type="text" name="title" /><br />
       <div id="editor" style="max-height: 400px; overflow: auto"></div>
       <br />
-      <input type="file" name="uploadFile" multiple="multiple" /><br>
+      <input type="file" name="uploadFile" multiple /><br>
       <hr>
       <button type="button" id="create">등록하기</button>
       <button type="button" onclick="location.href='/review/list'">돌아가기</button>
@@ -28,7 +29,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
     var maxSize = 10485760 // 10MB 제한
 
     //파일 사이즈 10MB 초과 또는 파일형식이 정규표현식이 아닌것을 업로드 시 alert창 띄우는 메서드
-    function checkExtension(fileName, fileSize) {
+    function checkExtension1(fileName, fileSize) {
       if (fileSize >= maxSize) {
         alert('파일 사이즈 초과')
         return false
@@ -44,37 +45,40 @@ uri="http://java.sun.com/jsp/jstl/core"%>
 
     /*     ------------------------------------------------------------------------------------------------------------ */
 $(document).ready(function (e) {
-	
 	$("input[type='file']").change(function(e){
-	 var formData = new FormData()
-     var inputFile = $("input[name='uploadFile']")
-     var files = inputFile[0].files
-     console.log(files)
-     for (let i = 0; i < files.length; i++) {
-       if (!checkExtension(files[i].name, files[i].size)) return false
-       formData.append('uploadFile', files[i])
-     }
-     $.ajax({
-       url: '/reviewUpload/uploadAjaxAction',
-       processData: false,
-       contentType: false,
-       data: formData,
-       type: 'POST',
-       dataType: 'json',
-       success: function (result) {
-       	alert(result)
-       },
-       error:function(){
-			alert("실패")
-		}
-     })
-     })
+		attachList = []
+		 var formData = new FormData()
+	     var inputFile = $("input[name='uploadFile']")
+	     var files = inputFile[0].files
+	     console.log(files)
+	     for (let i = 0; i < files.length; i++) {
+	       if (!checkExtension1(files[i].name, files[i].size)) return false
+	       formData.append('uploadFile', files[i])
+	     }
+	     $.ajax({
+		       url: '/reviewUpload/uploadAjaxAction',
+		       processData: false,
+		       contentType: false,
+		       data: formData,
+		       type: 'POST',
+		       dataType: 'json',
+		       success: function (result) {
+		       	console.log(result)
+		       	showUploadFile(result)
+		       },
+		       error:function(){
+					alert("실패")
+				}
+     	})//ajax
+     })//file change
+     
+
+
      
     var myEditor = document.querySelector('#editor')
     let form = $('form')
 
     const imageHandler = (e) => {
-      var rno = 99999999;
       console.log(e)
       let input = $('<input type="file" accept="image/*">')
       input.click()
@@ -82,7 +86,6 @@ $(document).ready(function (e) {
         let formData = new FormData()
         let uploadFile = $(input)[0].files[0]
         formData.append('uploadFile', uploadFile)
-        formData.append('rno', rno)
         $.ajax({
           type: 'post',
           url: '/reviewUpload/uploadAjaxAction',
@@ -90,12 +93,8 @@ $(document).ready(function (e) {
           contentType: false,
           data: formData,
           dataType: 'json',
-
           success: (res) => {
-            console.log('2)')
-            console.log(res)
             const IMG_URL = '/reviewUpload/display?fileName=' + encodeURIComponent(res[0].uploadPath + '/' + res[0].uuid + '_' + res[0].fileName)
-
             let range = quill.getSelection()
             console.log(range)
             quill.insertEmbed(range, 'image', IMG_URL)
@@ -114,6 +113,7 @@ $(document).ready(function (e) {
         content: myEditor.children[0].innerHTML,
         writer: $('input[name="writer"]').val(),
         group_name: $('input[name="group_name"]').val(),
+        attachList,
       }
       $.ajax({
         type: 'post',
@@ -125,7 +125,6 @@ $(document).ready(function (e) {
           console.log(xhr)
         },
       }) //ajax
-     
     }) //click
 
     
@@ -152,6 +151,6 @@ $(document).ready(function (e) {
 
     let toolbar = quill.getModule('toolbar')
     toolbar.addHandler('image', imageHandler)
-    })
+})
   </script>
 </html>

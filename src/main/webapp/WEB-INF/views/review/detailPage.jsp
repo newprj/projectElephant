@@ -18,7 +18,7 @@
 	내용 : ${detail.content}<br>
 	작성일 : <fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${detail.regdate}"/><br>
 	첨부파일 : <c:forEach items="${attachFile}" var="attachFile">
-		 <a href="/reviewUpload/download?uuid=${attachFile.uuid}">${attachFile.fileName}</a> / 
+		[ <a href="/reviewUpload/download?uuid=${attachFile.uuid}">${attachFile.fileName}</a> ]
 	</c:forEach> <br>
 	<button type="button" id="modifyBtn">수정</button>
 	<button type="button" id="homeBtn">후기 홈으로</button>

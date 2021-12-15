@@ -24,7 +24,6 @@ public class ReviewVO {
 	private int reply_count; // 댓글 갯수
 	private int view_count; // 조회수
 	private long attachedFile; // 첨부파일 갯수
-	private long countRno; // 첨부파일 갯수
-	private List<ReviewAttachFileDTO> getAttachFile; 
+	private List<ReviewAttachFileDTO> attachList; 
 	
 }

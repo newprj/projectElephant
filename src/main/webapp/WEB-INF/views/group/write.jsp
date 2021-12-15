@@ -35,7 +35,7 @@
         <div class="file">
           <input type="file" name="file" multiple />
         </div>
-        <div class="uploadResult">
+        <div class="	">
           <ul></ul>
         </div>
         <button class="create">입력</button>
@@ -47,7 +47,7 @@
    
       $(document).ready(function (e) {
     	 
-    	  let myEditor = document.querySelector('#editor')
+      let myEditor = document.querySelector('#editor')
 		
         const uploadClone = $('.file').clone()
 		

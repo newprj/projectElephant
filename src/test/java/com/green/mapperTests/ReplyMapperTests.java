@@ -7,7 +7,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.green.mapper.ReviewReplyMapper;
-import com.green.vo.ReplyVO;
+import com.green.vo.ReviewReplyVO;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -21,7 +21,7 @@ public class ReplyMapperTests {
 	
 	@Test
 	public void insertTest() {
-		ReplyVO vo = new ReplyVO();
+		ReviewReplyVO vo = new ReviewReplyVO();
 		vo.setContent("고생하셨어요");
 		vo.setRno(3l);
 		vo.setWriter("홍길동");
@@ -35,7 +35,7 @@ public class ReplyMapperTests {
 	
 	//@Test
 	public void updateTest() {
-		ReplyVO vo = new ReplyVO();
+		ReviewReplyVO vo = new ReviewReplyVO();
 		vo.setContent("고생했다");
 		vo.setCno(19l);
 		vo.setRno(47l);

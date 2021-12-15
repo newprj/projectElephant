@@ -3,6 +3,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet" />
 <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+<script src="/resources/js/fileUpload.js" type="text/javascript"></script>
 <!DOCTYPE html>
 <html>
   <head>
@@ -15,11 +16,12 @@ uri="http://java.sun.com/jsp/jstl/core"%>
       번호 <input type="text" name="rno" value="${read.rno}" readonly /><br />
       그룹명 <input type="text" name="group_name" value="${read.group_name}" /><br />
       제목 <input type="text" name="title" value="${read.title}" /><br />
-       작성자 <input type="text" name="writer" value="${read.writer}" /> <br />
+      작성자 <input type="text" name="writer" value="${read.writer}" /> <br />
       <div id="editor" style="max-height: 400px; overflow: auto"></div>
       <br />
-<%--       내용 <input type="text" name="content" value="${read.content}" /><br /> --%>
-     
+      <%-- 내용 <input type="text" name="content" value="${read.content}" /><br />
+      --%>
+
       <input type="file" name="uploadFile" multiple="multiple" /><br />
       <br />
       첨부파일 삭제 :
@@ -28,127 +30,127 @@ uri="http://java.sun.com/jsp/jstl/core"%>
       </c:forEach>
       <br />
       <button type="button" id="update">수정완료</button>
-      <button type="button" id="back">홈으로</button>
+      <button type="button" onclick="location.href='/review/list'">홈으로</button>
     </form>
   </body>
   <script>
-   
-     var regex = new RegExp('(.*?)\.(exe|sh|alz)$') //정규 표현식
-     var maxSize = 10485760 // 10MB 제한
+    var regex = new RegExp('(.*?)\.(exe|sh|alz)$') //정규 표현식
+    var maxSize = 10485760 // 10MB 제한
 
-     //파일 사이즈 10MB 초과 또는 파일형식이 정규표현식이 아닌것을 업로드 시 alert창 띄우는 메서드
-     function checkExtension(fileName, fileSize) {
-       if (fileSize >= maxSize) {
-         alert('파일 사이즈 초과')
-         return false
-       }
-       if (regex.test(fileName)) {
-         alert('해당 종류의 파일은 업로드 할 수 없습니다. ')
-         return false
-       }
-       return true
-     }
-  
-	  var myEditor = document.querySelector('#editor')
-	  let form = $('form')
-	  // 폼데이터 얻기
-	
-	  const imageHandler = (e) => {
-	    var rno = 99999999;
-	    console.log(e)
-	    let input = $('<input type="file" accept="image/*">')
-	    input.click()
-	    $(input).change(function (e) {
-	      let formData = new FormData()
-	      let uploadFile = $(input)[0].files[0]
-	      formData.append('uploadFile', uploadFile)
-	      formData.append('rno', rno)
-	      $.ajax({
-	        type: 'post',
-	        url: '/reviewUpload/uploadAjaxAction',
-	        processData: false,
-	        contentType: false,
-	        data: formData,
-	        dataType: 'json',
-	
-	        success: (res) => {
-	          console.log('2)')
-	          console.log(res)
-	          const IMG_URL = '/reviewUpload/display?fileName=' + encodeURIComponent(res[0].uploadPath + '/' + res[0].uuid + '_' + res[0].fileName)
-	
-	          let range = quill.getSelection()
-	          console.log(range)
-	          quill.insertEmbed(range, 'image', IMG_URL)
-	        },
-	        error: (xhr, status, er) => console.log(xhr),
-	      }) // ajax
-	    }) // click
-	  } //imageHandletr
+    //파일 사이즈 10MB 초과 또는 파일형식이 정규표현식이 아닌것을 업로드 시 alert창 띄우는 메서드
+    function checkExtension1(fileName, fileSize) {
+      if (fileSize >= maxSize) {
+        alert('파일 사이즈 초과')
+        return false
+      }
+      if (regex.test(fileName)) {
+        alert('해당 종류의 파일은 업로드 할 수 없습니다. ')
+        return false
+      }
+      return true
+    }
 
-  
+    var myEditor = document.querySelector('#editor')
+    let form = $('form')
+    // 폼데이터 얻기
 
-	  $('#update').click(function (e) {
-	    e.preventDefault()
-	    review = {
-	      rno: $('input[name="rno"]').val(),
-	      title: $('input[name="title"]').val(),
-	      content: myEditor.children[0].innerHTML,
-	      writer: $('input[name="writer"]').val(),
-	      group_name: $('input[name="group_name"]').val(),
-	    }
-	    $.ajax({
-	      type: 'post',
-	      url: '/review/modify',
-	      data: JSON.stringify(review),
-	      contentType: 'application/json; charset=utf-8',
-	      success: () => (location.href = '/review/list'),
-	      error: (xhr, staturs, er) => {
-	        console.log(xhr)
-	      },
-	    }) //ajax
-	    
-	    var rno = ${read.rno}
-	    var formData = new FormData()
-	    var inputFile = $("input[name='uploadFile']")
-	    var files = inputFile[0].files
-	    console.log(files)
-	    for (let i = 0; i < files.length; i++) {
-	      if (!checkExtension(files[i].name, files[i].size)) return false
-	      formData.append('uploadFile', files[i])
-	      formData.append('rno', rno)
-	    }
-	    $.ajax({
-	      url: '/reviewUpload/uploadAjaxAction',
-	      processData: false,
-	      contentType: false,
-	      data: formData,
-	      type: 'POST',
-	      dataType: 'json',
-	      success: function (result) {},
-	    })
-	  }) //click
+    $(document).ready(function (e) {
+      $("input[type='file']").change(function (e) {
+        attachList = []
+        var formData = new FormData()
+        var inputFile = $("input[name='uploadFile']")
+        var files = inputFile[0].files
+        console.log(files)
+        for (let i = 0; i < files.length; i++) {
+          if (!checkExtension1(files[i].name, files[i].size)) return false
+          formData.append('uploadFile', files[i])
+        }
+        $.ajax({
+          url: '/reviewUpload/uploadAjaxAction',
+          processData: false,
+          contentType: false,
+          data: formData,
+          type: 'POST',
+          dataType: 'json',
+          success: function (result) {
+            console.log(result)
+            showUploadFile(result)
+            
+          },
+          error: function () {
+            alert('실패')
+          },
+        }) //ajax
+      }) //file change
 
+      $('#update').click(function (e) {
+        e.preventDefault()
+        review = {
+          rno: $('input[name="rno"]').val(),
+          title: $('input[name="title"]').val(),
+          content: myEditor.children[0].innerHTML,
+          writer: $('input[name="writer"]').val(),
+          group_name: $('input[name="group_name"]').val(),
+          attachList,
+        }
+        $.ajax({
+          type: 'post',
+          url: '/review/modify',
+          data: JSON.stringify(review),
+          contentType: 'application/json; charset=utf-8',
+          success: () => (location.href = '/review/list'),
+          error: (xhr, staturs, er) => {
+            console.log(xhr)
+          },
+        }) //ajax
+      }) //click
 
-       $('.delete').on('click', function (e) {
-           console.log('여기가 왜 안눌려?')
-           var uuid = $(this).attr('name')
-           console.log(uuid)
-            $.ajax({
-         		url:'/reviewUpload/delete',
-         		data:{'uuid':uuid},
-         		dataType:'text',
-         		type:'POST',
-         		success:(result)=>{
-         			alert(result);
-         			location.reload();  
-         		}
-         	})
-       })
+      $('.delete').on('click', function (e) {
+        console.log('여기가 왜 안눌려?')
+        var uuid = $(this).attr('name')
+        console.log(uuid)
+        $.ajax({
+          url: '/reviewUpload/delete',
+          data: { uuid: uuid },
+          dataType: 'text',
+          type: 'POST',
+          success: (result) => {
+            alert(result)
+            location.reload()
+          },
+        })
+      })
+      const imageHandler = (e) => {
+        console.log(e)
+        let input = $('<input type="file" accept="image/*">')
+        input.click()
+        $(input).change(function (e) {
+          let formData = new FormData()
+          let uploadFile = $(input)[0].files[0]
+          formData.append('uploadFile', uploadFile)
+          $.ajax({
+            type: 'post',
+            url: '/reviewUpload/uploadAjaxAction',
+            processData: false,
+            contentType: false,
+            data: formData,
+            dataType: 'json',
 
-    $('#back').click(function () {
-        self.location = '/review/list'
-    })
+            success: (res) => {
+              console.log('2)')
+              console.log(res)
+              const IMG_URL =
+                '/reviewUpload/display?fileName=' + encodeURIComponent(res[0].uploadPath + '/' + res[0].uuid + '_' + res[0].fileName)
+              let range = quill.getSelection()
+              console.log(range)
+              quill.insertEmbed(range, 'image', IMG_URL)
+            },
+            error: (xhr, status, er) => console.log(xhr),
+          }) // ajax
+        }) // click
+      } //imageHandletr
     
+
     const toolbarOptions = [
       [{ header: [1, 2, 3, 4, 5, 6, false] }],
       [{ list: 'ordered' }, { list: 'bullet' }],
@@ -165,13 +167,13 @@ uri="http://java.sun.com/jsp/jstl/core"%>
         toolbar: toolbarOptions,
       },
     })
-	  
-  $.getJSON("/review/getReview/${read.rno}", (res) =>{
-		let content = res.content;
-		quill.container.firstChild.innerHTML = content 
-  })
+
+    $.getJSON('/review/getReview/${read.rno}', (res) => {
+      let content = res.content
+      quill.container.firstChild.innerHTML = content
+    })
     let toolbar = quill.getModule('toolbar')
     toolbar.addHandler('image', imageHandler)
-    
+    })
   </script>
 </html>
