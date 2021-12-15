@@ -10,4 +10,6 @@ public interface QnaReplyMapper {
 	public int replyDelete(Long rno);
 	public int replyUpdate(QnaReplyVO vo);
 	public int count(Long qno);
+	
+	public List<QnaReplyVO> myReply(String r_writer);
 }

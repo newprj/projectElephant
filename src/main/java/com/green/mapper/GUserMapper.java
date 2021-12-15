@@ -3,6 +3,7 @@ package com.green.mapper;
 import java.util.List;
 
 import com.green.vo.GUserVO;
+import com.green.vo.GroupVO;
 
 public interface GUserMapper {
 	

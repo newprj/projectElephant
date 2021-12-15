@@ -26,8 +26,6 @@ public class ChattingHandler extends TextWebSocketHandler{
 
 private List<WebSocketSession> sessionList = new ArrayList<WebSocketSession>();
 	
-	
-
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception{
 		
@@ -36,8 +34,6 @@ private List<WebSocketSession> sessionList = new ArrayList<WebSocketSession>();
 		for(WebSocketSession s : sessionList ) {
 			s.sendMessage(new TextMessage(session.getId() +": 입장 "));
 		}
-		
-		
 	}
 	
 	// 전송했을 때 

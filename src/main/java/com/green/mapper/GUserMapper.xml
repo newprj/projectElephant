@@ -19,4 +19,6 @@
 	<select id="listByUSer" resultType="com.green.vo.GUserVO">
 		select * from tbl_groupuser where user_id=#{user_id}
 	</select>
+	
+	
 </mapper>
