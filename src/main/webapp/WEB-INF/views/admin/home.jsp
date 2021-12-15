@@ -200,8 +200,14 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 			modalId.val(uid)
 			
 			var suspension=''
-			if($(this).text()=='정지') suspension='Y'
-			else suspension='N'
+			if($(this).text().trim()=='정지'){
+				suspension='N'
+				$("#register").text("정지 해제")
+			}
+			else if (($(this).text().trim()=='활동중')) {
+				suspension='Y'
+				$("#register").text("정지")
+			}
 			
 			$("#register").off('click').on('click',function(){
 				
