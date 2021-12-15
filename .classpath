@@ -36,22 +36,22 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/lib/javax.servlet.jsp.jstl-1.2.1.jar">
+	<classpathentry kind="lib" path="C:/Users/USER/Desktop/java lib/lombok.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/lib/javax.servlet.jsp.jstl-api-1.2.1.jar">
+	<classpathentry kind="lib" path="C:/Users/USER/Desktop/java lib/ojdbc8.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/lib/lombok.jar">
+	<classpathentry kind="lib" path="C:/Users/USER/Desktop/java lib/javax.servlet.jsp.jstl-1.2.1.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/lib/ojdbc8.jar">
+	<classpathentry kind="lib" path="C:/Users/USER/Desktop/java lib/javax.servlet.jsp.jstl-api-1.2.1.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
