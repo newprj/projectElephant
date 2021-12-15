@@ -17,6 +17,13 @@ prefix="c" %>
 		<script src="/resources/js/fileUpload.js" type="text/javascript"></script>
 
 		<title>Insert title here</title>
+		<style>
+			 div.uploadResult > ul > li > div > img{
+			 	width: 50px;
+                height: 50px;
+                border-radius: 50%;
+			 }	
+		</style>
 	</head>
 	<body>
 		<form>

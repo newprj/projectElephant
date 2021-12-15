@@ -36,7 +36,7 @@ public class GroupChatHandler extends TextWebSocketHandler{
 		ObjectMapper objectMapper = new ObjectMapper();
 		MessageDTO msg = objectMapper.readValue(message.getPayload(), MessageDTO.class);
 		//json을 객체로 저장함 
-		
+		System.out.println(message.getPayload());
 		if(roomList.get(msg.getGroup()) == null) {
 			ArrayList<WebSocketSession> sList = new ArrayList<WebSocketSession>();
 			sList.add(session);
@@ -47,8 +47,9 @@ public class GroupChatHandler extends TextWebSocketHandler{
 			sessionList.put(session, msg.getGroup());
 		}
 		
+		
 		for(WebSocketSession s : roomList.get(msg.getGroup())) {
-			s.sendMessage(new TextMessage(msg.getLoginUser() + ":" +msg.getMsg() +":"+msg.getSendTime()));
+			s.sendMessage(new TextMessage(msg.getUser() + ":" +msg.getMsg() +":"+msg.getSendTime()));
 		}
 	}
 	

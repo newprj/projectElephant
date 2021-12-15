@@ -17,7 +17,8 @@ public class MessageDTO {
 
 	
 	private String group;
-	private String loginUser;
+	private String user;
 	private String msg;
 	private String sendTime;
+	private String longMsg;
 }

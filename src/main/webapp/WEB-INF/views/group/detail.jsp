@@ -18,9 +18,13 @@ prefix="c" %>
  <p><a href="/group/"> 메인 </a></p>
  <p>
   </div>
-  
-   
-	
+  =====</br>
+  	<c:if test="${user.user_id== one.leader}">
+  	
+  	<a href="/group/gather/${one.group_name}/modify"> <button> 모집글 수정하기 </button></a>
+  	</c:if>
+  	
+	<br/>
     ${one.group_name}<br/>
     ${one.leader }<br/>
     ${one.subject }<br/>

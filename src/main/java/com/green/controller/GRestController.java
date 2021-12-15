@@ -118,6 +118,23 @@ public class GRestController {
 		mv.addObject("user", user);
 		return mv;
 	}
+
+	// 그룹 모집 페이지 수정시 json 받기 
+	@GetMapping("/getDetail/{group_name}")
+	public ResponseEntity<GroupVO> readDetail(@PathVariable("group_name") String group_name){
+		System.out.println(" .......  겟 디테이 ");
+		return new ResponseEntity<>(groupService.showOne(group_name), HttpStatus.OK);
+	}
+	
+	// 그룹 모집페이지 수정 
+	@GetMapping("/gather/{group_name}/modify")
+	public ModelAndView groupModify(@PathVariable("group_name") String group_name, HttpSession session ) {
+		UserVO user = (UserVO) session.getAttribute("user");
+		ModelAndView mv = new ModelAndView("/group/groupModifyForm");
+		mv.addObject("one", groupService.showOne(group_name));
+		mv.addObject("user", user);
+		return mv;
+	}
 	
 	//그룹 이름 중복체크
 	@PostMapping("/duplicateCheck")
@@ -137,6 +154,8 @@ public class GRestController {
 		try {
 			UserVO user = (UserVO) session.getAttribute("user");
 			mv.addObject("user", user.getUser_id());
+			mv.addObject("board", boardService.showList(group_name));
+			
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -235,6 +254,9 @@ public class GRestController {
 	public ResponseEntity<BoardVO> readContent(@PathVariable("bno") Long bno){
 		return new ResponseEntity<BoardVO>(boardService.read(bno), HttpStatus.OK);
 	}
+	
+	
+	
 	
 
 	

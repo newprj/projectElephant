@@ -1,6 +1,7 @@
 package com.green.mapperTests;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,6 +17,7 @@ import com.green.mapper.UserMapper;
 import com.green.vo.BoardReplyVO;
 import com.green.vo.BoardVO;
 import com.green.vo.Criteria;
+import com.green.vo.FileVO;
 import com.green.vo.GUserVO;
 import com.green.vo.GroupVO;
 import com.green.vo.UserVO;
@@ -91,7 +93,10 @@ public class MapperTests {
 	
 	@Test
 	public void showAllTest() {
-		bMapper.showList("그룹이름");
+		
+		List<BoardVO> voList = bMapper.showList("그루비룸");
+		 List<BoardVO> size = voList.stream().filter(vo -> vo.getNotice() == 'N').collect(Collectors.toList());
+		
 	}
 	
 //	@Test

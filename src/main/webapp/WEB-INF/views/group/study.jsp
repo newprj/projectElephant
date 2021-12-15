@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core"
+prefix="c" %>
 
 <!DOCTYPE html>
 <html>
@@ -13,12 +15,22 @@ pageEncoding="UTF-8"%>
 		<h1>스터디별 페이지</h1>
 		${group_name}
 
-		<div>
-			<a href="/group/board/${group_name}"> 게시판 </a>
-		</div>
+		
 		
 		<p><a href="/group/"> 메인 </a></p>
-		
+		<c:choose>
+          	<c:when test="${board.size() > 0 }">
+          		<c:forEach items="${board}" var = "board">
+					<div> ${board.title}</div>
+				</c:forEach>
+          	</c:when>
+          	<c:otherwise>
+          		<div> 등록된 공지글이 없습니다 </div>
+          	</c:otherwise>
+        </c:choose>
+		<div>
+			<a href="/group/board/${group_name}"> ${group_name} 게시판 </a>
+		</div>
 		
 		<div class="event"> 
 			<h4> 최근일정</h4>
@@ -40,7 +52,9 @@ pageEncoding="UTF-8"%>
 		<div>
 		<input class="message" type ="text">
 			<div>
-				<button> 전송</button>
+				<button class="getChat"> 입장 </button>
+				<button class="send"> 전송</button>
+				<button class="close"> 퇴장 </button>
 			</div>
 		</div>			
 		
@@ -101,14 +115,16 @@ pageEncoding="UTF-8"%>
 		})// getJSON
 		
 		// 채팅 
+				
 		let socket = new SockJS('http://localhost:8080/chat/{group_name}')
-
-
+			
+		
 		let msg = $('input.message')
 		const sendMessage = () => {
+			
 			const sendTime = new Date().toLocaleTimeString();
 			const data = {
-					loginUser, group, msg: msg.val(), sendTime 
+					user : loginUser, group, msg: msg.val(), sendTime 
 			}
 			let jsonMSG = JSON.stringify(data)
 			socket.send(jsonMSG)
@@ -116,13 +132,13 @@ pageEncoding="UTF-8"%>
 		} // sendMsg
 
 		const onMessage = ( message ) => {
-			
+			console.log(message)
 			const data = message.data;
 			let sessionId
 			let messages
 			let time 
 		
-		  let arr = data.split(':')
+		  	let arr = data.split(':')
 			
 			sessionId =  arr[0]
 			messages = arr[1]
@@ -134,39 +150,72 @@ pageEncoding="UTF-8"%>
 		
 		} //onMessage
 		
-		const onClose = (e) =>{
+		
+		const socketClose = (e) => {
+			console.log("disconnect")
 			const sendTime = new Date().toLocaleTimeString();
+			const longMsg =  $('div.message')[0].innerHTML
 			const data = {
-					loginUser, group, msg : " 님이 퇴장했습니다 ", sendTime
+					user : loginUser, group, msg : " 님이 퇴장했습니다 ", sendTime
 			}
 			let jsonMSG = JSON.stringify(data)
 			socket.send(jsonMSG)
+			console.log(data)
+			socket.close()
+		}
+	
+		
+		const onClose = (e, a) =>{
+			const sendTime = new Date().toLocaleTimeString();
+			const longMsg =  $('div.message')[0].innerHTML
+			const data = {
+					user : loginUser, group, msg : "이것도 갔으면 좋겠어 ", sendTime
+			}
+			let jsonMSG = JSON.stringify(data)
+			socket.send(jsonMSG)
+			console.log(data)
 		}// onClose
 
 		const onOpen = (e) =>{
+			
+			console.log(e)
 			const sendTime = new Date().toLocaleTimeString();
 			const data = {
-					loginUser, group, msg : " 님이 입장했습니다 ", sendTime
+					user : loginUser, group, msg : " 님이 입장했습니다 ", sendTime
 			}
 			let jsonMSG = JSON.stringify(data)
 			socket.send(jsonMSG)
 		}//open
 
-			
-
-			$('button').click(function(e){
+		
+			$('button.send').click(function(e){
 				sendMessage()
 				msg.val("")
 			})
 			
 			$('input').keyup((e) =>{
-				if(e.keyCode ===13) $('button').trigger('click')				
+				if(e.keyCode ===13) {
+					$('button.send').trigger('click')
+				}
 			})
 			
-
+			$('button.close').click((e) => {
+				socketClose()
+			})
+			
+			
+			window.onbeforeunload = function() {
+    			websocket.onclose = function () {}; // disable onclose handler first
+    			socketClose(e)
+			};
+		
 		socket.onmessage = onMessage;
 		socket.onclose = onClose;
 		socket.onopen = onOpen
+
+			
+
+		
 	
 	// 나중에 쓸꺼야
 		console.log('${pageContext.request.serverName}') // localhost
