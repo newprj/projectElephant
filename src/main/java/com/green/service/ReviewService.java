@@ -14,8 +14,8 @@ public interface ReviewService {
 	public void modify(ReviewVO vo);
 	public void remove(ReviewVO vo);
 	public List<ReviewVO> getList();
-	public List<ReviewVO> list(SearchCriteria scri);
-	public int listCount(SearchCriteria scri);
+	public List<ReviewVO> listqnaWithPaging(Criteria cri);
+	public int listCount(Criteria cri);
 	public int rnoRead ();
 	public void updateReplyCount(Long rno);
 	public void viewCount(Long rno);

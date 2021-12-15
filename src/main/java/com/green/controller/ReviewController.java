@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.green.mapper.ReviewAttachFileMapper;
 import com.green.service.ReviewService;
+import com.green.vo.Criteria;
+import com.green.vo.PageDTO;
 import com.green.vo.PageMaker;
 import com.green.vo.ReviewVO;
 import com.green.vo.SearchCriteria;
@@ -34,17 +36,13 @@ public class ReviewController {
 
 	
 	@RequestMapping(value = "/list", method = RequestMethod.GET)//리뷰 리스트 컨트롤러
-	public void list(Model model, @ModelAttribute("scri") SearchCriteria scri){
-		try {
-			log.info("리뷰 컨트롤러 list 접근.................");
-			model.addAttribute("list", reviewService.list(scri));
-			PageMaker pageMaker = new PageMaker();
-			pageMaker.setCri(scri);
-			pageMaker.setTotalCount(reviewService.listCount(scri));
-			model.addAttribute("pageMaker", pageMaker);
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
+	public void list(Model model, Criteria cri){
+		log.info("리뷰 컨트롤러 list 접근.................");
+		int total = reviewService.listCount(cri);
+		PageDTO pageDTO = new PageDTO(cri,total);
+		model.addAttribute("list", reviewService.listqnaWithPaging(cri));
+		model.addAttribute("pageMarker",pageDTO);
+	
 	}
 
 	@RequestMapping("/detailPage") //상세 페이지 컨트롤러

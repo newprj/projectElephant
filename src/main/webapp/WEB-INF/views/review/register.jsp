@@ -1,14 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> <%@ taglib prefix="c"
 uri="http://java.sun.com/jsp/jstl/core"%>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet" />
-<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
-<script src="/resources/js/fileUpload.js" type="text/javascript"></script>
+
 <!DOCTYPE html>
 <html>
   <head>
     <meta charset="UTF-8" />
     <title>Insert title here</title>
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet" />
+	<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+	<script src="/resources/js/fileUpload.js" type="text/javascript"></script>
+	<script src="/resources/image-resize.min.js"></script>
+	<script src="/resources/image-drop.min.js"></script>
   </head>
   <body>
     <form>
@@ -40,9 +43,6 @@ uri="http://java.sun.com/jsp/jstl/core"%>
       }
       return true
     }
-
-    
-
     /*     ------------------------------------------------------------------------------------------------------------ */
 $(document).ready(function (e) {
 	$("input[type='file']").change(function(e){
@@ -127,10 +127,7 @@ $(document).ready(function (e) {
       }) //ajax
     }) //click
 
-    
-    
-    
-    
+
     
     const toolbarOptions = [
       [{ header: [1, 2, 3, 4, 5, 6, false] }],

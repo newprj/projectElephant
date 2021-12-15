@@ -48,6 +48,7 @@ public class ReviewServiceImpl implements ReviewService{
 		return reviewMapper.read(rno);
 	}
 
+	@Transactional
 	@Override
 	public void modify(ReviewVO vo) {
 		vo.getAttachList();
@@ -81,21 +82,21 @@ public class ReviewServiceImpl implements ReviewService{
 
 
 	@Override
-	public List<ReviewVO> list(SearchCriteria scri) {
+	public List<ReviewVO> listqnaWithPaging(Criteria cri) {
 		System.out.println("2 서비스에서 리스트  가져옴");
-		List<ReviewVO> voList = reviewMapper.list(scri);
+		List<ReviewVO> voList = reviewMapper.listqnaWithPaging(cri);
 		voList.forEach(vo->{
 			List<ReviewAttachFileDTO> files = attachMapper.getList(vo.getRno());
 			vo.setAttachList(files);
 			reviewMapper.attachedFile(vo.getRno());
 		});
-		return reviewMapper.list(scri);
+		return reviewMapper.listqnaWithPaging(cri);
 	}
 
 	@Override
-	public int listCount(SearchCriteria scri) {
+	public int listCount(Criteria cri) {
 		System.out.println("2 서비스에서 리스트 count 가져옴");
-		return reviewMapper.listCount(scri);
+		return reviewMapper.listCount(cri);
 	}
 
 	@Override

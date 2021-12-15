@@ -35,33 +35,60 @@
 		delete from tbl_review where rno = #{rno}
 	</delete> 
 	
-	<!-- 리뷰 번호 맥스값 조회  -->
-	<select id="rnoRead" resultType="int">
-		select max(rno) from tbl_review
-	</select>  
-	
-	
+
 	<!-- 리뷰 전체 게시물 페이징 처리 조회  -->
-	<select id="list" resultType="com.green.vo.ReviewVO" parameterType="com.green.vo.SearchCriteria">
-		select * from (select rno, group_name,title,content,writer,regdate,reply_count,view_count,attachedFile,row_number() over(order by rno desc) as rNum from tbl_review
-        where 1=1 <include refid="search"></include>) 
-        review where rNum between #{rowStart} and #{rowEnd} order by rno desc
+	<select id="listqnaWithPaging" resultType="com.green.vo.ReviewVO">
+		<![CDATA[
+			select * from (
+			    select /*+ index_desc(tbl_review pk_rno) */
+				    rownum rn, rno, group_name,title,content,writer,regdate,reply_count,view_count,attachedFile
+				    	from 
+				    	(select * from  tbl_review 
+					    	order by rno desc nulls LAST
+					   	)
+				    where 
+		]]>
+		<include refid="criteria"></include>
+	    <![CDATA[
+			    rownum <=#{pageNum} * #{amount}
+		    )
+		    where rn> (#{pageNum}-1) * #{amount}  
+		]]>
 	</select> 
 	
-	<!-- 페이지 카운트 처리  -->
-	<select id="listCount" parameterType="com.green.vo.SearchCriteria" resultType="int">
-		select count(rno) from tbl_review where 1=1 <include refid="search"></include> and rno > 0
-	</select>
+
 	
 	<!-- 검색 처리를 위한 쿼리문  -->
-	<sql id="search">
-		<if test="searchType != null">
-			<if test="searchType == 't'.toString()">AND TITLE LIKE '%' || #{keyword} || '%'</if>
-			<if test="searchType == 'c'.toString()">AND CONTENT LIKE '%' || #{keyword} || '%'</if>
-			<if test="searchType == 'w'.toString()">AND WRITER LIKE '%' || #{keyword} || '%'</if>
-			<if test="searchType == 'tc'.toString()">AND (TITLE LIKE '%' || #{keyword} || '%') or (CONTENT LIKE '%' || #{keyword} || '%')</if>
-		</if>
-	</sql>
+<!-- 	<sql id="criteria">
+		<trim prefix="(" suffix=") and " prefixOverrides="OR">
+	    	<foreach item="type" collection="typeArr">
+	    		<trim prefix="OR">
+	    			<choose>
+	    				<when test="type== 'T'.toString()">
+	    					title like '%'||#{keyword}||'%'
+	    				</when>
+	    				<when test="type== 'W'.toString()">
+	    					writer like '%'||#{keyword}||'%'
+	    				</when>
+	    			</choose>
+	    		</trim>
+	    	</foreach>
+		</trim>
+	</sql> -->
+	<select id="listCount" resultType="int">
+		select count(*) from tbl_review where rno>0
+	</select>
+	
+	<sql id="criteria">
+		<trim prefix="(" suffix=") and " prefixOverrides="OR">
+			<if test="type != null">
+				<if test="type == 't'.toString()">AND TITLE LIKE '%' || #{keyword} || '%'</if>
+				<if test="type == 'c'.toString()">AND CONTENT LIKE '%' || #{keyword} || '%'</if>
+				<if test="type == 'w'.toString()">AND WRITER LIKE '%' || #{keyword} || '%'</if>
+				<if test="type == 'tc'.toString()">AND (TITLE LIKE '%' || #{keyword} || '%') or (CONTENT LIKE '%' || #{keyword} || '%')</if>
+			</if>
+		</trim>
+	</sql> 
 	
 	<!-- 리플 갯수   -->
 	<update id="updateReplyCount" parameterType="long">

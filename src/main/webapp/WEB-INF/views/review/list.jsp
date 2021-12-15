@@ -18,62 +18,69 @@
 <form role="form" method="get"></form>
 	<ul>
 		<c:forEach items="${list}" var="list">
-		번호 : ${list.rno} / 작성자 : ${list.writer}  / 
-		제목 : <a href="detailPage?no=${list.rno}">${list.title}</a>  [${list.reply_count}] / 작성일 : <fmt:formatDate pattern="yyyy-MM-dd" value="${list.regdate}"/>
-		/ 조회수 : ${list.view_count}  
-		<c:if test="${list.attachedFile ne 0}">
-				[ <i class="fas fa-save"></i> ]
-		</c:if>
-		<br>
-		
+			번호 : ${list.rno} / 작성자 : ${list.writer}  / 
+			제목 : <a href="detailPage?no=${list.rno}">${list.title}</a>  [${list.reply_count}] / 작성일 : <fmt:formatDate pattern="yyyy-MM-dd" value="${list.regdate}"/>
+			/ 조회수 : ${list.view_count}  
+			<c:if test="${list.attachedFile ne 0}">
+					[ <i class="fas fa-save"></i> ]
+			</c:if>
+			<br>
 		</c:forEach>
 	</ul>
-	<button type="button" id="registerReview">후기등록</button>
-	<button type="button" id="refresh">새로고침</button>
+	<button type="button" onclick="location.href= '/review/register'">후기등록</button>
+	<button type="button" onclick="location.href= '/review/list'">새로고침</button>
   <div class="search">
-    <select name="searchType">
-      <option value="t"<c:out value="${scri.searchType eq 't' ? 'selected' : ''}"/>>제목</option>
-      <option value="c"<c:out value="${scri.searchType eq 'c' ? 'selected' : ''}"/>>내용</option>
-      <option value="w"<c:out value="${scri.searchType eq 'w' ? 'selected' : ''}"/>>작성자</option>
-      <option value="tc"<c:out value="${scri.searchType eq 'tc' ? 'selected' : ''}"/>>제목+내용</option>
-    </select>
-
-    <input type="text" name="keyword" id="keywordInput" value="${scri.keyword}"/>
-
+    <select name="type">
+			<option value="" <c:out value="${pageMaker.cri.type==null?'selected':''}"/>>선택</option>
+			<option value="T" <c:out value="${pageMaker.cri.type eq 'T' ?'selected':''}"/> >제목</option>
+			<option value="W" <c:out value="${pageMaker.cri.type eq 'W' ?'selected':''}"/>>작성자</option>			
+			<option value="TW" <c:out value="${pageMaker.cri.type eq 'TW'?'selected':''}"/>>제목 또는 작성자</option>			
+	</select>
+	<input type="hidden" name="pageNum" value='${pageMarker.cri.pageNum}'>
+    <input type="hidden" name="amount" value='${pageMarker.cri.amount}'>
+    <input type="text" name="keyword" id="keywordInput" value="${cri.keyword}"/>
     <button id="searchBtn" type="button">검색</button>
   </div>
-<div>
-  <ul>
-    <c:if test="${pageMaker.prev}">
-    	<li><a href="list${pageMaker.makeSearch(pageMaker.startPage - 1)}">이전</a></li>
-    </c:if> 
-
-    <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="idx">
-    	<li><a href="list${pageMaker.makeSearch(idx)}">${idx}</a></li>
-    </c:forEach>
-
-    <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-    	<li><a href="list${pageMaker.makeSearch(pageMaker.endPage + 1)}">다음</a></li>
-    </c:if> 
-  </ul>
-</div>
+	<div>
+		<ul class="pagination">
+			<c:if test="${pageMarker.prev}">
+				<li class="paginate_btn previous"><a href="${pageMarker.startPage -1}">이전</a>
+				</li>
+			</c:if>
+			<c:forEach var="num" begin="${pageMarker.startPage}" end="${pageMarker.endPage}">
+				<li class="paginate_btn ${pageMarker.cri.pageNum==num ? "active": "" }">
+					<a href="${num}">${num}</a>
+				</li>
+			</c:forEach>
+			<c:if test="${pageMarker.next}">
+				<li class="paginate_btn next"><a href="${pageMarker.endPage +1}">다음</a></li>
+			</c:if>
+		</ul>
+	</div>
+	<form id='actionForm' action="/review/list" method="get" >
+		<input type="hidden" name='pageNum' value='${pageMarker.cri.pageNum}'/>
+		<input type="hidden" name='amount' value='${pageMarker.cri.amount}'/>
+		<input type="hidden" name='type' value='${pageMarker.cri.type}'/>
+		<input type="hidden" name='keyword' value='${pageMarker.cri.keyword}'/>
+	</form>
 </body>
 <script type="text/javascript">
 
 $(document).ready(function () {
-	$('#registerReview').click(function () {
-		console.log("버튼이 눌림")
-	    self.location = '/review/register'
-	 })
-	 $('#refresh').click(function () {
-		location.href = '/review/list'
+	$(".paginate_btn a").click(function(e){
+		e.preventDefault();
+		var thisis=$(this).attr("href")
+		$("#actionForm").find("input[name='pageNum']").val(thisis)
+		$("#actionForm").submit()
 	})
+	
+
 }) 
  $(function(){
         $('#searchBtn').click(function() {
        	  if($('#keywordInput').val()=="") alert("검색어를 입력해 주세요")
        	  else{
-          self.location = "list" + '${pageMaker.makeQuery(1)}' + "&searchType=" + $("select option:selected").val() + "&keyword=" + encodeURIComponent($('#keywordInput').val());
+          self.location = "list" + '${pageMaker.makeQuery(1)}' + "&type=" + $("select option:selected").val() + "&keyword=" + encodeURIComponent($('#keywordInput').val());
        	  } 
        	});
       });   
