@@ -22,7 +22,7 @@ import com.green.vo.UserVO;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
-@Controller
+@Controller//d
 @RequestMapping("/admin/*")
 @Slf4j
 public class AdminController {//z
