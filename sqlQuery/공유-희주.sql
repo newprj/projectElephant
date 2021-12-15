@@ -1,4 +1,4 @@
--------------------------qna ±¸ÇöÇÏ¸é¼­ ÇÊ¿äÇÑ Å×ÀÌºí
+-------------------------qna ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸é¼­ ï¿½Ê¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½
 create table qna_tbl
 (
     qno number(10,0) primary key,
@@ -34,7 +34,7 @@ create table qna_attach_tbl(
 drop table tbl_user;
 
 
-----------------admin ÆäÀÌÁö¿¡¼­ È¸¿ø Á¤Áö °ü·Ã Ä®·³ Ãß°¡
+----------------admin í˜ì´ì§€ì—ì„œ user í™œë™ ì •ì§€ (12ì›” 15ì¼ ìˆ˜ì •)
 create table tbl_user(
     uno number,
     user_id varchar2(30),
@@ -43,20 +43,23 @@ create table tbl_user(
     email varchar2(30));
 
 create sequence seq_uno;
-alter table tbl_user add suspension varchar2(50) check(suspension in('Y','N'));
-alter table qna_tbl add up_date timestamp;
 
-
-------------admin¿¡¼­ ÇÊ¿äÇÑ Á¤º¸
-drop table tbl_user;
-create table tbl_user(
-    uno number,
-    user_id varchar2(30),
-    password varchar2(30),
-    name varchar2(30),
-    email varchar2(30));
-drop sequence seq_uno;
-create sequence seq_uno;
-alter table tbl_user add regDate timestamp;
+-- ì •ì§€ ì¹¼ëŸ¼ :ê¸°ë³¸ìœ¼ë¡œ N(í™œë™ê°€ëŠ¥) /YëŠ” ì •ì§€
+alter table tbl_user add suspension varchar2(50) default 'N' check(suspension in('Y','N'));
+alter table tbl_user add susDate timestamp;
+alter table tbl_user add suspContent varchar2(100);
 
 select*from tbl_user;
+
+
+-- ìŠ¤í„°ë”” ìŠ¹ì¸ ì¹¼ëŸ¼ì¶”ê°€ (12/15)
+create table tbl_group(
+    gno number primary key,
+    group_name varchar2(30),
+    leader varchar2(30),
+    subject varchar2(30),
+    description varchar2(30),
+    member_number number,
+    authorized char(1) default 'N' check(authorized in('Y','N'))
+    
+);

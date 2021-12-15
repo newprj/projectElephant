@@ -16,4 +16,6 @@ public interface QnaMapper {
 	public int update(QnaVO vo);
 	public int deleteByQno(Long qno);
 	public int totalCount(Criteria cri);
+	
+	public List<QnaVO> myQna(String writer);
 }

@@ -151,6 +151,7 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 				data:formData,
 				type:'post',
 				dataType:'json',
+				enctype: 'multipart/form-data',
 				success:function(result){
 					showUploadResult(result);
 				},

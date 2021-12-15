@@ -12,4 +12,5 @@ public interface ReplyService {
 	public int updateReply(BoardReplyVO vo);
 	public int deleteReply(Long rno);
 
+	public List<BoardReplyVO> myReply(String replyer);
 }

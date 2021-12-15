@@ -40,6 +40,11 @@ prefix="c" %>
     <c:if test="${user != null}">
     <button class="signup">지원하기</button>
     </c:if>
+    <br/>
+    <c:if test="${user.user_id == 'admin'}">
+    	<button class="auth">승인하기</button>
+    </c:if>
+    
   </body>
   <script>
   
@@ -83,6 +88,32 @@ prefix="c" %>
        
         signupGroup(signupform)
       })
+      
+      /* admin이 그룹 승인 */
+      $(".auth").click(function(){
+    	  var gno=${one.gno}
+    	  var authorized='Y'
+    	  var gAuth={
+    			gno: gno,
+    			authorized:authorized,
+    	  }
+    	  console.log("승인 버튼 누름"+JSON.stringify(gAuth))
+    	  $.ajax({
+          type: 'post',
+          url:'/admin/auth',
+          data: JSON.stringify(gAuth),
+          contentType: 'application/json; charset=utf-8',
+          success: () => {
+            console.log('승인 완료')
+            alert("승인 완료")
+            location.href = '/admin/home'
+          },
+          error: (xhr, status, er) => {
+            console.log(status)
+          },
+        }) //ajax
+      })
+      
     })
   </script>
 </html>

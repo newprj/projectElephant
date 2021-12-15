@@ -5,7 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.omg.CORBA.PUBLIC_MEMBER;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -57,6 +57,12 @@ public class UserServiceImpl implements UserService {
 	public int userSusp(UserVO vo) {
 		log.info("2) 서비스에서 사용자 계정 정지, 해제");
 		return usermapper.susp(vo);
+	}
+
+	@Override
+	public UserVO selectMaster(String user_id) {
+		log.info("2) 서비스에서 마스터 사용자 검색");
+		return usermapper.selectMaster(user_id);
 	}
 
 	

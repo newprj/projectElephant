@@ -19,4 +19,6 @@ public interface UserService {
 
 	public List<UserVO> allList();
 	public int userSusp(UserVO vo);
+	
+	public UserVO selectMaster(String user_id);
 }

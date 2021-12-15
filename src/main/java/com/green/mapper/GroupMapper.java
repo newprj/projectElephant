@@ -2,6 +2,8 @@ package com.green.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.green.vo.GroupVO;
 
 public interface GroupMapper {
@@ -12,4 +14,6 @@ public interface GroupMapper {
 	public int deleteGroup (String group_name);
 	public int groupNameCheck(String group_name);
 
+	//스터디 승인
+	public void GroupAuth(@Param("gno") Long gno,@Param("authorized") String authorized);
 }
