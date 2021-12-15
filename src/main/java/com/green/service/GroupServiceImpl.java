@@ -5,7 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.green.mapper.GUserMapper;
 import com.green.mapper.GroupMapper;
+import com.green.vo.GUserVO;
 import com.green.vo.GroupVO;
 
 import lombok.Setter;
@@ -16,6 +18,9 @@ public class GroupServiceImpl implements GroupService{
 	@Setter
 	(onMethod_=@Autowired)
 	GroupMapper mapper;
+	
+	@Setter(onMethod_=@Autowired)
+	GUserMapper umapper;
 
 	@Override
 	public int makeGroup(GroupVO vo) {
@@ -45,6 +50,12 @@ public class GroupServiceImpl implements GroupService{
 	public int groupNameCheck(String group_name) {
 		// TODO Auto-generated method stub
 		return mapper.groupNameCheck(group_name);
+	}
+
+	@Override
+	public void GroupAuth(Long gno, String authorized) {
+		
+		mapper.GroupAuth(gno, authorized);
 	}
 
 	

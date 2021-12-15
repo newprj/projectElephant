@@ -76,7 +76,7 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 					<td>${status.count}</td>
 					<td id='userId${status.index}'>${i.user_id}</td>
 					<td>${i.name}</td>
-					<td>${i.regDate}</td>
+					<td></td>
 					<td><button id='chat'>채팅</button></td>
 					<td><button class='susp' >
 						<c:choose>
@@ -112,7 +112,11 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 					<td>${i.leader}</td>
 					<td>${i.member_number}명</td>
 					<td><a href='/group/gather/${i.group_name}'>확인</a></td>
-					<td>Y/N</td>
+					<td><c:choose>
+							<c:when test="${i.authorized eq 'Y'}">승인</c:when>
+							<c:otherwise>비승인</c:otherwise>
+						</c:choose>	
+					</td>
 				</tr>
 			</c:forEach>
 		</table>

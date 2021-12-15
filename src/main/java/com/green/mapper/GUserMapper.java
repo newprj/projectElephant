@@ -10,4 +10,5 @@ public interface GUserMapper {
 	public List<GUserVO> listByGroup(String group_name);
 	public List<GUserVO> listByUSer(String user);
 
+	
 }

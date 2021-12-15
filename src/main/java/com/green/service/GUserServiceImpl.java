@@ -23,7 +23,7 @@ public class GUserServiceImpl implements GUserService {
 	@Override
 	public int groupSignUp(GUserVO vo) {
 		System.out.println("서비스 group Signup" + vo);
-
+		
 		return mapper.groupSignUp(vo);
 	}
 
@@ -38,6 +38,10 @@ public class GUserServiceImpl implements GUserService {
 		
 		return mapper.listByUSer(user);
 	}
+
+
+
+	
 
 
 }

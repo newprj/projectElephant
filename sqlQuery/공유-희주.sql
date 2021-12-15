@@ -49,8 +49,17 @@ alter table tbl_user add suspension varchar2(50) default 'N' check(suspension in
 alter table tbl_user add susDate timestamp;
 alter table tbl_user add suspContent varchar2(100);
 
-
-
-
-
 select*from tbl_user;
+
+
+-- 스터디 승인 칼럼추가 (12/15)
+create table tbl_group(
+    sno number primary key,
+    group_name varchar2(30),
+    leader varchar2(30),
+    subject varchar2(30),
+    description varchar2(30),
+    member_number number,
+    authorized char(1) default 'N' check(authorized in('Y','N'))
+    
+);

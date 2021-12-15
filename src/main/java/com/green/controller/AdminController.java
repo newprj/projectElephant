@@ -20,9 +20,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.green.service.GUserService;
 import com.green.service.GroupService;
 import com.green.service.QnaService;
 import com.green.service.UserService;
+import com.green.vo.GUserVO;
+import com.green.vo.GroupVO;
 import com.green.vo.UserVO;
 
 import lombok.Setter;
@@ -40,6 +43,7 @@ public class AdminController {
 
 	@Setter(onMethod_=@Autowired)
 	QnaService qnaService;
+	
 	
 	@GetMapping("/home")
 	public String adminHome(Model model, HttpServletResponse response,HttpSession session) {
@@ -75,5 +79,20 @@ public class AdminController {
 		log.info("들어온 정보"+vo);
 		return susp==1 ? new ResponseEntity<>("success",HttpStatus.OK):
 			new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+	
+	@GetMapping("/mypage")
+	public void mypage(HttpSession session,Model model) {
+		UserVO login= (UserVO) session.getAttribute("user");
+		log.info("id="+login.getUser_id());
+		
+		model.addAttribute("user",login);
+	}
+	
+	@ResponseBody
+	@PostMapping(value="/auth", consumes= "application/json")
+	public void GroupAuth(@RequestBody GroupVO vo) {
+		gService.GroupAuth(vo.getGno(), vo.getAuthorized());
+		
 	}
 }
