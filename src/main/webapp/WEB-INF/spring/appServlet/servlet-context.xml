@@ -7,7 +7,7 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
-		http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket.xsd">
+		http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.3.xsd">
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	
@@ -34,30 +34,30 @@
 	  </interceptor>
 	    <interceptor>
 		    <!-- login 인증이 필요한 URI 들 -->
-		    <mapping path="/group/gather/{group_name}"/>
+		    
 		    <mapping path="/group/{group_name}"/>
 		    <mapping path="/group/board/{group_name}"/>
 		    <mapping path="/group/test/{group_name}"/>
+		     
 		    <beans:ref bean="authinterceptor"/>
  	 </interceptor>
 	</interceptors>
-	
 
 		
 	<context:component-scan base-package="com.green.controller" />
 	<!-- 파일 업로드 -->
 	<!-- <beans:bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver"></beans:bean> -->
 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-	
 		<beans:property name="maxUploadSize" value="99999999999"/>
 	</beans:bean>
+	
 	<!-- 채팅을 위한 등록 -->
 	<websocket:handlers>
 		<websocket:mapping handler="chattingHandler" path="/chatting"/>
-		<websocket:sockjs></websocket:sockjs>
+		 <websocket:sockjs websocket-enabled="true" />
 	</websocket:handlers>
 	
 	<beans:bean id="chattingHandler" class="com.green.listener.ChattingHandler"/>
 	
-			
+
 </beans:beans>
