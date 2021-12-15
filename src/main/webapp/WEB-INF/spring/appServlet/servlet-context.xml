@@ -54,10 +54,12 @@
 	<!-- 채팅을 위한 등록 -->
 	<websocket:handlers>
 		<websocket:mapping handler="chattingHandler" path="/chatting"/>
+		<websocket:mapping handler="groupchatHandler" path="/chat/{group_name}"/>
 		 <websocket:sockjs websocket-enabled="true" />
 	</websocket:handlers>
 	
 	<beans:bean id="chattingHandler" class="com.green.listener.ChattingHandler"/>
+	<beans:bean id="groupchatHandler" class="com.green.listener.GroupChatHandler"/>
 	
 
 </beans:beans>

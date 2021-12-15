@@ -12,7 +12,7 @@ import lombok.extern.log4j.Log4j;
 public class AhthInterceptor extends HandlerInterceptorAdapter{
 	
 	
-	private void saveDestination(HttpServletRequest req) {
+private void saveDestination(HttpServletRequest req) {
 		
 		String uri = req.getRequestURI();
 		String query= req.getQueryString();
@@ -39,11 +39,10 @@ public class AhthInterceptor extends HandlerInterceptorAdapter{
 		if(session.getAttribute("user") == null ) {
 			response.sendRedirect("/user/login");
 			saveDestination(request);
-			log.info(" 로그인 안한 사용자..... 거꾸로 맞지? ");
+			log.info(" 로그인 안한 사용자");
 			return false;
 		}
 		
 		return true;
 	}
-
 }
