@@ -11,7 +11,7 @@ import lombok.ToString;
 @Setter
 @Getter
 @ToString
-public class AttachFileDTO {
+public class ReviewAttachFileDTO {
 	private long rno;
 	private String fileName;
 	private String uploadPath;

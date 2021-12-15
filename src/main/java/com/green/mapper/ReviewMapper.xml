@@ -7,7 +7,11 @@
 	
 	<!-- 리뷰 등록  -->
 	<insert id="insert">
-		insert into tbl_review values(seq_rno.nextval, #{group_name},#{title},#{content},#{writer},sysdate,null,0)
+		<selectKey keyProperty="rno" order="BEFORE" resultType="Long">
+			select seq_rno.nextval from dual
+		</selectKey>
+		insert into tbl_review values
+		(#{rno}, #{group_name},#{title},#{content},#{writer},sysdate,null,0,default)
 	</insert>
 	
 	
@@ -39,8 +43,7 @@
 	
 	<!-- 리뷰 전체 게시물 페이징 처리 조회  -->
 	<select id="list" resultType="com.green.vo.ReviewVO" parameterType="com.green.vo.SearchCriteria">
-		select rno, group_name, title, content, writer, regdate,reply_count,view_count
-        from (select rno, group_name,title,content,writer,regdate,reply_count,view_count,row_number() over(order by rno desc) as rNum from tbl_review
+		select * from (select rno, group_name,title,content,writer,regdate,reply_count,view_count,attachedFile,row_number() over(order by rno desc) as rNum from tbl_review
         where 1=1 <include refid="search"></include>) 
         review where rNum between #{rowStart} and #{rowEnd} order by rno desc
 	</select> 
@@ -74,5 +77,15 @@
 		set view_count = view_count+1
 		where rno = #{rno}
 	</update>
+	
+	<!-- 첨부유무   -->
+	<update id="attachedFile" parameterType="long">
+		update tbl_review b 
+		set attachedFile = (select count(rno) from attachFile where rno=#{rno})
+		where b.rno=#{rno}
+	</update>	
+
+
+	
 	
 </mapper>

@@ -176,7 +176,7 @@ li {
 					str+=" data-uuid='"+attach.uuid+"' data-filename='"+attach.fileName+"' data-type='"+attach.fileType+"'"
 					str+="><div>"
 					str+="</br><img src='/upload/display?fileName="+fileCallPath+"'>"
-					str+="<span> "+attach.fileName+"</span>"
+					str+="<span> "+attach.file	Name+"</span>"
 					str+="<button type='button' data-file=\'"+fileCallPath+"\' data-type='file' class='btn-circle'><i>X</i></button>"
 					str+="</div>"	
 					str+="</li>"

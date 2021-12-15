@@ -1,16 +1,19 @@
 package com.green.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.green.service.AttachFileService;
+import com.green.service.ReviewAttachFileService;
 import com.green.service.ReviewService;
 import com.green.vo.PageMaker;
 import com.green.vo.ReviewVO;
@@ -27,17 +30,21 @@ public class ReviewController {
 	@Setter(onMethod_=@Autowired)
 	ReviewService service;
 	@Setter(onMethod_=@Autowired)
-	AttachFileService aService;
+	ReviewAttachFileService aService;
 
 	
 	@RequestMapping(value = "/list", method = RequestMethod.GET)//리뷰 리스트 컨트롤러
 	public void list(Model model, @ModelAttribute("scri") SearchCriteria scri){
-		log.info("리뷰 컨트롤러 list 접근.................");
-		model.addAttribute("list", service.list(scri));
-		PageMaker pageMaker = new PageMaker();
-		pageMaker.setCri(scri);
-		pageMaker.setTotalCount(service.listCount(scri));
-		model.addAttribute("pageMaker", pageMaker);
+		try {
+			log.info("리뷰 컨트롤러 list 접근.................");
+			model.addAttribute("list", service.list(scri));
+			PageMaker pageMaker = new PageMaker();
+			pageMaker.setCri(scri);
+			pageMaker.setTotalCount(service.listCount(scri));
+			model.addAttribute("pageMaker", pageMaker);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@RequestMapping("/detailPage") //상세 페이지 컨트롤러
@@ -49,13 +56,12 @@ public class ReviewController {
 		model.addAttribute("attachFile", aService.getList(no));
 	}
 	
-	@RequestMapping("/register")//리뷰생성 get 컨트롤러
-	public void register(Model model) {
+	@GetMapping("/register")//리뷰생성 get 컨트롤러
+	public void register() {
 		System.out.println("리뷰 컨트롤러  register 접근.................");
 	}
 	
 	@PostMapping("/insert")//리뷰생성 post 컨트롤러
-	
 	public String insert(@RequestBody ReviewVO vo) {
 		System.out.println("리뷰 컨트롤러  insert 접근.................");
 		service.register(vo);		
@@ -70,12 +76,16 @@ public class ReviewController {
 	}
 	
 	@PostMapping("/modify")//리뷰수정 post 컨트롤러
-	public String modify(ReviewVO vo) {
+	public String modify(@RequestBody ReviewVO vo) {
 		System.out.println("리뷰 컨트롤러  modify 접근................."+vo);
 		service.modify(vo);
 		return "redirect:/review/list";
 	}
 	
+	@GetMapping("/getReview/{bno}")
+	public ResponseEntity<ReviewVO> readContent(@PathVariable("bno") Long bno){
+		return new ResponseEntity<ReviewVO>(service.get(bno), HttpStatus.OK);
+	}
 	
 	
 	/*

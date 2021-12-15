@@ -19,10 +19,11 @@ uri="http://java.sun.com/jsp/jstl/core"%>
       <input type="file" name="uploadFile" multiple="multiple" /><br>
       <hr>
       <button type="button" id="create">등록하기</button>
-      <button type="button" id="back">돌아가기</button>
+      <button type="button" onclick="location.href='/review/list'">돌아가기</button>
     </form>
   </body>
   <script>
+  
     var regex = new RegExp('(.*?)\.(exe|sh|alz)$') //정규 표현식
     var maxSize = 10485760 // 10MB 제한
 
@@ -39,24 +40,38 @@ uri="http://java.sun.com/jsp/jstl/core"%>
       return true
     }
 
-    $(document).ready(function (e) {
-    	
-      $('#back').click(function () {
-        self.location = '/review/list'
-      })
-   
+    
 
     /*     ------------------------------------------------------------------------------------------------------------ */
-
+$(document).ready(function (e) {
+	
+	$("input[type='file']").change(function(e){
+	 var formData = new FormData()
+     var inputFile = $("input[name='uploadFile']")
+     var files = inputFile[0].files
+     console.log(files)
+     for (let i = 0; i < files.length; i++) {
+       if (!checkExtension(files[i].name, files[i].size)) return false
+       formData.append('uploadFile', files[i])
+     }
+     $.ajax({
+       url: '/reviewUpload/uploadAjaxAction',
+       processData: false,
+       contentType: false,
+       data: formData,
+       type: 'POST',
+       dataType: 'json',
+       success: function (result) {
+       	alert(result)
+       },
+       error:function(){
+			alert("실패")
+		}
+     })
+     })
+     
     var myEditor = document.querySelector('#editor')
     let form = $('form')
-    // 폼데이터 얻기
-
-    const getData = () => {
-      let content = $('input[name="content"]')
-      content.val(JSON.stringify(quill.getContents()))
-      return content.val()
-    }
 
     const imageHandler = (e) => {
       var rno = 99999999;
@@ -94,13 +109,11 @@ uri="http://java.sun.com/jsp/jstl/core"%>
 
     $('#create').click(function (e) {
       e.preventDefault()
-      let attachList
       review = {
         title: $('input[name="title"]').val(),
         content: myEditor.children[0].innerHTML,
         writer: $('input[name="writer"]').val(),
         group_name: $('input[name="group_name"]').val(),
-        attachList,
       }
       $.ajax({
         type: 'post',
@@ -112,27 +125,14 @@ uri="http://java.sun.com/jsp/jstl/core"%>
           console.log(xhr)
         },
       }) //ajax
-      var rno = 0;
-      var formData = new FormData()
-      var inputFile = $("input[name='uploadFile']")
-      var files = inputFile[0].files
-      console.log(files)
-      for (let i = 0; i < files.length; i++) {
-        if (!checkExtension(files[i].name, files[i].size)) return false
-        formData.append('uploadFile', files[i])
-        formData.append('rno', rno)
-      }
-      $.ajax({
-        url: '/reviewUpload/uploadAjaxAction',
-        processData: false,
-        contentType: false,
-        data: formData,
-        type: 'POST',
-        dataType: 'json',
-        success: function (result) {},
-      })
+     
     }) //click
 
+    
+    
+    
+    
+    
     const toolbarOptions = [
       [{ header: [1, 2, 3, 4, 5, 6, false] }],
       [{ list: 'ordered' }, { list: 'bullet' }],

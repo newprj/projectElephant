@@ -2,6 +2,7 @@ package com.green.service;
 
 import java.util.List;
 
+import com.green.vo.ReviewAttachFileDTO;
 import com.green.vo.Criteria;
 import com.green.vo.ReviewVO;
 import com.green.vo.SearchCriteria;
@@ -18,4 +19,6 @@ public interface ReviewService {
 	public int rnoRead ();
 	public void updateReplyCount(Long rno);
 	public void viewCount(Long rno);
+	public void attachedFile(Long rno);
+	public List<ReviewAttachFileDTO> getAttachList(Long rno);
 }

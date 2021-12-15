@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="https://kit.fontawesome.com/6584921572.js" crossorigin="anonymous"></script>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,7 +20,10 @@
 		<c:forEach items="${list}" var="list">
 		번호 : ${list.rno} / 작성자 : ${list.writer}  / 
 		제목 : <a href="detailPage?no=${list.rno}">${list.title}</a>  [${list.reply_count}] / 작성일 : <fmt:formatDate pattern="yyyy-MM-dd" value="${list.regdate}"/>
-		/ 조회수 : ${list.view_count}
+		/ 조회수 : ${list.view_count}  
+		<c:if test="${list.attachedFile ne 0}">
+				[ <i class="fas fa-save"></i> ]
+		</c:if>
 		<br>
 		
 		</c:forEach>

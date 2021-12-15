@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> <%@ taglib prefix="c"
 uri="http://java.sun.com/jsp/jstl/core"%>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet" />
+<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 <!DOCTYPE html>
 <html>
   <head>
@@ -9,12 +11,15 @@ uri="http://java.sun.com/jsp/jstl/core"%>
   </head>
   <h1>후기 수정 페이지</h1>
   <body>
-    <form action="/review/modify" method="post">
+    <form>
       번호 <input type="text" name="rno" value="${read.rno}" readonly /><br />
       그룹명 <input type="text" name="group_name" value="${read.group_name}" /><br />
       제목 <input type="text" name="title" value="${read.title}" /><br />
-      내용 <input type="text" name="content" value="${read.content}" /><br />
-      작성자 <input type="text" name="writer" value="${read.writer}" /> <br />
+       작성자 <input type="text" name="writer" value="${read.writer}" /> <br />
+      <div id="editor" style="max-height: 400px; overflow: auto"></div>
+      <br />
+<%--       내용 <input type="text" name="content" value="${read.content}" /><br /> --%>
+     
       <input type="file" name="uploadFile" multiple="multiple" /><br />
       <br />
       첨부파일 삭제 :
@@ -22,11 +27,12 @@ uri="http://java.sun.com/jsp/jstl/core"%>
         <div class="delete" name="${attachFile.uuid}">${attachFile.fileName}</div>
       </c:forEach>
       <br />
-      <button type="submit" id="uploadBtn">수정완료</button>
+      <button type="button" id="update">수정완료</button>
       <button type="button" id="back">홈으로</button>
     </form>
   </body>
   <script>
+   
      var regex = new RegExp('(.*?)\.(exe|sh|alz)$') //정규 표현식
      var maxSize = 10485760 // 10MB 제한
 
@@ -42,30 +48,86 @@ uri="http://java.sun.com/jsp/jstl/core"%>
        }
        return true
      }
+  
+	  var myEditor = document.querySelector('#editor')
+	  let form = $('form')
+	  // 폼데이터 얻기
+	
+	  const imageHandler = (e) => {
+	    var rno = 99999999;
+	    console.log(e)
+	    let input = $('<input type="file" accept="image/*">')
+	    input.click()
+	    $(input).change(function (e) {
+	      let formData = new FormData()
+	      let uploadFile = $(input)[0].files[0]
+	      formData.append('uploadFile', uploadFile)
+	      formData.append('rno', rno)
+	      $.ajax({
+	        type: 'post',
+	        url: '/reviewUpload/uploadAjaxAction',
+	        processData: false,
+	        contentType: false,
+	        data: formData,
+	        dataType: 'json',
+	
+	        success: (res) => {
+	          console.log('2)')
+	          console.log(res)
+	          const IMG_URL = '/reviewUpload/display?fileName=' + encodeURIComponent(res[0].uploadPath + '/' + res[0].uuid + '_' + res[0].fileName)
+	
+	          let range = quill.getSelection()
+	          console.log(range)
+	          quill.insertEmbed(range, 'image', IMG_URL)
+	        },
+	        error: (xhr, status, er) => console.log(xhr),
+	      }) // ajax
+	    }) // click
+	  } //imageHandletr
 
-     $(document).ready(function (e) {
-     	var rno = ${read.rno}
-       $('#uploadBtn').click(function (e) {
-         var formData = new FormData()
-         var inputFile = $("input[name='uploadFile']")
-         var files = inputFile[0].files
-         console.log(files)
-         for (let i = 0; i < files.length; i++) {
-           if (!checkExtension(files[i].name, files[i].size)) return false
-           formData.append('uploadFile', files[i])
-           formData.append('rno', rno)
-         }
-         $.ajax({
-           url: '/reviewUpload/uploadAjaxAction',
-           processData: false,
-           contentType: false,
-           data: formData,
-           type: 'POST',
-           dataType: 'json',
-           success: function (result) {
-           },
-         })
-       })
+  
+
+	  $('#update').click(function (e) {
+	    e.preventDefault()
+	    review = {
+	      rno: $('input[name="rno"]').val(),
+	      title: $('input[name="title"]').val(),
+	      content: myEditor.children[0].innerHTML,
+	      writer: $('input[name="writer"]').val(),
+	      group_name: $('input[name="group_name"]').val(),
+	    }
+	    $.ajax({
+	      type: 'post',
+	      url: '/review/modify',
+	      data: JSON.stringify(review),
+	      contentType: 'application/json; charset=utf-8',
+	      success: () => (location.href = '/review/list'),
+	      error: (xhr, staturs, er) => {
+	        console.log(xhr)
+	      },
+	    }) //ajax
+	    
+	    var rno = ${read.rno}
+	    var formData = new FormData()
+	    var inputFile = $("input[name='uploadFile']")
+	    var files = inputFile[0].files
+	    console.log(files)
+	    for (let i = 0; i < files.length; i++) {
+	      if (!checkExtension(files[i].name, files[i].size)) return false
+	      formData.append('uploadFile', files[i])
+	      formData.append('rno', rno)
+	    }
+	    $.ajax({
+	      url: '/reviewUpload/uploadAjaxAction',
+	      processData: false,
+	      contentType: false,
+	      data: formData,
+	      type: 'POST',
+	      dataType: 'json',
+	      success: function (result) {},
+	    })
+	  }) //click
+
 
        $('.delete').on('click', function (e) {
            console.log('여기가 왜 안눌려?')
@@ -81,11 +143,35 @@ uri="http://java.sun.com/jsp/jstl/core"%>
          			location.reload();  
          		}
          	})
-         })
+       })
 
     $('#back').click(function () {
         self.location = '/review/list'
-     	})
-     })
+    })
+    
+    const toolbarOptions = [
+      [{ header: [1, 2, 3, 4, 5, 6, false] }],
+      [{ list: 'ordered' }, { list: 'bullet' }],
+      ['bold', 'italic', 'underline', 'strike'],
+      [{ color: [] }, { background: [] }],
+      [{ align: [] }],
+      ['image'],
+      ['clean'],
+    ]
+
+    let quill = new Quill('#editor', {
+      theme: 'snow',
+      modules: {
+        toolbar: toolbarOptions,
+      },
+    })
+	  
+  $.getJSON("/review/getReview/${read.rno}", (res) =>{
+		let content = res.content;
+		quill.container.firstChild.innerHTML = content 
+  })
+    let toolbar = quill.getModule('toolbar')
+    toolbar.addHandler('image', imageHandler)
+    
   </script>
 </html>

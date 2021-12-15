@@ -16,6 +16,7 @@ public interface ReviewMapper {
 		public int listCount(SearchCriteria scri);
 		public void updateReplyCount(Long rno);
 		public void viewCount(Long rno);
+		public void attachedFile(Long rno);
 	}
 
 

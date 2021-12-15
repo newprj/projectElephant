@@ -41,7 +41,7 @@ public class QnaServiceImpl implements QnaService{
 	public void insertQna(QnaVO vo) {
 		log.info("2) 서비스에서 insert 하기 "+vo);
 		mapper.insertQnaKey(vo);
-		
+
 		if(vo.getAttachList()==null || vo.getAttachList().size()<=0) {
 			return;
 		}

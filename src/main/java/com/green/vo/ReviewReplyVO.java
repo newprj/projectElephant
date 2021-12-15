@@ -13,7 +13,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class ReplyVO {
+public class ReviewReplyVO {
 	private long rno; //번호
 	private long cno; //번호
 	private String content; //내용

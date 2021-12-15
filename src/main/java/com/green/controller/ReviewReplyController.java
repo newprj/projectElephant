@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.green.service.ReviewReplyService;
 import com.green.service.ReviewService;
-import com.green.vo.ReplyVO;
+import com.green.vo.ReviewReplyVO;
 
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Controller
 @RequestMapping("/reply")
-public class ReplyController {
+public class ReviewReplyController {
 	@Setter(onMethod_=@Autowired)
 	ReviewReplyService service;
 	@Setter(onMethod_=@Autowired)
@@ -26,7 +26,7 @@ public class ReplyController {
 	
 	@RequestMapping("/list") //댓글 리스트 컨트롤러
     @ResponseBody
-    private List<ReplyVO> ReplyList(long rno){
+    private List<ReviewReplyVO> ReplyList(long rno){
 		log.info("댓글 조회 컨트롤러 진입...................");
         return service.getList(rno);
     }
@@ -35,7 +35,7 @@ public class ReplyController {
     @ResponseBody
     private int insert(int rno, String content){
 		log.info("댓글 인서트 컨트롤러 진입.............");
-		ReplyVO vo = new ReplyVO();
+		ReviewReplyVO vo = new ReviewReplyVO();
 		vo.setRno(rno);
 		vo.setWriter("홍길동");
 		vo.setContent(content);
@@ -48,7 +48,7 @@ public class ReplyController {
     @ResponseBody
     private int update(int cno, String content){
 		log.info("댓글 수정 컨트롤러 진입...........");
-		ReplyVO vo = new ReplyVO();
+		ReviewReplyVO vo = new ReviewReplyVO();
 		vo.setCno(cno);
 		vo.setContent(content);
 		service.modify(vo);

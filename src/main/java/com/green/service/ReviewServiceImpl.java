@@ -4,8 +4,11 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.green.mapper.ReviewAttachFileMapper;
 import com.green.mapper.ReviewMapper;
+import com.green.vo.ReviewAttachFileDTO;
 import com.green.vo.Criteria;
 import com.green.vo.ReviewVO;
 import com.green.vo.SearchCriteria;
@@ -20,12 +23,27 @@ import lombok.extern.slf4j.Slf4j;
 public class ReviewServiceImpl implements ReviewService{
 	@Setter(onMethod_=@Autowired)
 	private ReviewMapper mapper;
+	@Setter(onMethod_=@Autowired)
+	private ReviewAttachFileMapper attachMapper;
 	
 	
+	@Transactional
 	@Override
 	public void register(ReviewVO vo) {
-		System.out.println("2 서비스에서 등록"+vo);
+		System.out.println("2) 서비스에서 insert 하기 "+vo);
+		System.out.println("2) 서비스에서 vo 가져옴????????????????????????"+vo.getGetAttachFile());
 		mapper.insert(vo);
+		
+		if(vo.getGetAttachFile()==null || vo.getGetAttachFile().size()<=0) {
+			return;
+		}
+		vo.getGetAttachFile().forEach(i->{
+			i.setRno(vo.getRno());
+			attachMapper.insert(i);
+			System.out.println("2) 서비스에서 vo 가져옴????????????????????????"+i);
+		});
+		mapper.attachedFile(vo.getRno());
+		
 	}
 
 	@Override
@@ -61,7 +79,14 @@ public class ReviewServiceImpl implements ReviewService{
 
 	@Override
 	public List<ReviewVO> list(SearchCriteria scri) {
-		System.out.println("2 서비스에서 리스트 search 가져옴");
+		System.out.println("2 서비스에서 리스트  가져옴");
+		List<ReviewVO> voList = mapper.list(scri);
+		System.out.println(mapper.list(scri));
+		voList.forEach(vo->{
+			List<ReviewAttachFileDTO> files = attachMapper.getList(vo.getRno());
+			vo.setGetAttachFile(files);
+		});
+		
 		return mapper.list(scri);
 	}
 
@@ -81,5 +106,18 @@ public class ReviewServiceImpl implements ReviewService{
 	public void viewCount(Long rno) {
 		mapper.viewCount(rno);
 
+	}
+
+	@Override
+	public void attachedFile(Long rno) {
+		// TODO Auto-generated method stub
+		mapper.attachedFile(rno);
+		
+	}
+
+	@Override
+	public List<ReviewAttachFileDTO> getAttachList(Long rno) {
+		// TODO Auto-generated method stub
+		return attachMapper.getList(rno);
 	}
 }
