@@ -18,17 +18,19 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 				<tr>
 				  <th>no.</th>
 				  <th>그룹이름</th>
-				  <th></th>
+				  <th>승인</th>
 	              <th></th>
 				</tr>
 			</thead>
 			<tbody id="groupBody">
-				<tr>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-				</tr>
+				<c:forEach items="${myGroup}" var="i" varStatus="status"  begin="0" end='9'>
+						<tr>
+							<td>${status.count}</td>
+							<td>${i.group_name}</td>
+							<td>${i.authorized}</td>
+							<td></td>
+						</tr>
+					</c:forEach>
 			</tbody>
 		</table>
 	</div>
@@ -176,13 +178,7 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 </body>
  <script>
  	$(document).ready(function () {
- 		/* 내가 가입한 스터디 list =>수정필요*/
-		$.getJSON("/group/getGroupByUSer/${user.user_id}", (list) =>{
-			console.log(list)
-			console.log('${user.user_id}')
-			$("#groupBody").append('<tr><td>no.</td><td>이름</td><td>유저</td><td>날짜</td></tr>')
-			
-		})
+ 		
  	 })	
 </script>
 </html>
