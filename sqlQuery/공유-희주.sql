@@ -54,7 +54,7 @@ select*from tbl_user;
 
 -- 스터디 승인 칼럼추가 (12/15)
 create table tbl_group(
-    sno number primary key,
+    gno number primary key,
     group_name varchar2(30),
     leader varchar2(30),
     subject varchar2(30),

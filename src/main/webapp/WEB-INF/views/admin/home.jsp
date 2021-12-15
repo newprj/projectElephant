@@ -10,9 +10,8 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <head>
 <meta charset="UTF-8">
 <style>
-#today {
-	width:100%;
-	height:10px;
+nav {
+	display:inline;
 	text-align:right;
 }
 
@@ -49,12 +48,15 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 
 </style>
-<title>Admin 페이지</title>
+<title>관리자 페이지</title>
 
 </head>
 <body>
-	<h1>Admin page</h1>
-	<h5 id='today'><fmt:formatDate value="<%= today %>" pattern="yyyy-MM-dd" /> : 방문자수(가능하면)</h5>
+	<h1>관리자 페이지</h1>
+	<nav>
+		<h5><a href="/user/logout">로그아웃</a></h5>
+		<h5 id='today'><fmt:formatDate value="<%= today %>" pattern="yyyy-MM-dd" /> : 방문자수(가능하면)</h5>
+	</nav>
 	<h3>받은 쪽지 리스트도 보이도록, 방문자 평균 그래프로 보이게</h3>
 	
 	<h3 id='a'>회원 리스트</h3>
@@ -91,7 +93,7 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 	
 	<h3 id='a'><a href='/group/'>스터디 승인 리스트</a></h3>
 	<div class='study'>
-	<h5>스터디 a태그로 누르면 전제 내용 띄우고 승인 버튼 스터디 테이블에 승인 컬럼 만들기</h5>
+	<h5>스터디장이 승인 요청한 것만 띄우기</h5>
 		<table>
 			<thead>
 				<tr>

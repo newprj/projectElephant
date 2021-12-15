@@ -25,4 +25,8 @@
 	<select id="count" resultType="int">
 		select count(*) from qna_reply_tbl where qno=#{qno}
 	</select>
+	
+	<select id="myReply" resultType="com.green.vo.QnaReplyVO">
+		select * from qna_reply_tbl where r_writer=#{r_writer}
+	</select>
 </mapper>

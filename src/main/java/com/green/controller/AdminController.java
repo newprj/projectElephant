@@ -20,9 +20,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.green.service.BoardService;
 import com.green.service.GUserService;
 import com.green.service.GroupService;
 import com.green.service.QnaService;
+import com.green.service.ReplyService;
 import com.green.service.UserService;
 import com.green.vo.GUserVO;
 import com.green.vo.GroupVO;
@@ -44,6 +46,14 @@ public class AdminController {
 	@Setter(onMethod_=@Autowired)
 	QnaService qnaService;
 	
+	@Setter(onMethod_=@Autowired)
+	GUserService gUserService;
+	
+	@Setter(onMethod_=@Autowired)
+	BoardService bService;
+	
+	@Setter(onMethod_=@Autowired)
+	ReplyService replyService;
 	
 	@GetMapping("/home")
 	public String adminHome(Model model, HttpServletResponse response,HttpSession session) {
@@ -84,13 +94,18 @@ public class AdminController {
 	@GetMapping("/mypage")
 	public void mypage(HttpSession session,Model model) {
 		UserVO login= (UserVO) session.getAttribute("user");
-		log.info("id="+login.getUser_id());
-		
+		String id=login.getUser_id();
+		log.info("id="+id);
+		model.addAttribute("myGroup",gUserService.listByUSer(id));
 		model.addAttribute("user",login);
+		model.addAttribute("myBoard",bService.myBoard(id));
+		model.addAttribute("boardReply", replyService.myReply(id));
+		model.addAttribute("qnaReply",qnaService.myReply(id));
+		model.addAttribute("myqna",qnaService.myQna(id));
 	}
 	
 	@ResponseBody
-	@PostMapping(value="/auth", consumes= "application/json")
+	@PostMapping(value="/auth", consumes="application/json")
 	public void GroupAuth(@RequestBody GroupVO vo) {
 		gService.GroupAuth(vo.getGno(), vo.getAuthorized());
 		
