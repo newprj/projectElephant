@@ -81,7 +81,7 @@
 	<select id="listCount" resultType="int">
 		select count(*) from tbl_review where
 		<include refid="criteria"></include>
-		rno>0
+		 rno>0
 	</select>
 	
 	<!-- 리플 갯수   -->

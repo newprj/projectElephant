@@ -25,7 +25,12 @@
 	</update>
 	
 	<delete id="delete">
-		delete from cpage where rno = #{rno}
+		delete from cpage where member = #{member}
 	</delete> 
-
+	
+	<select id="memberLimit" resultType ="int">
+		select count(membership) from cpage where membership = 'Y' and group_name = #{group_name}
+	</select>  
+	
+	
 </mapper>
