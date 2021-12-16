@@ -305,11 +305,11 @@ li {
 			var str=""
 			$(arr).each(function(i,attach){
 				if(attach.fileType){
-					var fileCallPath=encodeURIComponent(attach.uploadPath+"/s_"+attach.uuid+"_"+attach.fileName)
+					var fileCallPath=encodeURIComponent(attach.uploadPath+"/"+attach.uuid+"_"+attach.fileName)
 					str+="<li data-path='"+attach.uploadPath+"'"
 					str+=" data-uuid='"+attach.uuid+"' data-filename='"+attach.fileName+"' data-type='"+attach.fileType+"'"
 					str+="><div>"
-					str+="</br><img src='/upload/display?fileName="+fileCallPath+"'>"
+					str+="</br><img src='/upload/display?fileName="+fileCallPath+"' style=' width:50px; height:50px; ' >"
 					str+="<span> "+attach.fileName+"</span>"
 					str+="</div>"	
 					str+="</li>"

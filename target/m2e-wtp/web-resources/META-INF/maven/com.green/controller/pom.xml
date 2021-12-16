@@ -117,7 +117,15 @@
 		    <artifactId>commons-io</artifactId>
 		    <version>1.4</version>
 		</dependency>
-	
+	  <!-- 자바 방식 - FileUpload에서는 CGLIB 넣어줘야 함 -->
+	  <!-- https://mvnrepository.com/artifact/cglib/cglib -->
+	  <dependency>
+	      <groupId>cglib</groupId>
+	      <artifactId>cglib</artifactId>
+	      <version>3.3.0</version>
+	  </dependency>
+	  
+	  
 		<!-- Servlet -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
