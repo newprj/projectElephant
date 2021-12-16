@@ -192,60 +192,61 @@ ul.tabs li.current{
 	
 	<div class="container">
 
-	<ul class="tabs">
-		<li class="tab-link current" data-tab="tab-1">받은 쪽지</li>
-		<li class="tab-link" data-tab="tab-2">보낸 쪽지</li>
-	</ul>
-
-	<div id="tab-1" class="tab-content current">
-		<table>
-				<thead>
-					<tr>
-					  <th>no.</th>
-					  <th>보낸 id</th>
-					  <th>내용</th>
-		              <th>날짜</th>
-		              <th></th>
-					</tr>
-				</thead>
-				<c:forEach items="${letter}" var="i" varStatus="status"  begin="0" end='9'>
-					<tr>
-						<td>${status.count}</td>
-						<td id='userId${status.index}'>${i.writer}</td>
-						<td>${i.content}</td>
-						<td><fmt:formatDate value="${i.reg_date}" pattern="yyyy-MM-dd a hh:mm" /></td>
-						<td><button class='letterBtn'>답장</button></td>
-					</tr>
-				</c:forEach>
-		</table>
-
-	</div>
-	<div id="tab-2" class="tab-content">
+		<ul class="tabs">
+			<li class="tab-link current" data-tab="tab-1">받은 쪽지</li>
+			<li class="tab-link" data-tab="tab-2">보낸 쪽지</li>
+			<li><button class='letterBtn'>쪽지 보내기</button></li>
+		</ul>
 	
-		<table>
-				<thead>
-					<tr>
-					  <th>no.</th>
-					  <th>받은 id</th>
-					  <th>내용</th>
-		              <th>날짜</th>
-		              <th></th>
-		              <th></th>
-					</tr>
-				</thead>
-				<c:forEach items="${sendletter}" var="i" varStatus="status"  begin="0" end='9'>
-					<tr>
-						<td>${status.count}</td>
-						<td>${i.recipient}</td>
-						<td>${i.content}</td>
-						<td><fmt:formatDate value="${i.reg_date}" pattern="yyyy-MM-dd a hh:mm" /></td>
-						<td><button data-lno='${i.lno}' class='deleLetter'>삭제</button></td>
-					</tr>
-				</c:forEach>
-		</table>
-	</div>
+		<div id="tab-1" class="tab-content current">
+			<table>
+					<thead>
+						<tr>
+						  <th>no.</th>
+						  <th>보낸 id</th>
+						  <th>내용</th>
+			              <th>날짜</th>
+			              <th></th>
+						</tr>
+					</thead>
+					<c:forEach items="${letter}" var="i" varStatus="status"  begin="0" end='9'>
+						<tr>
+							<td>${status.count}</td>
+							<td id='userId${status.index}'>${i.writer}</td>
+							<td>${i.content}</td>
+							<td><fmt:formatDate value="${i.reg_date}" pattern="yyyy-MM-dd a hh:mm" /></td>
+							<td><button class='letterBtn'>답장</button></td>
+						</tr>
+					</c:forEach>
+			</table>
 
-</div>
+		</div>
+		<div id="tab-2" class="tab-content">
+		
+			<table>
+					<thead>
+						<tr>
+						  <th>no.</th>
+						  <th>받은 id</th>
+						  <th>내용</th>
+			              <th>날짜</th>
+			              <th></th>
+			              <th></th>
+						</tr>
+					</thead>
+					<c:forEach items="${sendletter}" var="i" varStatus="status"  begin="0" end='9'>
+						<tr>
+							<td>${status.count}</td>
+							<td>${i.recipient}</td>
+							<td>${i.content}</td>
+							<td><fmt:formatDate value="${i.reg_date}" pattern="yyyy-MM-dd a hh:mm" /></td>
+							<td><button data-lno='${i.lno}' class='deleLetter'>삭제</button></td>
+						</tr>
+					</c:forEach>
+			</table>
+		</div>
+
+	</div>
 	
 	<!-- 유저 정지 모달 -->
 	<div class="modal" id="modal" >
