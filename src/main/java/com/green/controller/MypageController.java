@@ -28,11 +28,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.green.service.BoardService;
 import com.green.service.GUserService;
 import com.green.service.GroupService;
+import com.green.service.LetterService;
 import com.green.service.QnaService;
 import com.green.service.ReplyService;
 import com.green.service.UserService;
 import com.green.vo.GUserVO;
 import com.green.vo.GroupVO;
+import com.green.vo.LetterVO;
 import com.green.vo.UserVO;
 
 import lombok.Setter;
@@ -60,6 +62,9 @@ public class MypageController {
 	@Setter(onMethod_=@Autowired)
 	ReplyService replyService;
 	
+	@Setter(onMethod_=@Autowired)
+	LetterService letterService;
+	
 	@GetMapping("/admin")
 	public String adminHome(Model model, HttpServletResponse response,HttpSession session) {
 		UserVO login= (UserVO) session.getAttribute("user");
@@ -81,9 +86,11 @@ public class MypageController {
             
 			return "redirect:/user/login";
 		}
+		model.addAttribute("user",id);
 		model.addAttribute("list",userService.allList());
 		model.addAttribute("group",gService.showAll());
 		model.addAttribute("qna",qnaService.list());
+		model.addAttribute("letter",letterService.myLetter(id));
 		return "/mypage/admin";
 	}
 	
@@ -108,6 +115,7 @@ public class MypageController {
 		model.addAttribute("boardReply", replyService.myReply(id));
 		model.addAttribute("qnaReply",qnaService.myReply(id));
 		model.addAttribute("myqna",qnaService.myQna(id));
+		model.addAttribute("letter",letterService.myLetter(id));
 	}
 	
 	@ResponseBody
@@ -117,4 +125,12 @@ public class MypageController {
 		
 	}
 	
+	@ResponseBody
+	@PostMapping(value="/letterRegister" , consumes = "application/json", produces = {MediaType.TEXT_PLAIN_VALUE})
+	public ResponseEntity<String> letterReg(@RequestBody LetterVO vo){
+		int letter=letterService.insert(vo);
+		log.info("들어온 정보"+vo);
+		return letter==1 ? new ResponseEntity<>("success",HttpStatus.OK):
+			new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+	}
 }

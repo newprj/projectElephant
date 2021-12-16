@@ -63,3 +63,14 @@ create table tbl_group(
     authorized char(1) default 'N' check(authorized in('Y','N'))
     
 );
+
+
+-------쪽지 DB
+create table letter_tbl(
+    lno number primary key,
+    writer varchar2(40),
+    recipient varchar2(40),
+    content varchar2(100),
+    reg_date Date 
+);
+create SEQUENCE lno_seq;
