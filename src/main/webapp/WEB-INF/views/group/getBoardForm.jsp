@@ -39,6 +39,12 @@ prefix="c" %>
 			button[type="reset"]{
 				display : none;
 			}
+			 div.uploadResult > ul > li > div > img{
+			 	width: 50px;
+                height: 50px;
+                border-radius: 50%;
+			 }
+			 
 		</style>
 	</head>
 	<body>
@@ -145,16 +151,12 @@ prefix="c" %>
 					files.map( file => {
 //						attachList.push(file) // 수정할때 넣음
 						if(file.fileType){
-							let fileCallpath = encodeURIComponent(
-									file.uploadPath + "/_s" + file.uuid + "_" + file.fileName
-								);
+							let fileCallpath = encodeURIComponent(`\${file.uploadPath}/\${file.uuid}_\${file.fileName}`)
 							str += `<li><div><a href='/download?fileName=\${fileCallpath}'><span>\${file.fileName}</span></a>`;
 							str += `<img src='/display?fileName=\${fileCallpath}'></div></li>`
 						}
 						else{
-							let fileCallpath = encodeURIComponent(
-									file.uploadPath + "/" + file.uuid + "_" + file.fileName
-								);
+							let fileCallpath =encodeURIComponent(`\${file.uploadPath}/\${file.uuid}_\${file.fileName}`)
 							str += `<li><div><a href='/download?fileName=\${fileCallpath}'><span>\${file.fileName}</span></a></div></li>`;
 						}
 					})//map

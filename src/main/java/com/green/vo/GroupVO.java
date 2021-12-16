@@ -19,5 +19,7 @@ public class GroupVO {
     private String subject;
     private String description;
     private int member_number;
+
     private String authorized;
+
 }

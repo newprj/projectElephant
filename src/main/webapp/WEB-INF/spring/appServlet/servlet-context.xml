@@ -25,7 +25,8 @@
 	
 	
 	<beans:bean id="logininterceptor" class="com.green.interceptor.LoginInterceptor"/>
-  	<beans:bean id="authinterceptor"  class="com.green.interceptor.AhthInterceptor"/>
+  <beans:bean id="authinterceptor"  class="com.green.interceptor.AhthInterceptor"/>
+  
 
 	<interceptors>
 	  <interceptor>
@@ -34,16 +35,17 @@
 	  </interceptor>
 	    <interceptor>
 		    <!-- login 인증이 필요한 URI 들 -->
-		    
 		    <mapping path="/group/{group_name}"/>
 		    <mapping path="/group/board/{group_name}"/>
 		    <mapping path="/group/test/{group_name}"/>
-		     
 		    <beans:ref bean="authinterceptor"/>
  	 </interceptor>
+ 	
 	</interceptors>
 
-		
+
+	
+	
 	<context:component-scan base-package="com.green.controller" />
 	<!-- 파일 업로드 -->
 	<!-- <beans:bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver"></beans:bean> -->
@@ -52,7 +54,7 @@
 	</beans:bean>
 	
 	<!-- 채팅을 위한 등록 -->
-	<websocket:handlers>
+	<websocket:handlers allowed-origins="*">
 		<websocket:mapping handler="chattingHandler" path="/chatting"/>
 		<websocket:mapping handler="groupchatHandler" path="/chat/{group_name}"/>
 		 <websocket:sockjs websocket-enabled="true" />
@@ -60,6 +62,8 @@
 	
 	<beans:bean id="chattingHandler" class="com.green.listener.ChattingHandler"/>
 	<beans:bean id="groupchatHandler" class="com.green.listener.GroupChatHandler"/>
-	
 
+
+	<context:component-scan base-package="com.green.controller" />
+	
 </beans:beans>

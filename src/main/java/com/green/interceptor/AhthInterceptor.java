@@ -8,6 +8,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import lombok.extern.log4j.Log4j;
 
+
 @Log4j
 public class AhthInterceptor extends HandlerInterceptorAdapter{
 	
@@ -22,11 +23,9 @@ private void saveDestination(HttpServletRequest req) {
 		}else {
 			query ="?" + query;
 		}
-		
 		if(req.getMethod().contentEquals("GET")) {
 			log.info(" ... " + uri + query);
 			req.getSession().setAttribute("dest", uri + query);
-			
 		}
 	}
 	
