@@ -59,12 +59,8 @@ prefix="c" %>
 		<script>
 			$(document).ready(function (e) {
 				let loginUser = "${user}";
-				if (!loginUser) {
-					console.log("로그인안됨");
-					alert("로그인 해야 접근 가능합니다");
-					location.href = "/group/";
-				} else {
-					console.log("로그인됨");
+			
+			
 					$.getJSON("/group/getMemberlistByGroup/${cri.group_name}", (list) => {
 						console.log(list);
 						console.log(loginUser);
@@ -76,8 +72,8 @@ prefix="c" %>
 							alert(" 글 작성자만 수정할 수 있습니다");
 							history.back();
 						}
-					});
-				}
+					});//get json
+	
 
 				const uploadClone = $(".file").clone();
 				var myEditor = document.querySelector("#editor");

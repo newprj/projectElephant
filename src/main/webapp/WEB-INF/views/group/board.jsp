@@ -78,11 +78,7 @@ prefix="c" %>
         let amount = "${cri.amount}"
         
         let loginUser= "${user}"
-        if(! loginUser){
-					console.log('로그인안됨')
-					alert("로그인 해야 접근 가능합니다")
-					location.href="/group/"
-				}else{
+        
 				$.getJSON(
 					"/group/getMemberlistByGroup/${name}", (list) =>{
 						console.log(list)
@@ -93,7 +89,7 @@ prefix="c" %>
 							location.href="/group/"
 					} 
 				})
-		}
+		
 		
         $('.create').click(function(e){
         	location.href="/group/board/${name}/write"

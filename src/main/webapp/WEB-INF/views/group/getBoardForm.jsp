@@ -124,12 +124,7 @@ prefix="c" %>
 			   
 			   
 		   let loginUser= "${user}"
-		  	if(! loginUser){
-				console.log('로그인안됨')
-				alert("로그인 해야 접근 가능합니다")
-				location.href="/group/"
-			}else{
-				
+		  	
 				$.getJSON(
 					"/group/getMemberlistByGroup/${cri.group_name}", (list) =>{
 						console.log(list)
@@ -140,7 +135,7 @@ prefix="c" %>
 							location.href="/group/"
 						} 
 					})
-			}
+			
 	   
 //			 let attachList = [];
 		
@@ -254,7 +249,7 @@ prefix="c" %>
 			// 글 수정하러가기
 			$(".go_modify").click(function (e) {
 				e.preventDefault();
-				let url = "/group/modify/${cri.group_name}/${cri.bno}/${cri.pageNum}/${cri.amount}"
+				let url = "/group/board/modify/${cri.group_name}/${cri.bno}/${cri.pageNum}/${cri.amount}"
 				url += "${cri.keyword}"? "/${cri.type}/${cri.keyword}" : ""
 				location.href = url
 				

@@ -209,7 +209,7 @@ public class GRestController {
 	
 	
 	// 그룹별 게시판 페이지
-	@GetMapping({ "/board/{group_name}/{pageNum}/{amount}", "/board/{group_name}/{pageNum}/{amount}/{type}/{keyword}"})
+	@GetMapping({ "/board/{group_name}/{pageNum}/{amount}", "/board/{group_name}/{pageNum}/{amount}/{type}/{keyword}", "/board/{group_name}"})
 	public ModelAndView tempGroupPage(@ModelAttribute("cri") Criteria cri,  HttpSession session ) {
 		ModelAndView mv = new ModelAndView("/group/board");
 		int total = boardService.getTotalCount(cri);
@@ -295,7 +295,7 @@ public class GRestController {
 		boardService.delete(bno);
 	}
 	// 게시글 수정
-	@GetMapping({"/modify/{group_name}/{bno}/{pageNum}/{amount}", "/modify/{group_name}/{bno}/{pageNum}/{amount}/{type}/{keyword}" })
+	@GetMapping({"/board/modify/{group_name}/{bno}/{pageNum}/{amount}", "/modify/{group_name}/{bno}/{pageNum}/{amount}/{type}/{keyword}" })
 	public ModelAndView boardModify(@ModelAttribute("cri") Criteria cri, HttpSession session ) {
 		Long bno = cri.getBno();
 		ModelAndView mv = new ModelAndView("/group/modifyForm");

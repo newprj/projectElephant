@@ -36,7 +36,7 @@
 	    <interceptor>
 		    <!-- login 인증이 필요한 URI 들 -->
 		    <mapping path="/group/{group_name}"/>
-		    <mapping path="/group/board/{group_name}"/>
+		    <mapping path="/group/board/{group_name}/*"/>
 		    <mapping path="/group/test/{group_name}"/>
 		    <beans:ref bean="authinterceptor"/>
  	 </interceptor>

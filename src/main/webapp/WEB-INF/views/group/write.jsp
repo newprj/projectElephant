@@ -61,13 +61,7 @@ pageEncoding="UTF-8"%>
 			$(document).ready(function (e) {
 				var myEditor = document.querySelector("#editor");
 				const uploadClone = $(".file").clone();
-				let loginUser = "${user}";
-				if (!loginUser) {
-					console.log("로그인안됨");
-					alert("로그인 해야 접근 가능합니다");
-					location.href = "/group/";
-				} else {
-					console.log("로그인됨");
+			
 					$.getJSON("/group/getMemberlistByGroup/${group_name}", (list) => {
 						console.log(list);
 						console.log(loginUser);
@@ -76,8 +70,8 @@ pageEncoding="UTF-8"%>
 							alert("그룹 회원만 접근 가능한 페이지입니다");
 							location.href = "/group/";
 						}
-					});
-				}
+					});//get Json
+		
 
 				// input file이 변할때
 				$('input[type="file"]').change(function (e) {
@@ -184,33 +178,11 @@ pageEncoding="UTF-8"%>
 				}; //imageHandletr
 
 				const toolbarOptions = [
-					[
-						{
-							header: [1, 2, 3, 4, 5, 6, false],
-						},
-					],
-					[
-						{
-							list: "ordered",
-						},
-						{
-							list: "bullet",
-						},
-					],
+					[{ header: [1, 2, 3, 4, 5, 6, false] }],
+					[{ list: "ordered" }, { list: "bullet" }],
 					["bold", "italic", "underline", "strike"],
-					[
-						{
-							color: [],
-						},
-						{
-							background: [],
-						},
-					],
-					[
-						{
-							align: [],
-						},
-					],
+					[{ color: [] }, { background: [] }],
+					[{ align: [] }],
 					["image"],
 					["clean"],
 				];

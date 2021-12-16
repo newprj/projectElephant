@@ -66,7 +66,7 @@ ggg
 					let uploadFile = $(input)[0].files[0];
 
 					formData.append("uploadFile", uploadFile);
-
+	
 					$.ajax({
 						type: "post",
 						url: "/upload",
@@ -126,7 +126,10 @@ ggg
 			
 			$('button').click((e)=>{
 				e.preventDefault()
-				console.log(" hhhh")
+				if ( "${user}" !== "${one.leader}"){
+					alert(" 작성자가 아니면 수정할 수 없습니다 ")
+					return false;
+				}
 				const data = {
 					gno : '${one.gno}',
 					group_name : "${one.group_name}",

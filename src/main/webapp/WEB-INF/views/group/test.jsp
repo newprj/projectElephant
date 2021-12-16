@@ -137,26 +137,18 @@ pageEncoding="UTF-8"%>
 				const Calendar = FullCalendar.Calendar
 				const group = "${group.group_name}";
 				
-				let loginUser= "${user}"
-				  	if(! loginUser){
-						console.log('로그인안됨')
-						alert("로그인 해야 접근 가능합니다")
-						location.href="/group/"
-					}else{
-						console.log("로그인됨")
-						$.getJSON(
-							"/group/getMemberlistByGroup/"+group, (list) =>{
-								console.log(list)
-								console.log(loginUser)
-								let joinCheck = list.find( user => user.user_id === loginUser)
-								if(!joinCheck){
-									alert("그룹 회원만 접근 가능한 페이지입니다")
-									location.href="/group/"
-								}
-							})
-					}
 				
-				
+
+				$.getJSON(
+					"/group/getMemberlistByGroup/"+group, (list) =>{
+						console.log(list)
+						console.log(loginUser)
+						let joinCheck = list.find( user => user.user_id === loginUser)
+						if(!joinCheck){
+							alert("그룹 회원만 접근 가능한 페이지입니다")
+							location.href="/group/"
+						}
+					})
 				
 				// 이벤트 렌더 위해 가지고 옴 => 이거 클로저 가능할것같은데
 				const getEvent = (data) => {
