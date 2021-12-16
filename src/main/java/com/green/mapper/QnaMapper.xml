@@ -74,7 +74,9 @@
 	</delete>
 	
 	<select id="totalCount" resultType="int">
-		select count(*) from qna_tbl where qno>0
+		select count(*) from qna_tbl where 
+		<include refid="criteria"></include>
+		qno>0
 	</select>
 	
 	<select id="myQna" resultType="com.green.vo.QnaVO">

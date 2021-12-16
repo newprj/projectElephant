@@ -121,13 +121,13 @@ prefix="c" %>
     	  console.log("승인 버튼 누름"+JSON.stringify(gAuth))
     	  $.ajax({
           type: 'post',
-          url:'/admin/auth',
+          url:'/mypage/auth',
           data: JSON.stringify(gAuth),
           contentType: 'application/json; charset=utf-8',
           success: () => {
             console.log('승인 완료')
             alert("승인 완료")
-            location.href = '/admin/home'
+            location.href = '/mypage/admin'
           },
           error: (xhr, status, er) => {
             console.log(status)

@@ -24,7 +24,7 @@ nav {
 }
 
 
-.modal {
+.modal,.letter_modal {
 	display:none;
 	position: fixed;
 	z-index: 1;
@@ -59,8 +59,8 @@ nav {
 	</nav>
 	<h3>받은 쪽지 리스트도 보이도록, 방문자 평균 그래프로 보이게</h3>
 	
-	<h3 >회원 리스트</h3>
 	<div class='userList'>
+		<h3 >회원 리스트</h3>
 		<h5>회원에게 쪽지, 버튼 크기 맞추기,정지된 회원은 로그인 안되게 하기</h5>
 		<table>
 			<thead>
@@ -79,7 +79,7 @@ nav {
 					<td id='userId${status.index}'>${i.user_id}</td>
 					<td>${i.name}</td>
 					<td></td>
-					<td><button id='chat'>채팅</button></td>
+					<td><button class='letterBtn'>쪽지</button></td>
 					<td><button class='susp' >
 						<c:choose>
 							<c:when test="${i.suspension eq 'Y'}">정지</c:when>
@@ -91,8 +91,8 @@ nav {
 		</table>
 	</div>
 	
-	<h3 ><a href='/group/'>스터디 승인 리스트</a></h3>
 	<div class='study'>
+		<h3 ><a href='/group/'>스터디 승인 리스트</a></h3>
 	<h5>스터디장이 승인 요청한 것만 띄우기</h5>
 		<table>
 			<thead>
@@ -127,8 +127,8 @@ nav {
 	
 	
 	
-	<h3><a href='/qna/list'>Q&A 리스트</a></h3>
 	<div class='qna'>
+	<h3><a href='/qna/list'>Q&A 리스트</a></h3>
 		<table>
 			<thead>
 				<tr>
@@ -153,17 +153,36 @@ nav {
 		</table>
 	</div>
 	
-	<h3>받은 쪽지</h3>
 	<div class="letter">
-		
+	<h3>받은 쪽지</h3>
+		<table>
+			<thead>
+				<tr>
+				  <th>no.</th>
+	              <th>id</th>
+				  <th>내용</th>
+	              <th>날짜</th>
+	              <th></th>
+				</tr>
+			</thead>
+			<c:forEach items="${letter}" var="i" varStatus="status" begin="0" end='9'>
+				<tr>
+					<td>${status.count}</td>
+					<td id='writeId${status.index}'>${i.writer}</td>
+					<td>${i.content}</td>
+					<td><fmt:formatDate value="${i.reg_date}" pattern="yyyy-MM-dd a hh:mm" /></td>
+					<td><button class='letterBtn'>답장</button></td>
+				</tr>
+			</c:forEach>
+		</table>
 	</div>
 	
-	
+	<!-- 유저 정지 모달 -->
 	<div class="modal" id="modal" >
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" style='float:right;'>X</button>
-					<h4 class="modal-title">댓글 창 </h4>
+					<h4 class="modal-title">유저 정지 </h4>
 				</div>
 				<div class="modal-body">
 					<div class="modal-group">
@@ -187,16 +206,53 @@ nav {
 				
 		</div>
 	</div>
+	
+	<!-- 쪽지 모달 -->
+	<div class="letter_modal" id="letter_modal" >
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" style='float:right;'>X</button>
+					<h4 class="modal-title">쪽지 </h4>
+				</div>
+				<div class="modal-body">
+					<div class="modal-group">
+						<label>보내는 사람</label><br/>
+						<input name="writeId"/>
+					</div>
+					<div class="modal-group">
+						<label>받는 사람</label><br/>
+						<input name="recipientId"/>
+					</div>
+					<div class="modal-group">
+						<label>내용</label><br/>
+						<textarea name="letterContent"></textarea>
+						
+					</div>
+					<div class="modal-group">
+						<label>날짜</label><br/>
+						<input name="letterDate"/>
+					</div>
+				</div><br/>
+				<div class="modal-footer">
+					<button type="button" id="letterRegister">등록</button>
+					<button type="button" class="close">닫기</button>
+				</div>
+				
+		</div>
+	</div>
 </body>
 <script type="text/javascript">
 	
 	$(document).ready(function () {
 		
+				
 		var modal=$(".modal")
 		var modalContent=modal.find("textarea[name='modalContent']")
 		var modalId=modal.find("input[name='modelId']")
 		var modalDate=modal.find("input[name='modalDate']")
 		var today=new Date()
+		
+		/* 댓글 */
 		$(".susp").click(function(){
 			console.log('회원정지 버튼 눌림')
 			modalDate.closest('div').hide()
@@ -241,8 +297,61 @@ nav {
 			})
 		})
 		
+		
+		
+		
+		/* 쪽지 */
+		var letterModal=$(".letter_modal")
+		var modalwriteId=letterModal.find("input[name='writeId']")
+		var modalrecipientId=letterModal.find("input[name='recipientId']")
+		var letterDate=letterModal.find("input[name='letterDate']")
+		var letterContent=letterModal.find("textarea[name='letterContent']")
+		
+		$(".letterBtn").click(function(){
+			console.log('쪽지 버튼 눌림')
+			
+			letterDate.closest('div').hide()
+			$(".letter_modal").show()
+			var idx=$(".letterBtn").index(this)
+			var uid=$("#userId"+idx).text()
+			
+			console.log(idx)
+			console.log('${user}')
+			
+			modalwriteId.val('${user}')
+			modalrecipientId.val(uid)
+						
+			$("#letterRegister").off('click').on('click',function(){
+				
+				var form={
+						writer:modalwriteId.val(),
+						recipient:modalrecipientId.val(),
+						content:letterContent.val(),
+						reg_date:today,
+				}
+				console.log(form)
+				$.ajax({
+					url:"/mypage/letterRegister",
+					type:"post",
+					data:JSON.stringify(form),
+					contentType:"application/json; charset=utf-8",
+					dataType:"text",
+					success:function(result){
+						$(".letter_modal").hide();
+						location.reload();
+					},
+					error:function(){
+						alert("실패")
+					}
+				}) 
+			})
+		})
+		
+		
 		$(".close").click(function(){
 			$(".modal").hide()
+			$(".letter_modal").hide()
+			
 		})
 	})
 

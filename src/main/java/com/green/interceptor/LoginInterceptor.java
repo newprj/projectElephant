@@ -46,7 +46,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 		if(userVO !=null) {
 			UserVO user = (UserVO) userVO;
 			if(user.getUser_id().equals("admin")) {
-				response.sendRedirect("/admin/home");
+				response.sendRedirect("/mypage/admin");
 			}else {
 				log.info(" login success ");
 				Object dest = session.getAttribute("dest");
