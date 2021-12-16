@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -91,6 +92,7 @@ public class MypageController {
 		model.addAttribute("group",gService.showAll());
 		model.addAttribute("qna",qnaService.list());
 		model.addAttribute("letter",letterService.myLetter(id));
+		model.addAttribute("sendletter",letterService.sendLetter(id));
 		return "/mypage/admin";
 	}
 	
@@ -116,6 +118,7 @@ public class MypageController {
 		model.addAttribute("qnaReply",qnaService.myReply(id));
 		model.addAttribute("myqna",qnaService.myQna(id));
 		model.addAttribute("letter",letterService.myLetter(id));
+		model.addAttribute("sendletter",letterService.sendLetter(id));
 	}
 	
 	@ResponseBody
@@ -133,4 +136,12 @@ public class MypageController {
 		return letter==1 ? new ResponseEntity<>("success",HttpStatus.OK):
 			new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
+	
+	@ResponseBody
+	@PostMapping(value="/deleLetter", consumes="application/json")
+	public void deleLetter(@RequestBody Map<String,String> data) {
+		letterService.delete(data.get("writer"),Long.valueOf(data.get("lno")));
+		
+	}
+	
 }
