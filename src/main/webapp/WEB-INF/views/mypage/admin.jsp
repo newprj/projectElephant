@@ -79,7 +79,7 @@ nav {
 					<td id='userId${status.index}'>${i.user_id}</td>
 					<td>${i.name}</td>
 					<td></td>
-					<td><button class='letterBtn'>쪽지</button></td>
+					<td><button data-idx='${status.index}' class='letterBtn'>쪽지</button></td>
 					<td><button class='susp' >
 						<c:choose>
 							<c:when test="${i.suspension eq 'Y'}">정지</c:when>
@@ -168,10 +168,10 @@ nav {
 			<c:forEach items="${letter}" var="i" varStatus="status" begin="0" end='9'>
 				<tr>
 					<td>${status.count}</td>
-					<td id='writeId${status.index}'>${i.writer}</td>
+					<td id='userId${status.index}'>${i.writer}</td>
 					<td>${i.content}</td>
 					<td><fmt:formatDate value="${i.reg_date}" pattern="yyyy-MM-dd a hh:mm" /></td>
-					<td><button class='letterBtn'>답장</button></td>
+					<td><button data-idx='${status.index}' class='letterBtn'>답장</button></td>
 				</tr>
 			</c:forEach>
 		</table>
@@ -312,11 +312,9 @@ nav {
 			
 			letterDate.closest('div').hide()
 			$(".letter_modal").show()
-			var idx=$(".letterBtn").index(this)
+			var idx=$(this).data("idx")
 			var uid=$("#userId"+idx).text()
 			
-			console.log(idx)
-			console.log('${user}')
 			
 			modalwriteId.val('${user}')
 			modalrecipientId.val(uid)
