@@ -2,7 +2,12 @@ package com.green.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -92,10 +97,11 @@ public class MypageController {
 	}
 	
 	@GetMapping("/user")
-	public void mypage(HttpSession session,Model model) {
+	public void mypage(HttpSession session,Model model ) {
 		UserVO login= (UserVO) session.getAttribute("user");
 		String id=login.getUser_id();
 		log.info("id="+id);
+
 		model.addAttribute("myGroup",gUserService.listByUSer(id));
 		model.addAttribute("user",login);
 		model.addAttribute("myBoard",bService.myBoard(id));
@@ -110,4 +116,5 @@ public class MypageController {
 		gService.GroupAuth(vo.getGno(), vo.getAuthorized());
 		
 	}
+	
 }

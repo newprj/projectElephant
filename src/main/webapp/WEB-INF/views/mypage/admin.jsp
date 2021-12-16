@@ -59,8 +59,8 @@ nav {
 	</nav>
 	<h3>받은 쪽지 리스트도 보이도록, 방문자 평균 그래프로 보이게</h3>
 	
-	<h3 >회원 리스트</h3>
 	<div class='userList'>
+		<h3 >회원 리스트</h3>
 		<h5>회원에게 쪽지, 버튼 크기 맞추기,정지된 회원은 로그인 안되게 하기</h5>
 		<table>
 			<thead>
@@ -91,8 +91,8 @@ nav {
 		</table>
 	</div>
 	
-	<h3 ><a href='/group/'>스터디 승인 리스트</a></h3>
 	<div class='study'>
+		<h3 ><a href='/group/'>스터디 승인 리스트</a></h3>
 	<h5>스터디장이 승인 요청한 것만 띄우기</h5>
 		<table>
 			<thead>
@@ -127,8 +127,8 @@ nav {
 	
 	
 	
-	<h3><a href='/qna/list'>Q&A 리스트</a></h3>
 	<div class='qna'>
+	<h3><a href='/qna/list'>Q&A 리스트</a></h3>
 		<table>
 			<thead>
 				<tr>
@@ -153,8 +153,8 @@ nav {
 		</table>
 	</div>
 	
-	<h3>받은 쪽지</h3>
 	<div class="letter">
+	<h3>받은 쪽지</h3>
 		
 	</div>
 	

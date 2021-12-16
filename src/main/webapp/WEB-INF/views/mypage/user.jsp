@@ -6,13 +6,28 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
   src="https://code.jquery.com/jquery-3.6.0.js"></script> 
 <!DOCTYPE html>
 <html>
+<style>
+#division {
+	width:50%;
+	height:300px;
+	float:left;
+	overflow:auto;
+	
+}
+#division h2,#division button{
+	display:inline;	
+}
+
+</style>
 <head>
+
 <meta charset="UTF-8">
 <title>마이페이지</title>
 </head>
 <body>
-	<h2>내가 가입한 그룹</h2>
-	<div id="group">
+	<h2>${user.name}님 페이지</h2>
+	<div id="division">
+		<h2 id="title">내가 가입한 그룹</h2>
 		<table>
 			<thead>
 				<tr>
@@ -30,15 +45,16 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 							<td>${i.authorized}</td>
 							<td></td>
 						</tr>
-					</c:forEach>
+				</c:forEach>
 			</tbody>
 		</table>
 	</div>
 	
-	<h2>내정보</h2>
-	<button onclick="location='/user/modify'">정보 수정</button>
 	
-	<div id="info">
+	
+	<div id="division">
+		<h2 id="title">내정보</h2>
+		<button onclick="location='/user/modify'">정보 수정</button>
 		<table>
 			<thead>
 				<tr>
@@ -56,8 +72,10 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 				</tr>
 		</table>
 	</div>
-	<h2>내 게시물</h2>
-	<div id="board">
+	
+	
+	<div id="division">
+		<h2 id="title">내 게시물</h2>
 		<ul>
 			<li>
 				스터디
@@ -124,60 +142,66 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 	
 	</div>
 	
-	<h2>내 댓글</h2>
-	<div id="reply">
-	<ul>
-		<li>
-			<table id="boardReply">
-				<thead>
-					<tr>
-					  <th>no.</th>
-					  <th>게시글 제목</th>
-					  <th>댓글</th>
-		              <th>날짜</th>
-					</tr>
-				</thead>
-				<c:forEach items="${boardReply}" var="i" varStatus="status"  begin="0" end='9'>
-					<tr>
-						<td>${status.count}</td>
-						<td></td>
-						<td>${i.reply}</td>
-						<td><fmt:formatDate value="${i.replydate}" pattern="yyyy-MM-dd a hh:mm" /></td>
-					</tr>
-				</c:forEach>
-			</table>
-		</li>
-		
-		<li>
-			<table id="qnaReply">
-				<thead>
-					<tr>
-					  <th>no.</th>
-					  <th>Q&A 제목</th>
-					  <th>댓글</th>
-		              <th>날짜</th>
-					</tr>
-				</thead>
-				<c:forEach items="${qnaReply}" var="i" varStatus="status"  begin="0" end='9'>
-					<tr>
-						<td>${status.count}</td>
-						<td></td>
-						<td>${i.r_content}</td>
-						<td><fmt:formatDate value="${i.r_reg_date}" pattern="yyyy-MM-dd a hh:mm" /></td>
-					</tr>
-				</c:forEach>
-			</table>
-		</li>
-	</ul>
+	<div id="division">
+		<h2 id="title">내 댓글</h2>
+		<ul>
+			<li>
+				<table id="boardReply">
+					<thead>
+						<tr>
+						  <th>no.</th>
+						  <th>게시글 제목</th>
+						  <th>댓글</th>
+			              <th>날짜</th>
+						</tr>
+					</thead>
+					<c:forEach items="${boardReply}" var="i" varStatus="status"  begin="0" end='9'>
+						<tr>
+							<td>${status.count}</td>
+							<td></td>
+							<td>${i.reply}</td>
+							<td><fmt:formatDate value="${i.replydate}" pattern="yyyy-MM-dd a hh:mm" /></td>
+						</tr>
+					</c:forEach>
+				</table>
+			</li>
+			
+			<li>
+				<table id="qnaReply">
+					<thead>
+						<tr>
+						  <th>no.</th>
+						  <th>Q&A 제목</th>
+						  <th>댓글</th>
+			              <th>날짜</th>
+						</tr>
+					</thead>
+					<c:forEach items="${qnaReply}" var="i" varStatus="status"  begin="0" end='9'>
+						<tr>
+							<td>${status.count}</td>
+							<td></td>
+							<td>${i.r_content}</td>
+							<td><fmt:formatDate value="${i.r_reg_date}" pattern="yyyy-MM-dd a hh:mm" /></td>
+						</tr>
+					</c:forEach>
+				</table>
+			</li>
+		</ul>
 	</div>
 	
-	<h2>쪽지</h2>
-	<div id="letter">
+	<div id="division">
+		<h2 id="title">쪽지</h2>
 		
 	</div>
 </body>
  <script>
  	$(document).ready(function () {
+ 		
+ 		if('${user}'==null){
+ 			alert("로그인 후 이용하세요")
+ 			location.href="/user/login";
+ 		}
+ 		
  		
  	 })	
 </script>

@@ -52,7 +52,7 @@
 	</filter-mapping>
 
 	<session-config>
-		<session-timeout>60</session-timeout>
+		<session-timeout>-1</session-timeout>
 	</session-config>
 
 	<!-- 채팅을 위한 작업 , 단톡을 하기위해 비동기화처리 -->
