@@ -124,6 +124,25 @@ prefix="c" %>
 		<span> 모집 중인 그룹 </span>
 		<div class="container">
 			<c:forEach items="${group}" var="group">
+				
+				<div class="box">
+					<span class="group_name"> ${group.group_name} </span>
+					<span> ${group.leader}</span>
+					<span> ${group.subject }</span>
+					<span> ${group.member_number}</span>
+				</div>
+			</c:forEach>
+
+			<form method="get" action="./detail">
+				<input type="hidden" name="group_name" />
+			</form>
+		</div>
+	</body>
+	
+	<p> 모집이 완료된 그룹 </p>
+		<div class="container">
+			<c:forEach items="${completed}" var="group">
+				
 				<div class="box">
 					<span class="group_name"> ${group.group_name} </span>
 					<span> ${group.leader}</span>

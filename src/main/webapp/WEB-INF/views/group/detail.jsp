@@ -13,8 +13,6 @@ prefix="c" %>
   <div>
   <h3> 스터디 모집글이 들어갈 거에요</h5>
 
- - 지금은 로그인 기능이 없으므로 여기에서 페이지를 넘김- => 메인페이지에서 접근가능하도록 바꿈 , 편의를 위해 남김 지우시오~~ <br/>
- <a href="/group/${one.group_name}"> 스터디 별 페이지 </a>
  <p><a href="/group/"> 메인 </a></p>
  <p>
   </div>
@@ -29,9 +27,11 @@ prefix="c" %>
     ${one.leader }<br/>
     ${one.subject }<br/>
     ${one.description }<br/>
-    ${one.member_number }</br>
+    ${one.member_number }<br/>
     
+    <c:if test="${user.user_id eq one.leader}">
     <button class="delete"> 그룹 삭제</button>
+    </c:if>
     <div>
       <form>
         <div>
@@ -41,9 +41,13 @@ prefix="c" %>
         </div>
       </form>
     </div>
-    <c:if test="${user != null}">
-    <button class="signup">지원하기</button>
-    </c:if>
+   
+    	<div class="signup">
+    	 <c:if test="${user != null && user.user_id != one.leader}">
+    	 	<button class="signup">지원하기</button>
+    	 </c:if>
+    	</div>
+   
     <br/>
     <c:if test="${user.user_id == 'admin'}">
     	<button class="auth">승인하기</button>
@@ -51,10 +55,6 @@ prefix="c" %>
     
   </body>
   <script>
-  	console.log("----------------------")
-		console.log("${msg}")
-		
-		
 
     const signupGroup = (data) => {
       $.ajax({
@@ -70,6 +70,10 @@ prefix="c" %>
     }
 
     $(document).ready(function (e) {
+    	console.log( "${one.leader}")
+    	console.log( "${user}")
+     	const member_number = Number("${one.member_number}" )
+     	
       
       $('.delete').click(function (e) {
         $.ajax({
@@ -85,13 +89,24 @@ prefix="c" %>
         }) //ajax
       }) //delete button
       let signupform = {}
+      let joinedMember
+  		$.getJSON("/group/getMemberlistByGroup/${group_name}", (list) => {
+  			console.log(`멤버 넘버 \${member_number} 리스트 길이 \${list.length}`)
+  			let msg = $('<span> 모집이 완료된 그룹입니다 </span>')
+  			if(list.length >= member_number) {
+  				$('button.signup').remove()
+  				$('div.signup').append(msg)
+  				console.log("모집완료")
+  			} 	
+  		})
+      
       $('.signup').click(function (e) {
-    	
+
         signupform = {
           user_id: $('input[name="user_id"]').val(),
           group_name: '${one.group_name}',
         }
-       
+         
         signupGroup(signupform)
       })
       

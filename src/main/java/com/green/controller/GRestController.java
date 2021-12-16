@@ -1,6 +1,10 @@
 package com.green.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpSession;
 
@@ -42,6 +46,7 @@ import lombok.extern.slf4j.Slf4j;
 
 
 
+
 @RestController
 @RequestMapping("/group/*")
 @Slf4j
@@ -72,13 +77,17 @@ public class GRestController {
 		try {
 			UserVO user = (UserVO) session.getAttribute("user");
 			List<GUserVO> groupList = groupUserService.listByUSer(user.getUser_id());
-			
 			mv.addObject("myGroup", groupList);
 			mv.addObject("user", user);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}finally {
-			mv.addObject("group", groupService.showAll());
+			List<GroupVO> groups = groupService.showAll();
+			List<GroupVO> joinedYetGroup = groups.stream().filter( vo -> vo.getMember_number() > groupUserService.listByGroup(vo.getGroup_name()).size())
+				.collect(Collectors.toList());
+			joinedYetGroup.forEach(i -> groups.remove(i));
+			mv.addObject("group", joinedYetGroup);
+			mv.addObject("completed", groups);
 		}
 		return mv;
 	}
@@ -240,11 +249,6 @@ public class GRestController {
 	public ResponseEntity<BoardVO> readContent(@PathVariable("bno") Long bno){
 		return new ResponseEntity<BoardVO>(boardService.read(bno), HttpStatus.OK);
 	}
-	
-	
-	
-	
-
 	
 	
 	@GetMapping(value="/board/{group_name}/write")
