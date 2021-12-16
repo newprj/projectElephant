@@ -43,12 +43,12 @@ prefix="c" %>
 
 
     <c:forEach items="${board}" var="board">
-      <div class="list"  data="${board.bno}">
-      	<span> ${board.title} </span>
+      <div >
+      	<span class="list"  data="${board.bno}"> ${board.title} </span>
       	<c:if test="${board.attachList !=null && board.attachList.size()>0 }">
       		<i class="fas fa-paperclip"></i>
       	</c:if>
-      	<span>[ ${board.replyCnt} ]</span>
+      	<span> <i class="far fa-comment-dots"></i> ${board.replyCnt}</span>
       </div>
    	 	<div>
 
@@ -81,12 +81,13 @@ prefix="c" %>
         
 				$.getJSON(
 					"/group/getMemberlistByGroup/${name}", (list) =>{
-						console.log(list)
+						console.log(" 손을 봐야 해...")
+						console.log(list.memberList)
 						console.log(loginUser)
-						let joinCheck = list.find( user => user.user_id === loginUser)
+						let joinCheck = list.memberList.find( user => user.user_id === loginUser)
 						if(!joinCheck){
 							alert("그룹 회원만 접근 가능한 페이지입니다")
-							location.href="/group/"
+							location.href="/group/" 
 					} 
 				})
 		

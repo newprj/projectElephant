@@ -47,6 +47,7 @@ import lombok.extern.slf4j.Slf4j;
 
 
 
+
 @RestController
 @RequestMapping("/group/*")
 @Slf4j
@@ -76,7 +77,8 @@ public class GRestController {
 		ModelAndView mv =  new ModelAndView("/group/main");
 		try {
 			UserVO user = (UserVO) session.getAttribute("user");
-			List<GUserVO> groupList = groupUserService.listByUSer(user.getUser_id());
+			List<GUserVO> groupList = groupUserService.listByUSer(user.getUser_id()).stream()
+					.filter(i -> i.getAuthorized() =='Y').collect(Collectors.toList());
 			mv.addObject("myGroup", groupList);
 			mv.addObject("user", user);
 		}catch(Exception e) {
@@ -84,8 +86,15 @@ public class GRestController {
 		}
 		try {
 			List<GroupVO> groups = groupService.showAll();
-			List<GroupVO> joinedYetGroup = groups.stream().filter( vo -> vo.getMember_number() > groupUserService.listByGroup(vo.getGroup_name()).size())
-				.collect(Collectors.toList());
+			// 그룹에 지원자 수, 가입 수 넣기
+			groups.forEach(i -> {
+				i.setApplicantCnt(groupUserService.listByGroupAll(i.getGroup_name()).size());
+				i.setJoinedCnt(groupUserService.listByGroup(i.getGroup_name()).size());
+			});
+			// 모집이 끝난 그룹과 구분
+			List<GroupVO> joinedYetGroup = groups.stream().filter( i -> 
+				i.getMember_number() > groupUserService.listByGroup(i.getGroup_name()).size())
+					.collect(Collectors.toList());
 			joinedYetGroup.forEach(i -> groups.remove(i));
 			
 			mv.addObject("group", joinedYetGroup);
@@ -115,13 +124,18 @@ public class GRestController {
 	
 	// 그룹별 가입 유저 가지고 오기 
 	@GetMapping(value ="/getMemberlistByGroup/{group_name}")
-	public ResponseEntity<List<GUserVO>> getMemberlistByGroup(
+	public ResponseEntity<Map<String, List<GUserVO>>> getMemberlistByGroup(
 			@PathVariable("group_name") String group_name){
-		List<GUserVO> userList = groupUserService.listByGroup(group_name);
+		Map<String, List<GUserVO>> userMap= new HashMap<>();
+		
+		userMap.put("memberList" , groupUserService.listByGroup(group_name));
+		userMap.put("allList", groupUserService.listByGroupAll(group_name));
+		
 
-		log.info("list" + userList);
-		return new ResponseEntity<>(userList, HttpStatus.OK);
+		return new ResponseEntity<>(userMap, HttpStatus.OK);
 	}
+	
+	
 	
 	// 그룹 모집 페이지
 	@GetMapping("/gather/{group_name}")
@@ -201,7 +215,7 @@ public class GRestController {
 			produces = {MediaType.TEXT_PLAIN_VALUE})
 	public ResponseEntity<String> signupGroup(@RequestBody GUserVO vo) {
 		
-		System.out.println("vo" + vo);
+		System.out.println(" 컨트롤러 vo" + vo);
 		groupUserService.groupSignUp(vo);
 		return new ResponseEntity<String>("success", HttpStatus.OK);
 	}
@@ -295,7 +309,7 @@ public class GRestController {
 		boardService.delete(bno);
 	}
 	// 게시글 수정
-	@GetMapping({"/board/modify/{group_name}/{bno}/{pageNum}/{amount}", "/modify/{group_name}/{bno}/{pageNum}/{amount}/{type}/{keyword}" })
+	@GetMapping({"/board/modify/{group_name}/{bno}/{pageNum}/{amount}", "/board/modify/{group_name}/{bno}/{pageNum}/{amount}/{type}/{keyword}" })
 	public ModelAndView boardModify(@ModelAttribute("cri") Criteria cri, HttpSession session ) {
 		Long bno = cri.getBno();
 		ModelAndView mv = new ModelAndView("/group/modifyForm");
@@ -359,7 +373,7 @@ public class GRestController {
 			GroupVO vo = groupService.showOne(group_name);
 			mv.addObject("user", user.getUser_id());
 			mv.addObject("group", vo);
-			mv.addObject("member", groupUserService.listByGroup(group_name));
+			mv.addObject("member", groupUserService.listByGroupAll(group_name));
 			
 		}catch(Exception e) {
 			e.printStackTrace();

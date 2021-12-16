@@ -5,6 +5,7 @@ prefix="c" %>
 <html>
 	<head>
 		<script src="//code.jquery.com/jquery-3.6.0.js"></script>
+		<script src="https://kit.fontawesome.com/eab4c34ae3.js" crossorigin="anonymous"></script>
 		<meta charset="UTF-8" />
 		<style>
 			.container {
@@ -72,7 +73,7 @@ prefix="c" %>
 							<div class="mygroup">
 								<c:choose>
 									<c:when test="${empty myGroup}"
-										>>
+										>
 										<span> 가입한 그룹이 없습니다 </span>
 									</c:when>
 
@@ -120,8 +121,8 @@ prefix="c" %>
 				<button>create</button>
 			</c:if>
 		</a>
-		<button>내 그룹 보기</button>
-		<span> 모집 중인 그룹 </span>
+		<button>내 그룹 보기</button><br/>
+		<span> 모집 중인 그룹 </span> 
 		<div class="container">
 			<c:forEach items="${group}" var="group">
 				
@@ -130,6 +131,8 @@ prefix="c" %>
 					<span> ${group.leader}</span>
 					<span> ${group.subject }</span>
 					<span> ${group.member_number}</span>
+					<span> <i class="fas fa-eye"></i> ${group.viewCnt} </span>
+					<span> 🙋‍♀  ${group.applicantCnt} <i class="far fa-hand-peace"> ${group.joinedCnt}</i> </span>
 				</div>
 			</c:forEach>
 
@@ -148,6 +151,8 @@ prefix="c" %>
 					<span> ${group.leader}</span>
 					<span> ${group.subject }</span>
 					<span> ${group.member_number}</span>
+					<span> <i class="fas fa-eye"></i> ${group.viewCnt} </span>
+					<span> 🙋‍♀  ${group.applicantCnt}  <i class="far fa-hand-peace"> ${group.joinedCnt}</i></span>
 				</div>
 			</c:forEach>
 

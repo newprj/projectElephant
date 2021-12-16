@@ -26,7 +26,7 @@ prefix="c" %>
 			</c:otherwise>
 		</c:choose>
 		<div>
-			<a href="/group/board/${group_name}/1/10"> ${group_name} 게시판 </a>
+			<a href="/group/board/${group_name}"> ${group_name} 게시판 </a>
 		</div>
 
 		<div class="event">
@@ -63,7 +63,7 @@ prefix="c" %>
 		let group = "${group_name}";
 
 		$.getJSON("/group/getMemberlistByGroup/${group_name}", (list) => {
-			let joinCheck = list.find((user) => user.user_id === loginUser);
+			let joinCheck = list.memberList.find( user => user.user_id === loginUser)
 			if (!joinCheck) {
 				alert("그룹 회원만 접근 가능한 페이지입니다");
 				location.href = "/group/";

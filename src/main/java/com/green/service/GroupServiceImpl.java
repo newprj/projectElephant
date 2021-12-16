@@ -38,7 +38,7 @@ public class GroupServiceImpl implements GroupService{
 
 	@Override
 	public GroupVO showOne(String group_name) {
-		// TODO Auto-generated method stub
+		mapper.updateViewCnt(group_name);
 		return mapper.showOne(group_name);
 	}
 

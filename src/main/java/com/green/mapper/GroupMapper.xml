@@ -37,6 +37,10 @@
 		update tbl_group set authorized=#{authorized} where gno=#{gno}
 	</update>
 	
+	<update id="updateViewCnt">
+		update tbl_group set viewCnt = viewCnt +1 where group_name = #{group_name}
+	</update>
+	
 	
 	
 </mapper>

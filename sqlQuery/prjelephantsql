@@ -2,14 +2,24 @@ SELECT  'DROP TABLE ' || object_name || ' CASCADE CONSTRAINTS;'
   FROM    user_objects
 WHERE   object_type = 'TABLE';
 
+DROP TABLE TBL_REVIEW CASCADE CONSTRAINTS;
+DROP TABLE ATTACHFILE CASCADE CONSTRAINTS;
+DROP TABLE CPAGE CASCADE CONSTRAINTS;
+DROP TABLE TBL_MESSAGE CASCADE CONSTRAINTS;
+DROP TABLE TBL_GROUP CASCADE CONSTRAINTS;
+DROP TABLE TBL_GROUPUSER CASCADE CONSTRAINTS;
+DROP TABLE QNA_TBL CASCADE CONSTRAINTS;
+DROP TABLE QNA_REPLY_TBL CASCADE CONSTRAINTS;
+DROP TABLE QNA_ATTACH_TBL CASCADE CONSTRAINTS;
+DROP TABLE TBL_USER CASCADE CONSTRAINTS;
+DROP TABLE TBL_CALENDAR CASCADE CONSTRAINTS;
+
+commit;
+
 -- spring database에서 모든 table을 삭제 했습니다
 CREATE DATABASE spring CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 --- create , drop table and sequence
-
-
-
-
 
 drop table tbl_user;
 create table tbl_user(
@@ -28,7 +38,8 @@ create table tbl_groupuser(
     authorized varchar2(1) default 'N',
     user_id varchar2(30),
     group_name varchar2(30));
-    
+drop sequence seq_cno;
+create sequence seq_cno;
 
 drop table tbl_review;
 -------------- 치원님 쿼리 이용
@@ -59,6 +70,7 @@ create table tbl_board(
 create sequence seq_bno;
 drop sequence seq_bno; 
 alter table tbl_board add constraint pk_board primary key(bno);
+alter table tbl_board add (notice char(1) default('N'));
 
 
 ----------- 테이블 컬럼 속성 변경 
@@ -71,6 +83,7 @@ create table board_reply(
     replydate date default sysdate,
     updatedate timestamp);    
 create sequence board_rno;  
+drop sequence board_rno;  
 create sequence seq_rno;
 drop sequence seq_rno;
     
@@ -79,8 +92,6 @@ drop sequence seq_rno;
 create sequence seq_cno;
 drop sequence seq_cno;
 
-
-
 select * from tbl_groupuser;
 select * from tbl_board;
 select * from tbl_user;
@@ -88,15 +99,8 @@ select * from tbl_group;
 select * from board_file;
 select * from board_reply;
 select * from tbl_calendar;
-
-update tbl_calendar set user_ = 'test';
-
 select * from user_sequences;
-commit;
 
-
-select * from tbl_board where group_name='그루비룸';
-select * from tbl_board where group_name='그룹이름' ;
 --- 쿼리 문서 수정 /공유 시 수정한 부분 주석으로 달아주세요 
 --- select, update 등 테스트를 위한 쿼리문은 공유 X
 
@@ -116,6 +120,7 @@ create table tbl_calendar(
     user_ varchar2(50),
     member_ varchar2(50));
 create sequence seq_cid;
+drop sequence seq_cid;
 
 -------------------------------------------------- 12/15
 
@@ -126,11 +131,6 @@ create table tbl_message(
     user_id varchar2(200));
 
 create sequence seq_mid;
-alter table tbl_board add (notice char(1) default('N'));
-alter table tbl_board add(updatedate timestamp);
-alter table tbl_group add(authorized char(1) default 'N' check(authorized in('Y','N')));
-
-commit;
 
 -------------------
 drop table tbl_group;
@@ -143,24 +143,17 @@ create table tbl_group(
     member_number number,
     authorized char(1) default 'N' check(authorized in('Y','N'))
 );
-
+alter table tbl_group add ( viewCnt number default 0 );
+alter table tbl_group add(authorized char(1) default 'N' check(authorized in('Y','N')));
 
 select * from tbl_group;
 drop sequence seq_gno;
 create sequence seq_gno;
 
 
-update tbl_group set authorized = 'Y';
-update tbl_groupuser set authorized='y';
-delete from tbl_user where user_id = 'a';
-
-commit;
-
-
-select * from (
-    select /*+INDEX_DESC(tbl_board )*/
-    rownum rn , bno, title, content ,writer, regdate, updatedate from tbl_board where (title like '%테스트%' or content like '%내용%') and rownum <=20)
-    where rn >10;
+----- 어드민기능
+update tbl_group set authorized = 'Y'; 
+update tbl_groupuser set authorized='Y';
 
 commit;
 

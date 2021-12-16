@@ -16,7 +16,7 @@ prefix="c" %>
  <p><a href="/group/"> 메인 </a></p>
  <p>
   </div>
-  =====</br>
+	</br>
   	<c:if test="${user.user_id== one.leader}">
   	
   	<a href="/group/gather/${one.group_name}/modify"> <button> 모집글 수정하기 </button></a>
@@ -55,9 +55,12 @@ prefix="c" %>
     
   </body>
   <script>
+  
+  	
 
     const signupGroup = (data) => {
-      $.ajax({
+      
+    	$.ajax({
         type: 'post',
         url: '/group/',
         data: JSON.stringify(data),
@@ -74,6 +77,20 @@ prefix="c" %>
     	console.log( "${user}")
      	const member_number = Number("${one.member_number}" )
      	
+     	let signupform = {}
+     	$('button.signup').click(function (e) {
+					console.log(" 버튼이 눌림 사인업버튼 ")
+					let memberMsg =$('<span> 이미 지원한 모임입니다 </span>')
+					$('button.signup').remove()
+					$('div.signup').append(memberMsg)
+        	
+					signupform = {
+          	user_id: $('input[name="user_id"]').val(),
+         		group_name: '${one.group_name}',
+        	}
+         
+        signupGroup(signupform)
+      })// 가입버튼 click
       
       $('.delete').click(function (e) {
         $.ajax({
@@ -88,27 +105,29 @@ prefix="c" %>
           },
         }) //ajax
       }) //delete button
-      let signupform = {}
+      
+      
       let joinedMember
   		$.getJSON("/group/getMemberlistByGroup/${group_name}", (list) => {
-  			console.log(`멤버 넘버 \${member_number} 리스트 길이 \${list.length}`)
+  		// 모집 완료 된 경우 지원 버튼 노출 X
   			let msg = $('<span> 모집이 완료된 그룹입니다 </span>')
-  			if(list.length >= member_number) {
+  			if(list.memberList.length >= member_number) {
   				$('button.signup').remove()
   				$('div.signup').append(msg)
   				console.log("모집완료")
-  			} 	
-  		})
+  			}
+  			console.log(list)
+  			 ///이미 지원 한 그룹일 경우 버튼 노출 없애기 	
+	  		let memberMsg =$('<span> 이미 지원한 모임입니다 </span>')
+	  		list.allList.map(console.log)
+  			if(list.allList.some(i => i.user_id === "${user.user_id}")){
+					$('button.signup').remove()
+					$('div.signup').append(memberMsg)
+					console.log("야....")
+				} 
+  		})//getJson
       
-      $('.signup').click(function (e) {
-
-        signupform = {
-          user_id: $('input[name="user_id"]').val(),
-          group_name: '${one.group_name}',
-        }
-         
-        signupGroup(signupform)
-      })
+     
       
       /* admin이 그룹 승인 */
       $(".auth").click(function(){

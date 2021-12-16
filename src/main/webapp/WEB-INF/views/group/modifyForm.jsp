@@ -64,7 +64,7 @@ prefix="c" %>
 					$.getJSON("/group/getMemberlistByGroup/${cri.group_name}", (list) => {
 						console.log(list);
 						console.log(loginUser);
-						let joinCheck = list.find((user) => user.user_id === loginUser);
+						let joinCheck = list.memberList.find( user => user.user_id === loginUser)
 						if (!joinCheck) {
 							alert("그룹 회원만 접근 가능한 페이지입니다");
 							location.href = "/group/";

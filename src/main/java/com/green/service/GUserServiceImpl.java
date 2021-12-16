@@ -14,6 +14,7 @@ import com.green.vo.GroupVO;
 
 
 import lombok.Setter;
+import lombok.extern.log4j.Log4j;
 
 
 @Service
@@ -36,12 +37,20 @@ public class GUserServiceImpl implements GUserService {
 				.stream().filter( vo -> vo.getAuthorized() == 'Y').collect(Collectors.toList());
 		return list;
 	}
+	
+
+	@Override
+	public List<GUserVO> listByGroupAll(String group_name) {
+		// 모든 사용자 
+		return mapper.listByGroup(group_name);
+	}
 
 	@Override
 	public List<GUserVO> listByUSer(String user) {
 		
 		return mapper.listByUSer(user);
 	}
+
 
 
 
