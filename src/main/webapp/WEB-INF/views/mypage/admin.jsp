@@ -10,9 +10,8 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <head>
 <meta charset="UTF-8">
 <style>
-#today {
-	width:100%;
-	height:10px;
+nav {
+	display:inline;
 	text-align:right;
 }
 
@@ -49,15 +48,18 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 
 </style>
-<title>Admin 페이지</title>
+<title>관리자 페이지</title>
 
 </head>
 <body>
-	<h1>Admin page</h1>
-	<h5 id='today'><fmt:formatDate value="<%= today %>" pattern="yyyy-MM-dd" /> : 방문자수(가능하면)</h5>
+	<h1>관리자 페이지</h1>
+	<nav>
+		<h5><a href="/user/logout">로그아웃</a></h5>
+		<h5 id='today'><fmt:formatDate value="<%= today %>" pattern="yyyy-MM-dd" /> : 방문자수(가능하면)</h5>
+	</nav>
 	<h3>받은 쪽지 리스트도 보이도록, 방문자 평균 그래프로 보이게</h3>
 	
-	<h3 id='a'>회원 리스트</h3>
+	<h3 >회원 리스트</h3>
 	<div class='userList'>
 		<h5>회원에게 쪽지, 버튼 크기 맞추기,정지된 회원은 로그인 안되게 하기</h5>
 		<table>
@@ -76,7 +78,7 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 					<td>${status.count}</td>
 					<td id='userId${status.index}'>${i.user_id}</td>
 					<td>${i.name}</td>
-					<td>${i.regDate}</td>
+					<td></td>
 					<td><button id='chat'>채팅</button></td>
 					<td><button class='susp' >
 						<c:choose>
@@ -89,9 +91,9 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 		</table>
 	</div>
 	
-	<h3 id='a'><a href='/group/'>스터디 승인 리스트</a></h3>
+	<h3 ><a href='/group/'>스터디 승인 리스트</a></h3>
 	<div class='study'>
-	<h5>스터디 a태그로 누르면 전제 내용 띄우고 승인 버튼 스터디 테이블에 승인 컬럼 만들기</h5>
+	<h5>스터디장이 승인 요청한 것만 띄우기</h5>
 		<table>
 			<thead>
 				<tr>
@@ -112,7 +114,11 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 					<td>${i.leader}</td>
 					<td>${i.member_number}명</td>
 					<td><a href='/group/gather/${i.group_name}'>확인</a></td>
-					<td>Y/N</td>
+					<td><c:choose>
+							<c:when test="${i.authorized eq 'Y'}">승인</c:when>
+							<c:otherwise>비승인</c:otherwise>
+						</c:choose>	
+					</td>
 				</tr>
 			</c:forEach>
 		</table>
@@ -200,8 +206,14 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 			modalId.val(uid)
 			
 			var suspension=''
-			if($(this).text()=='정지') suspension='Y'
-			else suspension='N'
+			if($(this).text().trim()=='정지'){
+				suspension='N'
+				$("#register").text("정지 해제")
+			}
+			else if (($(this).text().trim()=='활동중')) {
+				suspension='Y'
+				$("#register").text("정지")
+			}
 			
 			$("#register").off('click').on('click',function(){
 				
@@ -213,7 +225,7 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 				}
 				console.log(form)
 				$.ajax({
-					url:"/admin/susp",
+					url:"/mypage/susp",
 					type:"post",
 					data:JSON.stringify(form),
 					contentType:"application/json; charset=utf-8",

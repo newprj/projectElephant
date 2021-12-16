@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	<mapper namespace="com.green.mapper.ChatMapper">
+
+	
+	<select id="selectChatRoom" resultType="com.green.vo.ChatRoomVO">
+		select * from chatRoom_tbl where room_id=#{room_id}
+	</select>
+	
+	<insert id="insertMessage">
+		insert into chat_tbl(roomId,message_Id,message,name,email,unReadCnt) 
+			values(#{roomId},#{message_Id},#{message},#{name},#{email},
+			<choose>
+				<when test="#{sessionCnt}.equals('1')>">1</when>
+				<when test="#{sessionCnt}.equals('2')>">0</when>
+			</choose> 
+			
+			
+			)
+	</insert> 
+	
+	<select id="searchRoom" resultType="com.green.vo.ChatRoomVO">
+		select *from chatRoom_tbl where userName=#{userName}, masterName=#{masterName}
+	</select>
+	
+	<insert id="createChat">
+		insert into chatRoom_tbl
+			values(#{roomId},#{userEmail},#{userName},#{masterEmail},#{masterName})
+	</insert>
+
+</mapper>

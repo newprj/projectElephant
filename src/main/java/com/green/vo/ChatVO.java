@@ -15,22 +15,12 @@ import lombok.ToString;
 @Setter
 @Getter
 @ToString
-public class UserVO {
-	private Long uno;
-	private String user_id;
-	private String password;
+public class ChatVO {
+
+	private String room_id;
+	private Long message_id;
+	private String message;
 	private String name;
 	private String email;
-	
-	@JsonFormat(pattern="yyyy-MM-dd")
-	private Date regDate;
-	
-	//admin이 회원정지 
-	private String suspension;
-	private String suspContent;
-	private Date suspDate;
-	
-	
-	// 로그인 유지
-	private boolean useCookie;
+	private int sessionCnt;
 }

@@ -13,7 +13,7 @@ import lombok.extern.log4j.Log4j;
 public class AhthInterceptor extends HandlerInterceptorAdapter{
 	
 	
-	private void saveDestination(HttpServletRequest req) {
+private void saveDestination(HttpServletRequest req) {
 		
 		String uri = req.getRequestURI();
 		String query= req.getQueryString();
@@ -44,5 +44,4 @@ public class AhthInterceptor extends HandlerInterceptorAdapter{
 		
 		return true;
 	}
-
 }

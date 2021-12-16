@@ -58,6 +58,7 @@ prefix="c" %>
 	</body>
 
 	<script>
+
 		let loginUser = "${user}";
 		let group = "${group_name}";
 
@@ -72,6 +73,7 @@ prefix="c" %>
 		const today = new Date().toISOString().split("T")[0];
 
 		console.log(today);
+
 		$.getJSON("/group/getLatestEvent/${group_name}", (list) => {
 			const todayEvent = list.filter((i) => i.startDate === today);
 			console.log(todayEvent);
@@ -101,6 +103,7 @@ prefix="c" %>
 				let noEvent = $("<li> 다가오는 일정이 없습니다 </li>");
 				$("ul.latest").append(noEvent);
 			}
+
 
 			latestEvent.map((event) => {
 				const { title, description_ } = event;
@@ -211,6 +214,7 @@ prefix="c" %>
 			websocket.onclose = function () {}; // disable onclose handler first
 			socketClose(e);
 		};
+
 
 		socket.onmessage = onMessage;
 		socket.onclose = onClose;

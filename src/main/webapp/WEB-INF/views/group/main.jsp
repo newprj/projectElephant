@@ -142,7 +142,6 @@ prefix="c" %>
 		$(document).ready(function (e) {
 			$(".group_name").click(function (e) {
 				const group_name = e.target.innerText;
-
 				location.href = "/group/gather/" + group_name;
 			});
 

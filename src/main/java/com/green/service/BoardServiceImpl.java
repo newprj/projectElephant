@@ -114,4 +114,10 @@ public class BoardServiceImpl implements BoardService{
 		return mapper.getTotalCount(cri);
 	}
 
+	@Override
+	public List<BoardVO> myBoard(String writer) {
+		// TODO Auto-generated method stub
+		return mapper.myBoard(writer);
+	}
+
 }

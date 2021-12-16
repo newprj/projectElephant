@@ -1,6 +1,5 @@
 package com.green.controller;
 
-
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -105,6 +104,7 @@ public class GRestController {
 	public ResponseEntity<List<GUserVO>> getMemberlistByGroup(
 			@PathVariable("group_name") String group_name){
 		List<GUserVO> userList = groupUserService.listByGroup(group_name);
+
 		log.info("list" + userList);
 		return new ResponseEntity<>(userList, HttpStatus.OK);
 	}

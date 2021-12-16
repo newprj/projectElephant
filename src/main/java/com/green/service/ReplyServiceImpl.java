@@ -47,4 +47,10 @@ public class ReplyServiceImpl implements ReplyService{
 
 	}
 
+	@Override
+	public List<BoardReplyVO> myReply(String replyer) {
+		// TODO Auto-generated method stub
+		return mapper.myReply(replyer);
+	}
+
 }

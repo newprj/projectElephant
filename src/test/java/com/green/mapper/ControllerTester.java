@@ -40,13 +40,13 @@ public class ControllerTester {
 	
 	Date date=new Date();
 	
-	//@Test
+	@Test
 	public void gtest() {
-		for (int i = 0; i <10; i++) {
+		for (int i = 0; i <5; i++) {
 			GroupVO vo=new GroupVO();
 			vo.setDescription("설명"+i);
 			vo.setGroup_name("name"+i);
-			vo.setLeader("리더"+i);
+			vo.setLeader("a");
 			vo.setMember_number(i+1);
 			vo.setSubject("주제"+i);
 			gService.makeGroup(vo);

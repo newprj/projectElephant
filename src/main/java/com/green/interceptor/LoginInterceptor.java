@@ -4,19 +4,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.ui.ModelMap;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import com.green.controller.AdminController;
 import com.green.vo.UserVO;
 
 import lombok.extern.log4j.Log4j;
 
-
 @Log4j
 public class LoginInterceptor extends HandlerInterceptorAdapter{
 	
-
 
 	@Override
 	public boolean preHandle(
@@ -57,4 +55,6 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 		
 	}
 
+	
+	
 }

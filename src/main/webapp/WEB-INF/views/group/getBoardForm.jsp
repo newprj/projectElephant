@@ -149,7 +149,7 @@ prefix="c" %>
 			 $.getJSON("/group/getFileList", {bno} , (files) =>{
 					let str =""
 					files.map( file => {
-						//attachList.push(file) // 수정할때 넣음
+//						attachList.push(file) // 수정할때 넣음
 						if(file.fileType){
 							let fileCallpath = encodeURIComponent(`\${file.uploadPath}/\${file.uuid}_\${file.fileName}`)
 							str += `<li><div><a href='/download?fileName=\${fileCallpath}'><span>\${file.fileName}</span></a>`;

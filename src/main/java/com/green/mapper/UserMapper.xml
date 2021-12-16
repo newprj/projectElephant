@@ -35,5 +35,9 @@
 		update tbl_user set suspension=#{suspension}, suspContent=#{suspContent},suspDate=#{suspDate}
 			where user_id=#{user_id}
 	</update>
+	
+	<select id="selectMaster">
+		select *from tbl_user where user_id=#{user_id}
+	</select>
 </mapper>
 

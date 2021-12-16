@@ -29,6 +29,12 @@
 	</delete>
 	
 	
+	<update id="GroupAuth">
+		update tbl_group set authorized=#{authorized} where gno=#{gno}
+	</update>
+	
+	
+	
 </mapper>
 
    
