@@ -149,22 +149,26 @@ prefix="c" %>
 						url: "/group/board/${cri.bno}",
 						data: JSON.stringify(modified),
 						contentType: "application/json; charset=utf-8",
-						success: () =>
-							(location.href =
-								"/group/board/${cri.group_name}/${cri.bno}/${cri.pageNum}/${cri.amount}"),
+						success: () =>{
+							let url = "/group/board/${cri.group_name}/${cri.bno}/${cri.pageNum}/${cri.amount}"
+							url += "${cri.keyword}" ? "/${cri.type}/${cri.keyword}" : ""
+							location.href = url
+						},
 						error: (xhr, status, er) => {
 							console.log(status);
 						}, //error
 					}); //ajax
 				}); // modify c
+				
 				$(".delete").click(function (e) {
 					e.preventDefault();
 					$.ajax({
 						type: "delete",
 						url: "/group/board/${cri.bno}",
 						success: () => {
-							location.href =
-								"/group/board/${cri.group_name}/${cri.pageNum}/${cri.amount}";
+								let url = "/group/board/${cri.group_name}/${cri.pageNum}/${cri.amount}"
+								url += "${cri.keyword}" ? "/${cri.type}/${cri.keyword}" : ""
+								location.href = url
 						},
 						error: (xhr, status, er) => {
 							console.log(status);
@@ -173,8 +177,9 @@ prefix="c" %>
 				}); //delete click
 				$(".go_board").click((e) => {
 					e.preventDefault();
-					location.href =
-						"/group/board/${cri.group_name}/${cri.pageNum}/${cri.amount}";
+					let url = "/group/board/${cri.group_name}/${cri.pageNum}/${cri.amount}"
+					url += "${cri.keyword}" ? "/${cri.type}/${cri.keyword}" : ""
+					location.href = url
 				});
 
 				const imageHandler = (e) => {

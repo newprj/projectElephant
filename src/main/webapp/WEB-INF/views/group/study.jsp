@@ -26,7 +26,7 @@ prefix="c" %>
 			</c:otherwise>
 		</c:choose>
 		<div>
-			<a href="/group/board/${group_name}"> ${group_name} 게시판 </a>
+			<a href="/group/board/${group_name}/1/10"> ${group_name} 게시판 </a>
 		</div>
 
 		<div class="event">

@@ -1,7 +1,10 @@
 package com.green.mapperTests;
 
+import java.sql.Date;
 import java.util.List;
+import java.util.function.IntConsumer;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -91,7 +94,7 @@ public class MapperTests {
 		}
 	}
 	
-	@Test
+//	@Test
 	public void showAllTest() {
 		
 		List<BoardVO> voList = bMapper.showList("그루비룸");
@@ -160,5 +163,28 @@ public class MapperTests {
 		gMapper.deleteGroup("1");
 	}
 	
+	
+	//@Test
+	public void registerTEst() {
+		IntStream.rangeClosed(1, 100).forEach( i -> {
+			BoardVO vo = new BoardVO();
+			vo.setGroup_name("테스트그룹");
+			vo.setNotice('N');
+			vo.setTitle("테스트 타이틀" +i);
+			vo.setContent(" 내용" );
+			vo.setWriter("test");
+			bMapper.register(vo);
+		});
+		
+	}
+	
+	@Test 
+	public void testSearck() {
+		Criteria cri = new Criteria();
+		cri.setGroup_name("테스트그룹");
+		cri.setKeyword("내용");
+		cri.setType("TC");
+		bMapper.getListWithPaging(cri).forEach(i->System.out.println(i));
+	}
 
 }

@@ -151,3 +151,11 @@ update tbl_group set authorized = 'Y';
 delete from tbl_user where user_id = 'a';
 
 commit;
+
+
+select * from (
+    select /*+INDEX_DESC(tbl_board )*/
+    rownum rn , bno, title, content ,writer, regdate, updatedate from tbl_board where (title like '%테스트%' or content like '%내용%') and rownum <=20)
+    where rn >10;
+
+commit;

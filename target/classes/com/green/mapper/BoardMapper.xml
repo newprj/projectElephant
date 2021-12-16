@@ -30,14 +30,37 @@
 		delete from tbl_board where bno=#{bno}
 	</delete>
 	
+	
+	<sql id="criteria">
+		 <trim prefix="(" suffix=") and " prefixOverrides="OR">
+			    	<foreach item="type" collection="typeArr">
+			    		<trim prefix="OR">
+			    			<choose>
+			    				<when test="type== 'T'.toString()">
+			    					title like '%'||#{keyword}||'%'
+			    				</when>
+			    				<when test="type== 'W'.toString()">
+			    					writer like '%'||#{keyword}||'%'
+			    				</when>
+			    				<when test="type== 'C'.toString()">
+			    					content like '%'||#{keyword}||'%'
+			    				</when>
+			    			</choose>
+			    		</trim>
+			    	</foreach>
+		    </trim>
+	</sql>
+	
 	<select id="getListWithPaging"  resultType="com.green.vo.BoardVO">
 		<![CDATA[
-			select bno, title, writer, content, regdate, group_name
+			select bno, title, writer, content, regdate, updatedate, group_name
 			from (
 			    select /*+ index_desc(tbl_board pk_board) */
-				    rownum rn, bno, title, writer, content, regdate, group_name
+				    rownum rn, bno, title, writer, content, regdate, updatedate, group_name
 				    	from tbl_board
-				    where 
+				    where ]]>
+		   <include refid="criteria"></include>
+		    <![CDATA[
 			    rownum <=#{pageNum} * #{amount}
 		    )
 		    where rn> (#{pageNum}-1) * #{amount} and group_name = #{group_name}
@@ -45,7 +68,9 @@
 	</select> 
 	
 	<select id="getTotalCount" resultType="int">
-		select count(*) from tbl_board where bno > 0 and group_name = #{group_name}
+		select count(*) from tbl_board where 
+			<include refid="criteria"></include>
+		bno > 0 and group_name = #{group_name}
 	</select>
 	
 	<select id="myBoard" resultType="com.green.vo.BoardVO">

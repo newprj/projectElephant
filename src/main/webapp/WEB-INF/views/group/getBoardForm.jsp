@@ -175,8 +175,9 @@ prefix="c" %>
 					type: "delete",
 					url: "/group/board/${cri.bno}",
 					success: () => {
-						location.href =
-							"/group/board/${cri.group_name}/${cri.pageNum}/${cri.amount}";
+						let url = "/group/board/${cri.group_name}/${cri.pageNum}/${cri.amount}"
+						url += "${cri.keyword}" ? "/${cri.type}/${cri.keyword}" : ""
+						location.href = url
 					},
 					error: (xhr, status, er) => {
 						console.log(status);
@@ -195,8 +196,11 @@ prefix="c" %>
 			// 목록 go 
 			$(".go_board").click((e) => {
 				e.preventDefault();
-				location.href =
-					"/group/board/${cri.group_name}/${cri.pageNum}/${cri.amount}";
+				
+				let url = "/group/board/${cri.group_name}/${cri.pageNum}/${cri.amount}"
+				url += "${cri.keyword}" ? "/${cri.type}/${cri.keyword}" : ""
+				location.href = url
+		
 			});
 			
 			// 리플폼 데이터 얻기
@@ -250,8 +254,10 @@ prefix="c" %>
 			// 글 수정하러가기
 			$(".go_modify").click(function (e) {
 				e.preventDefault();
-				location.href =
-					"/group/modify/${cri.group_name}/${cri.bno}/${cri.pageNum}/${cri.amount}";
+				let url = "/group/modify/${cri.group_name}/${cri.bno}/${cri.pageNum}/${cri.amount}"
+				url += "${cri.keyword}"? "/${cri.type}/${cri.keyword}" : ""
+				location.href = url
+				
 			}); //modify
 			
 			// 댓글 수정

@@ -195,7 +195,7 @@ public class GRestController {
 	
 	
 	// 그룹별 게시판 페이지
-	@GetMapping("/board/{group_name}/{pageNum}/{amount}")
+	@GetMapping({ "/board/{group_name}/{pageNum}/{amount}", "/board/{group_name}/{pageNum}/{amount}/{type}/{keyword}"})
 	public ModelAndView tempGroupPage(@ModelAttribute("cri") Criteria cri,  HttpSession session ) {
 		ModelAndView mv = new ModelAndView("/group/board");
 		int total = boardService.getTotalCount(cri);
@@ -213,29 +213,9 @@ public class GRestController {
 	}
 	
 	
-	
-	@GetMapping("/board/{group_name}")
-	public ModelAndView tempGroupPage( @PathVariable("group_name") String group_name, 
-			Criteria cri,  HttpSession session) {
-		ModelAndView mv = new ModelAndView("/group/board");
-		cri.setGroup_name(group_name);
-		int total = boardService.getTotalCount(cri);
-		try {
-			UserVO user = (UserVO) session.getAttribute("user");
-			mv.addObject("user", user.getUser_id());
-			mv.addObject("name", cri.getGroup_name());
-			mv.addObject("board", boardService.getListWithPaging(cri));
-			mv.addObject("pageMaker" , new PageDTO(cri, total));
-			mv.addObject("name", group_name);
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-	
-		return mv;
-	}
 
 	// 게시글 조회
-	@GetMapping(value="/board/{group_name}/{bno}/{pageNum}/{amount}")
+	@GetMapping({"/board/{group_name}/{bno}/{pageNum}/{amount}", "/board/{group_name}/{bno}/{pageNum}/{amount}/{type}/{keyword}"})
 	public ModelAndView readOne(@ModelAttribute("cri") Criteria cri, HttpSession session){
 		ModelAndView mv = new ModelAndView("/group/getBoardForm");
 
@@ -306,7 +286,7 @@ public class GRestController {
 		boardService.delete(bno);
 	}
 	// 게시글 수정
-	@GetMapping("/modify/{group_name}/{bno}/{pageNum}/{amount}")
+	@GetMapping({"/modify/{group_name}/{bno}/{pageNum}/{amount}", "/modify/{group_name}/{bno}/{pageNum}/{amount}/{type}/{keyword}" })
 	public ModelAndView boardModify(@ModelAttribute("cri") Criteria cri, HttpSession session ) {
 		Long bno = cri.getBno();
 		ModelAndView mv = new ModelAndView("/group/modifyForm");
