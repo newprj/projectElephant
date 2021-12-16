@@ -15,6 +15,14 @@ pageEncoding="UTF-8"%>
 		<script src="/resources/image-resize.min.js"></script>
 		<script src="/resources/image-drop.min.js"></script>
 		<script src="/resources/js/fileUpload.js" type="text/javascript"></script>
+
+		<style>
+			div.uploadResult > ul > li > div > img {
+				width: 50px;
+				height: 50px;
+				border-radius: 50%;
+			}
+		</style>
 	</head>
 
 	<body>
@@ -27,7 +35,11 @@ pageEncoding="UTF-8"%>
 				</div>
 				<div>
 					<label>writer</label>
-					<input name="writer" value="${user}"/>
+					<input name="writer" value="${user}" />
+				</div>
+				<div>
+					<label>공지사항 </label>
+					<input type="checkbox" name="notice" />
 				</div>
 				<div>
 					<label> content </label>
@@ -36,6 +48,7 @@ pageEncoding="UTF-8"%>
 				<div class="file">
 					<input type="file" name="file" multiple />
 				</div>
+
 				<div class="uploadResult">
 					<ul></ul>
 				</div>
@@ -48,23 +61,22 @@ pageEncoding="UTF-8"%>
 			$(document).ready(function (e) {
 				var myEditor = document.querySelector("#editor");
 				const uploadClone = $(".file").clone();
-				let loginUser= "${user}"
-			  	if(! loginUser){
-					console.log('로그인안됨')
-					alert("로그인 해야 접근 가능합니다")
-					location.href="/group/"
-				}else{
-					console.log('로그인됨')
-					$.getJSON(
-						"/group/getMemberlistByGroup/${group_name}", (list) =>{
-							console.log(list)
-							console.log(loginUser)
-							let joinCheck = list.find( user => user.user_id === loginUser)
-							if(!joinCheck){
-								alert("그룹 회원만 접근 가능한 페이지입니다")
-								location.href="/group/"
-							} 
-						})
+				let loginUser = "${user}";
+				if (!loginUser) {
+					console.log("로그인안됨");
+					alert("로그인 해야 접근 가능합니다");
+					location.href = "/group/";
+				} else {
+					console.log("로그인됨");
+					$.getJSON("/group/getMemberlistByGroup/${group_name}", (list) => {
+						console.log(list);
+						console.log(loginUser);
+						let joinCheck = list.find((user) => user.user_id === loginUser);
+						if (!joinCheck) {
+							alert("그룹 회원만 접근 가능한 페이지입니다");
+							location.href = "/group/";
+						}
+					});
 				}
 
 				// input file이 변할때
@@ -121,6 +133,7 @@ pageEncoding="UTF-8"%>
 						writer: $('input[name="writer"]').val(),
 						group_name: "${group_name}",
 						attachList,
+						notice: $('input[name="notice"]').is(":checked") ? "Y" : "N",
 					};
 					console.log(board);
 					$.ajax({
@@ -142,7 +155,7 @@ pageEncoding="UTF-8"%>
 					$(input).change(function (e) {
 						let formData = new FormData();
 						let uploadFile = $(input)[0].files[0];
-
+						console.log("uploadFile", uploadFile);
 						formData.append("uploadFile", uploadFile);
 
 						$.ajax({
@@ -156,8 +169,10 @@ pageEncoding="UTF-8"%>
 							success: (res) => {
 								console.log("2)");
 								console.log(res);
-								const encodURL = encodeURIComponent(`\${res[0].uploadPath}/\${res[0].uuid}_\${res[0].fileName}`)
-								const IMG_URL =  `/display?fileName=\${encodURL}`
+								const encodURL = encodeURIComponent(
+									`\${res[0].uploadPath}/\${res[0].uuid}_\${res[0].fileName}`
+								);
+								const IMG_URL = `/display?fileName=\${encodURL}`;
 
 								let range = quill.getSelection();
 								console.log(range);
@@ -169,11 +184,33 @@ pageEncoding="UTF-8"%>
 				}; //imageHandletr
 
 				const toolbarOptions = [
-					[{ header: [1, 2, 3, 4, 5, 6, false] }],
-					[{ list: "ordered" }, { list: "bullet" }],
+					[
+						{
+							header: [1, 2, 3, 4, 5, 6, false],
+						},
+					],
+					[
+						{
+							list: "ordered",
+						},
+						{
+							list: "bullet",
+						},
+					],
 					["bold", "italic", "underline", "strike"],
-					[{ color: [] }, { background: [] }],
-					[{ align: [] }],
+					[
+						{
+							color: [],
+						},
+						{
+							background: [],
+						},
+					],
+					[
+						{
+							align: [],
+						},
+					],
 					["image"],
 					["clean"],
 				];

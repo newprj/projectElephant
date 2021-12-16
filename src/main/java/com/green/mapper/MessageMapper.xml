@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	<mapper namespace="com.green.mapper.MessageMapper">
+	
+	<insert id="MessageMapper">
+		<selectKey keyProperty="mid" order="BEFORE" resultType="long">
+			select seq_mid.nextval from dual
+		</selectKey>
+		insert into tbl_message(mid, msg, group_name, user_id) 
+			values(#{mid}, #{msg}, #{group_name}, #{user_id})
+	</insert>
+	
+	<select id="getMsg" resultType="com.green.vo.MessageVO">
+		 select * from tbl_message where group_name = #{group_name}
+		 	and user_id=#{user_id}
+	</select>
+	
+	<delete id="deleteMsg">
+		delete from tbl_message where mid=#{mid}
+	</delete>
+	
+</mapper>

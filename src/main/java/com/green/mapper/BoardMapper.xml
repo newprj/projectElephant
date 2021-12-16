@@ -7,8 +7,8 @@
 		<selectKey keyProperty="bno" order="BEFORE" resultType="long">
 			select seq_bno.nextval from dual
 		</selectKey>
-		insert into tbl_board(bno, group_name, title, content, writer, regdate)
-			values(#{bno}, #{group_name}, #{title}, #{content}, #{writer}, sysdate)
+		insert into tbl_board(bno, group_name, title, notice, content, writer, regdate)
+			values(#{bno}, #{group_name}, #{title}, #{notice}, #{content}, #{writer}, sysdate)
 	
 	</insert>
 	

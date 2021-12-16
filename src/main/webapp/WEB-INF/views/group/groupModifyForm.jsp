@@ -22,26 +22,23 @@ pageEncoding="UTF-8"%>
 		<script src="/resources/js/fileUpload.js" type="text/javascript"></script>
 	</head>
 	<body>
-		<form method="post" action="./make">
+		<form method="post" >
 			<div>
 				<label for=""> 그룹 이름 </label>
-				<input type="text" name="group_name" required />
+				<input type="text" name="group_name" value = "${one.group_name}"/>
 			</div>
-			<div>
-				<span class="duplicated hidden">중복된 이름입니다 </span>
-				<span class="unduplicated hidden">사용 가능한 이름입니다 </span>
-			</div>
+			
 			<div>
 				<label for=""> 리더 </label>
 				<input type="text" name="leader" value="${user.user_id}" />
 			</div>
 			<div>
 				<label for=""> 주제 </label>
-				<input type="text" name="subject" />
+				<input type="text" name="subject" value="${one.subject }" />
 			</div>
 			<div>
 				<label for=""> 모집 인원 </label>
-				<input type="number" name="member_number" />
+				<input type="number" name="member_number" value="${one.member_number}"/>
 			</div>
 			<div>
 				<label for=""> 상세 설명 </label>
@@ -49,53 +46,17 @@ pageEncoding="UTF-8"%>
 				<input name="description" type="hidden" />
 			</div>
 			<div class="submit">
-				<button type="submit" disabled="disabled">생성</button>
+				<button type="submit" >수정</button>
 			</div>
 		</form>
 	</body>
-
+ggg
 	<script>
 		$(document).ready(function (e) {
-			let user = "${user}";
-			if (!user) {
-				alert("로그인 된 사용자만 그룹을 만들수 있습니다");
-				location.href = "/group/";
-			}
+			
 			let result;
 			let myEditor = document.querySelector("#editor");
-			$('input[name="group_name"]').on(
-				"propertychange change keyup paste input",
-				function (e) {
-					let group_name = $('input[name="group_name"]').val();
-					let data = { group_name };
-
-					$.ajax({
-						type: "post",
-						url: "/group/duplicateCheck",
-						data: data,
-						success: (res) => {
-							result = res;
-							if (res === "duplicated") {
-								$(".unduplicated").addClass("hidden");
-								$(".duplicated").removeClass("hidden");
-								$(".submit > button").attr("disabled", true);
-							} else {
-								$(".duplicated").addClass("hidden");
-								$(".unduplicated").removeClass("hidden");
-								$(".submit > button").attr("disabled", false);
-							}
-						},
-					}); //ajax
-				}
-			); //namecheck
-
-			$("button").click(function (e) {
-				e.preventDefault();
-				$('input[name="description"]').val(myEditor.children[0].innerHTML);
-				console.log($('input[name="description"]').val());
-				$("form").submit();
-			});
-
+			
 			const imageHandler = (e) => {
 				console.log(e);
 				let input = $('<input type="file" accept="image/*">');
@@ -115,7 +76,7 @@ pageEncoding="UTF-8"%>
 						dataType: "json",
 
 						success: (res) => {
-								console.log("2)");
+						 	console.log("2)");
 							console.log(res);
 							const IMG_URL =
 								"/display?fileName=" +
@@ -125,7 +86,7 @@ pageEncoding="UTF-8"%>
 
 							let range = quill.getSelection();
 							console.log(range);
-							quill.insertEmbed(range, "image", IMG_URL); 
+							quill.insertEmbed(range, "image", IMG_URL);
 						},
 						error: (xhr, status, er) => console.log(xhr),
 					}); // ajax
@@ -155,6 +116,44 @@ pageEncoding="UTF-8"%>
 
 			let toolbar = quill.getModule("toolbar");
 			toolbar.addHandler("image", imageHandler);
+			
+			$.getJSON("/group/getDetail/${group_name}", (res) =>{
+				console.log(res)
+				let content = res.description
+				quill.container.firstChild.innerHTML = content 
+			})
+			
+			
+			$('button').click((e)=>{
+				e.preventDefault()
+				console.log(" hhhh")
+				const data = {
+					gno : '${one.gno}',
+					leader : $("input[name='leader']").val(),
+					subject : $('input[name="subject"]').val(),
+					description : myEditor.children[0].innerHTML,
+					member_number : $('input[name="member_number"]').val()
+				}
+					$.ajax({
+						type: "PUT",
+						url: "/group/board/${one.gno}",
+						data: JSON.stringify(data),
+						contentType: "application/json; charset=utf-8",
+						success: () =>
+							(location.href =
+								"//"),
+						error: (xhr, status, er) => {
+							console.log(status); 
+						}, //error
+					}); //ajax
+				}); // modify c*/
+				
+				
+			})// button click
+			
+			
+			
+			
 		}); //docu ready
 	</script>
 </html>

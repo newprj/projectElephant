@@ -1,15 +1,9 @@
 package com.green.controller;
 
-import java.io.Console;
 import java.util.List;
 
-import javax.security.auth.login.LoginContext;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpSession;
-import javax.swing.border.EmptyBorder;
 
-import org.apache.ibatis.javassist.expr.NewArray;
-import org.springframework.aop.aspectj.annotation.LazySingletonAspectInstanceFactoryDecorator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -18,18 +12,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.green.mapper.BoardMapper;
 import com.green.service.BoardService;
 import com.green.service.CalendarService;
 import com.green.service.GUserService;
@@ -128,6 +118,23 @@ public class GRestController {
 		mv.addObject("user", user);
 		return mv;
 	}
+
+	// 그룹 모집 페이지 수정시 json 받기 
+	@GetMapping("/getDetail/{group_name}")
+	public ResponseEntity<GroupVO> readDetail(@PathVariable("group_name") String group_name){
+		System.out.println(" .......  겟 디테이 ");
+		return new ResponseEntity<>(groupService.showOne(group_name), HttpStatus.OK);
+	}
+	
+	// 그룹 모집페이지 수정 
+	@GetMapping("/gather/{group_name}/modify")
+	public ModelAndView groupModify(@PathVariable("group_name") String group_name, HttpSession session ) {
+		UserVO user = (UserVO) session.getAttribute("user");
+		ModelAndView mv = new ModelAndView("/group/groupModifyForm");
+		mv.addObject("one", groupService.showOne(group_name));
+		mv.addObject("user", user);
+		return mv;
+	}
 	
 	//그룹 이름 중복체크
 	@PostMapping("/duplicateCheck")
@@ -147,6 +154,8 @@ public class GRestController {
 		try {
 			UserVO user = (UserVO) session.getAttribute("user");
 			mv.addObject("user", user.getUser_id());
+			mv.addObject("board", boardService.showList(group_name));
+			
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -245,6 +254,9 @@ public class GRestController {
 	public ResponseEntity<BoardVO> readContent(@PathVariable("bno") Long bno){
 		return new ResponseEntity<BoardVO>(boardService.read(bno), HttpStatus.OK);
 	}
+	
+	
+	
 	
 
 	
