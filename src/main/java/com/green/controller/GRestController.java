@@ -136,6 +136,12 @@ public class GRestController {
 		return mv;
 	}
 	
+	// 그룹 모집페이지 수정 put
+	@PutMapping(value = "/gather/{group_name}/modify", consumes= "application/json")
+	public void groupGatherUpdate(@RequestBody GroupVO group) {
+		groupService.updateGroup(group);
+	}
+	
 	//그룹 이름 중복체크
 	@PostMapping("/duplicateCheck")
 	public String groupNameCheck(String group_name) {

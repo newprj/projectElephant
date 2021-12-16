@@ -25,6 +25,8 @@ public class GroupServiceImpl implements GroupService{
 	@Override
 	public int makeGroup(GroupVO vo) {
 		System.out.println(" 서비스 vo " + vo);
+		GUserVO groupLeader = new GUserVO(vo);
+		umapper.groupSignUp(groupLeader);
 		return mapper.makeGroup(vo);
 	}
 
@@ -56,6 +58,12 @@ public class GroupServiceImpl implements GroupService{
 	public void GroupAuth(Long gno, String authorized) {
 		
 		mapper.GroupAuth(gno, authorized);
+	}
+
+	@Override
+	public int updateGroup(GroupVO vo) {
+		
+		return mapper.updateGroup(vo);
 	}
 
 	

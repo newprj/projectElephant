@@ -129,6 +129,7 @@ ggg
 				console.log(" hhhh")
 				const data = {
 					gno : '${one.gno}',
+					group_name : "${one.group_name}",
 					leader : $("input[name='leader']").val(),
 					subject : $('input[name="subject"]').val(),
 					description : myEditor.children[0].innerHTML,
@@ -136,20 +137,16 @@ ggg
 				}
 					$.ajax({
 						type: "PUT",
-						url: "/group/board/${one.gno}",
+						url: "/group/gather/${one.group_name}/modify",
 						data: JSON.stringify(data),
 						contentType: "application/json; charset=utf-8",
-						success: () =>
-							(location.href =
-								"//"),
+						success: () =>location.href = "/group/gather/${one.group_name}",
 						error: (xhr, status, er) => {
 							console.log(status); 
 						}, //error
 					}); //ajax
 				}); // modify c*/
-				
-				
-			})// button click
+
 			
 			
 			

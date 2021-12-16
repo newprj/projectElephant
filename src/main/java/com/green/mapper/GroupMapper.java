@@ -13,6 +13,8 @@ public interface GroupMapper {
 	public GroupVO showOne(String group_name);
 	public int deleteGroup (String group_name);
 	public int groupNameCheck(String group_name);
+	
+	public int updateGroup(GroupVO vo);
 
 	//스터디 승인
 	public void GroupAuth(@Param("gno") Long gno,@Param("authorized") String authorized);

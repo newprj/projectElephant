@@ -29,6 +29,10 @@
 	</delete>
 	
 	
+	<update id="updateGroup">
+		update tbl_group set group_name =#{group_name}, subject= #{subject}, description= #{description}, member_number = #{member_number} where gno=#{gno}
+	</update>
+	
 	<update id="GroupAuth">
 		update tbl_group set authorized=#{authorized} where gno=#{gno}
 	</update>
