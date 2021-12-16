@@ -89,10 +89,11 @@ select * from board_file;
 select * from board_reply;
 select * from tbl_calendar;
 
-update tbl_calendar set user_='test';
+update tbl_calendar set user_ = 'test';
 
 select * from user_sequences;
 commit;
+
 
 select * from tbl_board where group_name='그루비룸';
 select * from tbl_board where group_name='그룹이름' ;
@@ -150,6 +151,7 @@ create sequence seq_gno;
 
 
 update tbl_group set authorized = 'Y';
+update tbl_groupuser set authorized='y';
 delete from tbl_user where user_id = 'a';
 
 commit;
@@ -161,4 +163,6 @@ select * from (
     where rn >10;
 
 commit;
+
+
 

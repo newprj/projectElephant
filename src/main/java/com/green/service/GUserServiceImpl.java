@@ -1,6 +1,8 @@
 package com.green.service;
 
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +31,10 @@ public class GUserServiceImpl implements GUserService {
 
 	@Override
 	public List<GUserVO> listByGroup(String group_name) {
-		// TODO Auto-generated method stub
-		return mapper.listByGroup(group_name);
+		// 승인된 사용자만 
+		List<GUserVO> list = mapper.listByGroup(group_name)
+				.stream().filter( vo -> vo.getAuthorized() == 'Y').collect(Collectors.toList());
+		return list;
 	}
 
 	@Override

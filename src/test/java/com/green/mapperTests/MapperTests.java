@@ -20,14 +20,15 @@ import com.green.mapper.UserMapper;
 import com.green.vo.BoardReplyVO;
 import com.green.vo.BoardVO;
 import com.green.vo.Criteria;
-import com.green.vo.FileVO;
+
 import com.green.vo.GUserVO;
 import com.green.vo.GroupVO;
-import com.green.vo.UserVO;
+
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
-import oracle.net.aso.b;
+
+
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
@@ -178,7 +179,18 @@ public class MapperTests {
 		
 	}
 	
-	@Test 
+	
+	@Test
+	public void group() {
+		List<GroupVO> list = gMapper.showAll();
+		list.forEach(i -> {
+			 guMapper.listByGroup(i.getGroup_name())
+				.stream().filter( vo -> vo.getAuthorized() == 'Y').collect(Collectors.toList())
+				.forEach(v -> log.info("  " + v));
+		});
+		
+	}
+	//@Test 
 	public void testSearck() {
 		Criteria cri = new Criteria();
 		cri.setGroup_name("테스트그룹");

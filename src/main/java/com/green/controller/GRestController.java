@@ -81,14 +81,19 @@ public class GRestController {
 			mv.addObject("user", user);
 		}catch(Exception e) {
 			e.printStackTrace();
-		}finally {
+		}
+		try {
 			List<GroupVO> groups = groupService.showAll();
 			List<GroupVO> joinedYetGroup = groups.stream().filter( vo -> vo.getMember_number() > groupUserService.listByGroup(vo.getGroup_name()).size())
 				.collect(Collectors.toList());
 			joinedYetGroup.forEach(i -> groups.remove(i));
+			
 			mv.addObject("group", joinedYetGroup);
 			mv.addObject("completed", groups);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+		
 		return mv;
 	}
 	
