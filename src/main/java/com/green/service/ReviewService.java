@@ -5,7 +5,6 @@ import java.util.List;
 import com.green.vo.ReviewAttachFileDTO;
 import com.green.vo.Criteria;
 import com.green.vo.ReviewVO;
-import com.green.vo.SearchCriteria;
 
 
 public interface ReviewService {

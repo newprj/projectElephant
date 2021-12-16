@@ -29,18 +29,20 @@
 	</ul>
 	<button type="button" onclick="location.href= '/review/register'">후기등록</button>
 	<button type="button" onclick="location.href= '/review/list'">새로고침</button>
-  <div class="search">
-    <select name="type">
+	
+	<form method="get" action="/review/list" id="searchForm">
+		<select name="type">
 			<option value="" <c:out value="${pageMaker.cri.type==null?'selected':''}"/>>선택</option>
 			<option value="T" <c:out value="${pageMaker.cri.type eq 'T' ?'selected':''}"/> >제목</option>
 			<option value="W" <c:out value="${pageMaker.cri.type eq 'W' ?'selected':''}"/>>작성자</option>			
 			<option value="TW" <c:out value="${pageMaker.cri.type eq 'TW'?'selected':''}"/>>제목 또는 작성자</option>			
-	</select>
-	<input type="hidden" name="pageNum" value='${pageMarker.cri.pageNum}'>
-    <input type="hidden" name="amount" value='${pageMarker.cri.amount}'>
-    <input type="text" name="keyword" id="keywordInput" value="${cri.keyword}"/>
-    <button id="searchBtn" type="button">검색</button>
-  </div>
+		</select>
+		<input type="text" placeholder="검색어 입력" name="keyword"> 
+		<input type="hidden" name="pageNum" value='${pageMarker.cri.pageNum}'>
+        <input type="hidden" name="amount" value='${pageMarker.cri.amount}'>
+              
+		<button id="search">검색</button>
+	</form>
 	<div>
 		<ul class="pagination">
 			<c:if test="${pageMarker.prev}">
@@ -52,7 +54,7 @@
 					<a href="${num}">${num}</a>
 				</li>
 			</c:forEach>
-			<c:if test="${pageMarker.next}">
+			<c:if test="${pageMarker.next && pageMarker.endPage > 0}">
 				<li class="paginate_btn next"><a href="${pageMarker.endPage +1}">다음</a></li>
 			</c:if>
 		</ul>
@@ -75,6 +77,21 @@ $(document).ready(function () {
 	})
 	
 
+	$("#searchForm button").click(function(e){
+		if(!$("#searchForm").find("option:selected").val()){
+			alert("검색 종류를 선택하세요")
+			return false
+		}
+		if(!$("#searchForm").find("input[name='keyword']").val()){
+			alert("검색어를 입력하세요")
+			return false
+		}
+		/* 검색시 무조건 1페이지로  */
+		$("#searchForm").find("input[name='pageNum']").val("1")
+		
+		 e.preventDefault();
+		$("#searchForm").submit()
+	})
 }) 
  $(function(){
         $('#searchBtn').click(function() {

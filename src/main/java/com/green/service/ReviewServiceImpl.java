@@ -11,7 +11,6 @@ import com.green.mapper.ReviewMapper;
 import com.green.vo.ReviewAttachFileDTO;
 import com.green.vo.Criteria;
 import com.green.vo.ReviewVO;
-import com.green.vo.SearchCriteria;
 
 import lombok.AllArgsConstructor;
 import lombok.Setter;

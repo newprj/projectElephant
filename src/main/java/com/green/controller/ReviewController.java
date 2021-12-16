@@ -6,7 +6,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,10 +16,7 @@ import com.green.mapper.ReviewAttachFileMapper;
 import com.green.service.ReviewService;
 import com.green.vo.Criteria;
 import com.green.vo.PageDTO;
-import com.green.vo.PageMaker;
 import com.green.vo.ReviewVO;
-import com.green.vo.SearchCriteria;
-
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 

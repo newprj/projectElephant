@@ -59,7 +59,7 @@
 
 	
 	<!-- 검색 처리를 위한 쿼리문  -->
-<!-- 	<sql id="criteria">
+	<sql id="criteria">
 		<trim prefix="(" suffix=") and " prefixOverrides="OR">
 	    	<foreach item="type" collection="typeArr">
 	    		<trim prefix="OR">
@@ -74,21 +74,15 @@
 	    		</trim>
 	    	</foreach>
 		</trim>
-	</sql> -->
-	<select id="listCount" resultType="int">
-		select count(*) from tbl_review where rno>0
-	</select>
-	
-	<sql id="criteria">
-		<trim prefix="(" suffix=") and " prefixOverrides="OR">
-			<if test="type != null">
-				<if test="type == 't'.toString()">AND TITLE LIKE '%' || #{keyword} || '%'</if>
-				<if test="type == 'c'.toString()">AND CONTENT LIKE '%' || #{keyword} || '%'</if>
-				<if test="type == 'w'.toString()">AND WRITER LIKE '%' || #{keyword} || '%'</if>
-				<if test="type == 'tc'.toString()">AND (TITLE LIKE '%' || #{keyword} || '%') or (CONTENT LIKE '%' || #{keyword} || '%')</if>
-			</if>
-		</trim>
 	</sql> 
+	
+	
+	<!-- 페이지 수   -->
+	<select id="listCount" resultType="int">
+		select count(*) from tbl_review where
+		<include refid="criteria"></include>
+		rno>0
+	</select>
 	
 	<!-- 리플 갯수   -->
 	<update id="updateReplyCount" parameterType="long">
@@ -112,7 +106,4 @@
 		where b.rno=#{rno}
 	</update>	
 
-
-	
-	
 </mapper>
