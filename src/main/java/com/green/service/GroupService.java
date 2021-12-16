@@ -10,6 +10,7 @@ public interface GroupService {
 	public GroupVO showOne(String group_name);
 	public int deleteGroup (String group_name);
 	public int groupNameCheck(String group_name);
+	public int updateGroup(GroupVO vo);
 	
 	public void GroupAuth(Long gno,String authorized);
 }
