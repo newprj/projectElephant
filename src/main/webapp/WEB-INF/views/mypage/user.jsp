@@ -234,10 +234,10 @@ nav h2,nav h4{
 				<c:forEach items="${letter}" var="i" varStatus="status"  begin="0" end='9'>
 					<tr>
 						<td>${status.count}</td>
-						<td>${i.writer}</td>
+						<td id='userId${status.index}'>${i.writer}</td>
 						<td>${i.content}</td>
 						<td><fmt:formatDate value="${i.reg_date}" pattern="yyyy-MM-dd a hh:mm" /></td>
-						<td><button data-idx='${status.index}' class='letterBtn'>답장</button></td>
+						<td><button class='letterBtn'>답장</button></td>
 					</tr>
 				</c:forEach>
 		</table>
@@ -302,7 +302,7 @@ nav h2,nav h4{
 			var idx=$(".letterBtn").index(this)
 			var uid=$("#userId"+idx).text()
 			
-			console.log(uid)
+			console.log(idx)
 			console.log('${user.user_id}')
 			
 			modalwriteId.val('${user.user_id}')
