@@ -156,9 +156,7 @@ prefix="c" %>
 							str += `<img src='/display?fileName=\${fileCallpath}'></div></li>`
 						}
 						else{
-							let fileCallpath = encodeURIComponent(
-									file.uploadPath + "/" + file.uuid + "_" + file.fileName
-								);
+							let fileCallpath =encodeURIComponent(`\${file.uploadPath}/\${file.uuid}_\${file.fileName}`)
 							str += `<li><div><a href='/download?fileName=\${fileCallpath}'><span>\${file.fileName}</span></a></div></li>`;
 						}
 					})//map

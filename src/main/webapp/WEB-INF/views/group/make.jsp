@@ -22,7 +22,7 @@ pageEncoding="UTF-8"%>
 		<script src="/resources/js/fileUpload.js" type="text/javascript"></script>
 	</head>
 	<body>
-		<form method="post" action="./make" >
+		<form method="post" action="./make">
 			<div>
 				<label for=""> 그룹 이름 </label>
 				<input type="text" name="group_name" required />
@@ -56,10 +56,10 @@ pageEncoding="UTF-8"%>
 
 	<script>
 		$(document).ready(function (e) {
-			let user = "${user}"
-			if(!user){
-				alert("로그인 된 사용자만 그룹을 만들수 있습니다")
-				location.href="/group/"
+			let user = "${user}";
+			if (!user) {
+				alert("로그인 된 사용자만 그룹을 만들수 있습니다");
+				location.href = "/group/";
 			}
 			let result;
 			let myEditor = document.querySelector("#editor");
@@ -115,7 +115,7 @@ pageEncoding="UTF-8"%>
 						dataType: "json",
 
 						success: (res) => {
-						/* 	console.log("2)");
+								console.log("2)");
 							console.log(res);
 							const IMG_URL =
 								"/display?fileName=" +
@@ -125,7 +125,7 @@ pageEncoding="UTF-8"%>
 
 							let range = quill.getSelection();
 							console.log(range);
-							quill.insertEmbed(range, "image", IMG_URL); */
+							quill.insertEmbed(range, "image", IMG_URL); 
 						},
 						error: (xhr, status, er) => console.log(xhr),
 					}); // ajax

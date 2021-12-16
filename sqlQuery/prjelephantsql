@@ -125,7 +125,7 @@ create table tbl_message(
 create sequence seq_mid;
 alter table tbl_board add (notice char(1) default('N'));
 alter table tbl_board add(updatedate timestamp);
-
+alter table tbl_group add(authorized char(1) default 'N' check(authorized in('Y','N')));
 
 commit;
 
@@ -141,11 +141,13 @@ create table tbl_group(
     authorized char(1) default 'N' check(authorized in('Y','N'))
 );
 
+
 select * from tbl_group;
 drop sequence seq_gno;
 create sequence seq_gno;
 
 
 update tbl_group set authorized = 'Y';
+delete from tbl_user where user_id = 'a';
 
 commit;

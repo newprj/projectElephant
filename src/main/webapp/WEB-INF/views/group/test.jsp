@@ -33,8 +33,8 @@ pageEncoding="UTF-8"%>
 				align-items : center;
 				
 				top: 50%;
-  				left: 50%;
-  				transform: translate(-50%, -50%);
+				left: 50%;
+				transform: translate(-50%, -50%);
 				background-color : white;
 			}
 			.modal_content *{

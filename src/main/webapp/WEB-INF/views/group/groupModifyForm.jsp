@@ -22,7 +22,7 @@ pageEncoding="UTF-8"%>
 		<script src="/resources/js/fileUpload.js" type="text/javascript"></script>
 	</head>
 	<body>
-		<form method="post" action="./make" >
+		<form method="post" >
 			<div>
 				<label for=""> 그룹 이름 </label>
 				<input type="text" name="group_name" value = "${one.group_name}"/>
@@ -50,21 +50,13 @@ pageEncoding="UTF-8"%>
 			</div>
 		</form>
 	</body>
-
+ggg
 	<script>
 		$(document).ready(function (e) {
 			
 			let result;
 			let myEditor = document.querySelector("#editor");
 			
-
-			$("button").click(function (e) {
-				e.preventDefault();
-				$('input[name="description"]').val(myEditor.children[0].innerHTML);
-				console.log($('input[name="description"]').val());
-				$("form").submit();
-			});
-
 			const imageHandler = (e) => {
 				console.log(e);
 				let input = $('<input type="file" accept="image/*">');
@@ -131,6 +123,33 @@ pageEncoding="UTF-8"%>
 				quill.container.firstChild.innerHTML = content 
 			})
 			
+			
+			$('button').click((e)=>{
+				e.preventDefault()
+				console.log(" hhhh")
+				const data = {
+					gno : '${one.gno}',
+					leader : $("input[name='leader']").val(),
+					subject : $('input[name="subject"]').val(),
+					description : myEditor.children[0].innerHTML,
+					member_number : $('input[name="member_number"]').val()
+				}
+					$.ajax({
+						type: "PUT",
+						url: "/group/board/${one.gno}",
+						data: JSON.stringify(data),
+						contentType: "application/json; charset=utf-8",
+						success: () =>
+							(location.href =
+								"//"),
+						error: (xhr, status, er) => {
+							console.log(status); 
+						}, //error
+					}); //ajax
+				}); // modify c*/
+				
+				
+			})// button click
 			
 			
 			
