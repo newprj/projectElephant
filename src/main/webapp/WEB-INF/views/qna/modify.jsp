@@ -111,11 +111,11 @@ li {
 		$(uploadResultArr).each(function(i,obj){
 
 			if(obj.fileType){
-				var fileCallPath=encodeURIComponent(obj.uploadPath+"/s_"+obj.uuid+"_"+obj.fileName)
+				var fileCallPath=encodeURIComponent(obj.uploadPath+"/"+obj.uuid+"_"+obj.fileName)
 				str+="<li data-path='"+obj.uploadPath+"'"
 				str+=" data-uuid='"+obj.uuid+"' data-filename='"+obj.fileName+"' data-type='"+obj.fileType+"'"
 				str+="><div>"
-				str+="<img src='/upload/display?fileName="+fileCallPath+"'>"
+				str+="<img src='/upload/display?fileName="+fileCallPath+"'  style=' width:50px; height:50px;' >"
 				str+="<span> "+obj.fileName+"</span>"
 				str+="<button type='button' data-file=\'"+fileCallPath+"\' data-type='image' class='btn-circle'><i>X</i></button>"
 				str+="</div>"	
