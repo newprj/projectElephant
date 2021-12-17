@@ -33,6 +33,7 @@ import com.green.service.LetterService;
 import com.green.service.QnaService;
 import com.green.service.ReplyService;
 import com.green.service.UserService;
+import com.green.service.VisitService;
 import com.green.vo.GUserVO;
 import com.green.vo.GroupVO;
 import com.green.vo.LetterVO;
@@ -66,9 +67,14 @@ public class MypageController {
 	@Setter(onMethod_=@Autowired)
 	LetterService letterService;
 	
+	@Setter(onMethod_=@Autowired)
+	VisitService visitService;
+	
 	@GetMapping("/admin")
 	public String adminHome(Model model, HttpServletResponse response,HttpSession session) {
 		UserVO login= (UserVO) session.getAttribute("user");
+		log.info("오늘 방문자"+session.getAttribute("todayCnt"));
+		log.info(""+ session.getAttribute("totalCnt"));
 		log.info("id="+login.getUser_id());
 		
 		log.info("admin page");
@@ -87,6 +93,8 @@ public class MypageController {
             
 			return "redirect:/user/login";
 		}
+		
+		model.addAttribute("visit",visitService.todayCnt());
 		model.addAttribute("user",id);
 		model.addAttribute("list",userService.allList());
 		model.addAttribute("group",gService.showAll());

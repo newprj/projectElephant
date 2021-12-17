@@ -3,6 +3,7 @@
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core"
 prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %> 
 
+
 <jsp:useBean id="today" class="java.util.Date" />
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <!DOCTYPE html>
@@ -91,7 +92,7 @@ ul.tabs li.current{
 	<h1>관리자 페이지</h1>
 	<nav>
 		<h5><a href="/user/logout">로그아웃</a></h5>
-		<h5 id='today'><fmt:formatDate value="<%= today %>" pattern="yyyy-MM-dd" /> : 방문자수(가능하면)</h5>
+		<h5 id='today'><fmt:formatDate value="<%= today %>" pattern="yyyy-MM-dd" /> 방문자 :  ${visit}명 </h5>
 	</nav>
 	<h3>방문자 평균 그래프로 보이게</h3>
 	

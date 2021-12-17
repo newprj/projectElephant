@@ -14,6 +14,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import com.green.service.GroupService;
 import com.green.service.QnaService;
 import com.green.service.UserService;
+import com.green.service.VisitService;
 import com.green.vo.QnaVO;
 import com.green.vo.UserVO;
 import com.green.vo.Criteria;
@@ -37,10 +38,18 @@ public class ControllerTester {
 	@Setter(onMethod_=@Autowired)
 	private GroupService gService;
 	
+	@Setter(onMethod_=@Autowired)
+	private VisitService visit;
 	
 	Date date=new Date();
 	
 	@Test
+	public void vtest() {
+		//visit.insertVisitor();
+		//visit.totalCnt();
+		visit.todayCnt();
+	}
+	//@Test
 	public void gtest() {
 		for (int i = 0; i <5; i++) {
 			GroupVO vo=new GroupVO();

@@ -26,6 +26,7 @@
 	
 	<beans:bean id="logininterceptor" class="com.green.interceptor.LoginInterceptor"/>
   	<beans:bean id="authinterceptor"  class="com.green.interceptor.AhthInterceptor"/>
+  	<beans:bean id="visitCounter" class="com.green.listener.VisitCounter"/>
 
 	<interceptors>
 	  <interceptor>
@@ -41,9 +42,11 @@
 		     
 		    <beans:ref bean="authinterceptor"/>
  	 </interceptor>
+
 	</interceptors>
 
-		
+	 
+	  
 	<context:component-scan base-package="com.green.controller" />
 	<!-- 파일 업로드 -->
 	<!-- <beans:bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver"></beans:bean> -->
@@ -60,6 +63,8 @@
 	
 	<beans:bean id="chattingHandler" class="com.green.listener.ChattingHandler"/>
 	<beans:bean id="groupchatHandler" class="com.green.listener.GroupChatHandler"/>
+
+
 	
 
 </beans:beans>

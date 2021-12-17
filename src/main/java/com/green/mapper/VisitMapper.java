@@ -1,9 +1,10 @@
 package com.green.mapper;
 
-import com.green.vo.VisitCountVO;
+import com.green.vo.VisitCountDTO;
 
 public interface VisitMapper {
-	public int insertVisitor(VisitCountVO vo);
-	public int totalCount();
+	public int insertVisitor();
+	public int todayCnt();
+	public int totalCnt();
 	
 }
