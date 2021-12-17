@@ -16,7 +16,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
   <body>
     <form>
       그룹명 <input type="text" name="group_name" /><br />
-      작성자 <input type="text" name="writer" /><br />
+   <input type="hidden" name="writer" value="${login}"/>
       제목 <input type="text" name="title" /><br />
       <div id="editor" style="max-height: 400px; overflow: auto"></div>
       <br />

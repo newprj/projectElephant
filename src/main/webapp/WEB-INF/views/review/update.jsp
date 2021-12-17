@@ -16,7 +16,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
       번호 <input type="text" name="rno" value="${read.rno}" readonly /><br />
       그룹명 <input type="text" name="group_name" value="${read.group_name}" /><br />
       제목 <input type="text" name="title" value="${read.title}" /><br />
-      작성자 <input type="text" name="writer" value="${read.writer}" /> <br />
+   <input type="hidden" name="writer" value="${read.writer}" /> <br />
       <div id="editor" style="max-height: 400px; overflow: auto"></div>
       <br />
       <%-- 내용 <input type="text" name="content" value="${read.content}" /><br />

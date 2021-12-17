@@ -10,7 +10,8 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
-<h1>후기 게시판</h1>
+<h1>후기 게시판</h1> 
+<input type="hidden" id="userCheck" value='${login}'>
 <style type="text/css">
 			li {list-style: none; float: left; padding: 6px;}
 </style>
@@ -27,7 +28,7 @@
 			<br>
 		</c:forEach>
 	</ul>
-	<button type="button" onclick="location.href= '/review/register'">후기등록</button>
+	<button type="button" id="register" >후기등록</button>
 	<button type="button" onclick="location.href= '/review/list'">새로고침</button>
 	
 	<form method="get" action="/review/list" id="searchForm">
@@ -68,7 +69,11 @@
 </body>
 <script type="text/javascript">
 
+var user = $('#userCheck').val()
+console.log(user)
+
 $(document).ready(function () {
+
 	$(".paginate_btn a").click(function(e){
 		e.preventDefault();
 		var thisis=$(this).attr("href")
@@ -91,6 +96,17 @@ $(document).ready(function () {
 		 e.preventDefault();
 		$("#searchForm").submit()
 	})
+	
+	$('#register').click(function(e){
+		console.log("버튼이 눌리다.")
+		console.log(user)
+		if(user == "cantLogin"){
+			alert("로그인 후 이용해주세요")
+			return false;
+		}
+		else location.href="/review/register"
+	})
+	
 }) 
 
       

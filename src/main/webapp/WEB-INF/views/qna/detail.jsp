@@ -139,7 +139,6 @@ li {
 					<button type="button" id="register">등록</button>
 					<button type="button" class="close">닫기</button>
 				</div>
-				
 		</div>
 	</div>
 	

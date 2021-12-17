@@ -2,6 +2,9 @@ package com.green.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.green.service.ReviewReplyService;
 import com.green.service.ReviewService;
 import com.green.vo.ReviewReplyVO;
+import com.green.vo.UserVO;
 
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -33,11 +37,13 @@ public class ReviewReplyController {
 	
 	@RequestMapping("/insert") //댓글 입력 컨트롤러
     @ResponseBody
-    private int insert(int rno, String content){
+    private int insert(int rno, String content,HttpServletRequest request){
 		log.info("댓글 인서트 컨트롤러 진입.............");
+		HttpSession session =request.getSession();
+		UserVO login= (UserVO) session.getAttribute("user");
 		ReviewReplyVO vo = new ReviewReplyVO();
 		vo.setRno(rno);
-		vo.setWriter("홍길동");
+		vo.setWriter(login.getUser_id());
 		vo.setContent(content);
 		replyService.register(vo);
 		reviewService.updateReplyCount((long)rno);

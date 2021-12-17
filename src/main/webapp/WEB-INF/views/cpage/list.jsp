@@ -9,6 +9,34 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
+<style>
+li {
+	list-style-type:none;
+}
+.modal {
+	display:none;
+	position: fixed;
+	z-index: 1;
+	left: 0;
+	top:0;
+	width: 100%;
+	height:100%;
+	overflow:auto;
+	background-color:rgb(0,0,0);
+	background-color:rgba(0,0,0,0.4);
+}
+
+.modal-content{
+	background-color:#fefefe;
+	margin:15% auto;
+	padding: 20px;
+	border: 1px solid #888;
+       width: 30%;
+
+}
+
+
+</style>
 <h1>소모임장 페이지</h1>
 <body>
 	<h2>소모임 명 : ${str[1]}</h2>
@@ -19,7 +47,7 @@
 		<c:if test="${list.membership eq 'Y'}">
 			<c:if test="${list.captain ne 'Y'}">
 				${list.member} ======== <button type="button" onclick="remove('${list.member}')" >추방하기</button>
-				<button type="button">쪽지보내기</button>
+				<button type="button" onclick="letter('${list.member}')">쪽지보내기</button>
 				<button type="button">회원정보</button><br> 
 			</c:if>
 		</c:if>
@@ -31,19 +59,52 @@
 		<c:if test="${list.membership eq 'N'}">
 			${list.member}  ======== <button type="button" onclick="update('${list.member}')" >승인</button>
 			<button type="button" onclick="remove('${list.member}')" >거절</button>
-			<button type="button"  >쪽지보내기</button>
+			<button type="button" onclick="letter('${list.member}')">쪽지보내기</button>
 			<button type="button">회원정보</button><br> 
 		</c:if>
+		<div class="modal" >
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">쪽지보내기</h4>
+				</div>
+				<div class="modal-body">
+					<div class="modal-group">
+						<input name="writer" type="hidden" value="${str[0]}"/>
+						<input name="replyDate" type="hidden"/>
+					</div>
+					<div class="modal-group">
+						<label>쪽지내용</label><br/>
+						<textarea name="content" placeholder="내용을 입력하세요"></textarea>
+					</div>
+				</div><br/>
+				<div class="modal-footer">
+					<button type="button" id="register">보내기</button>
+					<button type="button" id="close">닫기</button>
+				</div>
+		</div>
+	</div>
 	</c:forEach>
+	
 </body>
 <script type="text/javascript">
+
+$(".modal").hide()
+
 
 var memberLimit = ${memberLimit}
 console.log(memberLimit)
 
 
 $(".memberLimit").append("<p> 모집인원 : " + memberLimit + " / 5 </p>")
-	
+
+function letter(member){
+	$(".modal").show()
+}
+
+$('#close').click(function() {
+	$(".modal").hide()
+})
+
 function update(member){
 	if(memberLimit === 5) {
 		alert("인원이 초과되었습니다")

@@ -23,6 +23,7 @@
 	<button type="button" id="modifyBtn">수정</button>
 	<button type="button" id="homeBtn">후기 홈으로</button>
 	<hr>
+	<input type="hidden" id="userCheck" value='${login}'>
 	<div class="container">
 		<label for="content">댓글</label>
 		<form name="replyInsertForm">
@@ -39,8 +40,10 @@
 	
 </body>
 <script type="text/javascript">
-
+	
+	var user = $('#userCheck').val()
 	var rno = '${detail.rno}'
+	
 	$('[name=replyInsertBtn]').click(function(){
 		var insertData = $('[name=replyInsertForm]').serialize();
 		replyInsert(insertData);
@@ -52,7 +55,14 @@
     $('#homeBtn').click(function () {
 	    location.href = '/review/list'
     }) 
-    	
+    
+    $('[name=content]').click(function(){
+    	if(user == "cantLogin"){
+			alert("로그인 후 이용해주세요")
+			return false;
+		}
+    })
+	
     	
 	function replyList(){
 		$.ajax({
