@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,6 +35,7 @@ public class CPageController {
 	@RequestMapping("/list") 
     private void list(Model model, String input){
 		log.info("야호..................."+input);
+		
 		List<String> str = new ArrayList<>();
 		String captain = "";
 		CPageVO vo = new CPageVO();
@@ -48,32 +51,35 @@ public class CPageController {
 		service.update(vo);
 		str.add(captain);
 		str.add(service.getList(input).get(0).getGroup_name());
+		int memberLimit = service.memberLimit(input);
+		log.info("회원수..................."+memberLimit);
 		captain =" ";
 		
 		model.addAttribute("list",service.getList(input));
 		model.addAttribute("str",str);
+		model.addAttribute("memberLimit",memberLimit);
     }
 	
 	@RequestMapping("/update/{member}")
     @ResponseBody
-    private int update(@PathVariable String member){
+    private ResponseEntity<String> update(@PathVariable String member){
 		log.info("수락 컨트롤러 진입............."+member);
 		CPageVO vo = new CPageVO();
 		vo.setMember(member);
 		vo.setMembership("Y");
 		service.update(vo);
-        return 1;
+		return new ResponseEntity<>("success",HttpStatus.OK);
     }
 	
 	@RequestMapping("/remove/{member}")
     @ResponseBody
-    private int remove(@PathVariable String member){
+    private ResponseEntity<String> remove(@PathVariable String member){
 		log.info("탈퇴 컨트롤러 진입............."+member);
 		CPageVO vo = new CPageVO();
 		vo.setMember(member);
 		vo.setMembership("N");
 		service.update(vo);
-        return 1;
+		return new ResponseEntity<>("success",HttpStatus.OK);
     }
 	
 	

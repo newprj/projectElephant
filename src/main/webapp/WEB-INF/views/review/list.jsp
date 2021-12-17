@@ -86,21 +86,13 @@ $(document).ready(function () {
 			alert("검색어를 입력하세요")
 			return false
 		}
-		/* 검색시 무조건 1페이지로  */
 		$("#searchForm").find("input[name='pageNum']").val("1")
 		
 		 e.preventDefault();
 		$("#searchForm").submit()
 	})
 }) 
- $(function(){
-        $('#searchBtn').click(function() {
-       	  if($('#keywordInput').val()=="") alert("검색어를 입력해 주세요")
-       	  else{
-          self.location = "list" + '${pageMaker.makeQuery(1)}' + "&type=" + $("select option:selected").val() + "&keyword=" + encodeURIComponent($('#keywordInput').val());
-       	  } 
-       	});
-      });   
+
       
       
 </script>

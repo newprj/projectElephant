@@ -17,4 +17,5 @@ public class CPageVO {
 	private String member;
 	private String captain;
 	private String Membership;
+	private int memberLimit;
 }
