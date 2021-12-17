@@ -13,6 +13,6 @@ import com.green.vo.VisitCountDTO;
 public interface VisitService {
 	public int insertVisitor();
 	public int todayCnt();
-	public int totalCnt();
+	public List<Integer>  weekCnt();
 	
 }

@@ -25,6 +25,7 @@ import com.green.vo.QnaReplyVO;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 
+@WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
 @Log4j
@@ -44,6 +45,16 @@ public class ControllerTester {
 	Date date=new Date();
 	
 	@Test
+	public void weekHit() {
+		visit.weekCnt();
+	}
+	
+	//@Test
+	public void hit() {
+		service.updateHit(162L, 0L);
+	}
+	
+	//@Test
 	public void vtest() {
 		//visit.insertVisitor();
 		//visit.totalCnt();

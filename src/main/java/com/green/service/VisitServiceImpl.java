@@ -37,9 +37,9 @@ public class VisitServiceImpl implements VisitService {
 	}
 
 	@Override
-	public int totalCnt() {
+	public List<Integer>  weekCnt() {
 		// TODO Auto-generated method stub
-		return mapper.totalCnt();
+		return mapper.weekCnt();
 	}
 
 	

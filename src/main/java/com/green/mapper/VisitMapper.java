@@ -1,10 +1,9 @@
 package com.green.mapper;
-
-import com.green.vo.VisitCountDTO;
+import java.util.List;
 
 public interface VisitMapper {
 	public int insertVisitor();
 	public int todayCnt();
-	public int totalCnt();
-	
+
+	public List<Integer> weekCnt();
 }

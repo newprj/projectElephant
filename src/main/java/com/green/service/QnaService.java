@@ -2,6 +2,8 @@ package com.green.service;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.green.vo.QnaVO;
 import com.green.mapper.QnaAttachMapper;
 import com.green.vo.Criteria;
@@ -19,6 +21,7 @@ public interface QnaService {
 	public List<QnaVO> listqnaWithPaging(Criteria cri);
 	public List<QnaAttachDTO> getAttachList(Long qno);
 	public List<QnaVO> myQna(String writer);
+	public int updateHit(@Param("qno") Long qno,@Param("hit") Long hit);
 	
 	//reply
 	public int register(QnaReplyVO vo);

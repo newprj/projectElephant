@@ -9,6 +9,9 @@ create table qna_tbl
     p_group varchar2(10) default 'public' constraint group_ch check (p_group in ('public','private'))
 );
 alter table qna_tbl add up_date timestamp;
+---qna 게시물 조회수 (12/17)
+alter table qna_tbl add hit number DEFAULT 0;
+
 create sequence qna_seq;
 
 create table qna_reply_tbl(

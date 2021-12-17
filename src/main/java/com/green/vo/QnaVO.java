@@ -23,6 +23,7 @@ public class QnaVO {
     private Date up_date;
     private String pwd;
     private String p_group;
+    private Long hit;
     
     private List<QnaAttachDTO> attachList;
 }

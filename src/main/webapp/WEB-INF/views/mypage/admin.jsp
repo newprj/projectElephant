@@ -3,7 +3,7 @@
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core"
 prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %> 
 
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 <jsp:useBean id="today" class="java.util.Date" />
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <!DOCTYPE html>
@@ -184,13 +184,14 @@ ul.tabs li.current{
 					<td>${i.pwd}</td>
 					<td>${i.writer}</td>
 					<td><fmt:formatDate value="${i.up_date}" pattern="yyyy-MM-dd a hh:mm" /></td>
-					<td>만들기</td>
+					<td>${i.hit}</td>
 				</tr>
 			</c:forEach>
 		</table>
 	</div>
 	
 	
+	<!-- 쪽지 -->
 	<div class="container">
 
 		<ul class="tabs">
@@ -455,6 +456,8 @@ ul.tabs li.current{
 				}
 			}) 
 		})
+		
+		
 	})
 
 </script>

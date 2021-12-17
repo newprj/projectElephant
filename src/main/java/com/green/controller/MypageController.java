@@ -94,6 +94,10 @@ public class MypageController {
 			return "redirect:/user/login";
 		}
 		
+		
+		System.out.println(visitService.weekCnt());
+		
+		model.addAttribute("week",visitService.weekCnt());
 		model.addAttribute("visit",visitService.todayCnt());
 		model.addAttribute("user",id);
 		model.addAttribute("list",userService.allList());
@@ -148,6 +152,7 @@ public class MypageController {
 	@ResponseBody
 	@PostMapping(value="/deleLetter", consumes="application/json")
 	public void deleLetter(@RequestBody Map<String,String> data) {
+		System.out.println("들어온 정보"+data);
 		letterService.delete(data.get("writer"),Long.valueOf(data.get("lno")));
 		
 	}
