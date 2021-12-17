@@ -40,11 +40,10 @@ public class CPageMapperTests {
 	}
 	
 	//@Test
-	/*
-	 * public void deleteTeset() { mapper.delete(member);
-	 * 
-	 * }
-	 */
+	public void deleteTeset() {
+		mapper.delete(8l);
+		
+	}
 	
 	@Test
 	public void getList() {

@@ -25,8 +25,9 @@ public class CPageServiceImpl implements CPageService{
 	}
 
 	@Override
-	public int delete(String member) {
-		return mapper.delete(member);
+	public int delete(long rno) {
+		
+		return mapper.delete(rno);
 	}
 
 	@Override
@@ -44,13 +45,5 @@ public class CPageServiceImpl implements CPageService{
 		mapper.update(vo);
 		
 	}
-
-	@Override
-	public int memberLimit(String group_name) {
-		// TODO Auto-generated method stub
-		return mapper.memberLimit(group_name);
-	}
-
-	
 
 }
