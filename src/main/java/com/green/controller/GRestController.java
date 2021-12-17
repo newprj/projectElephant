@@ -92,13 +92,13 @@ public class GRestController {
 				i.setJoinedCnt(groupUserService.listByGroup(i.getGroup_name()).size());
 			});
 			// 모집이 끝난 그룹과 구분
-			List<GroupVO> joinedYetGroup = groups.stream().filter( i -> 
-				i.getMember_number() > groupUserService.listByGroup(i.getGroup_name()).size())
-					.collect(Collectors.toList());
-			joinedYetGroup.forEach(i -> groups.remove(i));
+			List<GroupVO> recruiteCompletedGroup = groups.stream().filter( i -> 
+				i.getMember_number() <= groupUserService.listByGroup(i.getGroup_name()).size())
+				.collect(Collectors.toList());
 			
-			mv.addObject("group", joinedYetGroup);
-			mv.addObject("completed", groups);
+			
+			mv.addObject("group", groupService.showLatest20());
+			mv.addObject("completed", recruiteCompletedGroup);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -117,6 +117,30 @@ public class GRestController {
 			log.info(i.getGroup_name());
 		});
 		return new ResponseEntity<List<GUserVO>>(groupList, HttpStatus.OK);
+	}
+	
+	// 모든 그룹 가지고 오기
+	@GetMapping(value ="/main/getGroupAll")
+	public ResponseEntity<List<GroupVO>> getAllGroups(){
+		
+		log.info("모든 그룹 가지고 오기 ");
+		try{
+			List<GroupVO> groups = groupService.showAll();
+			// 가입 수 넣기
+			groups.forEach(i -> {
+				i.setApplicantCnt(groupUserService.listByGroupAll(i.getGroup_name()).size());
+				i.setJoinedCnt(groupUserService.listByGroup(i.getGroup_name()).size());
+				});
+			// 모집이 끝난 그룹과 구분
+			List<GroupVO> recruitingGroup = groups.stream().filter( i -> 
+				i.getMember_number() > groupUserService.listByGroup(i.getGroup_name()).size())
+					.collect(Collectors.toList());
+			return new ResponseEntity<List<GroupVO>>(recruitingGroup, HttpStatus.OK);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+		
 	}
 	
 	

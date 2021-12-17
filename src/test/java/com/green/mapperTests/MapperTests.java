@@ -127,17 +127,17 @@ public class MapperTests {
 	
 
 //	
-//	@Test
+	//@Test
 	public void makegroupTest() {
-		for(int i=0; i<10; i++) {
+		for(int i=0; i<30; i++) {
 			GroupVO groupVO = new GroupVO();
 			groupVO.setGroup_name("테스트" + i);
-			groupVO.setDescription("test description " + i);
+			groupVO.setDescription("<p>말하면 니가 아니</p>" + i);
 			groupVO.setLeader("aaa");
 			groupVO.setMember_number(4);
-			groupVO.setSubject(" test ");
+			groupVO.setSubject("test"+i);
 			gMapper.makeGroup(groupVO);
-			
+
 		}
 	}
 	
@@ -180,7 +180,7 @@ public class MapperTests {
 	}
 	
 	
-	@Test
+	//@Test
 	public void group() {
 		List<GroupVO> list = gMapper.showAll();
 		list.forEach(i -> {
@@ -197,6 +197,11 @@ public class MapperTests {
 		cri.setKeyword("내용");
 		cri.setType("TC");
 		bMapper.getListWithPaging(cri).forEach(i->System.out.println(i));
+	}
+	
+	@Test
+	public void testShow() {
+		gMapper.showLatest20();
 	}
 
 }

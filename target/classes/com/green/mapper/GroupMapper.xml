@@ -8,12 +8,22 @@
 		<selectKey keyProperty="gno" order="BEFORE" resultType="long">
 			select seq_gno.nextval from dual
 		</selectKey>
-		insert into tbl_group(gno, group_name, leader, subject, description, member_number)
-			values(#{gno}, #{group_name}, #{leader}, #{subject}, #{description}, #{member_number})
+		insert into tbl_group(gno, group_name, leader, subject, description, member_number, regdate)
+			values(#{gno}, #{group_name}, #{leader}, #{subject}, #{description}, #{member_number} , sysdate)
 	</insert>
 	
 	<select id="showAll" resultType="com.green.vo.GroupVO">
 		select * from tbl_group where authorized='Y' order by gno desc 
+	</select>
+	
+	<select id="showLatest20" resultType="com.green.vo.GroupVO">
+		<![CDATA[
+		select * from(
+    	select rownum rn, gno, group_name, leader, subject, description, member_number, authorized, viewcnt, regdate 
+    	from tbl_group 
+    	where authorized ='Y' order by gno desc)
+    where rn <=20
+    ]]>
 	</select>
 	
 	<select id="groupNameCheck" resultType="int">

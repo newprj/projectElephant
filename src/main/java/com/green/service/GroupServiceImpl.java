@@ -66,6 +66,12 @@ public class GroupServiceImpl implements GroupService{
 		return mapper.updateGroup(vo);
 	}
 
+	@Override
+	public List<GroupVO> showLatest20() {
+		
+		return mapper.showLatest20();
+	}
+
 	
 
 }

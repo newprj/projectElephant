@@ -10,6 +10,7 @@ public interface GroupMapper {
 	
 	public int makeGroup(GroupVO vo);
 	public List<GroupVO> showAll();
+	public List<GroupVO> showLatest20();
 	public GroupVO showOne(String group_name);
 	public int deleteGroup (String group_name);
 	public int groupNameCheck(String group_name);

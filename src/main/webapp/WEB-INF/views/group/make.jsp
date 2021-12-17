@@ -41,7 +41,7 @@ pageEncoding="UTF-8"%>
 			</div>
 			<div>
 				<label for=""> 모집 인원 </label>
-				<input type="number" name="member_number" />
+				<input type="number" name="member_number" min ='1'/>
 			</div>
 			<div>
 				<label for=""> 상세 설명 </label>

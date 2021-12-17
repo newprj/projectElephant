@@ -139,12 +139,14 @@ create table tbl_group(
     group_name varchar2(30),
     leader varchar2(30),
     subject varchar2(30),
-    description varchar2(30),
+    description varchar2(2000),
     member_number number,
     authorized char(1) default 'N' check(authorized in('Y','N'))
 );
 alter table tbl_group add ( viewCnt number default 0 );
 alter table tbl_group add(authorized char(1) default 'N' check(authorized in('Y','N')));
+alter table tbl_group add( regdate timestamp);
+
 
 select * from tbl_group;
 drop sequence seq_gno;
@@ -154,8 +156,9 @@ create sequence seq_gno;
 ----- ¾îµå¹Î±â´É
 update tbl_group set authorized = 'Y'; 
 update tbl_groupuser set authorized='Y';
-
+update tbl_group set regdate = sysdate;
 commit;
+
 
 
 
