@@ -1,7 +1,7 @@
 const MAX_SIZE = 5242880;
 const REGEX = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
 let attachList = [];
-console.log("파일업로드 js 파일과 연결")
+console.log("파일업로드 업그레이드  js 파일과 연결ㅇㅇㅇ")
 
 
 const checkExtension = (fileName, fileSize) => {
@@ -18,6 +18,8 @@ const checkExtension = (fileName, fileSize) => {
 
 // 파일 첨부를 위한 첨부파일 객체 만들기
 const addAttachlist = (file) => {
+	console.log("======================")
+	console.log(file.image)
 	attach = {
 		fileName: file.fileName,
 		uploadPath: file.uploadPath,
@@ -29,9 +31,9 @@ const addAttachlist = (file) => {
 };
 
 const getImgFileString = (file) => {
-	let fileCallpath = encodeURIComponent(
-			file.uploadPath + "/_s" + file.uuid + "_" + file.fileName
-		);
+	console.log("...... 이미지 스트링 구하는 중 ")
+	let fileCallpath = 
+	encodeURIComponent(`${file.uploadPath}/${file.uuid}_${file.fileName}`)
 	let str ="";
 	
 	str += "<li><div><span>" + file.fileName + "</span>";
@@ -45,8 +47,6 @@ const getImgFileString = (file) => {
 	str += fileCallpath + "'></div></li>";
 	return str;
 }
-
-
 
 
 
@@ -72,7 +72,7 @@ const showUploadFile = (arr) => {
 	var str = "";
 	arr.map((file) => {
 		addAttachlist(file)
-		console.log("1)");
+		console.log("1)......");
 		console.log(file);
 		if (file.image) {
 			str += getImgFileString(file)
@@ -103,3 +103,28 @@ const getFileList = (bno) =>{
 		$('.uploadResult ul').html(str)
 	}) //getJSON
 }
+
+/*const getFileListAtRead = (bno) => {
+	console.log(" 리드 함수 ")
+	$.getJSON("/group/getFileList", {bno} , (files) =>{
+		let str =""
+		files.map( file => {
+			attachList.push(file) // 수정할때 넣음
+			if(file.fileType){
+				let fileCallpath = encodeURIComponent(
+						file.uploadPath + "/_s" + file.uuid + "_" + file.fileName
+					);
+				str += `<li><div><a href='/download?fileName=${fileCallpath} ><span>${file.fileName}</span></a>`;
+				str += "<img src='/display?fileName=";
+				str += fileCallpath + "'></div></li>";
+			}
+			else{
+				let fileCallpath = encodeURIComponent(
+						file.uploadPath + "/" + file.uuid + "_" + file.fileName
+					);
+				str += `<li><div><a href='/download?fileName=${fileCallpath} ><span>${file.fileName}</span></a></div></li>`;
+			}
+		})//map
+		$('.uploadResult ul').html(str)
+	}) //getJSON
+}*/

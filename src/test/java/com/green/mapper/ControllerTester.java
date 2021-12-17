@@ -11,11 +11,14 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import com.green.service.GroupService;
 import com.green.service.QnaService;
 import com.green.service.UserService;
 import com.green.vo.QnaVO;
 import com.green.vo.UserVO;
 import com.green.vo.Criteria;
+import com.green.vo.GUserVO;
+import com.green.vo.GroupVO;
 import com.green.vo.QnaReplyVO;
 
 import lombok.Setter;
@@ -31,9 +34,24 @@ public class ControllerTester {
 	@Setter(onMethod_=@Autowired)
 	private UserService userService;
 	
+	@Setter(onMethod_=@Autowired)
+	private GroupService gService;
 	
 	
 	Date date=new Date();
+	
+	@Test
+	public void gtest() {
+		for (int i = 0; i <5; i++) {
+			GroupVO vo=new GroupVO();
+			vo.setDescription("설명"+i);
+			vo.setGroup_name("name"+i);
+			vo.setLeader("a");
+			vo.setMember_number(i+1);
+			vo.setSubject("주제"+i);
+			gService.makeGroup(vo);
+		}
+	}
 	
 	//@Test
 	public void test() {

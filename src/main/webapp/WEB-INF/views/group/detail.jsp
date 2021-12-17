@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core"
+prefix="c" %>
 <!DOCTYPE html>
 <html>
   <head>
@@ -10,15 +12,19 @@
   <h1> 스터디 모집 페이지 </h1>
   <div>
   <h3> 스터디 모집글이 들어갈 거에요</h5>
- -스터디 별 페이지는 로그인 => 자기가 가입된 소모임 에서 클릭하면 넘어가도록 구현 예정-<br/>
- - 지금은 로그인 기능이 없으므로 여기에서 페이지를 넘김-<br/>
+
+ - 지금은 로그인 기능이 없으므로 여기에서 페이지를 넘김- => 메인페이지에서 접근가능하도록 바꿈 , 편의를 위해 남김 지우시오~~ <br/>
  <a href="/group/${one.group_name}"> 스터디 별 페이지 </a>
  <p><a href="/group/"> 메인 </a></p>
  <p>
   </div>
-  
-   
-	
+  =====</br>
+  	<c:if test="${user.user_id== one.leader}">
+  	
+  	<a href="/group/gather/${one.group_name}/modify"> <button> 모집글 수정하기 </button></a>
+  	</c:if>
+  	
+	<br/>
     ${one.group_name}<br/>
     ${one.leader }<br/>
     ${one.subject }<br/>
@@ -29,14 +35,27 @@
     <div>
       <form>
         <div>
-          <label>아이디 </label>
-          <input type="text" name="user_id" />
+         <p>
+          <input type="hidden" name="user_id" value="${user.user_id}"/>
+          </p>
         </div>
       </form>
     </div>
+    <c:if test="${user != null}">
     <button class="signup">지원하기</button>
+    </c:if>
+    <br/>
+    <c:if test="${user.user_id == 'admin'}">
+    	<button class="auth">승인하기</button>
+    </c:if>
+    
   </body>
   <script>
+  	console.log("----------------------")
+		console.log("${msg}")
+		
+		
+
     const signupGroup = (data) => {
       $.ajax({
         type: 'post',
@@ -75,6 +94,32 @@
        
         signupGroup(signupform)
       })
+      
+      /* admin이 그룹 승인 */
+      $(".auth").click(function(){
+    	  var gno='${one.gno}'
+    	  var authorized='Y'
+    	  var gAuth={
+    			gno: gno,
+    			authorized:authorized,
+    	  }
+    	  console.log("승인 버튼 누름"+JSON.stringify(gAuth))
+    	  $.ajax({
+          type: 'post',
+          url:'/mypage/auth',
+          data: JSON.stringify(gAuth),
+          contentType: 'application/json; charset=utf-8',
+          success: () => {
+            console.log('승인 완료')
+            alert("승인 완료")
+            location.href = '/mypage/admin'
+          },
+          error: (xhr, status, er) => {
+            console.log(status)
+          },
+        }) //ajax
+      })
+      
     })
   </script>
 </html>

@@ -9,5 +9,8 @@ public interface GUserService {
 	
 	public int groupSignUp(GUserVO vo);
 	public List<GUserVO> listByGroup(String group_name);
+	public List<GUserVO> listByUSer(String user);
+	
+
 
 }

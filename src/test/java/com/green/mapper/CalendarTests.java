@@ -1,12 +1,10 @@
 package com.green.mapper;
 
-import org.apache.ibatis.binding.MapperRegistry;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
 
 import com.green.vo.CalendarVO;
 
@@ -27,7 +25,7 @@ public class CalendarTests {
 		CalendarVO vo = new CalendarVO();
 		vo.setColor("black");
 		vo.setTitle("testTitle2");
-		vo.setStartDate("2021-12-03");
+//		vo.setStartDate("2021-12-03");
 //		vo.setEndDate("21-12-02");
 		vo.setEditable(true);
 //		vo.setLocation("서울");

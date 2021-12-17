@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core"
+prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -42,13 +44,19 @@
           <h1 class="logo"> 코끼리 </h1>
         </div>
         <div class="right">
-          <div class="item"> 가입 </div>
-          <div class="item"> 로그인 </div>
-          
+    		<c:if test="${user==null && user.size()<0}">
+          <div class="item"><a href="/user/register"> 가입</a>  </div>
+          <div class="item"><a href="/user/login">로그인</a>  </div>
+          </c:if>
+          <c:if test="${user!=null}">
+          	<div class="item"> <a href="/user/logout"> 로그아웃 </a></div>
+          </c:if>
         </div>
       </div>
     </div>
   </div>
-  
+  <script>
+  	console.log("${user}")
+  </script>
   
 </html>

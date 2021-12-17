@@ -1,7 +1,6 @@
 package com.green.vo;
 
 import java.util.Date;
-import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -26,9 +25,12 @@ public class UserVO {
 	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date regDate;
 	
-	//정지 
+	//admin이 회원정지 
 	private String suspension;
 	private String suspContent;
 	private Date suspDate;
 	
+	
+	// 로그인 유지
+	private boolean useCookie;
 }

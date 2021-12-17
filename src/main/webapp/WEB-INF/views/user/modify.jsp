@@ -53,7 +53,7 @@
 	</script>
   <body>
     <h4>회원정보수정</h4>
-
+		
       <form action="/user/modify" method="post">
         <div class="form-group">
           <label for="user_id">아이디</label>
@@ -73,11 +73,11 @@
         </div>
          <div class="form-group">
           <label for="name">이름</label>
-          <input type="text" class="form-control" name="name" id="name"/>
+          <input type="text" class="form-control" value="${user.name}" name="name" id="name"/>
         </div>
          <div class="form-group">
           <label for="email">이메일</label>
-          <input type="text" class="form-control" name="email" />
+          <input type="text" class="form-control" name="email" value="${user.email }"/>
         </div>
         <button class="btn btn-info" id="submit">수정</button>
         <button class="btn btn-warning" type="button" onclick="location.href='login' ">수정 취소</button>

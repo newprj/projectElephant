@@ -13,7 +13,7 @@
 	</insert>
 	
 	<select id="showAll" resultType="com.green.vo.GroupVO">
-		select * from tbl_group order by gno desc
+		select * from tbl_group where authorized='Y' order by gno desc 
 	</select>
 	
 	<select id="groupNameCheck" resultType="int">
@@ -27,6 +27,12 @@
 	<delete id="deleteGroup">
 		delete from tbl_group where group_name = #{group_name}
 	</delete>
+	
+	
+	<update id="GroupAuth">
+		update tbl_group set authorized=#{authorized} where gno=#{gno}
+	</update>
+	
 	
 	
 </mapper>

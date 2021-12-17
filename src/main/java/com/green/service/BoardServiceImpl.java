@@ -1,6 +1,7 @@
 package com.green.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,10 +38,36 @@ public class BoardServiceImpl implements BoardService{
 		});
 	}
 
+	
+	
+	@Override
+	public List<BoardVO> getListWithPaging(Criteria cri) {
+		List<BoardVO> voList = mapper.getListWithPaging(cri);
+		voList.forEach(vo -> {
+			List<FileVO> files =fileMapper.filesByBno(vo.getBno());
+			List<BoardReplyVO> replies = replyMapper.getReplysByBno(vo.getBno());
+			vo.setAttachList(files);
+			vo.setReplyCnt(replies.size());
+		});
+		return voList;
+	}
+	
+	
+	
 	@Override
 	public List<BoardVO> showList(String group_name) {
-		// TODO Auto-generated method stub
-		return mapper.showList(group_name);
+		List<BoardVO> voList = mapper.showList(group_name);
+		List<BoardVO> notice = voList.stream()
+			.filter( board -> board.getNotice() == 'Y')
+			.collect(Collectors.toList());
+		
+		notice.forEach(vo ->{
+				List<FileVO> files =fileMapper.filesByBno(vo.getBno());
+				List<BoardReplyVO> replies = replyMapper.getReplysByBno(vo.getBno());
+				vo.setAttachList(files);
+				vo.setReplyCnt(replies.size());
+			});
+		return notice;
 	}
 
 	@Override
@@ -79,22 +106,18 @@ public class BoardServiceImpl implements BoardService{
 		return fileMapper.filesByBno(bno);
 	}
 
-	@Override
-	public List<BoardVO> getListWithPaging(Criteria cri) {
-		List<BoardVO> voList = mapper.getListWithPaging(cri);
-		voList.forEach(vo -> {
-			List<FileVO> files =fileMapper.filesByBno(vo.getBno());
-			List<BoardReplyVO> replies = replyMapper.getReplysByBno(vo.getBno());
-			vo.setAttachList(files);
-			vo.setReplyCnt(replies.size());
-		});
-		return voList;
-	}
+
 
 	@Override
 	public int getTotalCount(Criteria cri) {
 		
 		return mapper.getTotalCount(cri);
+	}
+
+	@Override
+	public List<BoardVO> myBoard(String writer) {
+		// TODO Auto-generated method stub
+		return mapper.myBoard(writer);
 	}
 
 }

@@ -12,4 +12,5 @@ public interface ReplyMapper {
 	public int updateReply(BoardReplyVO vo);
 	public int deleteReply(Long rno);
 
+	public List<BoardReplyVO> myReply(String replyer);
 }

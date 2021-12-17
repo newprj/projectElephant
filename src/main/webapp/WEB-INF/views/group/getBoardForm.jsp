@@ -36,6 +36,15 @@ prefix="c" %>
 			.modal_content *{
 				padding : 10px
 			}
+			button[type="reset"]{
+				display : none;
+			}
+			 div.uploadResult > ul > li > div > img{
+			 	width: 50px;
+                height: 50px;
+                border-radius: 50%;
+			 }
+			 
 		</style>
 	</head>
 	<body>
@@ -73,9 +82,10 @@ prefix="c" %>
 				<p class="reply" data-rno="${reply.rno}"><span > ${reply.reply} </span><span> ${reply.replyer}</span> <p>
 			</c:forEach>
 		</div>
-		
-		<button class="go_modify">글수정</button>
-		<button class="deleteBoard">글삭제</button>
+		<c:if test="${user eq board.writer}">
+			<button class="go_modify">글수정</button>
+			<button class="deleteBoard">글삭제</button>
+		</c:if>
 		<button class="go_board">목록</button>
 		<button class="reply">모달을 띄우자</button>
 		
@@ -89,8 +99,8 @@ prefix="c" %>
 						<input type="text" name="reply" />
 					</div>
 					<div>
-						<label for="replyer">댓글작성자</label>
-						<input type="text" name="replyer" />
+						
+						<input type="hidden" name="replyer" />
 					</div>
 					<input type="hidden" name="rno" />
 						<div>
@@ -107,16 +117,56 @@ prefix="c" %>
 	</div>
 	
 		<script>
+
+		  	
 		
 		   $(document).ready(function(e){
-			 let attachList = [];
-			 getFileList('${cri.bno}')
+			   
+			   
+		   let loginUser= "${user}"
+		  	if(! loginUser){
+				console.log('로그인안됨')
+				alert("로그인 해야 접근 가능합니다")
+				location.href="/group/"
+			}else{
+				
+				$.getJSON(
+					"/group/getMemberlistByGroup/${cri.group_name}", (list) =>{
+						console.log(list)
+						console.log(loginUser)
+						let joinCheck = list.find( user => user.user_id === loginUser)
+						if(!joinCheck){
+							alert("그룹 회원만 접근 가능한 페이지입니다")
+							location.href="/group/"
+						} 
+					})
+			}
+	   
+//			 let attachList = [];
+		
+			 // 파일 표시 (다운로드 )
+			 let bno = "${cri.bno}"
+			 $.getJSON("/group/getFileList", {bno} , (files) =>{
+					let str =""
+					files.map( file => {
+//						attachList.push(file) // 수정할때 넣음
+						if(file.fileType){
+							let fileCallpath = encodeURIComponent(`\${file.uploadPath}/\${file.uuid}_\${file.fileName}`)
+							str += `<li><div><a href='/download?fileName=\${fileCallpath}'><span>\${file.fileName}</span></a>`;
+							str += `<img src='/display?fileName=\${fileCallpath}'></div></li>`
+						}
+						else{
+							let fileCallpath =encodeURIComponent(`\${file.uploadPath}/\${file.uuid}_\${file.fileName}`)
+							str += `<li><div><a href='/download?fileName=\${fileCallpath}'><span>\${file.fileName}</span></a></div></li>`;
+						}
+					})//map
+					$('.uploadResult ul').html(str)
+				}) //getJSON
+			 
 		    $('div.modal > div > span').click(function(e){
 				$('.modal').hide()
 			})
-			
-			
-			
+
 			// 글삭제
 			$(".deleteBoard").click(function (e) {
 				
@@ -136,7 +186,9 @@ prefix="c" %>
 			
 			// 모달창 띄우기
 			$(".reply").click(function (e) {
+				
 				$('button[type="reset"]').trigger("click");
+				$('input[name="replyer"]').val(loginUser)
 				$('.modal').show()
 			});
 			
@@ -160,6 +212,7 @@ prefix="c" %>
 				e.preventDefault();
 				let data = getReplyData();
 				
+				
 				$.ajax({
 					type: "post",
 					url: "/group/reply",
@@ -178,13 +231,20 @@ prefix="c" %>
 			// 댓글 클릭하면 모달에 채우기...
 			$("p.reply").click(function (e) {
 				console.log(e)
+				$('button.submit').hide()
 				let rno = $(this).data("rno");
 				$.getJSON("/group/reply/" + rno, (res) => {
 					console.log(res);
 					$('input[name="rno"]').val(res.rno);
 					$('input[name="reply"]').val(res.reply);
 					$('input[name="replyer"]').val(res.replyer);
+					if(loginUser!== res.replyer) {
+						$('button.modify, button.delete').hide()
+					}
 				}); //getJSON
+				
+				
+				
 			}); //reply click
 			
 			// 글 수정하러가기

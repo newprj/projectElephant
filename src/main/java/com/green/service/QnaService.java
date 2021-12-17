@@ -18,6 +18,7 @@ public interface QnaService {
 	public int totalCount(Criteria cri);
 	public List<QnaVO> listqnaWithPaging(Criteria cri);
 	public List<QnaAttachDTO> getAttachList(Long qno);
+	public List<QnaVO> myQna(String writer);
 	
 	//reply
 	public int register(QnaReplyVO vo);
@@ -25,6 +26,7 @@ public interface QnaService {
 	public int replyDelete(Long rno);
 	public int replyUpdate(QnaReplyVO vo);
 	public int replyCount(Long qno);
+	public List<QnaReplyVO> myReply(String r_writer);
 	
 	//attach
 	public int attachCount(Long qno);

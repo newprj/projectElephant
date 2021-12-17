@@ -7,8 +7,8 @@
 		<selectKey keyProperty="bno" order="BEFORE" resultType="long">
 			select seq_bno.nextval from dual
 		</selectKey>
-		insert into tbl_board(bno, group_name, title, content, writer, regdate)
-			values(#{bno}, #{group_name}, #{title}, #{content}, #{writer}, sysdate)
+		insert into tbl_board(bno, group_name, title, notice, content, writer, regdate)
+			values(#{bno}, #{group_name}, #{title}, #{notice}, #{content}, #{writer}, sysdate)
 	
 	</insert>
 	
@@ -22,7 +22,7 @@
 	
 	<update id="update">
 		update tbl_board 
-			set group_name=#{group_name}, title=#{title}, content=#{content}, writer=#{writer}
+			set group_name=#{group_name}, title=#{title}, content=#{content}, writer=#{writer}, updateDate = sysdate
 				where bno=#{bno}
 	</update>
 	
@@ -46,6 +46,10 @@
 	
 	<select id="getTotalCount" resultType="int">
 		select count(*) from tbl_board where bno > 0 and group_name = #{group_name}
+	</select>
+	
+	<select id="myBoard" resultType="com.green.vo.BoardVO">
+		select *from tbl_board where writer=#{writer}
 	</select>
 </mapper>
 

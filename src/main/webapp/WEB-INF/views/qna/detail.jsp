@@ -91,10 +91,10 @@ li {
 				<table  style="border: 1px solid #dddddd;"  id="replyTable${i.rno}">
 					<tbody >
 						<tr style="background-color:gray">
-							<td align="left" id="r_writer" >${i.r_writer}</td>
+							<td align="left" id="r_writer${i.rno}" >${i.r_writer}</td>
 							<td align="right" id="r_reg_date"><fmt:formatDate value="${i.r_reg_date}" pattern="yyyy/MM/dd a hh:mm" /></td>
 							<td><button  id="reReply">댓글</button></td>
-							<td><button data-rno="${i.rno}"  id="replymodify${i.rno}">수정</button> </td>
+							<td><button data-rno="${i.rno}" class='replymodify' id="replymodify${i.rno}">수정</button> </td>
 							<td><button id="replyRemove${i.rno}">삭제</button> </td>
 						</tr>	
 						<tr>
@@ -122,7 +122,7 @@ li {
 				<div class="modal-body">
 					<div class="modal-group">
 						<label>작성자</label><br/>
-						<input name="replyer"/>
+						<input name="replyer" value="${loginId}"/>
 					</div>
 					<div class="modal-group">
 						<label>댓글</label><br/>
@@ -168,7 +168,7 @@ li {
 		/* 댓글 등록 버튼 누름 */
 		$("#addReply").on("click",function(e){
 			console.log("등록버튼 눌림")
-			modal.find("input").val("")
+			modalReply.val("")
 			modal.find("textarea").val("")
 			modalReplyDate.closest('div').hide()
 
@@ -234,15 +234,11 @@ li {
 			$(".modal").show()
 			modalRgBtn.hide()
 			
-			/* console.log($(this)) */
-			
 			var rno=$(this).data("rno")
-			/* console.log(rno) */
 			
-			/* console.log($("#replyTable"+rno).find("#r_writer").text()) */
-			
+						
 			modalReply.val($("#replyTable"+rno).find("#r_content").text())
-			modalReplyer.val($("#replyTable"+rno).find("#r_writer").text())
+			modalReplyer.val($("#replyTable"+rno).find("#r_writer"+rno).text())
 			modalReplyDate.val($("#replyTable"+rno).find("#r_reg_date").text()).attr("readonly","readonly")
 			 
 			/* modal창에서 수정버튼 누름  */
@@ -309,11 +305,11 @@ li {
 			var str=""
 			$(arr).each(function(i,attach){
 				if(attach.fileType){
-					var fileCallPath=encodeURIComponent(attach.uploadPath+"/s_"+attach.uuid+"_"+attach.fileName)
+					var fileCallPath=encodeURIComponent(attach.uploadPath+"/"+attach.uuid+"_"+attach.fileName)
 					str+="<li data-path='"+attach.uploadPath+"'"
 					str+=" data-uuid='"+attach.uuid+"' data-filename='"+attach.fileName+"' data-type='"+attach.fileType+"'"
 					str+="><div>"
-					str+="</br><img src='/upload/display?fileName="+fileCallPath+"'>"
+					str+="</br><img src='/upload/display?fileName="+fileCallPath+"' style=' width:50px; height:50px; ' >"
 					str+="<span> "+attach.fileName+"</span>"
 					str+="</div>"	
 					str+="</li>"
@@ -361,6 +357,21 @@ li {
 				$(".bigPictureWrapper").hide()
 			}, 1000);
 		})
+		
+		/* 로그인 정보와 댓글 정보 비교  */
+		<c:forEach items="${reply}" var="i" >
+		
+			if('${loginId}'==$("#r_writer${i.rno}").text()){
+				
+				$('#replymodify${i.rno}').show()
+				$('#replyRemove${i.rno}').show()
+			} else{
+				$('#replymodify${i.rno}').hide()
+				$('#replyRemove${i.rno}').hide()
+			}
+			
+		</c:forEach> 
+		
 	})
 	
 </script>

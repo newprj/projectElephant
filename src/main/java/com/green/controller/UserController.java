@@ -4,21 +4,26 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.green.service.UserService;
 import com.green.vo.UserVO;
 
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
+
 
 @Controller
 @RequestMapping("/user/*")
+@Slf4j
 public class UserController {
 
 	@Setter(onMethod_ = @Autowired)
@@ -44,6 +49,7 @@ public class UserController {
 	public String modifyPost(UserVO vo, HttpSession session) {
 		userservice.modify(vo);
 		logout(session);
+		// 회원정보 수정 후 로그아웃?
 		return "redirect:/user/login";
 	}
 
@@ -74,19 +80,19 @@ public class UserController {
 	
 	
 	@PostMapping("/login")
-	public String loginPost(UserVO vo, HttpServletRequest req, RedirectAttributes rttr) {
+	public void loginPost(UserVO vo, HttpServletRequest req, RedirectAttributes rttr) {
 		HttpSession session = req.getSession();
 		UserVO login = userservice.login(vo);
-		
+		/* String result=""; */
 		if(login == null) {
-			session.setAttribute("user", null);
 			rttr.addFlashAttribute("msg", false);
 		}
 		else {
 			session.setAttribute("user", login);
 		}
-		return "redirect:/user/login";
+		
 	}
+	
 
 	@GetMapping("/logout")
 	public String logout(HttpSession session) {
@@ -105,6 +111,7 @@ public class UserController {
 		}
 		return result;
 	}
+	
 }
 
 

@@ -16,6 +16,8 @@ public interface BoardService {
 	
 	public List<FileVO> getFileListByBno(Long bno);
 	
+	public List<BoardVO> myBoard(String writer);
+	
 	public List<BoardVO> getListWithPaging(Criteria cri);
 	public int getTotalCount(Criteria cri);
 

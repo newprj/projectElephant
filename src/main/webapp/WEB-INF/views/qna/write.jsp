@@ -8,6 +8,11 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
+<style>
+li {
+	list-style-type:none;
+}
+</style>
 <meta charset="UTF-8">
 <title>Q & A 등록</title>
 </head>
@@ -33,7 +38,7 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 		</div>
 		<div>
 			<label for="writer">글쓴이</label>
-			<input type="text" name="writer"/> 
+			<input type="text" name="writer" value='${id}' readonly="readonly"/> 
 		</div>
 		<div>
 			<label for="q_content">내용</label>
@@ -101,13 +106,13 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 		$(uploadResultArr).each(function(i,obj){
 
 			if(obj.fileType){
-				var fileCallPath=encodeURIComponent(obj.uploadPath+"/s_"+obj.uuid+"_"+obj.fileName)
+				var fileCallPath=encodeURIComponent(obj.uploadPath+"/"+obj.uuid+"_"+obj.fileName)
 				str+="<li data-path='"+obj.uploadPath+"'"
 				str+=" data-uuid='"+obj.uuid+"' data-filename='"+obj.fileName+"' data-type='"+obj.fileType+"'"
 				str+="><div>"
+				str+="<img src='/upload/display?fileName="+fileCallPath+"'  style=' width:50px; height:50px;'>"
 				str+="<span> "+obj.fileName+"</span>"
 				str+="<button type='button' data-file=\'"+fileCallPath+"\' data-type='image' class='btn-circle'><i>X</i></button></br>"
-				str+="<img src='/upload/display?fileName="+fileCallPath+"'>"
 				str+="</div>"	
 				str+="</li>"
 			}
@@ -117,9 +122,9 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 				str+="<li data-path='"+obj.uploadPath+"'"
 				str+=" data-uuid='"+obj.uuid+"' data-filename='"+obj.fileName+"' data-type='"+obj.fileType+"'"
 				str+="><div>"
+				str+="<img src='/resources/img/attach.png' style=' width:15px; height:15px;'></a>"
 				str+="<span> "+obj.fileName+"</span>"
 				str+="<button type='button' data-file=\'"+fileCallPath+"\' data-type='file' class='btn-circle'><i>X</i></button></br>"
-				str+="<img src='/resources/img/attach.png' style=' width:15px; height:15px;'></a>"
 				str+="</div>"	
 				str+="</li>"
 			}
@@ -151,6 +156,7 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 				data:formData,
 				type:'post',
 				dataType:'json',
+				enctype: 'multipart/form-data',
 				success:function(result){
 					showUploadResult(result);
 				},

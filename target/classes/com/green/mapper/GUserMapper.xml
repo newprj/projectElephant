@@ -15,4 +15,10 @@
 	<select id="listByGroup" resultType="com.green.vo.GUserVO">
 		select * from tbl_groupuser where group_name= #{group_name}
 	</select>
+	
+	<select id="listByUSer" resultType="com.green.vo.GUserVO">
+		select * from tbl_groupuser where user_id=#{user_id}
+	</select>
+	
+	
 </mapper>
