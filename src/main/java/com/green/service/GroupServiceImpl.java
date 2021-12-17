@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.green.mapper.GUserMapper;
 import com.green.mapper.GroupMapper;
+import com.green.vo.Criteria;
 import com.green.vo.GUserVO;
 import com.green.vo.GroupVO;
 
@@ -70,6 +71,18 @@ public class GroupServiceImpl implements GroupService{
 	public List<GroupVO> showLatest20() {
 		
 		return mapper.showLatest20();
+	}
+
+	@Override
+	public List<GroupVO> getListWithPaging(Criteria cri) {
+		
+		return mapper.getListWithPaging(cri);
+	}
+
+	@Override
+	public int getTotalCount(Criteria cri) {
+		// TODO Auto-generated method stub
+		return mapper.getTotalCount(cri);
 	}
 
 	

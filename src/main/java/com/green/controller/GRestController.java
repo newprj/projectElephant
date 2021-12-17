@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,11 +71,12 @@ public class GRestController {
 
 	
 	
-	// 메인 페이지
+	// 메인 페이지 // 코드 정리 절실함... 
 	@GetMapping("/")
-	public ModelAndView main(Model model, HttpSession session) {
+	public ModelAndView main(HttpSession session) {
 		
 		ModelAndView mv =  new ModelAndView("/group/main");
+
 		try {
 			UserVO user = (UserVO) session.getAttribute("user");
 			List<GUserVO> groupList = groupUserService.listByUSer(user.getUser_id()).stream()
@@ -95,9 +97,13 @@ public class GRestController {
 			List<GroupVO> recruiteCompletedGroup = groups.stream().filter( i -> 
 				i.getMember_number() <= groupUserService.listByGroup(i.getGroup_name()).size())
 				.collect(Collectors.toList());
+			List<GroupVO> show20 = groupService.showLatest20();
 			
-			
-			mv.addObject("group", groupService.showLatest20());
+			show20.forEach(i -> {
+				i.setApplicantCnt(groupUserService.listByGroupAll(i.getGroup_name()).size());
+				i.setJoinedCnt(groupUserService.listByGroup(i.getGroup_name()).size());
+			});
+			mv.addObject("group", show20);
 			mv.addObject("completed", recruiteCompletedGroup);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -106,6 +112,35 @@ public class GRestController {
 		return mv;
 	}
 	
+	
+	//메인페이지 - > 그룹 리스트 게시판 
+	@GetMapping(value= {"/main/list", "/main/list/{pageNum}/{amount}", "/main/list/{pageNum}/{amount}/{type}/{keyword}"})
+	public ModelAndView listOfgroups(HttpServletRequest request, @ModelAttribute("cri") Criteria cri) {
+		ModelAndView mv = new ModelAndView("/group/groupBoard");
+		try {
+			HttpSession session = request.getSession();
+			UserVO user = (UserVO) session.getAttribute("user");
+			mv.addObject("user", user);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		try {
+			List<GroupVO> group = groupService.getListWithPaging(cri);
+			group.forEach(i -> {
+				i.setApplicantCnt(groupUserService.listByGroupAll(i.getGroup_name()).size());
+				i.setJoinedCnt(groupUserService.listByGroup(i.getGroup_name()).size());
+			});
+			List<GroupVO> groupList = group.stream().filter(i -> 
+				i.getMember_number() > groupUserService.listByGroup(i.getGroup_name()).size())
+				.collect(Collectors.toList());
+			mv.addObject("group", groupList);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		int total = groupService.getTotalCount(cri);
+		mv.addObject("pageMaker" , new PageDTO(cri, total));
+		return mv;
+	}
 	
 	// 내가 가입한 그룹 가지고 오기
 	@GetMapping(value = "/getGroupByUSer/{user_id}")
@@ -143,9 +178,6 @@ public class GRestController {
 		
 	}
 	
-	
-	
-	
 	// 그룹별 가입 유저 가지고 오기 
 	@GetMapping(value ="/getMemberlistByGroup/{group_name}")
 	public ResponseEntity<Map<String, List<GUserVO>>> getMemberlistByGroup(
@@ -162,7 +194,7 @@ public class GRestController {
 	
 	
 	// 그룹 모집 페이지
-	@GetMapping("/gather/{group_name}")
+	@GetMapping("/gather/{group_name}" )
 	public ModelAndView groupDetail(@PathVariable("group_name") String group_name, HttpSession session ) {
 		UserVO user = (UserVO) session.getAttribute("user");
 		ModelAndView mv = new ModelAndView("/group/detail");

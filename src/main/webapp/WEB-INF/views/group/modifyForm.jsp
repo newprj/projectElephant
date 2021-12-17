@@ -182,7 +182,7 @@ prefix="c" %>
 					console.log(e);
 					let input = $('<input type="file" accept="image/*">');
 					input.click();
-					$(input).change(function (e) {
+					$(input).change( (e) =>{
 						let formData = new FormData();
 						let uploadFile = $(input)[0].files[0];
 

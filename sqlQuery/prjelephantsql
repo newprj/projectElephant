@@ -135,7 +135,7 @@ create sequence seq_mid;
 -------------------
 drop table tbl_group;
 create table tbl_group(
-    gno number primary key,
+    gno number,
     group_name varchar2(30),
     leader varchar2(30),
     subject varchar2(30),
@@ -159,6 +159,30 @@ update tbl_groupuser set authorized='Y';
 update tbl_group set regdate = sysdate;
 commit;
 
+select * from tbl_groupuser;
+delete from tbl_groupuser;
+commit;
 
 
+select * from tbl_group;
+
+
+    select 
+     /*+ index_desc(tbl_group PK_GROUP) */
+    rownum rn, gno, group_name, leader, subject, description, member_number, authorized, viewcnt, regdate 
+    from tbl_group 
+    where authorized ='Y' and rownum <=20;
+
+alter table tbl_group add constraint pk_group primary key(gno);
+
+select * from user_constraints where table_name='TBL_GROUP';
+select * from user_constraints where table_name in ('TBL_BOARD', 'TBL_GROUP');
+
+commit;
+
+alter table tbl_group rename constraint SYS_C007897 to pk_group;
+select * from tbl_groupuser where group_name='Å×½ºÆ®29';
+
+
+commit;
 

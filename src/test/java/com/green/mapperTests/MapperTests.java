@@ -126,8 +126,8 @@ public class MapperTests {
 	
 	
 
-//	
-	//@Test
+
+//	@Test
 	public void makegroupTest() {
 		for(int i=0; i<30; i++) {
 			GroupVO groupVO = new GroupVO();
@@ -199,9 +199,16 @@ public class MapperTests {
 		bMapper.getListWithPaging(cri).forEach(i->System.out.println(i));
 	}
 	
-	@Test
+	//@Test
 	public void testShow() {
 		gMapper.showLatest20();
 	}
 
+	@Test
+	public void testPagingGgroup() {
+		Criteria cri = new Criteria();
+		
+		
+		gMapper.getListWithPaging(cri).forEach(i -> System.out.println(i+"======================================================="));
+	}
 }

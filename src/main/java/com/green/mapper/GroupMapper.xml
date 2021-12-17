@@ -18,12 +18,52 @@
 	
 	<select id="showLatest20" resultType="com.green.vo.GroupVO">
 		<![CDATA[
-		select * from(
-    	select rownum rn, gno, group_name, leader, subject, description, member_number, authorized, viewcnt, regdate 
-    	from tbl_group 
-    	where authorized ='Y' order by gno desc)
-    where rn <=20
-    ]]>
+	    select 
+	     /*+ index_desc(tbl_group PK_GROUP) */
+	    rownum rn, gno, group_name, leader, subject, description, member_number, authorized, viewcnt, regdate 
+	    from tbl_group 
+	    where authorized ='Y' and rownum <=20
+	   ]]>
+	</select>
+	
+	
+	<sql id="criteria">
+		 <trim prefix="(" suffix=") and " prefixOverrides="OR">
+			    	<foreach item="type" collection="typeArr">
+			    		<trim prefix="OR">
+			    			<choose>
+			    				<when test="type== 'N'.toString()">
+			    					group_name like '%'||#{keyword}||'%'
+			    				</when>
+			    				<when test="type== 'S'.toString()">
+			    					subject like '%'||#{keyword}||'%'
+			    				</when>
+			    			</choose>
+			    		</trim>
+			    	</foreach>
+		    </trim>
+	</sql>
+	
+	
+	<select id="getListWithPaging" resultType="com.green.vo.GroupVO">
+			 <![CDATA[
+			select gno, group_name, leader, subject, description, member_number, viewcnt, regdate
+				from (
+			    select 
+			    /*+ index_desc(tbl_group pk_group ) */
+				    rownum rn, gno, group_name, leader, subject, description, member_number, authorized, viewcnt, regdate
+				    	from tbl_group
+				    where ]]>
+				    <include refid="criteria"></include>
+				    <![CDATA[
+			   rownum <=#{pageNum} * #{amount} and authorized ='Y'
+		    )
+		    where rn> (#{pageNum}-1) *  #{amount}
+		    ]]>
+	</select>
+	
+	<select id="getTotalCount" resultType="int">
+		select count(*) from tbl_group where <include refid="criteria"></include> gno>0 and authorized ='Y'
 	</select>
 	
 	<select id="groupNameCheck" resultType="int">

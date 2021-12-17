@@ -4,6 +4,8 @@ prefix="c" %>
 <!DOCTYPE html>
 <html>
 	<head>
+	<%@ taglib uri="http://java.sun.com/jsp/jstl/core"
+prefix="c" %>
 		<script src="//code.jquery.com/jquery-3.6.0.js"></script>
 		<script src="https://kit.fontawesome.com/eab4c34ae3.js" crossorigin="anonymous"></script>
 		<meta charset="UTF-8" />
@@ -140,7 +142,7 @@ prefix="c" %>
 			</c:forEach>
 
 		</div>
-		<a href ="">
+		<a href ="/group/main/list">
 		<span>....모집중인 그룹 모두 보기 </span>
 		</a>
 	
@@ -178,7 +180,7 @@ prefix="c" %>
 				location.reload();
 			})
 			
-			//인기순 정렬  
+			//인기순 정렬   
 			$('button.pop').click((e) => {
 				console.log("눌림")
 				$.getJSON("/group/main/getGroupAll", (list) =>{
