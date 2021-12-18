@@ -20,7 +20,14 @@ prefix="c" %>
 </head>
 <body>
 <h1> 그룹 전체보는 페이지 </h1>
-
+<div>
+	<select name="sort" class="sort">
+		<option value="recent"> 최신순 </option>
+		<option value="popular"> 지원자 많은순 </option>
+		<option value="viewCnt"> 조회순 </option>
+	</select>
+	
+</div>
  <div>
     	<form class="searchForm" >
     		<select name="type">
@@ -62,9 +69,6 @@ prefix="c" %>
 
 let pageNum = "${cri.pageNum}"
 let amount = "${cri.amount}" 
-console.log(" cri", "${cri}")
-console.log("pageMAker", "${pageMaker}")
-
 
 $(".group_name").click(function (e) {
 	const group_name = e.target.innerText;

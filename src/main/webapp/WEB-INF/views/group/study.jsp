@@ -62,7 +62,7 @@ prefix="c" %>
 		let loginUser = "${user}";
 		let group = "${group_name}";
 
-		$.getJSON("/group/getMemberlistByGroup/${group_name}", (list) => {
+		$.getJSON(`/group/getMemberlistByGroup/\${group}`, (list) => {
 			let joinCheck = list.memberList.find( user => user.user_id === loginUser)
 			if (!joinCheck) {
 				alert("그룹 회원만 접근 가능한 페이지입니다");
@@ -74,7 +74,7 @@ prefix="c" %>
 
 		console.log(today);
 
-		$.getJSON("/group/getLatestEvent/${group_name}", (list) => {
+		$.getJSON(`/group/getLatestEvent/\${group}`, (list) => {
 			const todayEvent = list.filter((i) => i.startDate === today);
 			console.log(todayEvent);
 			if (todayEvent.length == 0 || todayEvent == null) {
@@ -116,113 +116,23 @@ prefix="c" %>
 
 		// 채팅
 
-		let socket = new SockJS(`http://localhost:8080/chat/\${group}`);
-		console.log(socket);
-
-		let msg = $("input.message");
-		const sendMessage = () => {
-			const sendTime = new Date().toLocaleTimeString();
-			const data = {
-				user: loginUser,
-				group,
-				msg: msg.val(),
-				sendTime,
-			};
-			let jsonMSG = JSON.stringify(data);
-			socket.send(jsonMSG);
-		}; // sendMsg
-
-		const onMessage = (message) => {
-			console.log(message);
-			const data = message.data;
-			let sessionId;
-			let messages;
-			let time;
-
-			let arr = data.split(":");
-
-			sessionId = arr[0];
-			messages = arr[1];
-			time = arr.slice(-3).join(":");
-
-			let msgElement = $(
-				`<div><div><b>\${sessionId}</b> \${messages} <br/> \${time}</div></div>`
-			);
-			$("div.message").append(msgElement);
-			$("div.chatContainer").scrollTop($("div.chatContainer")[0].scrollHeight);
-		}; //onMessage
-
-		const socketClose = (e) => {
-			console.log("disconnect");
-			const sendTime = new Date().toLocaleTimeString();
-			const longMsg = $("div.message")[0].innerHTML;
-			const data = {
-				user: loginUser,
-				group,
-				msg: " 님이 퇴장했습니다 ",
-				sendTime,
-			};
-			let jsonMSG = JSON.stringify(data);
-			socket.send(jsonMSG);
-			console.log(data);
-			socket.close();
-		};
-
-		const onClose = (e, a) => {
-			const sendTime = new Date().toLocaleTimeString();
-			const longMsg = $("div.message")[0].innerHTML;
-			const data = {
-				user: loginUser,
-				group,
-				msg: "이것도 갔으면 좋겠어 ",
-				sendTime,
-			};
-			let jsonMSG = JSON.stringify(data);
-			socket.send(jsonMSG);
-			console.log(data);
-		}; // onClose
-
-		const onOpen = (e) => {
-			console.log(e);
-			const sendTime = new Date().toLocaleTimeString();
-			const data = {
-				user: loginUser,
-				group,
-				msg: " 님이 입장했습니다 ",
-				sendTime,
-			};
-			let jsonMSG = JSON.stringify(data);
-			socket.send(jsonMSG);
-		}; //open
-
-		$("button.send").click(function (e) {
-			sendMessage();
-			msg.val("");
-		});
-
-		$("input").keyup((e) => {
-			if (e.keyCode === 13) {
-				$("button.send").trigger("click");
-			}
-		});
-
-		$("button.close").click((e) => {
-			socketClose();
-		});
-
-		window.onbeforeunload = function () {
-			websocket.onclose = function () {}; // disable onclose handler first
-			socketClose(e);
-		};
+	
+		let popup
+ 		$('button.getChat').click((e) => {
+			console.log("채팅팅팅")
+			popup = window.open(`/chat_pop/\${group}`, "chatPop", "width=450, height=350, top=150, left=200")
+ 			console.log(popup)
+ 			
+ 			popup.onbeforeunload = (e) => {
+				
+ 			};  
 
 
-		socket.onmessage = onMessage;
-		socket.onclose = onClose;
-		socket.onopen = onOpen;
-
-		// 나중에 쓸꺼야
-		console.log("${pageContext.request.serverName}"); // localhost
-		console.log("${pageContext.request.serverPort}"); //8080
-		console.log("${pageContext.request.contextPath}");
+ 		})
+ 		
+ 		
+ 		
+ 
+		
 	</script>
 </html>

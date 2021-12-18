@@ -169,7 +169,7 @@ public class MapperTests {
 	public void registerTEst() {
 		IntStream.rangeClosed(1, 100).forEach( i -> {
 			BoardVO vo = new BoardVO();
-			vo.setGroup_name("테스트그룹");
+			vo.setGroup_name("테스트29");
 			vo.setNotice('N');
 			vo.setTitle("테스트 타이틀" +i);
 			vo.setContent(" 내용" );
@@ -204,7 +204,7 @@ public class MapperTests {
 		gMapper.showLatest20();
 	}
 
-	@Test
+	//@Test
 	public void testPagingGgroup() {
 		Criteria cri = new Criteria();
 		

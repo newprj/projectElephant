@@ -25,12 +25,12 @@ pageEncoding="UTF-8"%>
 		<form method="post" >
 			<div>
 				<label for=""> 그룹 이름 </label>
-				<input type="text" name="group_name" value = "${one.group_name}"/>
+				<input type="text" name="group_name" value = "${one.group_name}" readonly/>
 			</div>
 			
 			<div>
 				<label for=""> 리더 </label>
-				<input type="text" name="leader" value="${user.user_id}" />
+				<input type="text" name="leader" value="${user.user_id}" readonly/>
 			</div>
 			<div>
 				<label for=""> 주제 </label>

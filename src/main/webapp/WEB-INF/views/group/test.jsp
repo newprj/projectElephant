@@ -73,7 +73,7 @@ pageEncoding="UTF-8"%>
 				<div>
 					<label for=""> 색</label>
 					<select name="color">
-						<option>선택</option>
+						<option value=''>선택</option>
 						<option value="#D25565" style="color: #d25565">빨간색</option>
 						<option value="#9775fa" style="color: #9775fa">보라색</option>
 						<option value="#ffa94d" style="color: #ffa94d">주황색</option>
@@ -136,9 +136,8 @@ pageEncoding="UTF-8"%>
 				const modal = $('.modal')
 				const Calendar = FullCalendar.Calendar
 				const group = "${group.group_name}";
+				const loginUser ="${user}"
 				
-				
-
 				$.getJSON(
 					"/group/getMemberlistByGroup/"+group, (list) =>{
 						console.log(list)
@@ -363,12 +362,19 @@ pageEncoding="UTF-8"%>
 					
 					e.preventDefault();
 					let eventForm = getFormData();
-					
-					let cid = eventSubmit(eventForm);
-					let newEvent = calToEvent([{...eventForm, cid}])
-					calendar.addEventSource(newEvent) 
-					
-					$('button[type="reset"]').trigger("click")
+					delete eventForm.member_
+					delete eventForm.cid
+					delete eventForm.endDate
+					if( Object.values(eventForm).filter(val => val=='').length > 0) {
+						alert(" 모두 입력 해주세요 ")
+					}else{
+						let eventForm = getFormData();
+						
+						let cid = eventSubmit(eventForm);
+						let newEvent = calToEvent([{...eventForm, cid}])
+						calendar.addEventSource(newEvent) 
+						$('button[type="reset"]').trigger("click")
+					}
 				});//submit click
 				
 				// 캘린더 렌더

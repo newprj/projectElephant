@@ -33,11 +33,11 @@ prefix="c" %>
 			</div>
 			<div>
 				<label for="group_name"> 그룹 이름 </label>
-				<input name="group_name" type="text" value="${board.group_name}" />
+				<input name="group_name" type="text" value="${board.group_name}" readonly/>
 			</div>
 			<div>
 				<label for="writer"> 저자 </label>
-				<input name="writer" type="text" value="${board.writer}" />
+				<input name="writer" type="text" value="${board.writer}" readonly/>
 			</div>
 			<div>
 				<div id="editor" style="max-height: 400px; overflow: auto"></div>
@@ -135,11 +135,8 @@ prefix="c" %>
 
 				$(".modify").click(function (e) {
 					e.preventDefault();
-					console.log(attachList);
 					let modified = getForm();
-					console.log(modified);
-					modified = { ...modified, attachList };
-					console.log(modified);
+					modified = { ...modified, attachList }
 					$.ajax({
 						type: "PUT",
 						url: "/group/board/${cri.bno}",

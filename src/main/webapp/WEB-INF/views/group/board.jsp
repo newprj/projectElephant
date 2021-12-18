@@ -49,6 +49,9 @@ prefix="c" %>
       		<i class="fas fa-paperclip"></i>
       	</c:if>
       	<span> <i class="far fa-comment-dots"></i> ${board.replyCnt}</span>
+      	
+      	
+      	<span> ${board.regdate}</span>
       </div>
    	 	<div>
 
@@ -81,7 +84,6 @@ prefix="c" %>
         
 				$.getJSON(
 					"/group/getMemberlistByGroup/${name}", (list) =>{
-						console.log(" 손을 봐야 해...")
 						console.log(list.memberList)
 						console.log(loginUser)
 						let joinCheck = list.memberList.find( user => user.user_id === loginUser)
@@ -95,6 +97,8 @@ prefix="c" %>
         $('.create').click(function(e){
         	location.href="/group/board/${name}/write"
         })
+        
+        
         $('.list').click(function (e) {
           bno = $(this).attr('data')
           let type = "${cri.type}"

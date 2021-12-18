@@ -26,7 +26,7 @@ public class GroupChatHandler extends TextWebSocketHandler{
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception{
 		
-		log.info(" chatiing 을 위해 해당 페이지에 들어옴 " );
+		System.out.println(" chatiing 을 위해 해당 페이지에 들어옴 " );
 	}
 	
 	

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/core"
-prefix="c" %>
+prefix="c" %><%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %> 
 <!DOCTYPE html>
 <html>
 	<head>
@@ -64,6 +64,11 @@ prefix="c" %>
 				<input type="text" value="${board.writer}" />
 			</div>
 			<div>
+			<fmt:formatDate value="${board.regdate}" pattern="yyyy MM dd" />
+			<br/> <fmt:formatDate value="${board.updateDate}" pattern="yyyy MM dd" />
+			<br>
+			</div>
+			<div>
 				<div class="content"> ${board.content} </div>	
 			
 			</div>
@@ -79,7 +84,14 @@ prefix="c" %>
 		<h5>댓글</h5>
 		<div class="reply">
 			<c:forEach items="${replies}" var="reply">
-				<p class="reply" data-rno="${reply.rno}"><span > ${reply.reply} </span><span> ${reply.replyer}</span> <p>
+				<p class="reply" data-rno="${reply.rno}"><span > ${reply.reply} </span><span> ${reply.replyer}</span>
+				<span> 
+				<fmt:formatDate value="${reply.replydate}" pattern="yyyy MM dd" />
+				<c:if test="${reply.updateDate != null }">
+				수정일 : <fmt:formatDate value="${reply.updateDate}" pattern="yyyy MM dd" /> 
+				</c:if>
+				</span> <br/>
+				
 			</c:forEach>
 		</div>
 		<c:if test="${user eq board.writer}">
@@ -221,7 +233,6 @@ prefix="c" %>
 						$('button[type="reset"]').trigger("click");
 						$('.modal').hide();
 						location.reload()
-						/* $('div.reply').load(window.location.href + ' div.reply') */
 					},
 					error: (xhr, status, er) => console.log(xhr),
 				});

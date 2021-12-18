@@ -182,7 +182,9 @@ commit;
 
 alter table tbl_group rename constraint SYS_C007897 to pk_group;
 select * from tbl_groupuser where group_name='Å×½ºÆ®29';
-
+select * from tbl_user;
 
 commit;
-
+select table_name, index_name from all_ind_columns where table_name ='tbl_group';
+create index viewCnt on tbl_group(viewCnt);
+drop index viewCnt;
