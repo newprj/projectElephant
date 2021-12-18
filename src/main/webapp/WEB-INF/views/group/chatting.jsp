@@ -7,8 +7,12 @@
 <title>Insert title here</title>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.js"></script>
+		<script src="https://kit.fontawesome.com/eab4c34ae3.js" crossorigin="anonymous"></script>
+		
 </head>
 <body>
+<div>
+<div class="users"></div>
 	<div
 			style="overflow-y: auto; width: 350px; height: 200px"
 			class="chatContainer"
@@ -25,6 +29,7 @@
 			</div>
 		</div>
 		${user.user_id}
+</div>
 	</body>
 
 
@@ -32,10 +37,22 @@
 
 	let socket = new SockJS("http://localhost:8080/chat/${group_name}");
 	console.log(socket);
-	
 	const loginUser = "${user.user_id}"
 	const group = "${group_name}"
 	let msg = $("input.message");
+	
+	
+	$.getJSON(
+			"/group/getMemberlistByGroup/"+group, (list) =>{
+				console.log(list)
+				console.log(loginUser)
+				list.memberList.map( user => {
+					console.log("user .... ",user)
+			 		$('div.users').append($(`<span id='\${user.user_id}'> <i class="far fa-dot-circle"></i>  \${user.user_id} </span><br/>`))
+			 	})
+			})
+	
+	
 	const sendMessage = () => {
 		const sendTime = new Date().toLocaleTimeString();
 		const data = {
@@ -43,29 +60,34 @@
 			group,
 			msg: msg.val(),
 			sendTime,
+			type :'send'
 		};
 		let jsonMSG = JSON.stringify(data);
 		socket.send(jsonMSG);
 	}; // sendMsg
 
 	const onMessage = (message) => {
-		console.log(message);
-		const data = message.data;
-		let sessionId;
-		let messages;
-		let time;
-
-		let arr = data.split(":");
-
-		sessionId = arr[0];
-		messages = arr[1];
-		time = arr.slice(-3).join(":");
-
+		
+		const arr = message.data.split("-");
+		console.log(arr[0])
+		const users = arr[0].replace(/[[\]\s]/g,'').split(",");
+		
+		const sessionId  = arr[1];
+		const messages = arr[2];
+		const time = arr[3];
+		const type = arr[4]
+		console.log(users) 
+		
+		
+		if(type == "open") users.filter(user=> user!=='').map(user => $(`#\${user} >i`).css({"color" : "red "}))
+		else if(type == "close") $(`#\${sessionId} >i`).css({"color" : "black"})
+		
 		let msgElement = $(
 			`<div><div><b>\${sessionId}</b> \${messages} <br/> \${time}</div></div>`
-		);
+			);
+		
 		$("div.message").append(msgElement);
-		$("div.chatContainer").scrollTop($("div.chatContainer")[0].scrollHeight);
+		$("div.chatContainer").scrollTop($("div.chatContainer")[0].scrollHeight); 
 	}; //onMessage
 
 	const socketClose = (e) => {
@@ -77,6 +99,7 @@
 			group,
 			msg: " 님이 퇴장했습니다 ",
 			sendTime,
+			type : "close",
 		};
 		let jsonMSG = JSON.stringify(data);
 		socket.send(jsonMSG);
@@ -85,20 +108,11 @@
 	};
 
 	const onClose = (e, a) => {
-		const sendTime = new Date().toLocaleTimeString();
-		const longMsg = $("div.message")[0].innerHTML;
-		const data = {
-			user: loginUser,
-			group,
-			msg: "이것도 갔으면 좋겠어 ",
-			sendTime,
-		};
-		let jsonMSG = JSON.stringify(data);
-		socket.send(jsonMSG);
-		console.log(data);
+		
 	}; // onClose
 
 	const onOpen = (e) => {
+		
 		console.log(e);
 		const sendTime = new Date().toLocaleTimeString();
 		const data = {
@@ -106,6 +120,7 @@
 			group,
 			msg: " 님이 입장했습니다 ",
 			sendTime,
+			type : "open",
 		};
 		let jsonMSG = JSON.stringify(data);
 		socket.send(jsonMSG);
@@ -124,6 +139,7 @@
 
 	$("button.close").click((e) => {
 		socketClose();
+		window.close()
 	});
 
 	
