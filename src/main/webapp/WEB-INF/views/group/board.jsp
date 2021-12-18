@@ -44,7 +44,7 @@ prefix="c" %>
 
     <c:forEach items="${board}" var="board">
       <div >
-      	<span class="list"  data="${board.bno}"> ${board.title} </span>
+      	<span class="list"  data="${board.bno}"> ${board.notice}  ${board.title} </span>
       	<c:if test="${board.attachList !=null && board.attachList.size()>0 }">
       		<i class="fas fa-paperclip"></i>
       	</c:if>

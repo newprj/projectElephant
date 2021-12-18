@@ -12,7 +12,7 @@ prefix="c" %>
 	</head>
 	<body>
 		<h1>스터디별 페이지</h1>
-		${group_name}
+		<div class="member"></div>
 
 		<p><a href="/group/"> 메인 </a></p>
 		<c:choose>
@@ -68,6 +68,10 @@ prefix="c" %>
 				alert("그룹 회원만 접근 가능한 페이지입니다");
 				location.href = "/group/";
 			}
+			list.memberList.map((member) => {
+				let memElement =$(`<div>\${member.user_id}</div>`)
+				$('div.member').append(memElement)
+			})
 		});
 
 		const today = new Date().toISOString().split("T")[0];

@@ -400,6 +400,9 @@ pageEncoding="UTF-8"%>
 				}); //calender
 				calendar.render();
 			}); //event
+			
+			
+			//calendar.refetchEvents()
 		</script>
 	</body>
 </html>

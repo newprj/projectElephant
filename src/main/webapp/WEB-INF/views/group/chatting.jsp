@@ -149,13 +149,11 @@
 		
 	})
 	
+	$(window).on('beforeunload', function(){
+         socketClose()
+     });
 	
-/* 	window.onbeforeunload = function () {
-		websocket.onclose = function () {}; // disable onclose handler first
-		socketClose(e);
-	}; */
-
-
+	
 	socket.onmessage = onMessage;
 	socket.onclose = onClose;
 	socket.onopen = onOpen;
