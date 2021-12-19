@@ -33,11 +33,11 @@ prefix="c" %>
 			</div>
 			<div>
 				<label for="group_name"> 그룹 이름 </label>
-				<input name="group_name" type="text" value="${board.group_name}" />
+				<input name="group_name" type="text" value="${board.group_name}" readonly/>
 			</div>
 			<div>
 				<label for="writer"> 저자 </label>
-				<input name="writer" type="text" value="${board.writer}" />
+				<input name="writer" type="text" value="${board.writer}" readonly/>
 			</div>
 			<div>
 				<div id="editor" style="max-height: 400px; overflow: auto"></div>
@@ -59,16 +59,12 @@ prefix="c" %>
 		<script>
 			$(document).ready(function (e) {
 				let loginUser = "${user}";
-				if (!loginUser) {
-					console.log("로그인안됨");
-					alert("로그인 해야 접근 가능합니다");
-					location.href = "/group/";
-				} else {
-					console.log("로그인됨");
+			
+			
 					$.getJSON("/group/getMemberlistByGroup/${cri.group_name}", (list) => {
 						console.log(list);
 						console.log(loginUser);
-						let joinCheck = list.find((user) => user.user_id === loginUser);
+						let joinCheck = list.memberList.find( user => user.user_id === loginUser)
 						if (!joinCheck) {
 							alert("그룹 회원만 접근 가능한 페이지입니다");
 							location.href = "/group/";
@@ -76,8 +72,8 @@ prefix="c" %>
 							alert(" 글 작성자만 수정할 수 있습니다");
 							history.back();
 						}
-					});
-				}
+					});//get json
+	
 
 				const uploadClone = $(".file").clone();
 				var myEditor = document.querySelector("#editor");
@@ -139,32 +135,33 @@ prefix="c" %>
 
 				$(".modify").click(function (e) {
 					e.preventDefault();
-					console.log(attachList);
 					let modified = getForm();
-					console.log(modified);
-					modified = { ...modified, attachList };
-					console.log(modified);
+					modified = { ...modified, attachList }
 					$.ajax({
 						type: "PUT",
 						url: "/group/board/${cri.bno}",
 						data: JSON.stringify(modified),
 						contentType: "application/json; charset=utf-8",
-						success: () =>
-							(location.href =
-								"/group/board/${cri.group_name}/${cri.bno}/${cri.pageNum}/${cri.amount}"),
+						success: () =>{
+							let url = "/group/board/${cri.group_name}/${cri.bno}/${cri.pageNum}/${cri.amount}"
+							url += "${cri.keyword}" ? "/${cri.type}/${cri.keyword}" : ""
+							location.href = url
+						},
 						error: (xhr, status, er) => {
 							console.log(status);
 						}, //error
 					}); //ajax
 				}); // modify c
+				
 				$(".delete").click(function (e) {
 					e.preventDefault();
 					$.ajax({
 						type: "delete",
 						url: "/group/board/${cri.bno}",
 						success: () => {
-							location.href =
-								"/group/board/${cri.group_name}/${cri.pageNum}/${cri.amount}";
+								let url = "/group/board/${cri.group_name}/${cri.pageNum}/${cri.amount}"
+								url += "${cri.keyword}" ? "/${cri.type}/${cri.keyword}" : ""
+								location.href = url
 						},
 						error: (xhr, status, er) => {
 							console.log(status);
@@ -173,15 +170,16 @@ prefix="c" %>
 				}); //delete click
 				$(".go_board").click((e) => {
 					e.preventDefault();
-					location.href =
-						"/group/board/${cri.group_name}/${cri.pageNum}/${cri.amount}";
+					let url = "/group/board/${cri.group_name}/${cri.pageNum}/${cri.amount}"
+					url += "${cri.keyword}" ? "/${cri.type}/${cri.keyword}" : ""
+					location.href = url
 				});
 
 				const imageHandler = (e) => {
 					console.log(e);
 					let input = $('<input type="file" accept="image/*">');
 					input.click();
-					$(input).change(function (e) {
+					$(input).change( (e) =>{
 						let formData = new FormData();
 						let uploadFile = $(input)[0].files[0];
 

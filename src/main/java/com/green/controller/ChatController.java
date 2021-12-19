@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import com.green.service.ChatService;
 import com.green.service.UserService;
@@ -31,9 +32,16 @@ public class ChatController{
 		log.info("user: "+user);
 		model.addAttribute("userid" , user.getUser_id() );
 	}
+	
+	
 	@GetMapping("/chat/{group_name}")
 	public void groupChat(Model model, HttpServletRequest req) {
-
+		
+	}
+	
+	@GetMapping("/chat_pop/{group_name}")
+	public String chat_pop(@PathVariable("group_name") String group_name) {
+		return "/group/chatting";
 	}
 	
 }

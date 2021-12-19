@@ -17,5 +17,12 @@ public class GUserVO {
 	  private char authorized;
 	  private String user_id;
 	  private String group_name;
+	  
+	  // 그룹 생성할때 리더 가입처리 
+	  public GUserVO(GroupVO vo) {
+		  this.user_id = vo.getLeader();
+		  this.group_name = vo.getGroup_name();
+		  this.authorized = 'N';
+	  }
 	
 }

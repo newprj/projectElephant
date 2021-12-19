@@ -2,106 +2,123 @@ SELECT  'DROP TABLE ' || object_name || ' CASCADE CONSTRAINTS;'
   FROM    user_objects
 WHERE   object_type = 'TABLE';
 
+SELECT  'select * from ' || object_name || ';'
+  FROM    user_objects
+WHERE   object_type = 'TABLE';
+
+
+select 'drop sequence ' || sequence_name|| ';' from user_sequences;
+
+DROP TABLE BOARD_FILE CASCADE CONSTRAINTS;
+DROP TABLE TBL_MESSAGE CASCADE CONSTRAINTS;
+
+DROP TABLE TBL_GROUP CASCADE CONSTRAINTS;
+drop sequence SEQ_GNO;
+
+DROP TABLE TBL_USER CASCADE CONSTRAINTS;
+drop sequence SEQ_UNO;
+
+DROP TABLE TBL_GROUPUSER CASCADE CONSTRAINTS;
+drop sequence SEQ_CID;
+
+DROP TABLE TBL_BOARD CASCADE CONSTRAINTS;
+drop sequence SEQ_BNO;
+
+DROP TABLE BOARD_REPLY CASCADE CONSTRAINTS;
+drop sequence BOARD_RNO;
+
+DROP TABLE TBL_CALENDAR CASCADE CONSTRAINTS;
+drop sequence SEQ_CNO;
+
+delete from tbl_group where group_name != '테스트그룹';
+commit; 
+delete from tbl_groupuser where group_name = '테스트그룹' and user_id != 'test1';
+
+select * from TBL_GROUP order by gno desc;
+select * from TBL_USER;
+select * from TBL_GROUPUSER;
+select * from BOARD_FILE;
+select * from TBL_BOARD;
+select * from BOARD_REPLY;
+select * from TBL_CALENDAR;
+
 -- spring database에서 모든 table을 삭제 했습니다
 CREATE DATABASE spring CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 --- create , drop table and sequence
 
-
-
-
-
-drop table tbl_user;
 create table tbl_user(
-    uno number,
-    user_id varchar2(30),
-    password varchar2(30),
-    name varchar2(30),
-    email varchar2(30));
-drop sequence seq_uno;
+    uno number constraint pk_user primary key,
+    user_id varchar2(300) unique,
+    password varchar2(300),
+    name varchar2(300),
+    email varchar2(300));
 create sequence seq_uno;
 
+create table tbl_group(
+    gno number constraint pk_group primary key,
+    group_name varchar2(300) unique,
+    leader varchar2(300),
+    subject varchar2(30),
+    description varchar2(2000),
+    member_number number,
+    regdate timestamp,
+    authorized char(1) default 'N' check(authorized in('Y','N')),
+    viewCnt number default 0,
+    constraint fk_group foreign key(leader) references tbl_user(user_id)
+);
+create sequence seq_gno;
 
-drop table tbl_groupuser;
 create table tbl_groupuser(
-    cno number,
+    cno number primary key,
     authorized varchar2(1) default 'N',
     user_id varchar2(30),
-    group_name varchar2(30));
-    
+    group_name varchar2(30),
+    constraint fk_g_user foreign key(user_id) references tbl_user(user_id),
+    constraint fk_g_group foreign key(group_name) references tbl_group(group_name)
+    );
+alter table tbl_groupuser add unique(user_id, group_name);
+create sequence seq_cno;
 
-drop table tbl_review;
--------------- 치원님 쿼리 이용
-drop table board_file;   
+create table tbl_board(
+    bno number constraint pk_board primary key,
+    group_name varchar2(300),
+    title varchar2(300),
+    content varchar2(2000),
+    writer varchar2(300),
+    notice char(1) default('N'),
+    regdate timestamp default sysdate,
+    updatedate timestamp,
+    constraint fk_b_user foreign key(writer) references tbl_user(user_id),
+    constraint fk_b_group foreign key(group_name) references tbl_group(group_name)
+    );  
+
+create sequence seq_bno;
+
 create table board_file(
-    uuid varchar2(100),
+    uuid varchar2(100) primary key,
     uploadPath varchar2(200),
     fileName varchar2(100),
     fileType char(1) default '1',
-    bno number);
-
-drop table tbl_qanda;
--- -----------------희주님 쿼리 이용 
-create sequence seq_qno;
-drop sequence seq_qno;  
-
------------- 테이블 컬럼 속성 변경
-drop table tbl_board;
-create table tbl_board(
     bno number,
-    group_name varchar2(30),
-    title varchar2(200),
-    content varchar2(2000),
-    writer varchar2(30),
-    regdate timestamp default sysdate,
-    updatedate timestamp);  
-
-create sequence seq_bno;
-drop sequence seq_bno; 
-alter table tbl_board add constraint pk_board primary key(bno);
+    constraint fk_file foreign key(bno) references tbl_board(bno)
+    );
 
 
------------ 테이블 컬럼 속성 변경 
-drop table board_reply;
 create table board_reply(
-    rno number,
+    rno number primary key,
     bno number,
     reply varchar2(500),
     replyer varchar2(100),
     replydate date default sysdate,
-    updatedate timestamp);    
+    updatedate timestamp,
+    constraint fk_r_bno foreign key(bno) references tbl_board(bno),
+    constraint fk_r_user foreign key(replyer) references tbl_user(user_id)
+    );   
 create sequence board_rno;  
-create sequence seq_rno;
-drop sequence seq_rno;
-    
 
---- 어디에 쓴건지 모르는 시퀀스
-create sequence seq_cno;
-drop sequence seq_cno;
-
-
-
-select * from tbl_groupuser;
-select * from tbl_board;
-select * from tbl_user;
-select * from tbl_group;
-select * from board_file;
-select * from board_reply;
-select * from tbl_calendar;
-
-select * from user_sequences;
-commit;
-
-select * from tbl_board where group_name='그루비룸';
-select * from tbl_board where group_name='그룹이름' ;
---- 쿼리 문서 수정 /공유 시 수정한 부분 주석으로 달아주세요 
---- select, update 등 테스트를 위한 쿼리문은 공유 X
-
----- 12/11 컬럼 날짜를 varchar로 받던 것을 timestmap로 수정했습니다
-
-drop table tbl_calendar;
 create table tbl_calendar(
-    cid number,
+    cid number primary key,
     title varchar2(50),
     startDate timestamp,
     endDate timestamp,
@@ -111,43 +128,25 @@ create table tbl_calendar(
     location varchar2(100),
     group_ varchar2(500),
     user_ varchar2(50),
-    member_ varchar2(50));
+    member_ varchar2(50),
+    constraint fk_c_group foreign key(group_) references tbl_group(group_name),
+    constraint fk_c_user foreign key(user_) references tbl_user(user_id)
+    );
 create sequence seq_cid;
 
--------------------------------------------------- 12/15
+------------------------------------------------------------------
 
-create table tbl_message(
-    mid number,
-    msg Long,
-    group_name varchar2(200),
-    user_id varchar2(200));
+--- 쿼리 문서 수정 /공유 시 수정한 부분 주석으로 달아주세요 
+--- select, update 등 테스트를 위한 쿼리문은 공유 X
 
-create sequence seq_mid;
-alter table tbl_board add (notice char(1) default('N'));
-alter table tbl_board add(updatedate timestamp);
-alter table tbl_group add(authorized char(1) default 'N' check(authorized in('Y','N')));
-
+----- 어드민기능
+update tbl_group set authorized = 'Y' where gno<73; 
+update tbl_groupuser set authorized='Y';
 commit;
 
--------------------
-drop table tbl_group;
-create table tbl_group(
-    gno number primary key,
-    group_name varchar2(30),
-    leader varchar2(30),
-    subject varchar2(30),
-    description varchar2(30),
-    member_number number,
-    authorized char(1) default 'N' check(authorized in('Y','N'))
-);
+-------------------------------------------------------------------------
+---select * from user_constraints where table_name='TBL_GROUP'; 
+---select * from user_constraints where table_name in ('TBL_BOARD', 'TBL_GROUP');
+---alter table tbl_group rename constraint SYS_C007897 to pk_group;
+---select table_name, index_name from all_ind_columns where table_name ='tbl_group';
 
-
-select * from tbl_group;
-drop sequence seq_gno;
-create sequence seq_gno;
-
-
-update tbl_group set authorized = 'Y';
-delete from tbl_user where user_id = 'a';
-
-commit;

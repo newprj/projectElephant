@@ -25,12 +25,12 @@ pageEncoding="UTF-8"%>
 		<form method="post" >
 			<div>
 				<label for=""> 그룹 이름 </label>
-				<input type="text" name="group_name" value = "${one.group_name}"/>
+				<input type="text" name="group_name" value = "${one.group_name}" readonly/>
 			</div>
 			
 			<div>
 				<label for=""> 리더 </label>
-				<input type="text" name="leader" value="${user.user_id}" />
+				<input type="text" name="leader" value="${user.user_id}" readonly/>
 			</div>
 			<div>
 				<label for=""> 주제 </label>
@@ -66,7 +66,7 @@ ggg
 					let uploadFile = $(input)[0].files[0];
 
 					formData.append("uploadFile", uploadFile);
-
+	
 					$.ajax({
 						type: "post",
 						url: "/upload",
@@ -126,9 +126,13 @@ ggg
 			
 			$('button').click((e)=>{
 				e.preventDefault()
-				console.log(" hhhh")
+				if ( "${user}" !== "${one.leader}"){
+					alert(" 작성자가 아니면 수정할 수 없습니다 ")
+					return false;
+				}
 				const data = {
 					gno : '${one.gno}',
+					group_name : "${one.group_name}",
 					leader : $("input[name='leader']").val(),
 					subject : $('input[name="subject"]').val(),
 					description : myEditor.children[0].innerHTML,
@@ -136,20 +140,20 @@ ggg
 				}
 					$.ajax({
 						type: "PUT",
-						url: "/group/board/${one.gno}",
+						url: "/group/gather/${one.group_name}/modify",
 						data: JSON.stringify(data),
 						contentType: "application/json; charset=utf-8",
-						success: () =>
-							(location.href =
-								"//"),
+<<<<<<< HEAD
+						success: () =>location.href = "/group/gather/{one.group_name}",
+=======
+						success: () =>location.href = "/group/gather/${one.group_name}",
+>>>>>>> hyewon
 						error: (xhr, status, er) => {
 							console.log(status); 
 						}, //error
 					}); //ajax
 				}); // modify c*/
-				
-				
-			})// button click
+
 			
 			
 			

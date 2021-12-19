@@ -33,15 +33,15 @@ pageEncoding="UTF-8"%>
 			</div>
 			<div>
 				<label for=""> 리더 </label>
-				<input type="text" name="leader" value="${user.user_id}" />
+				<input type="text" name="leader" value="${user.user_id}" readonly/>
 			</div>
 			<div>
 				<label for=""> 주제 </label>
-				<input type="text" name="subject" />
+				<input type="text" name="subject" required />
 			</div>
 			<div>
 				<label for=""> 모집 인원 </label>
-				<input type="number" name="member_number" />
+				<input type="number" name="member_number" min ='1' required/>
 			</div>
 			<div>
 				<label for=""> 상세 설명 </label>
@@ -92,8 +92,18 @@ pageEncoding="UTF-8"%>
 			$("button").click(function (e) {
 				e.preventDefault();
 				$('input[name="description"]').val(myEditor.children[0].innerHTML);
-				console.log($('input[name="description"]').val());
-				$("form").submit();
+				if($('input[name="group_name"]').val() =='' ||
+						$('input[name="subject"]').val() =='' ||
+						$('input[name="member_number"]').val() =='' ||
+						myEditor.children[0].innerHTML == '<p><br></p>'){
+					if($('input[name="group_name"]').val() =='') $('input[name="group_name"]').focus()
+					else  if($('input[name="subject"]').val() =='') $('input[name="subject"]').focus()
+					else if($('input[name="member_number"]').val() =='') $('input[name="member_number"]').focus()
+					else myEditor.children[0].focus()
+					
+				}else{
+					$("form").submit();
+				}
 			});
 
 			const imageHandler = (e) => {

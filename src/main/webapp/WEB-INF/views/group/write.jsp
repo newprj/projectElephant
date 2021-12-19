@@ -31,11 +31,11 @@ pageEncoding="UTF-8"%>
 			<form>
 				<div>
 					<label>title</label>
-					<input name="title" />
+					<input name="title" required/>
 				</div>
 				<div>
 					<label>writer</label>
-					<input name="writer" value="${user}" />
+					<input name="writer" value="${user}" readonly/>
 				</div>
 				<div>
 					<label>공지사항 </label>
@@ -61,23 +61,17 @@ pageEncoding="UTF-8"%>
 			$(document).ready(function (e) {
 				var myEditor = document.querySelector("#editor");
 				const uploadClone = $(".file").clone();
-				let loginUser = "${user}";
-				if (!loginUser) {
-					console.log("로그인안됨");
-					alert("로그인 해야 접근 가능합니다");
-					location.href = "/group/";
-				} else {
-					console.log("로그인됨");
+			  const loginUser = "${user}"
 					$.getJSON("/group/getMemberlistByGroup/${group_name}", (list) => {
 						console.log(list);
 						console.log(loginUser);
-						let joinCheck = list.find((user) => user.user_id === loginUser);
+						let joinCheck = list.memberList.find( user => user.user_id === loginUser)
 						if (!joinCheck) {
 							alert("그룹 회원만 접근 가능한 페이지입니다");
 							location.href = "/group/";
 						}
-					});
-				}
+					});//get Json
+		
 
 				// input file이 변할때
 				$('input[type="file"]').change(function (e) {
@@ -127,25 +121,37 @@ pageEncoding="UTF-8"%>
 				// 글 작성
 				$(".create").click(function (e) {
 					e.preventDefault();
-					board = {
-						title: $('input[name="title"]').val(),
-						content: myEditor.children[0].innerHTML,
-						writer: $('input[name="writer"]').val(),
-						group_name: "${group_name}",
-						attachList,
-						notice: $('input[name="notice"]').is(":checked") ? "Y" : "N",
-					};
-					console.log(board);
-					$.ajax({
-						type: "post",
-						url: "/group/board/",
-						data: JSON.stringify(board),
-						contentType: "application/json; charset=utf-8",
-						success: () => (location.href = "/group/board/${group_name}"),
-						error: (xhr, staturs, er) => {
-							console.log(xhr);
+					
+					const title =$('input[name="title"]').val()
+					const content =  myEditor.children[0].innerHTML
+					
+					if(title == '' || content == '<p><br></p>'){
+						if(title == ''){
+							$('input[name="title"]').focus()
+						}else{
+							myEditor.children[0].focus()
+						}
+					}else{
+						board = {
+							title,
+							content,
+							writer: $('input[name="writer"]').val(),
+							group_name: "${group_name}",
+							attachList,
+							notice: $('input[name="notice"]').is(":checked") ? "Y" : "N",
+						};
+						console.log(board);
+						$.ajax({
+							type: "post",
+							url: "/group/board/",
+							data: JSON.stringify(board),
+							contentType: "application/json; charset=utf-8",
+							success: () => (location.href = "/group/board/${group_name}"),
+							error: (xhr, staturs, er) => {
+								console.log(xhr);
 						},
-					}); //ajax
+					}); //ajax  
+					}//else
 				}); //click
 
 				const imageHandler = (e) => {
@@ -184,33 +190,11 @@ pageEncoding="UTF-8"%>
 				}; //imageHandletr
 
 				const toolbarOptions = [
-					[
-						{
-							header: [1, 2, 3, 4, 5, 6, false],
-						},
-					],
-					[
-						{
-							list: "ordered",
-						},
-						{
-							list: "bullet",
-						},
-					],
+					[{ header: [1, 2, 3, 4, 5, 6, false] }],
+					[{ list: "ordered" }, { list: "bullet" }],
 					["bold", "italic", "underline", "strike"],
-					[
-						{
-							color: [],
-						},
-						{
-							background: [],
-						},
-					],
-					[
-						{
-							align: [],
-						},
-					],
+					[{ color: [] }, { background: [] }],
+					[{ align: [] }],
 					["image"],
 					["clean"],
 				];

@@ -8,12 +8,62 @@
 		<selectKey keyProperty="gno" order="BEFORE" resultType="long">
 			select seq_gno.nextval from dual
 		</selectKey>
-		insert into tbl_group(gno, group_name, leader, subject, description, member_number)
-			values(#{gno}, #{group_name}, #{leader}, #{subject}, #{description}, #{member_number})
+		insert into tbl_group(gno, group_name, leader, subject, description, member_number, regdate)
+			values(#{gno}, #{group_name}, #{leader}, #{subject}, #{description}, #{member_number} , sysdate)
 	</insert>
 	
 	<select id="showAll" resultType="com.green.vo.GroupVO">
 		select * from tbl_group where authorized='Y' order by gno desc 
+	</select>
+	
+	<select id="showLatest20" resultType="com.green.vo.GroupVO">
+		<![CDATA[
+	    select 
+	     /*+ index_desc(tbl_group PK_GROUP) */
+	    rownum rn, gno, group_name, leader, subject, description, member_number, authorized, viewcnt, regdate 
+	    from tbl_group 
+	    where authorized ='Y' and rownum <=20
+	   ]]>
+	</select>
+	
+	
+	<sql id="criteria">
+		 <trim prefix="(" suffix=") and " prefixOverrides="OR">
+			    	<foreach item="type" collection="typeArr">
+			    		<trim prefix="OR">
+			    			<choose>
+			    				<when test="type== 'N'.toString()">
+			    					group_name like '%'||#{keyword}||'%'
+			    				</when>
+			    				<when test="type== 'S'.toString()">
+			    					subject like '%'||#{keyword}||'%'
+			    				</when>
+			    			</choose>
+			    		</trim>
+			    	</foreach>
+		    </trim>
+	</sql>
+	
+	
+	<select id="getListWithPaging" resultType="com.green.vo.GroupVO">
+			 <![CDATA[
+			select gno, group_name, leader, subject, description, member_number, viewcnt, regdate
+				from (
+			    select 
+			    /*+ index_desc(tbl_group pk_group ) */
+				    rownum rn, gno, group_name, leader, subject, description, member_number, authorized, viewcnt, regdate
+				    	from tbl_group
+				    where ]]>
+				    <include refid="criteria"></include>
+				    <![CDATA[
+			   rownum <=#{pageNum} * #{amount} and authorized ='Y'
+		    )
+		    where rn> (#{pageNum}-1) *  #{amount}
+		    ]]>
+	</select>
+	
+	<select id="getTotalCount" resultType="int">
+		select count(*) from tbl_group where <include refid="criteria"></include> gno>0 and authorized ='Y'
 	</select>
 	
 	<select id="groupNameCheck" resultType="int">
@@ -29,8 +79,16 @@
 	</delete>
 	
 	
+	<update id="updateGroup">
+		update tbl_group set group_name =#{group_name}, subject= #{subject}, description= #{description}, member_number = #{member_number} where gno=#{gno}
+	</update>
+	
 	<update id="GroupAuth">
 		update tbl_group set authorized=#{authorized} where gno=#{gno}
+	</update>
+	
+	<update id="updateViewCnt">
+		update tbl_group set viewCnt = viewCnt +1 where group_name = #{group_name}
 	</update>
 	
 	
