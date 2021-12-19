@@ -77,3 +77,6 @@ create table letter_tbl(
     reg_date Date 
 );
 create SEQUENCE lno_seq;
+
+---qna 용량 증가(12/19)
+alter table qna_tbl modify q_content varchar2(700);

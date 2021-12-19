@@ -161,7 +161,7 @@ li {
 				data:JSON.stringify(data),
 				contentType:"application/json; charset=utf-8",
 				success:function(result){
-					alert("성공")
+					//alert("성공")
 				},
 				error:function(){
 					alert("실패")
