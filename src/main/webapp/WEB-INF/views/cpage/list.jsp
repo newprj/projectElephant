@@ -48,7 +48,6 @@ li {
 			<c:if test="${list.captain ne 'Y'}">
 				${list.member} ======== <button type="button" onclick="remove('${list.member}')" >추방하기</button>
 				<button type="button" onclick="letter('${list.member}')">쪽지보내기</button>
-				<button type="button">회원정보</button><br> 
 			</c:if>
 		</c:if>
 	</c:forEach>
@@ -59,10 +58,10 @@ li {
 		<c:if test="${list.membership eq 'N'}">
 			${list.member}  ======== <button type="button" onclick="update('${list.member}')" >승인</button>
 			<button type="button" onclick="remove('${list.member}')" >거절</button>
-			<button type="button" onclick="letter('${list.member}')">쪽지보내기</button>
-			<button type="button">회원정보</button><br> 
+			<button type="button" onclick="letter('${list.member}')">쪽지보내기</button><br>
 		</c:if>
-		<div class="modal" >
+	</c:forEach>
+	<div class="modal">
 			<div class="modal-content">
 				<div class="modal-header">
 					<h4 class="modal-title">쪽지보내기</h4>
@@ -70,7 +69,6 @@ li {
 				<div class="modal-body">
 					<div class="modal-group">
 						<input name="writer" type="hidden" value="${str[0]}"/>
-						<input name="replyDate" type="hidden"/>
 					</div>
 					<div class="modal-group">
 						<label>쪽지내용</label><br/>
@@ -83,53 +81,83 @@ li {
 				</div>
 		</div>
 	</div>
-	</c:forEach>
-	
 </body>
 <script type="text/javascript">
-
-$(".modal").hide()
-
-
-var memberLimit = ${memberLimit}
-console.log(memberLimit)
-
-
-$(".memberLimit").append("<p> 모집인원 : " + memberLimit + " / 5 </p>")
-
-function letter(member){
-	$(".modal").show()
-}
-
-$('#close').click(function() {
 	$(".modal").hide()
-})
-
-function update(member){
-	if(memberLimit === 5) {
-		alert("인원이 초과되었습니다")
-		return false;
-	}
+	var memberLimit = ${memberLimit}
 	console.log(memberLimit)
-	
-    $.ajax({
-        url : '/cpage/update/'+member,
-        type : 'post',
-        success : function(data){
-            if(data == "success") location.reload();  
-        }
-    });
-}
 
-function remove(member){
-    $.ajax({
-        url : '/cpage/remove/'+member,
-        type : 'post',
-        success : function(data){
-        	if(data == "success") location.reload();  
-        }
-    });
-}
+
+	$(".memberLimit").append("<p> 모집인원 : " + memberLimit + " / 5 </p>")
+
+	
+	function letter(member){
+		console.log(member)
+		$(".modal").show()
+		
+		$('#register').click(function() {
+			var letter={
+					recipient: member,
+					writer:$(".modal").find("input[name='writer']").val(),
+					content:$(".modal").find("textarea[name='content']").val(),
+					reg_date: new Date()
+			}
+			console.log(letter)
+			$.ajax({
+				url:"/cpage/letter",
+				type:"post",
+				data:JSON.stringify(letter),
+				contentType:"application/json; charset=utf-8",
+				dataType:"text",
+				success:function(result){
+					$(".modal").hide();
+					location.reload();
+					alert("쪽지를 발송하였습니다.")
+				},
+				error:function(){
+					alert("실패")
+				}
+			})
+		})
+	}
+	
+	
+	
+	
+	
+	
+	$('#close').click(function() {
+		$(".modal").hide()
+	})
+
+
+	
+	function update(member){
+		if(memberLimit === 5) {
+			alert("인원이 초과되었습니다")
+			return false;
+		}
+		console.log(memberLimit)
+		
+	    $.ajax({
+	        url : '/cpage/update/'+member,
+	        type : 'post',
+	        success : function(data){
+	            if(data == "success") location.reload();  
+	        }
+	    });
+	}
+	
+	function remove(member){
+	    $.ajax({
+	        url : '/cpage/remove/'+member,
+	        type : 'post',
+	        success : function(data){
+	        	if(data == "success") location.reload();  
+	        }
+	    });
+	}
+
 
 </script>
 </html>
