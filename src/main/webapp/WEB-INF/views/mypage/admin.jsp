@@ -3,6 +3,7 @@
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core"
 prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %> 
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 <jsp:useBean id="today" class="java.util.Date" />
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <!DOCTYPE html>
@@ -45,7 +46,43 @@ nav {
     width: 30%;
 
 }
+body{
+	margin-top: 50px;
+	margin-bottom: 50px;
+}
+.container{
+	width: 50%;
+	
+}
 
+
+ul.tabs{
+	margin: 0px;
+	padding: 0px;
+	list-style: none;
+}
+ul.tabs li{
+	background: none;
+	color: #222;
+	display: inline-block;
+	padding: 10px 15px;
+	cursor: pointer;
+}
+
+ul.tabs li.current{
+	background: #ededed;
+	color: #222;
+}
+
+.tab-content{
+	display: none;
+	background: #ededed;
+	padding: 15px;
+}
+
+.tab-content.current{
+	display: inherit;
+}
 
 </style>
 <title>관리자 페이지</title>
@@ -55,9 +92,9 @@ nav {
 	<h1>관리자 페이지</h1>
 	<nav>
 		<h5><a href="/user/logout">로그아웃</a></h5>
-		<h5 id='today'><fmt:formatDate value="<%= today %>" pattern="yyyy-MM-dd" /> : 방문자수(가능하면)</h5>
+		<h5 id='today'><fmt:formatDate value="<%= today %>" pattern="yyyy-MM-dd" /> 방문자 :  ${visit}명 </h5>
 	</nav>
-	<h3>받은 쪽지 리스트도 보이도록, 방문자 평균 그래프로 보이게</h3>
+	<h3>방문자 평균 그래프로 보이게</h3>
 	
 	<div class='userList'>
 		<h3 >회원 리스트</h3>
@@ -79,7 +116,7 @@ nav {
 					<td id='userId${status.index}'>${i.user_id}</td>
 					<td>${i.name}</td>
 					<td></td>
-					<td><button class='letterBtn'>쪽지</button></td>
+					<td><button data-idx='${status.index}' class='letterBtn'>쪽지</button></td>
 					<td><button class='susp' >
 						<c:choose>
 							<c:when test="${i.suspension eq 'Y'}">정지</c:when>
@@ -147,34 +184,70 @@ nav {
 					<td>${i.pwd}</td>
 					<td>${i.writer}</td>
 					<td><fmt:formatDate value="${i.up_date}" pattern="yyyy-MM-dd a hh:mm" /></td>
-					<td>만들기</td>
+					<td>${i.hit}</td>
 				</tr>
 			</c:forEach>
 		</table>
 	</div>
 	
-	<div class="letter">
-	<h3>받은 쪽지</h3>
-		<table>
-			<thead>
-				<tr>
-				  <th>no.</th>
-	              <th>id</th>
-				  <th>내용</th>
-	              <th>날짜</th>
-	              <th></th>
-				</tr>
-			</thead>
-			<c:forEach items="${letter}" var="i" varStatus="status" begin="0" end='9'>
-				<tr>
-					<td>${status.count}</td>
-					<td id='writeId${status.index}'>${i.writer}</td>
-					<td>${i.content}</td>
-					<td><fmt:formatDate value="${i.reg_date}" pattern="yyyy-MM-dd a hh:mm" /></td>
-					<td><button class='letterBtn'>답장</button></td>
-				</tr>
-			</c:forEach>
-		</table>
+	
+	<!-- 쪽지 -->
+	<div class="container">
+
+		<ul class="tabs">
+			<li class="tab-link current" data-tab="tab-1">받은 쪽지</li>
+			<li class="tab-link" data-tab="tab-2">보낸 쪽지</li>
+			<li><button class='letterBtn'>쪽지 보내기</button></li>
+		</ul>
+	
+		<div id="tab-1" class="tab-content current">
+			<table>
+					<thead>
+						<tr>
+						  <th>no.</th>
+						  <th>보낸 id</th>
+						  <th>내용</th>
+			              <th>날짜</th>
+			              <th></th>
+						</tr>
+					</thead>
+					<c:forEach items="${letter}" var="i" varStatus="status"  begin="0" end='9'>
+						<tr>
+							<td>${status.count}</td>
+							<td id='userId${status.index}'>${i.writer}</td>
+							<td>${i.content}</td>
+							<td><fmt:formatDate value="${i.reg_date}" pattern="yyyy-MM-dd a hh:mm" /></td>
+							<td><button class='letterBtn'>답장</button></td>
+						</tr>
+					</c:forEach>
+			</table>
+
+		</div>
+		<div id="tab-2" class="tab-content">
+		
+			<table>
+					<thead>
+						<tr>
+						  <th>no.</th>
+						  <th>받은 id</th>
+						  <th>내용</th>
+			              <th>날짜</th>
+			              <th></th>
+			              <th></th>
+						</tr>
+					</thead>
+					<c:forEach items="${sendletter}" var="i" varStatus="status"  begin="0" end='9'>
+						<tr>
+							<td>${status.count}</td>
+							<td>${i.recipient}</td>
+							<td>${i.content}</td>
+							<td><fmt:formatDate value="${i.reg_date}" pattern="yyyy-MM-dd a hh:mm" /></td>
+							<td><button data-lno='${i.lno}' class='deleLetter'>삭제</button></td>
+						</tr>
+					</c:forEach>
+			</table>
+		</div>
+
 	</div>
 	
 	<!-- 유저 정지 모달 -->
@@ -312,11 +385,9 @@ nav {
 			
 			letterDate.closest('div').hide()
 			$(".letter_modal").show()
-			var idx=$(".letterBtn").index(this)
+			var idx=$(this).data("idx")
 			var uid=$("#userId"+idx).text()
 			
-			console.log(idx)
-			console.log('${user}')
 			
 			modalwriteId.val('${user}')
 			modalrecipientId.val(uid)
@@ -353,6 +424,40 @@ nav {
 			$(".letter_modal").hide()
 			
 		})
+		
+		$('ul.tabs li').click(function(){
+			var tab_id = $(this).attr('data-tab');
+
+			$('ul.tabs li').removeClass('current');
+			$('.tab-content').removeClass('current');
+
+			$(this).addClass('current');
+			$("#"+tab_id).addClass('current');
+		})
+		
+		$(".deleLetter").click(function(){
+			console.log("삭제버튼 눌림")
+			var lno=$(this).data('lno')
+			var data={
+					lno:lno,
+					writer:'${user}'
+			}
+			console.log(data)
+			$.ajax({
+				url:"/mypage/deleLetter",
+				type:"post",
+				data:JSON.stringify(data),
+				contentType:"application/json; charset=utf-8",
+				success:function(){
+					location.reload();
+				},
+				error:function(){
+					alert("실패")
+				}
+			}) 
+		})
+		
+		
 	})
 
 </script>

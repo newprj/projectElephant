@@ -37,6 +37,18 @@ public class LetterServiceImpl implements LetterService{
 		// TODO Auto-generated method stub
 		return mapper.myLetter(recipient);
 	}
+
+	@Override
+	public List<LetterVO> sendLetter(String writer) {
+		// TODO Auto-generated method stub
+		return mapper.sendLetter(writer);
+	}
+
+	@Override
+	public void delete(String writer,Long lno) {
+		// TODO Auto-generated method stub
+		mapper.delete(writer,lno);
+	}
 	
 	
 		

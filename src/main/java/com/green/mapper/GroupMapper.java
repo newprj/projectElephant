@@ -22,7 +22,9 @@ public interface GroupMapper {
 	public int groupNameCheck(String group_name);
 	
 	public int updateGroup(GroupVO vo);
+
 	public int updateViewCnt(String group_name);
+
 
 	//스터디 승인
 	public void GroupAuth(@Param("gno") Long gno,@Param("authorized") String authorized);

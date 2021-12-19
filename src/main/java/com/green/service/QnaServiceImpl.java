@@ -148,6 +148,13 @@ public class QnaServiceImpl implements QnaService{
 		return mapper.myQna(writer);
 	}
 
+
+	@Override
+	public int updateHit(Long qno, Long hit) {
+		// TODO Auto-generated method stub
+		return mapper.updateHit(qno, hit);
+	}
+
 	
 
 

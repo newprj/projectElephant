@@ -61,6 +61,7 @@ li {
               <th>제목</th>
               <th>작성자</th>
               <th>작성일</th>
+              <th>조회수</th>
               <th></th>
               <th></th>
 			</tr>
@@ -74,6 +75,7 @@ li {
 				<td>
 					<fmt:formatDate value="${i.up_date}" pattern="yyyy-MM-dd a hh:mm" />
 				</td>
+				<td style="text-align:center;" id='hit${i.qno}'>${i.hit}</td>
 				<td><button data-qno='${i.qno}' class="writeMod" id="writeMod${i.qno}">수정</button></td>
 				<td><button onclick="location='/qna/remove?qno=${i.qno}'" id="writeRemove${i.qno}">삭제</button></td>
 			</tr>
@@ -125,7 +127,7 @@ li {
 		})
 		
 		$(".detail").on("click",function(e){
-			
+			/* private 비밀번호 입력 */
 			if($(this).parent().prev().text()=="private"){
 				var inputPwd=prompt("비밀번호를 입력해주세요")
 				
@@ -141,12 +143,38 @@ li {
 					alert("잘목입력하셨습니다. 다시 입력해주세요.")
 					return false
 				}
+				
 			}
 			e.preventDefault();
+			
+			/* 조회수 증가 */
+			var qno=$(".detail").attr('href')
+			var hit=$("#hit"+qno).text()
+			var data={
+					qno:qno,
+					hit:hit
+			}
+			console.log(data)
+			$.ajax({
+				url:"/qna/hitUp",
+				type:"post",
+				data:JSON.stringify(data),
+				contentType:"application/json; charset=utf-8",
+				success:function(result){
+					//alert("성공")
+				},
+				error:function(){
+					alert("실패")
+				}
+			}) 
+			
+			/* 페이지 이동 */
 			$(".detail").attr('href');
 			$("#actionForm").append("<input type='hidden' name='qno' value='"+$(this).attr("href")+"'>")
 			$("#actionForm").attr("action","/qna/detail")
 			$("#actionForm").submit()
+			
+			
 			
 		})
 		

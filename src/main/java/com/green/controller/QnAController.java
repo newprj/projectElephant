@@ -1,6 +1,7 @@
 package com.green.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -12,8 +13,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.green.service.QnaService;
@@ -42,6 +45,7 @@ public class QnAController {
 		UserVO login= (UserVO) session.getAttribute("user");
 		
 		int total=service.totalCount(cri);
+		
 		model.addAttribute("loginId", login.getUser_id());
 		model.addAttribute("list",service.listqnaWithPaging(cri));
 		model.addAttribute("pageMarker",new PageDTO(cri, total));
@@ -97,5 +101,12 @@ public class QnAController {
 	public String removeQno(Long qno) {
 		service.deleteByQno(qno);
 		return "redirect:/qna/list";
+	}
+	
+	@ResponseBody
+	@PostMapping(value="/hitUp", consumes="application/json")
+	public void updateHit(@RequestBody Map<String,Long> data) {
+		service.updateHit(data.get("qno"), data.get("hit"));
+		
 	}
 }

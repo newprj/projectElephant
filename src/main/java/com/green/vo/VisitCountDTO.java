@@ -13,12 +13,8 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class VisitCountVO {
+public class VisitCountDTO {
 	
-	  private Long visit_id;
-	  private String visit_ip;
-	  private Date visit_time;
-	  private String visit_refer;
-	  private String visit_agent;
-	
+	  private Long vno;
+	  private Date in_date;
 }

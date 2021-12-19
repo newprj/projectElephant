@@ -2,6 +2,8 @@ package com.green.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.green.vo.Criteria;
 import com.green.vo.QnaVO;
 
@@ -17,5 +19,8 @@ public interface QnaMapper {
 	public int deleteByQno(Long qno);
 	public int totalCount(Criteria cri);
 	
+	public int updateHit(@Param("qno") Long qno,@Param("hit") Long hit);
+	
 	public List<QnaVO> myQna(String writer);
+	
 }

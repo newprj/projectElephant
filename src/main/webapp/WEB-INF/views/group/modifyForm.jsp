@@ -158,7 +158,7 @@ prefix="c" %>
 						}, //error
 					}); //ajax
 				}); // modify c
-				
+
 				$(".delete").click(function (e) {
 					e.preventDefault();
 					$.ajax({

@@ -12,4 +12,12 @@
 	<select id="myLetter" resultType="com.green.vo.LetterVO">
 		select *from letter_tbl where recipient=#{recipient}
 	</select>
+	
+	<select id="sendLetter" resultType="com.green.vo.LetterVO">
+		select *from letter_tbl where writer=#{writer}
+	</select>
+	
+	<delete id="delete">
+		delete from letter_tbl where writer=#{writer} and lno=#{lno}
+	</delete>
 </mapper>

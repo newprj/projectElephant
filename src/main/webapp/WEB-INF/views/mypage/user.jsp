@@ -45,6 +45,44 @@ nav h2,nav h4{
 	border: 1px solid #888;	
 }
 
+body{
+	margin-top: 50px;
+	margin-bottom: 50px;
+}
+.container{
+	width: 50%;
+	
+}
+
+
+ul.tabs{
+	margin: 0px;
+	padding: 0px;
+	list-style: none;
+}
+ul.tabs li{
+	background: none;
+	color: #222;
+	display: inline-block;
+	padding: 10px 15px;
+	cursor: pointer;
+}
+
+ul.tabs li.current{
+	background: #ededed;
+	color: #222;
+}
+
+.tab-content{
+	display: none;
+	background: #ededed;
+	padding: 15px;
+}
+
+.tab-content.current{
+	display: inherit;
+}
+
 </style>
 <head>
 
@@ -56,6 +94,9 @@ nav h2,nav h4{
 		<h2>${user.name}님 페이지</h2>
 		<h4 style='float:right;'><a href="/user/logout">로그아웃</a></h4>
 	</nav>
+	
+	
+	
 	<div id="division">
 		<h2 id="title">내가 가입한 그룹</h2>
 		<table>
@@ -218,30 +259,66 @@ nav h2,nav h4{
 			</li>
 		</ul>
 	</div>
+	<div class="container">
 	
-	<div id="division">
-		<h2 id="title">쪽지</h2>
-		<table>
-				<thead>
-					<tr>
-					  <th>no.</th>
-					  <th>id</th>
-					  <th>내용</th>
-		              <th>날짜</th>
-		              <th></th>
-					</tr>
-				</thead>
-				<c:forEach items="${letter}" var="i" varStatus="status"  begin="0" end='9'>
-					<tr>
-						<td>${status.count}</td>
-						<td id='userId${status.index}'>${i.writer}</td>
-						<td>${i.content}</td>
-						<td><fmt:formatDate value="${i.reg_date}" pattern="yyyy-MM-dd a hh:mm" /></td>
-						<td><button class='letterBtn'>답장</button></td>
-					</tr>
-				</c:forEach>
-		</table>
+		<ul class="tabs">
+			<li class="tab-link current" data-tab="tab-1">받은 쪽지</li>
+			<li class="tab-link" data-tab="tab-2">보낸 쪽지</li>
+			<li><button class='letterBtn'>쪽지 보내기</button></li>
+		</ul>
+	
+		<div id="tab-1" class="tab-content current">
+			<table>
+					<thead>
+						<tr>
+						  <th>no.</th>
+						  <th>보낸 id</th>
+						  <th>내용</th>
+			              <th>날짜</th>
+			              <th></th>
+						</tr>
+					</thead>
+					<c:forEach items="${letter}" var="i" varStatus="status"  begin="0" end='9'>
+						<tr>
+							<td>${status.count}</td>
+							<td id='userId${status.index}'>${i.writer}</td>
+							<td>${i.content}</td>
+							<td><fmt:formatDate value="${i.reg_date}" pattern="yyyy-MM-dd a hh:mm" /></td>
+							<td><button class='letterBtn'>답장</button></td>
+							
+						</tr>
+					</c:forEach>
+			</table>
+	
+		</div>
+		<div id="tab-2" class="tab-content">
+		
+			<table>
+					<thead>
+						<tr>
+						  <th>no.</th>
+						  <th>받는 id</th>
+						  <th>내용</th>
+			              <th>날짜</th>
+			              <th></th>
+			              <th></th>
+						</tr>
+					</thead>
+					<c:forEach items="${sendletter}" var="i" varStatus="status"  begin="0" end='9'>
+						<tr>
+							<td>${status.count}</td>
+							<td>${i.recipient}</td>
+							<td>${i.content}</td>
+							<td><fmt:formatDate value="${i.reg_date}" pattern="yyyy-MM-dd a hh:mm" /></td>
+							<td><button data-lno='${i.lno}' class='deleLetter'>삭제</button></td>
+						</tr>
+					</c:forEach>
+			</table>
+		</div>
+
 	</div>
+	
+	
 	
 	<!-- 쪽지 모달 -->
 	<div class="letter_modal" id="letter_modal" >
@@ -302,7 +379,7 @@ nav h2,nav h4{
 			var idx=$(".letterBtn").index(this)
 			var uid=$("#userId"+idx).text()
 			
-			console.log(uid)
+			console.log(idx)
 			console.log('${user.user_id}')
 			
 			modalwriteId.val('${user.user_id}')
@@ -339,6 +416,40 @@ nav h2,nav h4{
 			$(".letter_modal").hide()
 			
 		})
+		
+		$('ul.tabs li').click(function(){
+			var tab_id = $(this).attr('data-tab');
+
+			$('ul.tabs li').removeClass('current');
+			$('.tab-content').removeClass('current');
+
+			$(this).addClass('current');
+			$("#"+tab_id).addClass('current');
+		})
+		
+		
+		$(".deleLetter").click(function(){
+			var lno=$(this).data('lno')
+			var data={
+		 			lno:lno,
+					writer:'${user.user_id}'
+				}
+		 		console.log(data)
+			$.ajax({
+				url:"/mypage/deleLetter",
+				type:"post",
+				data:JSON.stringify(data),
+				contentType:"application/json; charset=utf-8",
+				success:function(){
+					alert("성공")
+					location.reload();
+				},
+				error:function(){
+					alert("실패")
+				}
+			}) 
+		})//ajax
+
  	 })	
 </script>
 </html>

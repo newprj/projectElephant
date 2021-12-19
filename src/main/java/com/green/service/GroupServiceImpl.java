@@ -68,6 +68,7 @@ public class GroupServiceImpl implements GroupService{
 		return mapper.updateGroup(vo);
 	}
 
+
 	@Override
 	public List<GroupVO> showLatest20() {
 		
@@ -85,6 +86,7 @@ public class GroupServiceImpl implements GroupService{
 		// TODO Auto-generated method stub
 		return mapper.getTotalCount(cri);
 	}
+
 
 	
 
