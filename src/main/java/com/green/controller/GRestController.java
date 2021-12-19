@@ -109,7 +109,8 @@ public class GRestController {
 	
 	
 	//메인페이지 - > 그룹 리스트 게시판 
-	@GetMapping(value= {"/main/list", "/main/list/{pageNum}/{amount}", "/main/list/{pageNum}/{amount}/{type}/{keyword}"})
+	@GetMapping(value= {"/main/list", "/main/list/{pageNum}/{amount}", "/main/list/{pageNum}/{amount}/{type}/{keyword}" ,
+			"/main/list/{pageNum}/{amount}/{sort}", "/main/list/{pageNum}/{amount}/{type}/{keyword}/{sort}" })
 	public ModelAndView listOfgroups(HttpServletRequest request, @ModelAttribute("cri") Criteria cri) {
 		ModelAndView mv = new ModelAndView("/group/groupBoard");
 		try {
@@ -277,7 +278,8 @@ public class GRestController {
 	
 	
 	// 그룹별 게시판 페이지
-	@GetMapping({ "/board/{group_name}/{pageNum}/{amount}", "/board/{group_name}/{pageNum}/{amount}/{type}/{keyword}", "/board/{group_name}"})
+	@GetMapping({ "/board/{group_name}/{pageNum}/{amount}", "/board/{group_name}/{pageNum}/{amount}/{type}/{keyword}",
+		"/board/{group_name}"})
 	public ModelAndView tempGroupPage(@ModelAttribute("cri") Criteria cri,  HttpSession session ) {
 		ModelAndView mv = new ModelAndView("/group/board");
 		int total = boardService.getTotalCount(cri);

@@ -43,11 +43,21 @@
 			    	</foreach>
 		    </trim>
 	</sql>
-	
+
+	<sql id="sortBy">
+		<choose>
+			<when test="sort=='viewCnt'">
+				order by g.viewCnt desc
+			</when>
+			<when test="sort=='popular'">
+				order by u.pop desc
+			</when>
+		</choose>
+	</sql>
 	
 	<select id="getListWithPaging" resultType="com.green.vo.GroupVO">
 			 <![CDATA[
-			select gno, group_name, leader, subject, description, member_number, viewcnt, regdate
+			select g.gno, g.group_name, g.leader, g.subject, g.description, g.member_number, g.viewcnt, g.regdate, u.pop
 				from (
 			    select 
 			    /*+ index_desc(tbl_group pk_group ) */
@@ -57,9 +67,13 @@
 				    <include refid="criteria"></include>
 				    <![CDATA[
 			   rownum <=#{pageNum} * #{amount} and authorized ='Y'
-		    )
+		    ) g
+		    right join 
+		    		(select group_name, count(*) pop from tbl_groupuser group by group_name) u
+            on g.group_name = u.group_name
 		    where rn> (#{pageNum}-1) *  #{amount}
 		    ]]>
+		    <include refid="sortBy"></include>
 	</select>
 	
 	<select id="getTotalCount" resultType="int">

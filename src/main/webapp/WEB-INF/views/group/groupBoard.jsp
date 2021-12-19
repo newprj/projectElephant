@@ -21,12 +21,14 @@ prefix="c" %>
 <body>
 <h1> 그룹 전체보는 페이지 </h1>
 <div>
+<form class="sortForm">
 	<select name="sort" class="sort">
-		<option value="recent"> 최신순 </option>
-		<option value="popular"> 지원자 많은순 </option>
-		<option value="viewCnt"> 조회순 </option>
+		<option value="recent" <c:out value="${pageMaker.cri.sort == null ? 'selected' : ''}"/>> 최신순 </option>
+		<option value="popular" <c:out value="${pageMaker.cri.sort eq 'popular' ? 'selected' : ''}"/>> 지원자 많은순 </option>
+		<option value="viewCnt" <c:out value="${pageMaker.cri.sort eq 'viewCnt' ? 'selected' : ''}"/>> 조회순 </option>
 	</select>
-	
+	<button class="sortForm"> 정렬 </button>
+</form>
 </div>
  <div>
     	<form class="searchForm" >
@@ -95,15 +97,40 @@ $('button.searchForm').click((e) => {
 	e.preventDefault()
 	let type = searchForm.find("option:selected").val()
 	let keyword =  $('input[name="keyword"]').val()
+	let url = `/group/main/list/\${pageNum}/\${amount}/\${type}/\${keyword}`
+	let sort = $('select.sort').find("option:selected").val() 
 	if(!type){
 		alert("옵션 종류를 선택하세요 ") 
 	}else if (!keyword){
 		alert("검색 키워드를 입력하세요 ")
-	}else {
-		let url = `/group/main/list/\${pageNum}/\${amount}/\${type}/\${keyword}`
+	}else{
+		if(sort) url+=`/\${sort}`
 		location.href = url 
 	}
 
 })// search button click
+
+
+$('select.sort').change((e) => {
+	console.log(".....")
+	console.log($('select.sort').find("option:selected").val())
+	let sort = $('select.sort').find("option:selected").val()
+})
+
+$('button.sortForm').click((e)=>{
+	e.preventDefault()
+	let sort = $('select.sort').find("option:selected").val() 
+	let url =`/group/main/list/`
+	if(!sort){
+		alert('어떤 방식으로 정렬할지 선택하세요 ')
+	}else{
+		if(sort !== 'recent') {
+			url += `\${pageNum}/\${amount}/\${sort}`
+		}
+		location.href = url
+	}
+	
+	
+})
 </script>
 </html>
