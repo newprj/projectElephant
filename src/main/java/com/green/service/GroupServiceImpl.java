@@ -26,16 +26,10 @@ public class GroupServiceImpl implements GroupService{
 	@Override
 	public int makeGroup(GroupVO vo) {
 		System.out.println(" 서비스 vo " + vo);
-<<<<<<< HEAD
-		GUserVO groupLeader = new GUserVO(vo);
-		umapper.groupSignUp(groupLeader);
-		return mapper.makeGroup(vo);
-=======
 		int res = mapper.makeGroup(vo);
 		GUserVO groupLeader = new GUserVO(vo);
 		umapper.groupSignUp(groupLeader);
 		return res;
->>>>>>> hyewon
 	}
 
 	@Override
@@ -74,8 +68,7 @@ public class GroupServiceImpl implements GroupService{
 		return mapper.updateGroup(vo);
 	}
 
-<<<<<<< HEAD
-=======
+
 	@Override
 	public List<GroupVO> showLatest20() {
 		
@@ -94,7 +87,7 @@ public class GroupServiceImpl implements GroupService{
 		return mapper.getTotalCount(cri);
 	}
 
->>>>>>> hyewon
+
 	
 
 }
