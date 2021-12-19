@@ -140,16 +140,18 @@ create sequence seq_cid;
 --- select, update 등 테스트를 위한 쿼리문은 공유 X
 
 ----- 어드민기능
-update tbl_group set authorized = 'Y' where gno<73; 
+update tbl_group set authorized = 'Y' where gno <31; 
 update tbl_groupuser set authorized='Y';
 commit;
 
 
 select * from tbl_groupuser where group_name='운동30' order by cno;
-update tbl_groupuser set authorized='Y' where group_name='운동30' and cno < 288 ;
+
 -------------------------------------------------------------------------
 ---select * from user_constraints where table_name='TBL_GROUP'; 
 ---select * from user_constraints where table_name in ('TBL_BOARD', 'TBL_GROUP');
 ---alter table tbl_group rename constraint SYS_C007897 to pk_group;
 ---select table_name, index_name from all_ind_columns where table_name ='tbl_group';
+
+
 

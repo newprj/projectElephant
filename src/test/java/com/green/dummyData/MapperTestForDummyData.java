@@ -2,6 +2,7 @@ package com.green.dummyData;
 
 import java.util.Calendar;
 import java.util.List;
+import java.util.function.IntConsumer;
 import java.util.stream.IntStream;
 
 import org.junit.Test;
@@ -16,9 +17,11 @@ import com.green.mapper.GUserMapper;
 import com.green.mapper.GroupMapper;
 import com.green.mapper.ReplyMapper;
 import com.green.mapper.UserMapper;
+import com.green.service.GUserService;
 import com.green.vo.BoardReplyVO;
 import com.green.vo.BoardVO;
 import com.green.vo.CalendarVO;
+import com.green.vo.Criteria;
 import com.green.vo.GUserVO;
 import com.green.vo.GroupVO;
 import com.green.vo.UserVO;
@@ -42,6 +45,9 @@ public class MapperTestForDummyData {
 	public GUserMapper guMapper;
 	
 	@Setter(onMethod_=@Autowired)
+	public GUserService service;
+	
+	@Setter(onMethod_=@Autowired)
 	public BoardMapper bMapper;
 	
 	@Setter(onMethod_=@Autowired)
@@ -53,7 +59,7 @@ public class MapperTestForDummyData {
 	// 유저 생성 
 	//@Test
 	public void signUp() {
-		IntStream.rangeClosed(1,100).forEach( i-> {
+		IntStream.rangeClosed(1,200).forEach( i-> {
 			UserVO vo = new UserVO();
 			vo.setUser_id("test" + i);
 			vo.setPassword("test");
@@ -63,11 +69,11 @@ public class MapperTestForDummyData {
 		});
 	}
 	
-	//그룹 생성 =>  20번까지 승인함
-//	@Test
+	//그룹 생성 =>  20번까지 승인함(오라클)
+	//@Test
 	public void makeGroup() {
 		String [] subject = {"코딩", "그림", "공부", "맛집", "피아노", "독서", "공연", "운동", "요가"};
-		IntStream.rangeClosed(1, 40).forEach(i ->{
+		IntStream.rangeClosed(1, 60).forEach(i ->{
 			int random = (int)(Math.random()*subject.length);
 			GroupVO vo = new GroupVO();
 			vo.setGroup_name(subject[random]+i);
@@ -84,18 +90,19 @@ public class MapperTestForDummyData {
 		});
 	}
 	
-	//지원하기 => 여러번 반복해서 지원 횟수 늘리기
-//	@Test
+	//지원하기 => 오라클에서 적당히 승인
+	//@Test
 	public void groupSignUP() {
-		int random = (int)(Math.random()*50)+42;
+		
 		List<GroupVO> list = gMapper.showAll();
 		int num = list.size();
 		
-		IntStream.rangeClosed(41, 100).forEach(i ->{
+		IntStream.rangeClosed(1, 500).forEach(i ->{
+			int random = (int)(Math.random()*50)+42;
 			try{
 			GroupVO groupVO = list.get((int)(Math.random()*num));
 			GUserVO groupUserVO = new GUserVO();
-			groupUserVO.setUser_id("test"+i);
+			groupUserVO.setUser_id("test"+random);
 			groupUserVO.setGroup_name(groupVO.getGroup_name());
 			guMapper.groupSignUp(groupUserVO);
 			}catch (Exception e) {
@@ -112,7 +119,7 @@ public class MapperTestForDummyData {
 		int num = list.size();
 		for(int i=0; i<400; i++) {
 			GroupVO groupVO = list.get((int)(Math.random()*num));
-			List<GUserVO> guserVoList = guMapper.listByGroup(groupVO.getGroup_name());
+			List<GUserVO> guserVoList = service.listByGroup(groupVO.getGroup_name());
 			vo.setTitle("타이틀"+i );
 			vo.setContent("내용은 조금더 길게 ");
 			vo.setGroup_name(groupVO.getGroup_name());
@@ -129,7 +136,7 @@ public class MapperTestForDummyData {
 		
 		IntStream.rangeClosed(1, 700).forEach(i -> {
 			GroupVO groupVO = list.get((int)(Math.random()*num));
-			List<GUserVO> userList = guMapper.listByGroup(groupVO.getGroup_name());
+			List<GUserVO> userList = service.listByGroup(groupVO.getGroup_name());
 			List<BoardVO> boardList = bMapper.showList(groupVO.getGroup_name());
 			BoardReplyVO replyVO = new BoardReplyVO();
 			BoardVO board = boardList.get((int)(Math.random()*boardList.size()));
@@ -141,6 +148,20 @@ public class MapperTestForDummyData {
 		});
 	}
 	
+	//조회수 올리기
+	//@Test
+	public void viewCntUp() {
+		List<GroupVO> list = gMapper.showAll();
+		int num = list.size();
+		
+		IntStream.rangeClosed(1, 1000).forEach(IntConsumer ->{
+			GroupVO groupVO = list.get((int)(Math.random()*num));
+			String name = groupVO.getGroup_name();
+			gMapper.updateViewCnt(name);
+		});
+		
+	}
+	
 	//이벤트 등록
 	//@Test
 	public void registerEvent() {
@@ -150,7 +171,7 @@ public class MapperTestForDummyData {
 		
 		IntStream.rangeClosed(1, 100).forEach(i -> {
 			GroupVO groupVO = list.get((int)(Math.random()*num));
-			List<GUserVO> userList = guMapper.listByGroup(groupVO.getGroup_name());
+			List<GUserVO> userList = service.listByGroup(groupVO.getGroup_name());
 			GUserVO user = userList.get((int)(Math.random()*userList.size()));
 			CalendarVO vo = new CalendarVO();
 			vo.setColor(color[(int)(Math.random()*color.length)]);

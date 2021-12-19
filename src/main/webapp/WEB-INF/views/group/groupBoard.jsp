@@ -82,11 +82,12 @@ $('.pagenate a').click(function(e){
 	e.preventDefault()
 	let type = "${cri.type}"
 	let keyword =  "${cri.keyword}"
+	let sort = "${cri.sort}"
 	
 	let pageNum =$(this).attr('href')
 	let url = type && keyword ? `/group/main/list/\${pageNum}/\${amount}/\${type}/\${keyword}` 
 			:  `/group/main/list/\${pageNum}/\${amount}`
-	 
+	url += sort ? `/\${sort}` : ''
 	location.href = url 
 
 })// a click
@@ -111,26 +112,16 @@ $('button.searchForm').click((e) => {
 })// search button click
 
 
-$('select.sort').change((e) => {
-	console.log(".....")
-	console.log($('select.sort').find("option:selected").val())
-	let sort = $('select.sort').find("option:selected").val()
-})
-
 $('button.sortForm').click((e)=>{
 	e.preventDefault()
 	let sort = $('select.sort').find("option:selected").val() 
 	let url =`/group/main/list/`
-	if(!sort){
-		alert('어떤 방식으로 정렬할지 선택하세요 ')
-	}else{
-		if(sort !== 'recent') {
-			url += `\${pageNum}/\${amount}/\${sort}`
-		}
-		location.href = url
+	
+	if(sort !== 'recent') {
+		url += `\${pageNum}/\${amount}/\${sort}`
 	}
-	
-	
+	location.href = url
+
 })
 </script>
 </html>

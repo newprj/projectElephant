@@ -40,6 +40,10 @@ prefix="c" %>
 				<input name="writer" type="text" value="${board.writer}" readonly/>
 			</div>
 			<div>
+					<label>공지사항 </label>
+					<input type="checkbox" name="notice" value="${board.notice}"/>
+				</div>
+			<div>
 				<div id="editor" style="max-height: 400px; overflow: auto"></div>
 			</div>
 
