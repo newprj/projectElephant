@@ -26,9 +26,10 @@ public class GroupServiceImpl implements GroupService{
 	@Override
 	public int makeGroup(GroupVO vo) {
 		System.out.println(" 서비스 vo " + vo);
+		int res = mapper.makeGroup(vo);
 		GUserVO groupLeader = new GUserVO(vo);
 		umapper.groupSignUp(groupLeader);
-		return mapper.makeGroup(vo);
+		return res;
 	}
 
 	@Override

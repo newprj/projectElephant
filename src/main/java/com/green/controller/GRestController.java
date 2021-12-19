@@ -44,11 +44,6 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 
-
-
-
-
-
 @RestController
 @RequestMapping("/group/*")
 @Slf4j
@@ -323,12 +318,13 @@ public class GRestController {
 		return mv;
 	}
 	
+	// 게시글 정보
 	@GetMapping("/getBoard/{bno}")
 	public ResponseEntity<BoardVO> readContent(@PathVariable("bno") Long bno){
 		return new ResponseEntity<BoardVO>(boardService.read(bno), HttpStatus.OK);
 	}
 	
-	
+	// 게시글쓰기
 	@GetMapping(value="/board/{group_name}/write")
 	public ModelAndView boardWrite(@PathVariable("group_name")String group_name, 
 			HttpSession session) {
@@ -349,6 +345,7 @@ public class GRestController {
 		
 	}
 	
+	// 파일 리스트 가져오기
 	@GetMapping(value="/getFileList" ,
 			produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseEntity<List<FileVO>> getAttachList(Long bno){

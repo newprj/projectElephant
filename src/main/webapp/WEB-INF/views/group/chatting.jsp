@@ -118,7 +118,7 @@
 		const data = {
 			user: loginUser,
 			group,
-			msg: " 님이 입장했습니다 ",
+			msg: " 님이 입장했습니다 ", 
 			sendTime,
 			type : "open",
 		};

@@ -28,8 +28,6 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 		if(session.getAttribute("user") != null) {
 			Object dest = session.getAttribute("dest");
 			response.sendRedirect(dest != null? (String) dest : "/group/");
-		}else {
-			session.removeAttribute("dest");
 		}
 		return true;
 
