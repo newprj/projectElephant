@@ -67,8 +67,10 @@ create table tbl_group(
     viewCnt number default 0,
     constraint fk_group foreign key(leader) references tbl_user(user_id)
 );
+alter table tbl_group add(profile varchar2(1000));
 create sequence seq_gno;
-
+update tbl_group set profile = '임시';
+commit; 
 create table tbl_groupuser(
     cno number primary key,
     authorized varchar2(1) default 'N',
@@ -140,8 +142,9 @@ create sequence seq_cid;
 --- select, update 등 테스트를 위한 쿼리문은 공유 X
 
 ----- 어드민기능
-update tbl_group set authorized = 'Y' where gno <31; 
-update tbl_groupuser set authorized='Y';
+update tbl_group set authorized = 'Y' where gno =64; 
+select * from tbl_groupuser where group_name='코딩1' order by cno;
+update tbl_groupuser set authorized='Y' where group_name='코딩1' and cno<188;
 commit;
 
 
@@ -153,5 +156,9 @@ select * from tbl_groupuser where group_name='운동30' order by cno;
 ---alter table tbl_group rename constraint SYS_C007897 to pk_group;
 ---select table_name, index_name from all_ind_columns where table_name ='tbl_group';
 
+select * from tbl_board where notice = 'Y';
+update tbl_board set title ='공지공지공' where notice = 'Y';
+update tbl_board set notice = 'N' where notice !='Y';
+commit;
 
-
+select profile from tbl_group;

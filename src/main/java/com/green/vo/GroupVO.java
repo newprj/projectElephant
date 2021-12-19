@@ -22,6 +22,7 @@ public class GroupVO {
     private Long viewCnt;
 
     private String authorized;
+    private String profile;
     
     private int applicantCnt;
     private int joinedCnt;

@@ -23,6 +23,9 @@ prefix="c" %>
   	</c:if>
   	
 	<br/>
+		<div class="profile">
+		${one.profile}
+		</div>
     ${one.group_name}<br/>
     ${one.leader }<br/>
     ${one.subject }<br/>

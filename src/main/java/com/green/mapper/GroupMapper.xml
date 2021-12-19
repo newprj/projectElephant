@@ -8,8 +8,8 @@
 		<selectKey keyProperty="gno" order="BEFORE" resultType="long">
 			select seq_gno.nextval from dual
 		</selectKey>
-		insert into tbl_group(gno, group_name, leader, subject, description, member_number, regdate)
-			values(#{gno}, #{group_name}, #{leader}, #{subject}, #{description}, #{member_number} , sysdate)
+		insert into tbl_group(gno, group_name, leader, subject, description, member_number, regdate, profile)
+			values(#{gno}, #{group_name}, #{leader}, #{subject}, #{description}, #{member_number} , sysdate,  #{profile, jdbcType=VARCHAR})
 	</insert>
 	
 	<select id="showAll" resultType="com.green.vo.GroupVO">
@@ -94,7 +94,9 @@
 	
 	
 	<update id="updateGroup">
-		update tbl_group set group_name =#{group_name}, subject= #{subject}, description= #{description}, member_number = #{member_number} where gno=#{gno}
+		update tbl_group 
+		set group_name =#{group_name}, subject= #{subject}, 
+		description= #{description}, member_number = #{member_number} , profile = #{profile, jdbcType=VARCHAR} where gno=#{gno}
 	</update>
 	
 	<update id="GroupAuth">

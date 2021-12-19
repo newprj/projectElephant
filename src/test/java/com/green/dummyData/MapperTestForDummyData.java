@@ -76,6 +76,7 @@ public class MapperTestForDummyData {
 		IntStream.rangeClosed(1, 60).forEach(i ->{
 			int random = (int)(Math.random()*subject.length);
 			GroupVO vo = new GroupVO();
+			vo.setProfile("<img class='profile' src='/resources/img/elephant.png'>");
 			vo.setGroup_name(subject[random]+i);
 			vo.setLeader("test"+i);
 			vo.setSubject(subject[random]);
