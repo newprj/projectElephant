@@ -40,19 +40,10 @@ prefix="c" %>
 			<a href="/group/test/${group_name}"> ... 일정 더보기 </a>
 		</div>
 
-		<div
-			style="overflow-y: auto; width: 350px; height: 200px"
-			class="chatContainer"
-		>
-			<div class="message"></div>
-		</div>
 
 		<div>
-			<input class="message" type="text" />
 			<div>
-				<button class="getChat">입장</button>
-				<button class="send">전송</button>
-				<button class="close">퇴장</button>
+				<button class="getChat"> 채팅 입장</button>
 			</div>
 		</div>
 	</body>
@@ -123,13 +114,9 @@ prefix="c" %>
 	
 		let popup
  		$('button.getChat').click((e) => {
-			console.log("채팅팅팅")
+			
 			popup = window.open(`/chat_pop/\${group}`, "chatPop", "width=450, height=350, top=150, left=200")
  			console.log(popup)
- 			
- 			popup.onbeforeunload = (e) => {
-				
- 			};  
 
 
  		})

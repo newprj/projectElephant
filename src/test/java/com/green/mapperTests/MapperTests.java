@@ -64,6 +64,7 @@ public class MapperTests {
 	}
 	
 	
+	
 	//@Test
 	public void replyupdateTest() {
 		BoardReplyVO vo = replyMapper.getReplyOne(22L);
@@ -210,5 +211,10 @@ public class MapperTests {
 		
 		
 		gMapper.getListWithPaging(cri).forEach(i -> System.out.println(i+"======================================================="));
+	}
+	
+	@Test
+	public void test() {
+		bMapper.showList("독서2").forEach(i-> log.info(" 노티스 왜 못가져오ㅑ? " +i.getNotice()));
 	}
 }

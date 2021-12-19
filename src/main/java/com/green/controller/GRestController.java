@@ -44,6 +44,7 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 
+
 @RestController
 @RequestMapping("/group/*")
 @Slf4j
@@ -249,12 +250,7 @@ public class GRestController {
 		return mv;		
 	}
 	
-	
-	
-	
-	
-	
-	
+
 	
 	// 스터디 그룹 삭제
 	@DeleteMapping("/{group_name}")
@@ -292,6 +288,7 @@ public class GRestController {
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
+
 		
 		return mv;
 	}

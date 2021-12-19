@@ -22,7 +22,7 @@
 	
 	<update id="update">
 		update tbl_board 
-			set group_name=#{group_name}, title=#{title}, content=#{content}, writer=#{writer}, updateDate = sysdate
+			set group_name=#{group_name}, title=#{title}, content=#{content}, writer=#{writer}, updateDate = sysdate, notice=#{notice}
 				where bno=#{bno}
 	</update>
 	
@@ -53,10 +53,10 @@
 	
 	<select id="getListWithPaging"  resultType="com.green.vo.BoardVO">
 		<![CDATA[
-			select bno, title, writer, content, regdate, updatedate, group_name
+			select bno, title, writer, content, regdate, updatedate, group_name, notice
 			from (
 			    select /*+ index_desc(tbl_board pk_board) */
-				    rownum rn, bno, title, writer, content, regdate, updatedate, group_name
+				    rownum rn, bno, title, writer, content, regdate, updatedate, group_name, notice
 				    	from tbl_board
 				    where ]]>
 		   <include refid="criteria"></include>

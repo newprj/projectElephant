@@ -77,7 +77,9 @@ prefix="c" %>
 							history.back();
 						}
 					});//get json
-	
+				
+
+				if("${board.notice}" ==='Y') $('input[name="notice"]').prop('checked', true); 
 
 				const uploadClone = $(".file").clone();
 				var myEditor = document.querySelector("#editor");
@@ -140,7 +142,7 @@ prefix="c" %>
 				$(".modify").click(function (e) {
 					e.preventDefault();
 					let modified = getForm();
-					modified = { ...modified, attachList }
+					modified = { ...modified, attachList, notice: $('input[name="notice"]').is(":checked") ? "Y" : "N" }
 					$.ajax({
 						type: "PUT",
 						url: "/group/board/${cri.bno}",

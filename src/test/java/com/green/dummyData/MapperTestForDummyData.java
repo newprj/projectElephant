@@ -124,6 +124,11 @@ public class MapperTestForDummyData {
 			vo.setContent("내용은 조금더 길게 ");
 			vo.setGroup_name(groupVO.getGroup_name());
 			vo.setWriter((guserVoList.get((int)(Math.random()*guserVoList.size()))).getUser_id());
+			if(i%10==0) {
+				vo.setNotice('Y');
+				vo.setTitle("공지   ==============" + vo.getTitle());
+			}
+			else vo.setNotice('N');
 			bMapper.register(vo);
 		}
 	}
