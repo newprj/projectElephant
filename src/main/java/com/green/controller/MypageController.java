@@ -2,7 +2,12 @@ package com.green.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,11 +28,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.green.service.BoardService;
 import com.green.service.GUserService;
 import com.green.service.GroupService;
+import com.green.service.LetterService;
 import com.green.service.QnaService;
 import com.green.service.ReplyService;
 import com.green.service.UserService;
 import com.green.vo.GUserVO;
 import com.green.vo.GroupVO;
+import com.green.vo.LetterVO;
 import com.green.vo.UserVO;
 
 import lombok.Setter;
@@ -55,6 +62,9 @@ public class MypageController {
 	@Setter(onMethod_=@Autowired)
 	ReplyService replyService;
 	
+	@Setter(onMethod_=@Autowired)
+	LetterService letterService;
+	
 	@GetMapping("/admin")
 	public String adminHome(Model model, HttpServletResponse response,HttpSession session) {
 		UserVO login= (UserVO) session.getAttribute("user");
@@ -76,9 +86,11 @@ public class MypageController {
             
 			return "redirect:/user/login";
 		}
+		model.addAttribute("user",id);
 		model.addAttribute("list",userService.allList());
 		model.addAttribute("group",gService.showAll());
 		model.addAttribute("qna",qnaService.list());
+		model.addAttribute("letter",letterService.myLetter(id));
 		return "/mypage/admin";
 	}
 	
@@ -92,16 +104,18 @@ public class MypageController {
 	}
 	
 	@GetMapping("/user")
-	public void mypage(HttpSession session,Model model) {
+	public void mypage(HttpSession session,Model model ) {
 		UserVO login= (UserVO) session.getAttribute("user");
 		String id=login.getUser_id();
 		log.info("id="+id);
+
 		model.addAttribute("myGroup",gUserService.listByUSer(id));
 		model.addAttribute("user",login);
 		model.addAttribute("myBoard",bService.myBoard(id));
 		model.addAttribute("boardReply", replyService.myReply(id));
 		model.addAttribute("qnaReply",qnaService.myReply(id));
 		model.addAttribute("myqna",qnaService.myQna(id));
+		model.addAttribute("letter",letterService.myLetter(id));
 	}
 	
 	@ResponseBody
@@ -109,5 +123,14 @@ public class MypageController {
 	public void GroupAuth(@RequestBody GroupVO vo) {
 		gService.GroupAuth(vo.getGno(), vo.getAuthorized());
 		
+	}
+	
+	@ResponseBody
+	@PostMapping(value="/letterRegister" , consumes = "application/json", produces = {MediaType.TEXT_PLAIN_VALUE})
+	public ResponseEntity<String> letterReg(@RequestBody LetterVO vo){
+		int letter=letterService.insert(vo);
+		log.info("들어온 정보"+vo);
+		return letter==1 ? new ResponseEntity<>("success",HttpStatus.OK):
+			new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 }

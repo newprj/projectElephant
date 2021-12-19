@@ -13,12 +13,10 @@ prefix="c" %>
   <div>
   <h3> 스터디 모집글이 들어갈 거에요</h5>
 
- - 지금은 로그인 기능이 없으므로 여기에서 페이지를 넘김- => 메인페이지에서 접근가능하도록 바꿈 , 편의를 위해 남김 지우시오~~ <br/>
- <a href="/group/${one.group_name}"> 스터디 별 페이지 </a>
  <p><a href="/group/"> 메인 </a></p>
  <p>
   </div>
-  =====</br>
+	</br>
   	<c:if test="${user.user_id== one.leader}">
   	
   	<a href="/group/gather/${one.group_name}/modify"> <button> 모집글 수정하기 </button></a>
@@ -29,9 +27,11 @@ prefix="c" %>
     ${one.leader }<br/>
     ${one.subject }<br/>
     ${one.description }<br/>
-    ${one.member_number }</br>
+    ${one.member_number }<br/>
     
+    <c:if test="${user.user_id eq one.leader}">
     <button class="delete"> 그룹 삭제</button>
+    </c:if>
     <div>
       <form>
         <div>
@@ -41,9 +41,13 @@ prefix="c" %>
         </div>
       </form>
     </div>
-    <c:if test="${user != null}">
-    <button class="signup">지원하기</button>
-    </c:if>
+   
+    	<div class="signup">
+    	 <c:if test="${user != null && user.user_id != one.leader}">
+    	 	<button class="signup">지원하기</button>
+    	 </c:if>
+    	</div>
+   
     <br/>
     <c:if test="${user.user_id == 'admin'}">
     	<button class="auth">승인하기</button>
@@ -51,13 +55,12 @@ prefix="c" %>
     
   </body>
   <script>
-  	console.log("----------------------")
-		console.log("${msg}")
-		
-		
+  
+  	
 
     const signupGroup = (data) => {
-      $.ajax({
+      
+    	$.ajax({
         type: 'post',
         url: '/group/',
         data: JSON.stringify(data),
@@ -70,6 +73,24 @@ prefix="c" %>
     }
 
     $(document).ready(function (e) {
+    	console.log( "${one.leader}")
+    	console.log( "${user}")
+     	const member_number = Number("${one.member_number}" )
+     	
+     	let signupform = {}
+     	$('button.signup').click(function (e) {
+					console.log(" 버튼이 눌림 사인업버튼 ")
+					let memberMsg =$('<span> 이미 지원한 모임입니다 </span>')
+					$('button.signup').remove()
+					$('div.signup').append(memberMsg)
+        	
+					signupform = {
+          	user_id: $('input[name="user_id"]').val(),
+         		group_name: '${one.group_name}',
+        	}
+         
+        signupGroup(signupform)
+      })// 가입버튼 click
       
       $('.delete').click(function (e) {
         $.ajax({
@@ -84,16 +105,29 @@ prefix="c" %>
           },
         }) //ajax
       }) //delete button
-      let signupform = {}
-      $('.signup').click(function (e) {
-    	
-        signupform = {
-          user_id: $('input[name="user_id"]').val(),
-          group_name: '${one.group_name}',
-        }
-       
-        signupGroup(signupform)
-      })
+      
+      
+      let joinedMember
+  		$.getJSON("/group/getMemberlistByGroup/${group_name}", (list) => {
+  		// 모집 완료 된 경우 지원 버튼 노출 X
+  			let msg = $('<span> 모집이 완료된 그룹입니다 </span>')
+  			if(list.memberList.length >= member_number) {
+  				$('button.signup').remove()
+  				$('div.signup').append(msg)
+  				console.log("모집완료")
+  			}
+  			console.log(list)
+  			 ///이미 지원 한 그룹일 경우 버튼 노출 없애기 	
+	  		let memberMsg =$('<span> 이미 지원한 모임입니다 </span>')
+	  		list.allList.map(console.log)
+  			if(list.allList.some(i => i.user_id === "${user.user_id}")){
+					$('button.signup').remove()
+					$('div.signup').append(memberMsg)
+					console.log("야....")
+				} 
+  		})//getJson
+      
+     
       
       /* admin이 그룹 승인 */
       $(".auth").click(function(){
@@ -106,13 +140,13 @@ prefix="c" %>
     	  console.log("승인 버튼 누름"+JSON.stringify(gAuth))
     	  $.ajax({
           type: 'post',
-          url:'/admin/auth',
+          url:'/mypage/auth',
           data: JSON.stringify(gAuth),
           contentType: 'application/json; charset=utf-8',
           success: () => {
             console.log('승인 완료')
             alert("승인 완료")
-            location.href = '/admin/home'
+            location.href = '/mypage/admin'
           },
           error: (xhr, status, er) => {
             console.log(status)

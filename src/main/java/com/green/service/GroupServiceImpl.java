@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.green.mapper.GUserMapper;
 import com.green.mapper.GroupMapper;
+import com.green.vo.Criteria;
 import com.green.vo.GUserVO;
 import com.green.vo.GroupVO;
 
@@ -25,9 +26,16 @@ public class GroupServiceImpl implements GroupService{
 	@Override
 	public int makeGroup(GroupVO vo) {
 		System.out.println(" 서비스 vo " + vo);
+<<<<<<< HEAD
 		GUserVO groupLeader = new GUserVO(vo);
 		umapper.groupSignUp(groupLeader);
 		return mapper.makeGroup(vo);
+=======
+		int res = mapper.makeGroup(vo);
+		GUserVO groupLeader = new GUserVO(vo);
+		umapper.groupSignUp(groupLeader);
+		return res;
+>>>>>>> hyewon
 	}
 
 	@Override
@@ -38,7 +46,7 @@ public class GroupServiceImpl implements GroupService{
 
 	@Override
 	public GroupVO showOne(String group_name) {
-		// TODO Auto-generated method stub
+		mapper.updateViewCnt(group_name);
 		return mapper.showOne(group_name);
 	}
 
@@ -66,6 +74,27 @@ public class GroupServiceImpl implements GroupService{
 		return mapper.updateGroup(vo);
 	}
 
+<<<<<<< HEAD
+=======
+	@Override
+	public List<GroupVO> showLatest20() {
+		
+		return mapper.showLatest20();
+	}
+
+	@Override
+	public List<GroupVO> getListWithPaging(Criteria cri) {
+		
+		return mapper.getListWithPaging(cri);
+	}
+
+	@Override
+	public int getTotalCount(Criteria cri) {
+		// TODO Auto-generated method stub
+		return mapper.getTotalCount(cri);
+	}
+
+>>>>>>> hyewon
 	
 
 }

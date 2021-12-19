@@ -1,6 +1,8 @@
 package com.green.service;
 
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import com.green.vo.GroupVO;
 
 
 import lombok.Setter;
+import lombok.extern.log4j.Log4j;
 
 
 @Service
@@ -29,7 +32,16 @@ public class GUserServiceImpl implements GUserService {
 
 	@Override
 	public List<GUserVO> listByGroup(String group_name) {
-		// TODO Auto-generated method stub
+		// 승인된 사용자만 
+		List<GUserVO> list = mapper.listByGroup(group_name)
+				.stream().filter( vo -> vo.getAuthorized() == 'Y').collect(Collectors.toList());
+		return list;
+	}
+	
+
+	@Override
+	public List<GUserVO> listByGroupAll(String group_name) {
+		// 모든 사용자 
 		return mapper.listByGroup(group_name);
 	}
 
@@ -38,6 +50,7 @@ public class GUserServiceImpl implements GUserService {
 		
 		return mapper.listByUSer(user);
 	}
+
 
 
 
