@@ -51,6 +51,7 @@ li {
 			</c:if>
 		</c:if>
 	</c:forEach>
+	<br>
 	<hr>
 	<li>가입된 승인 대기중인 회원</li>
 	<br>
