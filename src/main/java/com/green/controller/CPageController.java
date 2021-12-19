@@ -80,6 +80,7 @@ public class CPageController {
 		vo.setMember(member);
 		vo.setMembership("Y");
 		service.update(vo);
+		letterService.insert(letter);
 		return new ResponseEntity<>("success",HttpStatus.OK);
     }
 	
@@ -96,6 +97,7 @@ public class CPageController {
 		vo.setMember(member);
 		vo.setMembership("N");
 		service.update(vo);
+		letterService.insert(letter);
 		return new ResponseEntity<>("success",HttpStatus.OK);
     }
 	@PostMapping(value="/letter",consumes = "application/json")
