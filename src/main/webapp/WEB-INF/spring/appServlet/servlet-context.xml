@@ -25,8 +25,13 @@
 	
 	
 	<beans:bean id="logininterceptor" class="com.green.interceptor.LoginInterceptor"/>
+<<<<<<< HEAD
   <beans:bean id="authinterceptor"  class="com.green.interceptor.AhthInterceptor"/>
   
+=======
+  	<beans:bean id="authinterceptor"  class="com.green.interceptor.AhthInterceptor"/>
+  	<beans:bean id="visitCounter" class="com.green.listener.VisitCounter"/>
+>>>>>>> refs/remotes/origin/heeju
 
 	<interceptors>
 	  <interceptor>
@@ -40,12 +45,21 @@
 		    <mapping path="/group/test/{group_name}"/>
 		    <beans:ref bean="authinterceptor"/>
  	 </interceptor>
+<<<<<<< HEAD
  	
+=======
+
+>>>>>>> refs/remotes/origin/heeju
 	</interceptors>
 
+<<<<<<< HEAD
 
 	
 	
+=======
+	 
+	  
+>>>>>>> refs/remotes/origin/heeju
 	<context:component-scan base-package="com.green.controller" />
 	<!-- 파일 업로드 -->
 	<!-- <beans:bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver"></beans:bean> -->
@@ -62,6 +76,12 @@
 	
 	<beans:bean id="chattingHandler" class="com.green.listener.ChattingHandler"/>
 	<beans:bean id="groupchatHandler" class="com.green.listener.GroupChatHandler"/>
+<<<<<<< HEAD
+=======
+
+
+	
+>>>>>>> refs/remotes/origin/heeju
 
 
 	<context:component-scan base-package="com.green.controller" />

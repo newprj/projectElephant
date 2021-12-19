@@ -34,7 +34,7 @@ private List<WebSocketSession> sessionList = new ArrayList<WebSocketSession>();
 		log.info(" chatiing 을 위해 해당 페이지에 들어옴 " );
 		sessionList.add(session);
 		for(WebSocketSession s : sessionList ) {
-			s.sendMessage(new TextMessage(session.getId() +": 입장,  총인원:"+i+"명"));
+			s.sendMessage(new TextMessage(session.getId() +": 입장"));
 		}
 	}
 	
@@ -55,7 +55,7 @@ private List<WebSocketSession> sessionList = new ArrayList<WebSocketSession>();
 		i--;
 		sessionList.remove(session);
 		for(WebSocketSession s : sessionList) {
-			s.sendMessage(new TextMessage( session.getId() + ": 님 퇴장,  총인원:"+i+"명"));
+			s.sendMessage(new TextMessage( session.getId() + ": 님 퇴장"));
 		}
 		log.info(" 퇴장" );
 	}

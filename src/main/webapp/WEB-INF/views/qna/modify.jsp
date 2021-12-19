@@ -3,6 +3,15 @@
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core"
 prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %> 
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<link
+	href="https://cdn.quilljs.com/1.3.6/quill.snow.css"
+	rel="stylesheet"
+/>
+<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+<script src="//code.jquery.com/jquery-3.6.0.js"></script>
+<script src="/resources/image-resize.min.js"></script>
+<script src="/resources/image-drop.min.js"></script>
+<script src="/resources/js/fileUpload.js" type="text/javascript"></script>
 
 <!DOCTYPE html>
 <html>
@@ -44,23 +53,18 @@ li {
 		</div>
 		<div>
 			<label for="q_content">내용</label>
-			<textarea name="q_content">${get.q_content}</textarea>
-		</div>
-		
-		<!-- 첨부파일 사진 -->
-		<div class="row col-lg-12">
-			<div class="panel panel-default">
-				<div class="panel-heading">첨부파일</div>
-				
-				<div class="panel-body">
-					<input type="file" name="uploadFile" multiple />
-					<div class="uploadResult">
-						<ul></ul>
-					</div>
+			<input name="q_content" type="hidden" />
+			<div>
+				<div id="editor" style="max-height: 400px; overflow: auto"></div>
+			</div>
+			<div class="panel-body">
+				<input type="file" name="uploadFile" multiple />
+				<div class="uploadResult">
+					<ul></ul>
 				</div>
 			</div>
-			
 		</div>
+		
 		<button type="submit" id="writeMod">수정</button>
 		<button type="button" id="goList" >목록</button>
 	</form>
@@ -74,11 +78,7 @@ li {
 	
 </body>
 
-<script type="text/javascript">
-	
-	
-	var today=new Date()
-	
+<script>
 	var choice=''
 	$("select").val("${get.p_group}")
 	choice="<input type='hidden' name='p_group' value='${get.p_group}'/>"
@@ -88,6 +88,10 @@ li {
 		console.log(choice)
 	}
 	
+$(document).ready(function () {
+	var today=new Date()
+	
+
 	var regex=new RegExp("(.*?)\.(exe|sh|alz)$");
 	var maxSize=5242880
 	function checkExtension(fileName,fileSize){
@@ -102,41 +106,8 @@ li {
 		}
 		return true
 	}
-	/* 썸네일 처리 */
-	function showUploadResult(uploadResultArr){
-		if(!uploadResultArr || uploadResultArr.length==0 ){return;}
-		var uploadUL=$(".uploadResult ul")
-		var str=""
 		
-		$(uploadResultArr).each(function(i,obj){
-
-			if(obj.fileType){
-				var fileCallPath=encodeURIComponent(obj.uploadPath+"/"+obj.uuid+"_"+obj.fileName)
-				str+="<li data-path='"+obj.uploadPath+"'"
-				str+=" data-uuid='"+obj.uuid+"' data-filename='"+obj.fileName+"' data-type='"+obj.fileType+"'"
-				str+="><div>"
-				str+="<img src='/upload/display?fileName="+fileCallPath+"'  style=' width:50px; height:50px;' >"
-				str+="<span> "+obj.fileName+"</span>"
-				str+="<button type='button' data-file=\'"+fileCallPath+"\' data-type='image' class='btn-circle'><i>X</i></button>"
-				str+="</div>"	
-				str+="</li>"
-			}else{
-				var fileCallPath=encodeURIComponent(obj.uploadPath+"/"+obj.uuid+"_"+obj.fileName)
-				var fileLink=fileCallPath.replace(new RegExp(/\\/g),"/")
-				str+="<li data-path='"+obj.uploadPath+"'"
-				str+=" data-uuid='"+obj.uuid+"' data-filename='"+obj.fileName+"' data-type='"+obj.fileType+"'"
-				str+="><div>"
-				str+="<img src='/resources/img/attach.png' style=' width:20px; height:20px;' >"
-				str+="<span> "+obj.fileName+"</span>"
-				str+="  <button type='button' data-file=\'"+fileCallPath+"\' data-type='file' class='btn-circle'><i>X</i></button></br>"
-				str+="</div>"	
-				str+="</li>"
-			}
-		})
-		uploadUL.append(str) 
-	}
-	
-	$(document).ready(function () {
+	var myEditor = document.querySelector("#editor");
 		
 		$("#goList").click(function(e){
 	        $("#operForm").submit()
@@ -157,6 +128,7 @@ li {
 				str+="<input type='hidden' name='attachList["+i+"].fileType' value='"+jobj.data("type")+"'>"
 			})
 			
+			$('input[name="q_content"]').val(myEditor.children[0].innerHTML);
 			$("#modForm").append(str);
 			$("#modForm").append(choice);
 			$("#modForm").append("<input type='hidden' name='up_date' pattern ='yy/MM/dd hh:mm' value='"+today+"'/>");
@@ -196,32 +168,35 @@ li {
 			$(".uploadResult ul").html(str)
 		})
 		
-		$("input[type='file']").change(function(e){
-			console.log("파일 등록")
-			var formData=new FormData()
-			var inputFile=$("input[name='uploadFile']")
-			var files=inputFile[0].files
-			
-			for(var i=0; i<files.length; i++){
-				if(!checkExtension(files[i].name, files[i].size)){
-					return false
-				}
-				formData.append("uploadFile",files[i])
-				console.log(formData)
-			}
-			$.ajax({
-				url:'/upload/uploadAjaxAction',
-				processData:false,
-				contentType:false,
-				data:formData,
-				type:'post',
-				dataType:'json',
-				success:function(result){
-					showUploadResult(result);
-				}
-			})
-		})
+		const imageHandler = (e) => {
+			let input = $('<input type="file" accept="image/*">');
+			input.click();
 		
+			$(input).change(function(e){
+				console.log("파일 등록")
+				let formData = new FormData();
+				let uploadFile = $(input)[0].files[0];
+
+				formData.append("uploadFile", uploadFile);
+
+				$.ajax({
+					url:'/upload/uploadAjaxAction',
+					processData:false,
+					contentType:false,
+					data:formData,
+					type:'post',
+					dataType:'json',
+					success:function(res){
+						const encodURL = encodeURIComponent(`\${res[0].uploadPath}/\${res[0].uuid}_\${res[0].fileName}`)
+						const IMG_URL =  `/upload/display?fileName=\${encodURL}`
+
+						let range = quill.getSelection();
+						console.log(range);
+						quill.insertEmbed(range, "image", IMG_URL);
+					}
+				})
+			})
+		};
 		$(".uploadResult").on("click","button",function(e){
 			console.log('파일 삭제')
 			var targetFile=$(this).data("file")
@@ -240,6 +215,34 @@ li {
 			
 			})
 		})
+		
+		const toolbarOptions = [
+			[{ header: [1, 2, 3, 4, 5, 6, false] }],
+			[{ list: "ordered" }, { list: "bullet" }],
+			["bold", "italic", "underline", "strike"],
+			[{ color: [] }, { background: [] }],
+			[{ align: [] }],
+			["image"],
+			["clean"],
+		];
+		
+		let quill = new Quill("#editor", {
+			theme: "snow",
+			modules: {
+				toolbar: toolbarOptions,
+				imageDrop: true,
+				imageResize: {
+					displaySize: true,
+				},
+			},
+		});
+ 
+
+		quill.container.firstChild.innerHTML ='${get.q_content}'
+		
+		let toolbar = quill.getModule("toolbar");
+		toolbar.addHandler("image", imageHandler);
+		
 	})
 </script>
 </html>

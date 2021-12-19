@@ -151,8 +151,12 @@ prefix="c" %>
 							console.log(status);
 						}, //error
 					}); //ajax
+<<<<<<< HEAD
 				}); // modify c
 				
+=======
+				}); // modify 
+>>>>>>> refs/remotes/origin/heeju
 				$(".delete").click(function (e) {
 					e.preventDefault();
 					$.ajax({

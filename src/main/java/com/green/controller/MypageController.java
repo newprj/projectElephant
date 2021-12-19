@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -32,6 +33,7 @@ import com.green.service.LetterService;
 import com.green.service.QnaService;
 import com.green.service.ReplyService;
 import com.green.service.UserService;
+import com.green.service.VisitService;
 import com.green.vo.GUserVO;
 import com.green.vo.GroupVO;
 import com.green.vo.LetterVO;
@@ -65,9 +67,14 @@ public class MypageController {
 	@Setter(onMethod_=@Autowired)
 	LetterService letterService;
 	
+	@Setter(onMethod_=@Autowired)
+	VisitService visitService;
+	
 	@GetMapping("/admin")
 	public String adminHome(Model model, HttpServletResponse response,HttpSession session) {
 		UserVO login= (UserVO) session.getAttribute("user");
+		log.info("오늘 방문자"+session.getAttribute("todayCnt"));
+		log.info(""+ session.getAttribute("totalCnt"));
 		log.info("id="+login.getUser_id());
 		
 		log.info("admin page");
@@ -86,11 +93,18 @@ public class MypageController {
             
 			return "redirect:/user/login";
 		}
+		
+		
+		System.out.println(visitService.weekCnt());
+		
+		model.addAttribute("week",visitService.weekCnt());
+		model.addAttribute("visit",visitService.todayCnt());
 		model.addAttribute("user",id);
 		model.addAttribute("list",userService.allList());
 		model.addAttribute("group",gService.showAll());
 		model.addAttribute("qna",qnaService.list());
 		model.addAttribute("letter",letterService.myLetter(id));
+		model.addAttribute("sendletter",letterService.sendLetter(id));
 		return "/mypage/admin";
 	}
 	
@@ -116,6 +130,7 @@ public class MypageController {
 		model.addAttribute("qnaReply",qnaService.myReply(id));
 		model.addAttribute("myqna",qnaService.myQna(id));
 		model.addAttribute("letter",letterService.myLetter(id));
+		model.addAttribute("sendletter",letterService.sendLetter(id));
 	}
 	
 	@ResponseBody
@@ -133,4 +148,13 @@ public class MypageController {
 		return letter==1 ? new ResponseEntity<>("success",HttpStatus.OK):
 			new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
+	
+	@ResponseBody
+	@PostMapping(value="/deleLetter", consumes="application/json")
+	public void deleLetter(@RequestBody Map<String,String> data) {
+		System.out.println("들어온 정보"+data);
+		letterService.delete(data.get("writer"),Long.valueOf(data.get("lno")));
+		
+	}
+	
 }
