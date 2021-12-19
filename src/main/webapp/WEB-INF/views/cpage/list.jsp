@@ -47,11 +47,10 @@ li {
 		<c:if test="${list.membership eq 'Y'}">
 			<c:if test="${list.captain ne 'Y'}">
 				${list.member} ======== <button type="button" onclick="remove('${list.member}')" >추방하기</button>
-				<button type="button" onclick="letter('${list.member}')">쪽지보내기</button>
+				<button type="button" onclick="letter('${list.member}')">쪽지보내기</button><br>
 			</c:if>
 		</c:if>
 	</c:forEach>
-	<br>
 	<hr>
 	<li>가입된 승인 대기중인 회원</li>
 	<br>
