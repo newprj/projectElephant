@@ -144,6 +144,9 @@ update tbl_group set authorized = 'Y' where gno<73;
 update tbl_groupuser set authorized='Y';
 commit;
 
+
+select * from tbl_groupuser where group_name='운동30' order by cno;
+update tbl_groupuser set authorized='Y' where group_name='운동30' and cno < 288 ;
 -------------------------------------------------------------------------
 ---select * from user_constraints where table_name='TBL_GROUP'; 
 ---select * from user_constraints where table_name in ('TBL_BOARD', 'TBL_GROUP');
