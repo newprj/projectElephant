@@ -84,7 +84,8 @@ prefix="c" %>
           	</c:otherwise>
           </c:choose>
           	</div>
-          	<button class="btn btn-primary" type="button" onclick="location.href='/user/logout' ">로그아웃</button>
+          		<button type="button" onclick="location.href='/mypage/user' ">마이 사이트</button>
+          		<button class="btn btn-primary" type="button" onclick="location.href='/user/logout' ">로그아웃</button>
       			<button class="btn btn-info" type="button" onclick="location.href='/user/modify' ">회원정보 수정</button>
       			<button class="btn btn-danger" type="button" onclick="location.href='/user/delete' ">회원탈퇴</button>
           </c:if>

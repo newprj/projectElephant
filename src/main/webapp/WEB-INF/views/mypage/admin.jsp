@@ -184,7 +184,7 @@ ul.tabs li.current{
 					<td>${i.pwd}</td>
 					<td>${i.writer}</td>
 					<td><fmt:formatDate value="${i.up_date}" pattern="yyyy-MM-dd a hh:mm" /></td>
-					<td>${i.hit}</td>
+					<td style="text-align:center;" >${i.hit}</td>
 				</tr>
 			</c:forEach>
 		</table>

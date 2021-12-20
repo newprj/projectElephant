@@ -190,3 +190,10 @@ create SEQUENCE lno_seq;
 
 ---qna 용량 증가(12/19)
 alter table qna_tbl modify q_content varchar2(700);
+
+------ 방문자 테이블 (12/20)
+create table tbl_visitor(
+    vno number primary key,
+    in_date Date
+);
+create SEQUENCE v_seq;
