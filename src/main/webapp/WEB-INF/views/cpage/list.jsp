@@ -39,8 +39,8 @@ li {
 </style>
 <h1>소모임장 페이지</h1>
 <body>
-	<h2>소모임 명 : ${str[1]}</h2>
-	<h3>소모임 장 : ${str[0]}</h3>
+	<h2>소모임 명 : ${leader.group_name}</h2>
+	<h3>소모임 장 : ${leader.user_id}</h3>
 	 <div class="memberLimit">
 	 모집인원 : ${memberLimit} / ${limit}
 	 </div> 
@@ -70,7 +70,7 @@ li {
 				</div>
 				<div class="modal-body">
 					<div class="modal-group">
-						<input name="writer" type="hidden" value="${str[0]}"/>
+						<input name="writer" type="hidden" value="${leader.user_id}"/>
 					</div>
 					<div class="modal-group">
 						<label>쪽지내용</label><br/>
@@ -85,10 +85,13 @@ li {
 	</div>
 </body>
 <script type="text/javascript">
+	
 	$(".modal").hide()
 	var memberLimit = ${memberLimit}
 	const limit = ${limit}
 	console.log(memberLimit)
+	const group_name = "${leader.group_name}"
+	console.log(group_name)
 
 	
 	function letter(member){
@@ -138,9 +141,9 @@ li {
 			return false;
 		}
 		console.log(memberLimit)
-		
+			
 	    $.ajax({
-	        url : '/cpage/update/'+member,
+	        url : `/cpage/update/\${member}/\${group_name}`,
 	        type : 'post',
 	        success : function(data){
 	            if(data == "success") location.reload();  
@@ -150,7 +153,7 @@ li {
 	
 	function remove(member){
 	    $.ajax({
-	        url : '/cpage/remove/'+member,
+	        url : `/cpage/remove/\${member}/\${group_name}`,
 	        type : 'post',
 	        success : function(data){
 	        	if(data == "success") location.reload();  

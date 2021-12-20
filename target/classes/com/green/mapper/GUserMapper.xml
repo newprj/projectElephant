@@ -28,7 +28,7 @@
 	</select> 
 	
 	<update id="update">
-		update tbl_groupuser set authorized=#{authorized} where user_id=#{user_id}
+		update tbl_groupuser set authorized=#{authorized} where user_id=#{user_id} and group_name=#{group_name}
 	</update>
 	
 	<update id="remove">
