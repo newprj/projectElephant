@@ -58,5 +58,9 @@ public class HomeController {
 		return "/abc";
 	}
 	
+	@GetMapping("/index")
+	public String doit() {
+		return "/index";
+	}
 	
 }

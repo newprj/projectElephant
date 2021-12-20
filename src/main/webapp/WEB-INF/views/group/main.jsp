@@ -60,6 +60,7 @@ prefix="c" %>
 		<title>Insert title here</title>
 	</head>
 	<body>
+<<<<<<< HEAD
 		<div>
 			<div class="navcontainer">
 				<div class="wrapper">
@@ -118,6 +119,48 @@ prefix="c" %>
 				</div>
 			</div>
 		</div>
+=======
+	<div>
+    <div class="navcontainer">
+      <div class="wrapper">	
+        <div class="left"></div>
+        <div class="center">
+          <h1 class="logo"> 코끼리 </h1>
+        </div>
+        <div class="right">
+    		
+    		<c:if test="${user==null}">
+          <div class="item"><a href="/user/register"> 가입</a>  </div>
+          <div class="item"><a href="/user/login">로그인</a>  </div>
+          </c:if>
+          <c:if test="${user!=null}">
+          	<div class="mygroup">
+          	<c:choose>
+          	<c:when test="${empty myGroup}">>
+          			<span> 가입한 그룹이 없습니다 </span>
+          	</c:when>
+          	
+          	<c:otherwise>
+          	<select name="group_name">
+          		<c:forEach items="${myGroup}" var="mine">	
+								<option value="${mine.group_name}" >${mine.group_name}</option>
+          		</c:forEach>
+          	</select>
+          	<button > go </button>
+          	</c:otherwise>
+          </c:choose>
+          	</div>
+          		<button type="button" onclick="location.href='/mypage/user' ">마이 사이트</button>
+          		<button class="btn btn-primary" type="button" onclick="location.href='/user/logout' ">로그아웃</button>
+      			<button class="btn btn-info" type="button" onclick="location.href='/user/modify' ">회원정보 수정</button>
+      			<button class="btn btn-danger" type="button" onclick="location.href='/user/delete' ">회원탈퇴</button>
+          </c:if>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+>>>>>>> refs/remotes/origin/heeju
 		<h1>메인 페이지</h1>
 		<a href="/group/make">
 			<c:if test="${user!=null}">
