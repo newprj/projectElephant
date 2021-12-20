@@ -157,5 +157,7 @@ commit;
 commit;
 
 --select profile from tbl_group;
-select tbl_groupuser where ;
+select * from tbl_groupuser where user_id='test5';
 update tbl_groupuser set leader ='Y' where user_id='test39';
+
+select * from tbl_groupuser where user_id='test5';
