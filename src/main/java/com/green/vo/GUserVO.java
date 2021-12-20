@@ -24,7 +24,7 @@ public class GUserVO {
 	  public GUserVO(GroupVO vo) {
 		  this.user_id = vo.getLeader();
 		  this.group_name = vo.getGroup_name();
-		  this.authorized = "N";
+		  this.authorized = "Y";
 		  this.leader = "Y";
 	  }
 	
