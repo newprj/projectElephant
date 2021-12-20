@@ -22,18 +22,16 @@ pageEncoding="UTF-8"%>
 		<script src="/resources/js/fileUpload.js" type="text/javascript"></script>
 	</head>
 	<body>
-		
-		
-		
 		<form method="post" action="./make">
 			<div>
 				<label> 대표 이미지 </label>
 				<div class="profile">
-				<img class="profile" src="/resources/img/elephant.png"></div>
-				<span style="cursor: pointer;" class="profile">이미지 바꾸기 </span>
-				<input type="hidden" name="profile"/>	
+					<img class="profile" src="/resources/img/elephant.png" />
+				</div>
+				<span style="cursor: pointer" class="profile">이미지 바꾸기 </span>
+				<input type="hidden" name="profile" />
 			</div>
-			<div> 
+			<div>
 				<label> 그룹 이름 </label>
 				<input type="text" name="group_name" required />
 			</div>
@@ -43,7 +41,7 @@ pageEncoding="UTF-8"%>
 			</div>
 			<div>
 				<label for=""> 리더 </label>
-				<input type="text" name="leader" value="${user.user_id}" readonly/>
+				<input type="text" name="leader" value="${user.user_id}" readonly />
 			</div>
 			<div>
 				<label for=""> 주제 </label>
@@ -51,7 +49,7 @@ pageEncoding="UTF-8"%>
 			</div>
 			<div>
 				<label for=""> 모집 인원 </label>
-				<input type="number" name="member_number" min ='1' required/>
+				<input type="number" name="member_number" min="1" required />
 			</div>
 			<div>
 				<label for=""> 상세 설명 </label>
@@ -102,24 +100,28 @@ pageEncoding="UTF-8"%>
 			$("button").click(function (e) {
 				e.preventDefault();
 				$('input[name="description"]').val(myEditor.children[0].innerHTML);
-				$('input[name="profile"]').val($('div.profile')[0].innerHTML)
-				if($('input[name="group_name"]').val() =='' ||
-						$('input[name="subject"]').val() =='' ||
-						$('input[name="member_number"]').val() =='' ||
-						myEditor.children[0].innerHTML == '<p><br></p>'){
-					if($('input[name="group_name"]').val() =='') $('input[name="group_name"]').focus()
-					else  if($('input[name="subject"]').val() =='') $('input[name="subject"]').focus()
-					else if($('input[name="member_number"]').val() =='') $('input[name="member_number"]').focus()
-					else myEditor.children[0].focus()
-					
-				}else{
+				$('input[name="profile"]').val($("div.profile")[0].innerHTML);
+				if (
+					$('input[name="group_name"]').val() == "" ||
+					$('input[name="subject"]').val() == "" ||
+					$('input[name="member_number"]').val() == "" ||
+					myEditor.children[0].innerHTML == "<p><br></p>"
+				) {
+					if ($('input[name="group_name"]').val() == "")
+						$('input[name="group_name"]').focus();
+					else if ($('input[name="subject"]').val() == "")
+						$('input[name="subject"]').focus();
+					else if ($('input[name="member_number"]').val() == "")
+						$('input[name="member_number"]').focus();
+					else myEditor.children[0].focus();
+				} else {
 					$("form").submit();
 				}
 			});
-			
-			$('span.profile').click((e) => {
-				let profileImg= $('<input type="file" accept="image/*">');
-				profileImg.click()
+
+			$("span.profile").click((e) => {
+				let profileImg = $('<input type="file" accept="image/*">');
+				profileImg.click();
 				$(profileImg).change(function (e) {
 					let formData = new FormData();
 					let uploadFile = $(profileImg)[0].files[0];
@@ -137,22 +139,20 @@ pageEncoding="UTF-8"%>
 						success: (res) => {
 							console.log(" 2 프로필)");
 							console.log(res);
-							const encodeURI = encodeURIComponent(`\${res[0].uploadPath}/\${res[0].uuid}_\${res[0].fileName}`)
-							const IMG_URL = `/display?fileName=\${encodeURI}`
-							console.log(IMG_URL)
-							$('img.profile').remove()
-							const newProfile= $(`<img class="profile" src="\${IMG_URL}">`)
-							$('div.profile').append(newProfile)
-							$('img.profile').css({ "height" : "170px "})
-
+							const encodeURI = encodeURIComponent(
+								`\${res[0].uploadPath}/\${res[0].uuid}_\${res[0].fileName}`
+							);
+							const IMG_URL = `/display?fileName=\${encodeURI}`;
+							console.log(IMG_URL);
+							$("img.profile").remove();
+							const newProfile = $(`<img class="profile" src="\${IMG_URL}">`);
+							$("div.profile").append(newProfile);
+							$("img.profile").css({ height: "170px " });
 						},
 						error: (xhr, status, er) => console.log(xhr),
 					}); // ajax
 				}); // change
-				
-			})//click
-
-
+			}); //click
 
 			const imageHandler = (e) => {
 				console.log(e);
@@ -173,7 +173,7 @@ pageEncoding="UTF-8"%>
 						dataType: "json",
 
 						success: (res) => {
-								console.log("2)");
+							console.log("2)");
 							console.log(res);
 							const IMG_URL =
 								"/display?fileName=" +
@@ -183,7 +183,7 @@ pageEncoding="UTF-8"%>
 
 							let range = quill.getSelection();
 							console.log(range);
-							quill.insertEmbed(range, "image", IMG_URL); 
+							quill.insertEmbed(range, "image", IMG_URL);
 						},
 						error: (xhr, status, er) => console.log(xhr),
 					}); // ajax

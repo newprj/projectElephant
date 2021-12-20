@@ -113,7 +113,7 @@ public class MapperTestForDummyData {
 	}
 	
 	//게시글 등록
-	//@Test
+//	@Test
 	public void resgisterTest() {
 		BoardVO vo = new BoardVO();
 		List<GroupVO> list = gMapper.showAll();
@@ -169,7 +169,7 @@ public class MapperTestForDummyData {
 	}
 	
 	//이벤트 등록
-	//@Test
+	@Test
 	public void registerEvent() {
 		List<GroupVO> list = gMapper.showAll();
 		int num = list.size();
@@ -188,8 +188,7 @@ public class MapperTestForDummyData {
 			vo.setDescription_("일정 설명"+i);
 			vo.setMember_(user.getUser_id());
 			vo.setGroup_(user.getGroup_name());
-//			
-			
+
 			Calendar cal = Calendar.getInstance();
 			cal.set(2021, Calendar.DECEMBER, 1);
 			cal.add(Calendar.DATE, (int)(Math.random()*30));
