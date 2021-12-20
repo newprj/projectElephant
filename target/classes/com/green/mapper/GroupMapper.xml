@@ -8,8 +8,8 @@
 		<selectKey keyProperty="gno" order="BEFORE" resultType="long">
 			select seq_gno.nextval from dual
 		</selectKey>
-		insert into tbl_group(gno, group_name, leader, subject, description, member_number, regdate)
-			values(#{gno}, #{group_name}, #{leader}, #{subject}, #{description}, #{member_number} , sysdate)
+		insert into tbl_group(gno, group_name, leader, subject, description, member_number, regdate, profile)
+			values(#{gno}, #{group_name}, #{leader}, #{subject}, #{description}, #{member_number} , sysdate,  #{profile, jdbcType=VARCHAR})
 	</insert>
 	
 	<select id="showAll" resultType="com.green.vo.GroupVO">
@@ -43,11 +43,21 @@
 			    	</foreach>
 		    </trim>
 	</sql>
-	
+
+	<sql id="sortBy">
+		<choose>
+			<when test="sort=='viewCnt'">
+				order by g.viewCnt desc
+			</when>
+			<when test="sort=='popular'">
+				order by u.pop desc
+			</when>
+		</choose>
+	</sql>
 	
 	<select id="getListWithPaging" resultType="com.green.vo.GroupVO">
 			 <![CDATA[
-			select gno, group_name, leader, subject, description, member_number, viewcnt, regdate
+			select g.gno, g.group_name, g.leader, g.subject, g.description, g.member_number, g.viewcnt, g.regdate, u.pop
 				from (
 			    select 
 			    /*+ index_desc(tbl_group pk_group ) */
@@ -57,9 +67,13 @@
 				    <include refid="criteria"></include>
 				    <![CDATA[
 			   rownum <=#{pageNum} * #{amount} and authorized ='Y'
-		    )
+		    ) g
+		    right join 
+		    		(select group_name, count(*) pop from tbl_groupuser group by group_name) u
+            on g.group_name = u.group_name
 		    where rn> (#{pageNum}-1) *  #{amount}
 		    ]]>
+		    <include refid="sortBy"></include>
 	</select>
 	
 	<select id="getTotalCount" resultType="int">
@@ -80,7 +94,9 @@
 	
 	
 	<update id="updateGroup">
-		update tbl_group set group_name =#{group_name}, subject= #{subject}, description= #{description}, member_number = #{member_number} where gno=#{gno}
+		update tbl_group 
+		set group_name =#{group_name}, subject= #{subject}, 
+		description= #{description}, member_number = #{member_number} , profile = #{profile, jdbcType=VARCHAR} where gno=#{gno}
 	</update>
 	
 	<update id="GroupAuth">

@@ -19,6 +19,9 @@ public class Criteria {
 	private String type;
 	private String keyword;
 	
+	//정렬
+	private String sort;
+	
 	public Criteria() {
 		this(1, 10);
 	}

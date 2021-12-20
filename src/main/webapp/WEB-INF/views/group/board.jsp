@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/core"
 prefix="c" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
 <!DOCTYPE html>
 
 <html>
@@ -20,7 +22,9 @@ prefix="c" %>
   </head>
   <body>
   <h1> 스터디별 게시판 페이지</h1>
-  <a href="/group/"> 메인 </a>
+  <a href="/group/"> 메인 </a><br/>
+  <span class='goGroup' style ="cursor:pointer"}>그룹별 페이지</span>
+  
   <button class="create">입력</button>
     
     
@@ -43,12 +47,18 @@ prefix="c" %>
 
 
     <c:forEach items="${board}" var="board">
-      <div >
-      	<span class="list"  data="${board.bno}"> ${board.notice}  ${board.title} </span>
+      <div>
+				
+			<c:if test="${fn:contains(board.notice, 'Y')}">
+  			<i class="fas fa-check"></i> 
+  		</c:if>
+		
+      	<span class="list" data="${board.bno}">  ${board.title}  </span>
       	<c:if test="${board.attachList !=null && board.attachList.size()>0 }">
       		<i class="fas fa-paperclip"></i>
       	</c:if>
       	<span> <i class="far fa-comment-dots"></i> ${board.replyCnt}</span>
+      	
       	
       	
       	<span> ${board.regdate}</span>
@@ -92,7 +102,10 @@ prefix="c" %>
 							location.href="/group/" 
 					} 
 				})
-		
+				
+				$('span.goGroup').click((e) => {
+					location.href =  `/group/${name}`;
+				})
 		
         $('.create').click(function(e){
         	location.href="/group/board/${name}/write"

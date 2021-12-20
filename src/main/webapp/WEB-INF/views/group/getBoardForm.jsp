@@ -63,6 +63,7 @@ prefix="c" %><%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 				<label for="writer"> 저자 </label>
 				<input type="text" value="${board.writer}" />
 			</div>
+			${board.notice }
 			<div>
 			<fmt:formatDate value="${board.regdate}" pattern="yyyy MM dd" />
 			<br/> <fmt:formatDate value="${board.updateDate}" pattern="yyyy MM dd" />
@@ -80,7 +81,7 @@ prefix="c" %><%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 				</div>
 			</div>
 		</form>
-
+		
 		<h5>댓글</h5>
 		<div class="reply">
 			<c:forEach items="${replies}" var="reply">

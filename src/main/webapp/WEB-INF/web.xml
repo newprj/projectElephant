@@ -64,14 +64,12 @@
 	    <load-on-startup>1</load-on-startup>
 	    <async-supported>true</async-supported>
 	</servlet>
-<<<<<<< HEAD
-=======
+
 	
 	<listener> 
 	   <listener-class>com.green.listener.VisitCounter</listener-class> 
 	</listener> 
 
->>>>>>> refs/remotes/origin/heeju
 
 </web-app>
 

@@ -53,7 +53,9 @@ pageEncoding="UTF-8"%>
 		<title>Insert title here</title>
 	</head>
 	<body>
+	 
 	<h1> 일정 캘린더 </h1>
+	<span class='goGroup' style ="cursor:pointer"}>그룹별 페이지</span>
 	<div> <!-- 캘린더 div  -->
 		<div id="reload">
 			<div id="calendar"></div>
@@ -149,6 +151,11 @@ pageEncoding="UTF-8"%>
 						}
 					})
 				
+					$('span.goGroup').click((e) => {
+					location.href =  `/group/${group.group_name}`;
+				})
+					
+					
 				// 이벤트 렌더 위해 가지고 옴 => 이거 클로저 가능할것같은데
 				const getEvent = (data) => {
 					let result;

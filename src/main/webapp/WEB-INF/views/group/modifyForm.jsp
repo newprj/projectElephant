@@ -40,6 +40,10 @@ prefix="c" %>
 				<input name="writer" type="text" value="${board.writer}" readonly/>
 			</div>
 			<div>
+					<label>공지사항 </label>
+					<input type="checkbox" name="notice" value="${board.notice}"/>
+				</div>
+			<div>
 				<div id="editor" style="max-height: 400px; overflow: auto"></div>
 			</div>
 
@@ -73,7 +77,9 @@ prefix="c" %>
 							history.back();
 						}
 					});//get json
-	
+				
+
+				if("${board.notice}" ==='Y') $('input[name="notice"]').prop('checked', true); 
 
 				const uploadClone = $(".file").clone();
 				var myEditor = document.querySelector("#editor");
@@ -136,7 +142,7 @@ prefix="c" %>
 				$(".modify").click(function (e) {
 					e.preventDefault();
 					let modified = getForm();
-					modified = { ...modified, attachList }
+					modified = { ...modified, attachList, notice: $('input[name="notice"]').is(":checked") ? "Y" : "N" }
 					$.ajax({
 						type: "PUT",
 						url: "/group/board/${cri.bno}",
@@ -151,12 +157,8 @@ prefix="c" %>
 							console.log(status);
 						}, //error
 					}); //ajax
-<<<<<<< HEAD
 				}); // modify c
-				
-=======
-				}); // modify 
->>>>>>> refs/remotes/origin/heeju
+
 				$(".delete").click(function (e) {
 					e.preventDefault();
 					$.ajax({
