@@ -58,9 +58,9 @@ public class HomeController {
 		return "/abc";
 	}
 	
-	@GetMapping("/index")
+	@GetMapping("/adminBoot")
 	public String doit() {
-		return "/index";
+		return "/adminBoot";
 	}
 	
 }
