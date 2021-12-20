@@ -90,8 +90,10 @@ ul.tabs li.current{
 <title>마이페이지</title>
 </head>
 <body>
-	<nav>
 		<h2>${user.name}님 페이지</h2>
+	<nav>
+		<h4 style='float:right;'><a href="/group/">스터디</a></h4>
+		<h4 style='float:right;'><a href="/qna/list">Q&A</a></h4>
 		<h4 style='float:right;'><a href="/user/logout">로그아웃</a></h4>
 	</nav>
 	

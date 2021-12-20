@@ -1,4 +1,5 @@
-
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -55,12 +56,11 @@
     <h1 class="sm-logo">Porto</h1>
     <i class="icon-remove menu-close"></i>
     <a class="scroll-link"  data-soffset="0" href="#home">Home</a>
-    <a class="scroll-link"  data-soffset="0" href="#about">About</a>
+    <a class="scroll-link"  data-soffset="0" href="#about">My Page</a>
     <a class="scroll-link"  data-soffset="0" href="#portfolio">Portfolio</a>
-    <a class="scroll-link"  data-soffset="0" href="#services">Services</a>
-    <a class="scroll-link"  data-soffset="0" href="#contact">Contact</a>
+    <a class="scroll-link"  data-soffset="0" href="#services"></a>
     <a class="scroll-link"  data-soffset="0" href="#profile">Profile Page</a>
-    <a class="scroll-link"  data-soffset="0" href="#testimonials">Project Page</a>
+    <a class="scroll-link"  data-soffset="0" href="#testimonials">Q&A page</a>
   </div>
   <!-- Navigation Trigger Button -->
   <div id="sm-trigger"></div>
@@ -101,7 +101,7 @@
           </div>
           <div class="second">
             <div class="arrow-left"></div>
-            <div class="content">About</div>
+            <div class="content">My Page</div>
           </div>
         </a>
       </li>
@@ -131,26 +131,13 @@
           </div>
           <div class="second">
             <div class="arrow-left"></div>
-            <div class="content">Services</div>
+            <div class="content">my page</div>
           </div>
         </a>
       </li>
       <!-- Ending : Nav Block -->
       
-      <!-- Starting : Nav Block -->
-      <li class="porto-bg-eight">
-       <a class="scroll-link" id="contact-link" href="#contact" data-soffset="0">
-          <div class="first">
-            <div class="arrow-right"></div>
-            <div class="content"><img alt="" title="" src="/resources/images/icons/05.png"/></div>
-          </div>
-          <div class="second">
-            <div class="arrow-left"></div>
-            <div class="content">Contact</div>
-          </div>
-        </a>
-      </li>
-      <!-- Ending : Nav Block -->
+      
       
       <!-- Starting : Nav Block -->
       <li class="porto-bg-six">
@@ -161,7 +148,7 @@
           </div>
           <div class="second">
             <div class="arrow-left"></div>
-            <div class="content">Testimonials</div>
+            <div class="content">Q&A page</div>
           </div>
         </a>
       </li>
@@ -188,7 +175,6 @@
   <!-- end sq-side-menu -->
 
 
-<div id="logo" class="hidden-xs"><img alt="" title="" src="/resources/images/logo.png"/></div>
 
 
 <!-- HEADER : STARTS -->
@@ -223,7 +209,7 @@
             <div class="nav-hover porto-bg-four">
                 <h5>Hello, I am Sarah Smith. A freelance graphic designer.</h5>
              </div>
-            <span>About Me</span>
+            <span>My Page</span>
             <img alt="" title="" src="/resources/images/icons/01.png"/>
           </a>
         </div>
@@ -244,7 +230,7 @@
             <div class="nav-hover porto-bg-four">
                 <h5>27 Applications, 87 Websites & 52 Illustrations</h5>
              </div>
-            <span>My Portfolio</span>
+            <span>My Study</span>
             <img alt="" title="" src="/resources/images/icons/06.png"/>
           </a>
         </div>
@@ -259,8 +245,8 @@
        <!-- Tile : Starts -->
         <div class="slogan tile-03   text-left">
           <div class="inner">
-            <h1>Sarah Smith</h1>
-          <h3>A freelance graphic & web designer</h3>
+            <h1>코끼리</h1>
+          <h3>끼리끼리 코딩</h3>
           </div>
         </div>
        <!-- Tile : Ends -->
@@ -272,7 +258,7 @@
                 <h5>Web Design / iPhone Application / Graphic Design / Android Application</h5>
 
              </div>
-            <span>My Services</span>
+            <span>My Pege</span>
             <img alt="" title="" src="/resources/images/icons/03.png"/>
           </a>
         </div>
@@ -303,7 +289,7 @@
                 <h5>Customer love us, Happy Words</h5>
 
              </div>
-            <span>Testimonials</span>
+            <span>Q&A page</span>
             <img alt="" title="" src="/resources/images/icons/02.png"/>
           </a>
         </div>
@@ -343,18 +329,6 @@
         </div>
        <!-- Tile : Ends -->
 
-        <!-- Tile : Starts -->
-        <div class="tile nav-tile tile-01 porto-bg-eight">
-          <a class="tile-nav scroll-link" href="#contact" data-soffset="0">
-            <div class="nav-hover porto-bg-four">
-                <h5>Have a question or message for me?</h5>
-          
-             </div>
-            <span>Contact Me</span>
-            <img alt="" title="" src="/resources/images/icons/05.png"/>
-          </a>
-        </div>
-       <!-- Tile : Ends -->
         
       </div>
       <!-- stripe :ends-->
@@ -373,7 +347,7 @@
 <div class="block row">
       
           <article class="text-left">
-            <h2 class="page-heading">About me</h2>
+            <h2 class="page-heading">My Page</h2>
             <div class="liner"><span></span></div>
           </article>
 
@@ -382,7 +356,7 @@
         <div class="col-md-4"><img alt="profile" title="" src="/resources/images/profile-pic.jpg"/></div>
         <div class="col-md-4"><div class="info-block">
        <ul>
-       <li class="name"><strong>Sarah Smith</strong></li>
+       <li class="name"><strong>코끼리</strong></li>
        <li class="phone">+123 456 7987</li>
        <li class="email">sarahsmith@porto.com</li>
        <li class="chat">sarahsmithprime</li>
@@ -449,7 +423,7 @@ and C. Stng background in project management and customer relations.</p>
 <div class="block row">
         <div class="row">
           <article class="col-md-12 text-left">
-            <h2 class="page-heading">my portfolio</h2>
+            <h2 class="page-heading">my study</h2>
             <div class="liner"><span></span></div>
           </article>
         </div>
@@ -702,7 +676,7 @@ and C. Stng background in project management and customer relations.</p>
 
         <div class="row">
           <article class="col-md-12 text-left">
-            <h2 class="page-heading">my services</h2>
+            <h2 class="page-heading">my page</h2>
             <div class="liner"><span></span></div>
           </article>
         </div>
@@ -780,71 +754,6 @@ and C. Stng background in project management and customer relations.</p>
 <!-- SERVICES : ENDS -->
 
 
-<!-- CONTACT : STARTS -->
-<section id="contact" class="page-section">
-
-
-      <section class="container">
-
-        <div class="row">
-          <article class="col-md-12 text-left">
-            <h2 class="page-heading">contact me</h2>
-            <div class="liner"><span></span></div>
-          </article>
-        </div>
-
-        <div class="row add-top add-bottom">
-          <article class="col-md-12 text-left">
-            <p class="welcome-text">I will reply to each and every email. If you have projects feel free to call me anytime</p>
-          </article>
-        </div>
-
-        <div class="row add-top">
-
-            <article class="col-md-12 contact-panel">
-
-               <div class="row">
-                <article class="col-md-12 text-center">
-                            <div id="fname"  class="alert alert-error error">
-                            Name must not be empty
-                            </div>
-                            <div id="fmail" class="alert alert-error  error">
-                            Please provide a valid email
-                            </div>
-                            <div id="fmsg" class="alert alert-error  error">
-                            Message should not be empty
-                            </div>
-                        </article>
-                </div>
-
-              <form name="myform" id="contactForm" action="sendcontact.php" enctype="multipart/form-data" method="post"> 
-                <div class="row add-top-small">
-                  <article class="col-md-6">
-                    <input size="100" type="text" name="name" id="name" placeholder="Name">
-                  </article>
-                  <article class="col-md-6">
-                            <input type="text"  size="30" id="email" name="email" placeholder="email">
-                  </article>
-                </div>
-                <div class="row add-top-small">
-                  <article class="col-md-12">
-                            <textarea  id="msg" rows="3" cols="40" name="message" placeholder="Message"></textarea>
-                            <button type="submit" name="submit" id="submit" class="btn btn-porto add-top-half">Send Message</button>
-                  </article>
-                </div>
-              </form>
-
-            </article>
-
-        </div>
-
-      </section> 
-
-          
-
-</section>
-<!-- CONTACT : ENDS -->
-
 
 
 <!-- QUOTES : STARTS -->
@@ -909,7 +818,7 @@ and C. Stng background in project management and customer relations.</p>
 
         <div class="row">
           <article class="col-md-12 text-left">
-            <h2 class="page-heading">my profile</h2>
+            <h2 class="page-heading">my study</h2>
             <div class="liner"><span></span></div>
           </article>
         </div>
@@ -930,15 +839,7 @@ and C. Stng background in project management and customer relations.</p>
         </div>
 
 
-        <div class="row add-top">
-          <article class="col-md-10 col-xs-6 text-left skill-desc">
-            <h3 class="porto-bg-eight">HTML5 / CSS3 / JS</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.<br><br> Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-          </article>
-          <article class="col-md-2 col-xs-6 text-left skill-wrap">
-            <div class="chart1 easyPieChart" data-percent="86" style="width: 140px; height: 140px; line-height: 140px;">86%<canvas width="140" height="140"></canvas></div>
-          </article>
-        </div>
+       
 
         <div class="row add-top">
           <article class="col-md-10 col-xs-6 text-left skill-desc">
