@@ -76,7 +76,7 @@ public class GRestController {
 		try {
 			UserVO user = (UserVO) session.getAttribute("user");
 			List<GUserVO> groupList = groupUserService.listByUSer(user.getUser_id()).stream()
-					.filter(i -> i.getAuthorized() =='Y').collect(Collectors.toList());
+					.filter(i -> i.getAuthorized().equals("Y")).collect(Collectors.toList());
 			mv.addObject("myGroup", groupList);
 			mv.addObject("user", user);
 		}catch(Exception e) {

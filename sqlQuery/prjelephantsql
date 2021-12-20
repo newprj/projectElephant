@@ -67,8 +67,7 @@ create table tbl_group(
 );
 alter table tbl_group add(profile varchar2(1000));
 create sequence seq_gno;
-update tbl_group set profile = 'юс╫ц';
-commit; 
+
 create table tbl_groupuser(
     cno number primary key,
     authorized varchar2(1) default 'N',
@@ -78,7 +77,9 @@ create table tbl_groupuser(
     constraint fk_g_group foreign key(group_name) references tbl_group(group_name)
     );
 alter table tbl_groupuser add unique(user_id, group_name);
+alter table tbl_groupuser add( leader varchar2(2) default 'N');
 create sequence seq_cno;
+desc tbl_groupuser;
 
 create table tbl_board(
     bno number constraint pk_board primary key,
@@ -156,3 +157,5 @@ commit;
 commit;
 
 --select profile from tbl_group;
+select tbl_groupuser where ;
+update tbl_groupuser set leader ='Y' where user_id='test39';
