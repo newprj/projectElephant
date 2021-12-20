@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>porto - Easy to use Portfolio - Responsive HTML5 Template</title>
+<title>메인 페이지</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="porto by ThemesGround - An easy to use Personal Portfolio - Retina Ready and Responsive HTML5 theme">
 <meta name="author" content="ThemesGround">
@@ -55,12 +55,12 @@
   <div class="sm-wrap">
     <h1 class="sm-logo">Porto</h1>
     <i class="icon-remove menu-close"></i>
-    <a class="scroll-link"  data-soffset="0" href="#home">Home</a>
-    <a class="scroll-link"  data-soffset="0" href="#about">My Page</a>
+    <a class="scroll-link"  data-soffset="0" href="/group/">Home</a>
+    <a class="scroll-link"  data-soffset="0" href="/user/login">login</a>
     <a class="scroll-link"  data-soffset="0" href="#portfolio">Portfolio</a>
-    <a class="scroll-link"  data-soffset="0" href="#services"></a>
+    <a class="scroll-link"  data-soffset="0" href="/mypage/user">My Page</a>
     <a class="scroll-link"  data-soffset="0" href="#profile">Profile Page</a>
-    <a class="scroll-link"  data-soffset="0" href="#testimonials">Q&A page</a>
+    <a class="scroll-link"  data-soffset="0" href="/qna/list">Q&A page</a>
   </div>
   <!-- Navigation Trigger Button -->
   <div id="sm-trigger"></div>
@@ -94,7 +94,7 @@
       
       <!-- Starting : Nav Block -->
       <li class="porto-bg-one">
-         <a class="scroll-link" id="about-link" href="#about" data-soffset="0">
+         <a class="scroll-link" id="about-link" href="#mypage" data-soffset="0">
           <div class="first">
             <div class="arrow-right"></div>
             <div class="content"><img alt="" title="" src="/resources/images/icons/01.png"/></div>
@@ -205,11 +205,11 @@
 
         <!-- Tile : Starts -->
         <div class="tile nav-tile tile-01  porto-bg-one">
-          <a class="tile-nav scroll-link" href="#about" data-soffset="0">
+          <a class="tile-nav scroll-link" href="#mypage" data-soffset="0">
             <div class="nav-hover porto-bg-four">
                 <h5>Hello, I am Sarah Smith. A freelance graphic designer.</h5>
              </div>
-            <span>My Page</span>
+            <span>Login</span>
             <img alt="" title="" src="/resources/images/icons/01.png"/>
           </a>
         </div>
@@ -340,7 +340,7 @@
 
 
 <!-- ABOUT : STARTS -->
-<section id="about" class="page-section navigation-fadeIn">
+<section id="mypage" class="page-section navigation-fadeIn">
 
 
       <section class="container">
