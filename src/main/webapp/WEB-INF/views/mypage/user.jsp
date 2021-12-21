@@ -90,8 +90,10 @@ ul.tabs li.current{
 <title>마이페이지</title>
 </head>
 <body>
-	<nav>
 		<h2>${user.name}님 페이지</h2>
+	<nav>
+		<h4 style='float:right;'><a href="/group/">스터디</a></h4>
+		<h4 style='float:right;'><a href="/qna/list">Q&A</a></h4>
 		<h4 style='float:right;'><a href="/user/logout">로그아웃</a></h4>
 	</nav>
 	
@@ -203,7 +205,7 @@ ul.tabs li.current{
 					<c:forEach items="${myqna}" var="i" varStatus="status"  begin="0" end='9'>
 						<tr>
 							<td>${status.count}</td>
-							<td>${i.title}</td>
+							<td><a href="/qna/detail?qno=${i.qno}">${i.title}</a></td>
 							<td><fmt:formatDate value="${i.reg_date}" pattern="yyyy-MM-dd a hh:mm" /></td>
 						</tr>
 					</c:forEach>
@@ -221,7 +223,6 @@ ul.tabs li.current{
 					<thead>
 						<tr>
 						  <th>no.</th>
-						  <th>게시글 제목</th>
 						  <th>댓글</th>
 			              <th>날짜</th>
 						</tr>
@@ -229,7 +230,6 @@ ul.tabs li.current{
 					<c:forEach items="${boardReply}" var="i" varStatus="status"  begin="0" end='9'>
 						<tr>
 							<td>${status.count}</td>
-							<td></td>
 							<td>${i.reply}</td>
 							<td><fmt:formatDate value="${i.replydate}" pattern="yyyy-MM-dd a hh:mm" /></td>
 						</tr>
@@ -242,7 +242,6 @@ ul.tabs li.current{
 					<thead>
 						<tr>
 						  <th>no.</th>
-						  <th>Q&A 제목</th>
 						  <th>댓글</th>
 			              <th>날짜</th>
 						</tr>
@@ -250,8 +249,7 @@ ul.tabs li.current{
 					<c:forEach items="${qnaReply}" var="i" varStatus="status"  begin="0" end='9'>
 						<tr>
 							<td>${status.count}</td>
-							<td></td>
-							<td>${i.r_content}</td>
+							<td><a href="/qna/detail?qno=${i.qno}">${i.r_content}</a></td>
 							<td><fmt:formatDate value="${i.r_reg_date}" pattern="yyyy-MM-dd a hh:mm" /></td>
 						</tr>
 					</c:forEach>
