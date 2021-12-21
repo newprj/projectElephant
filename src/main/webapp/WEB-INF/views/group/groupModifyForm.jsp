@@ -26,10 +26,12 @@ pageEncoding="UTF-8"%>
 			<div>
 				<label> 대표 이미지 </label>
 				<div class="profile">
+					<img class="profile" src="${one.profile}">
 				</div>
 				<span style="cursor: pointer;" class="profile">이미지 바꾸기 </span>
-	
+			
 			</div>
+			<input type="hidden" name="profile" value="${one.profile}">
 			<div>
 				<label for=""> 그룹 이름 </label>
 				<input type="text" name="group_name" value = "${one.group_name}" readonly/>
@@ -70,7 +72,6 @@ pageEncoding="UTF-8"%>
 				$(profileImg).change(function (e) {
 					let formData = new FormData();
 					let uploadFile = $(profileImg)[0].files[0];
-
 					formData.append("uploadFile", uploadFile);
 
 					$.ajax({
@@ -87,10 +88,11 @@ pageEncoding="UTF-8"%>
 							const encodeURI = encodeURIComponent(`\${res[0].uploadPath}/\${res[0].uuid}_\${res[0].fileName}`)
 							const IMG_URL = `/display?fileName=\${encodeURI}`
 							console.log(IMG_URL)
+							$('input[name="profile"]').val(IMG_URL)
 							$('div.profile')[0].innerHTML =''
 							const newProfile= $(`<img class="profile" src="\${IMG_URL}">`)
 							$('div.profile').append(newProfile)
-							$('img.profile').css({ "height" : "170px "})
+							$('img.profile').css({ "height" : "200px "})
 						},
 						error: (xhr, status, er) => console.log(xhr),
 					}); // ajax
@@ -127,7 +129,7 @@ pageEncoding="UTF-8"%>
 								encodeURIComponent(
 									res[0].uploadPath + "/" + res[0].uuid + "_" + res[0].fileName
 								);
-
+							
 							let range = quill.getSelection();
 							console.log(range);
 							quill.insertEmbed(range, "image", IMG_URL);
@@ -165,7 +167,6 @@ pageEncoding="UTF-8"%>
 				console.log(res)
 				let content = res.description
 				quill.container.firstChild.innerHTML = content 
-				$('div.profile')[0].innerHTML = res.profile
 			})
 			
 			
@@ -182,7 +183,7 @@ pageEncoding="UTF-8"%>
 					subject : $('input[name="subject"]').val(),
 					description : myEditor.children[0].innerHTML,
 					member_number : $('input[name="member_number"]').val(),
-					profile : $('div.profile')[0].innerHTML
+					profile : $('input[name="profile"]').val()
 					
 				}
 					$.ajax({

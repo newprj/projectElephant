@@ -1,172 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <script src="//code.jquery.com/jquery-3.6.0.js"></script>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-  <style>
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<style>
+			/* Lazy Load Styles */
+			.card-image {
+				display: block;
+				min-height: 20rem; /* layout hack */
+				background: #fff center center no-repeat;
+				background-size: cover;
+				filter: blur(3px); /* blur the lowres image */
+			}
 
-    body{
-      background-color: #f6f9fc;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; 
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 50px 0;
-    }
-    div.wrapper{
-      padding: 30px;
-  
-      background-color: white;
-      box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0,0,0,0.08); 
-    }
-    div.profile{
-      padding-left: 50px;
-    }
-    .hidden {
-      display: none;
-    }
-    .form-container {
-      width: 500px;
-    }
+			.card-image > img {
+				display: block;
+				width: 100%;
+				opacity: 0; /* visually hide the img element */
+			}
+			.card-image:hover {
+				filter: none;
+			}
 
-    .row {
-        margin-top: 15px;
-      }
-    .row.form-group {
-      padding-left: 15px;
-      padding-right: 15px;
-    }
-    .btn {
-      margin-left: 15px;
-    }
-    
-    span.profile {
-      background-color: #000;
-      border-bottom-left-radius: 6px;
-      border-bottom-right-radius: 6px;
-      bottom: 0;
-      color: #fff;
-      opacity: 0.8;
-      padding: 4px;
-      position: absolute;
-      text-align: center;
-      width: 300px;
-      margin-left: 50px;
-    }
-    span.profile:hover {
-      cursor: pointer;
-    }
-    
-    img.profile{
-      width: 300px;
-    }
-  
-    
-    #editor {
-      height: 500px;
-      overflow: auto;
-    }
-  </style>
-  <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
-  <script src="//code.jquery.com/jquery-3.6.0.js"></script>
-  <link
-    href="https://cdn.quilljs.com/1.3.6/quill.snow.css"
-    rel="stylesheet"
-  />
-  <script src="/resources/image-resize.min.js"></script>
-  <script src="/resources/image-drop.min.js"></script>
-  <script src="/resources/js/fileUpload.js" type="text/javascript"></script>
-</head>
-<body>
- 
-  <div class="wrapper">
-  <div id="form-container" class="container">
-		<form method="post" action="./make">
-			<div class="row">
-				<div class="col-xs-5 imgContainer profile">
-					<div class="profile">
-						<img class="profile img-rounded" src="../../../resources/img/elephant.png" />
-					</div>
-          <span class="profile">이미지 바꾸기 </span>
-				<input type="hidden" name="profile" />
-			</div>
+			/* Layout Styles */
+			html,
+			body {
+				width: 100%;
+				height: 100%;
+				margin: 0;
+				font-size: 16px;
+				font-family: sans-serif;
+			}
 
-			<div class="col-xs-7">
-				<div class="form-group row">
-					<label class="col-sm-2 col-form-label"> 그룹 이름 </label>
-            <div class="col-sm-10">
-              <input type="text" name="group_name"  class="form-control" required />
-					  </div>
-          <div>
-						<span class="duplicated hidden">중복된 이름입니다 </span>
-						<span class="unduplicated hidden">사용 가능한 이름입니다 </span>
-					</div>
-				</div>
-        
-				<div class="form-group row ">
-					<label class="col-sm-2 col-form-label"> 리더 </label>
-          <div class="col-sm-10">
-					  <input type="text" name="leader" value="${user.user_id}" class="form-control" readonly />
-          </div>
-				</div>
-      
-				<div class="form-group row">
-					<label class="col-sm-2 col-form-label"> 주제 </label>
-          <div class="col-sm-10">
-					  <input type="text" name="subject" class="form-control" required />
-          </div>
-				</div>
+			.card-list {
+				display: block;
+				margin: 1rem auto;
+				padding: 0;
+				font-size: 0;
+				text-align: center;
+				list-style: none;
+			}
 
-				<div class="form-group row">
-					<label class="col-sm-2 col-form-label"> 모집 인원 </label>
-          <div class="col-sm-10">
-					  <input type="number" name="member_number" min="1" required class="form-control"/>
-          </div>
-				</div>
-			</div>
-		</div> <!-- class row -->
-		<div class="row">
-				<label for="description"> 상세 설명 </label>
-				<div id="editor"></div>
-				<input name="description" type="hidden" />
-		</div>
-		<div class="row">
-				<button class="btn" type="submit" disabled="disabled">생성</button>
-			
-		</div>
-	</form>
-</div>
-</div>
+			.card {
+				display: inline-block;
+				width: 90%;
+				max-width: 20rem;
+				margin: 1rem;
+				font-size: 1rem;
+				text-decoration: none;
+				overflow: hidden;
+				box-shadow: 0 0 3rem -1rem rgba(0, 0, 0, 0.5);
+				transition: transform 0.1s ease-in-out, box-shadow 0.1s;
+			}
 
-</body>
-<script>
-  const toolbarOptions = [
-				[{ header: [1, 2, 3, 4, 5, 6, false] }],
-				[{ list: "ordered" }, { list: "bullet" }],
-				["bold", "italic", "underline", "strike"],
-				[{ color: [] }, { background: [] }],
-				[{ align: [] }],
-				["image"],
-				["clean"],
-			];
+			.card:hover {
+				transform: translateY(-0.5rem) scale(1.0125);
+				box-shadow: 0 0.5em 3rem -1rem rgba(0, 0, 0, 0.5);
+			}
 
-			let quill = new Quill("#editor", {
-				theme: "snow",
-				modules: {
-					toolbar: toolbarOptions,
-					imageDrop: true,
-					imageResize: {
-						displaySize: true,
-					},
-				},
-			});
+			.card-description {
+				display: block;
+				padding: 1em 0.5em;
+				color: #515151;
+				text-decoration: none;
+			}
 
-			let toolbar = quill.getModule("toolbar");
-		
+			.card-description > h2 {
+				margin: 0 0 0.5em;
+			}
 
-</script>
+			.card-description > p {
+				margin: 0;
+			}
+		</style>
+	</head>
+	<body>
+		<ul class="card-list">
+			<li class="card">
+				<a class="card-image" href="https://michellezauner.bandcamp.com/album/psychopomp-2" target="_blank" style="background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/310408/psychopomp-100.jpg);" data-image-full="https://s3-us-west-2.amazonaws.com/s.cdpn.io/310408/psychopomp-500.jpg">
+					<img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/310408/psychopomp-100.jpg" alt="Psychopomp" />
+				</a>
+				<a class="card-description" href="https://michellezauner.bandcamp.com/album/psychopomp-2" target="_blank">
+					<h2>Psychopomp</h2>
+					<p>Japanese Breakfast</p>
+				</a>
+			</li>
+		</ul>
+	</body>
 </html>

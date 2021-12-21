@@ -57,11 +57,11 @@
 	
 	<select id="getListWithPaging" resultType="com.green.vo.GroupVO">
 			 <![CDATA[
-			select g.gno, g.group_name, g.leader, g.subject, g.description, g.member_number, g.viewcnt, g.regdate, u.pop
+			select g.gno, g.group_name, g.leader, g.subject, g.description, g.member_number, g.viewcnt, g.regdate, u.pop, g.profile
 				from (
 			    select 
 			    /*+ index_desc(tbl_group pk_group ) */
-				    rownum rn, gno, group_name, leader, subject, description, member_number, authorized, viewcnt, regdate
+				    rownum rn, gno, group_name, leader, subject, description, member_number, authorized, viewcnt, regdate, profile
 				    	from tbl_group
 				    where ]]>
 				    <include refid="criteria"></include>

@@ -83,8 +83,8 @@ pageEncoding="UTF-8"%>
 		<script src="/resources/image-resize.min.js"></script>
 		<script src="/resources/image-drop.min.js"></script>
 		<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100&display=swap" rel="stylesheet">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100&display=swap" rel="stylesheet">
 		<script src="/resources/js/fileUpload.js" type="text/javascript"></script>
 	</head>
 	<body>
@@ -98,7 +98,7 @@ pageEncoding="UTF-8"%>
 						<img class="profile img-rounded" src="/resources/img/elephant.png" />
 					</div>
           <span class="profile"> 프로필 이미지 바꾸기 </span>
-				<input type="hidden" name="profile" />
+				<input type="hidden" name="profile" value="/resources/img/elephant.png"/>
 			</div>
 
 			<div class="col-xs-7">
@@ -145,6 +145,7 @@ pageEncoding="UTF-8"%>
 			
 		</div>
 	</form>
+
 </div>
 </div>
 
@@ -152,6 +153,7 @@ pageEncoding="UTF-8"%>
 
 	<script>
 		$(document).ready(function (e) {
+			
 			let user = "${user}";
 			if (!user) {
 				alert("로그인 된 사용자만 그룹을 만들수 있습니다");
@@ -188,7 +190,7 @@ pageEncoding="UTF-8"%>
 			$(".btn").click(function (e) {
 				e.preventDefault();
 				$('input[name="description"]').val(myEditor.children[0].innerHTML);
-				$('input[name="profile"]').val($('img.profile')[0].outerHTML);
+				$('input[name="profile"]').val();
 				if (
 					$('input[name="group_name"]').val() == "" ||
 					$('input[name="subject"]').val() == "" ||
@@ -235,7 +237,7 @@ pageEncoding="UTF-8"%>
 							$("img.profile").remove();
 							const newProfile = $(`<img class="profile img-rounded" src="\${IMG_URL}">`);
 							$("div.profile").append(newProfile);
-							$("img.profile").css({ height: "200px " });
+							$('input[name="profile"]').val(IMG_URL);
 						},
 						error: (xhr, status, er) => console.log(xhr),
 					}); // ajax

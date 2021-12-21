@@ -114,6 +114,7 @@ public class GRestController {
 			"/main/list/{pageNum}/{amount}/{sort}", "/main/list/{pageNum}/{amount}/{type}/{keyword}/{sort}" })
 	public ModelAndView listOfgroups(HttpServletRequest request, @ModelAttribute("cri") Criteria cri) {
 		ModelAndView mv = new ModelAndView("/group/groupBoard");
+		cri.setAmount(9);
 		try {
 			HttpSession session = request.getSession();
 			UserVO user = (UserVO) session.getAttribute("user");
@@ -134,6 +135,7 @@ public class GRestController {
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
+
 		int total = groupService.getTotalCount(cri);
 		mv.addObject("pageMaker" , new PageDTO(cri, total));
 		return mv;

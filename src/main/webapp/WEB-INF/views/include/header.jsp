@@ -15,10 +15,7 @@
 		></script>
 		<script src="/resources/assets/js/bootstrap.js"></script>
 		<script src="/resources/assets/js/bootstrap.min.js"></script>
-		<script
-			src="/resources/javascripts/responsive-nav.js"
-			type="text/javascript"
-		></script>
+	
 		<script src="/resources/javascripts/jquery.stellar.js"></script>
 		<script src="/resources/javascripts/prettyPhoto.js"></script>
 		<script src="/resources/javascripts/flexslider.js"></script>

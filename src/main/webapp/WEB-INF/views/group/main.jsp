@@ -71,7 +71,6 @@ prefix="c" %>
 	<link href="/resources/assets/css/font-awesome.css" rel="stylesheet">
 	<link href="/resources/assets/css/simple-line-icons.css" rel="stylesheet">
 	<link href="/resources/stylesheets/responsive-nav.css" rel="stylesheet">
-	<link href="/resources/stylesheets/responsive-nav.css" rel="stylesheet">
 	<link href="/resources/stylesheets/quotes.css" rel="stylesheet">
 	<link href="/resources/stylesheets/services.css" rel="stylesheet">
 	<link href="/resources/stylesheets/animate.css" rel="stylesheet">
@@ -592,9 +591,7 @@ prefix="c" %>
           </ul>
 
      </div>
-     <!-- End: Thumbnails -->
-            
-   
+     <!-- End: Thumbnails -->   
   		</section>  
         </div>
 		</div>

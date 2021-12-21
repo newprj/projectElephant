@@ -24,7 +24,7 @@ prefix="c" %>
   	
 	<br/>
 		<div class="profile">
-		${one.profile}
+		<img class="profile" src="${one.profile}">
 		</div>
     ${one.group_name}<br/>
     ${one.leader }<br/>
