@@ -16,6 +16,7 @@ prefix="c" %>
       .pagenate{
         margin: 4px;
       }
+ 
 </style>
 </head>
 <body>
