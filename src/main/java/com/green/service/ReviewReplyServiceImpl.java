@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.green.mapper.ReplyMapper;
 import com.green.mapper.ReviewReplyMapper;
-import com.green.vo.ReplyVO;
+import com.green.vo.ReviewReplyVO;
 
 import lombok.AllArgsConstructor;
 import lombok.Setter;
@@ -21,19 +21,19 @@ public class ReviewReplyServiceImpl implements ReviewReplyService{
 	private ReviewReplyMapper mapper;
 	
 	@Override
-	public void register(ReplyVO vo) {
+	public void register(ReviewReplyVO vo) {
 		mapper.insert(vo);
 		
 	}
 
 	@Override
-	public ReplyVO get(Long cno) {
+	public ReviewReplyVO get(Long cno) {
 		
 		return mapper.read(cno);
 	}
 
 	@Override
-	public void modify(ReplyVO vo) {
+	public void modify(ReviewReplyVO vo) {
 		mapper.update(vo);
 		
 	}
@@ -45,7 +45,7 @@ public class ReviewReplyServiceImpl implements ReviewReplyService{
 	}
 
 	@Override
-	public List<ReplyVO> getList(Long rno) {
+	public List<ReviewReplyVO> getList(Long rno) {
 		return mapper.getList(rno);
 	}
 

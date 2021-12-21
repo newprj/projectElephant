@@ -14,15 +14,18 @@ import lombok.ToString;
 public class GUserVO {
 	
 	  private Long cno;
-	  private char authorized;
+	  private String authorized;
 	  private String user_id;
 	  private String group_name;
+	  private String leader;
+	  private int memberLimit;
 	  
 	  // 그룹 생성할때 리더 가입처리 
 	  public GUserVO(GroupVO vo) {
 		  this.user_id = vo.getLeader();
 		  this.group_name = vo.getGroup_name();
-		  this.authorized = 'N';
+		  this.authorized = "Y";
+		  this.leader = "Y";
 	  }
 	
 }

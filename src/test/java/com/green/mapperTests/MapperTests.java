@@ -99,8 +99,7 @@ public class MapperTests {
 //	@Test
 	public void showAllTest() {
 		
-		List<BoardVO> voList = bMapper.showList("그루비룸");
-		 List<BoardVO> size = voList.stream().filter(vo -> vo.getNotice() == 'N').collect(Collectors.toList());
+		
 		
 	}
 	
@@ -186,7 +185,7 @@ public class MapperTests {
 		List<GroupVO> list = gMapper.showAll();
 		list.forEach(i -> {
 			 guMapper.listByGroup(i.getGroup_name())
-				.stream().filter( vo -> vo.getAuthorized() == 'Y').collect(Collectors.toList())
+				.stream().filter( vo -> vo.getAuthorized().equals("Y")).collect(Collectors.toList())
 				.forEach(v -> log.info("  " + v));
 		});
 		
