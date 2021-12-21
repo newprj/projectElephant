@@ -19,29 +19,13 @@ public class ReplyMapperTests {
 	@Setter(onMethod_=@Autowired)
 	private ReviewReplyMapper mapper;
 	
-	@Test
-	public void insertTest() {
-		ReplyVO vo = new ReplyVO();
-		vo.setContent("고생하셨어요");
-		vo.setRno(3l);
-		vo.setWriter("홍길동");
-		mapper.insert(vo);
-	}
+
 	
 	//@Test
 	public void readTest() {
 		mapper.read(1l);
 	}
 	
-	//@Test
-	public void updateTest() {
-		ReplyVO vo = new ReplyVO();
-		vo.setContent("고생했다");
-		vo.setCno(19l);
-		vo.setRno(47l);
-		vo.setWriter("박지성");
-		mapper.update(vo);
-	}
 	
 	//@Test
 	public void deleteTeset() {

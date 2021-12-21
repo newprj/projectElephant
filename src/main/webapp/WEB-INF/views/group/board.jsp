@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/core"
 prefix="c" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
 <!DOCTYPE html>
 
 <html>
@@ -19,27 +21,50 @@ prefix="c" %>
     </style>
   </head>
   <body>
-  <h1> 스터디별 게시판 페이지 </h1>
-  <a href="/group/"> 메인 </a>
+  <h1> 스터디별 게시판 페이지</h1>
+  <a href="/group/"> 메인 </a><br/>
+  <span class='goGroup' style ="cursor:pointer"}>그룹별 페이지</span>
+  
   <button class="create">입력</button>
     
     
-    
+    <div>
+    	<form class="searchForm" >
+    		<select name="type">
+    			<option value="" <c:out value="${pageMaker.cri.type == null ? 'selected' : ''}"/>> ====================== </option>
+					<option value="T" <c:out value="${pageMaker.cri.type eq 'T'? 'selected' : ''}"/>> 제목 </option>
+					<option value="W" <c:out value="${pageMaker.cri.type eq 'W'? 'selected' : ''}"/>> 작성자 </option>
+					<option value="C" <c:out value="${pageMaker.cri.type eq 'C'? 'selected' : ''}"/>> 내용 </option>
+					<option value="TC" <c:out value="${pageMaker.cri.type eq 'TC'? 'selected' : ''}"/>> 제목 OR 내용 </option>
+					<option value="TW" <c:out value="${pageMaker.cri.type eq 'TW'? 'selected' : ''}"/>> 제목 OR 작성자</option>
+					<option value="CW" <c:out value="${pageMaker.cri.type eq 'CW'? 'selected' : ''}"/>> 내용 OR 작성자  </option>
+					<option value="TCW" <c:out value="${pageMaker.cri.type eq 'TCW'? 'selected' : ''}"/>> 제목 OR 내용 OR 작성자 </option>
+    		</select>
+				<input type="text" name="keyword" />
+				<button class="searchForm"> 검색 </button>
+    	</form>
+    </div>
+
+
     <c:forEach items="${board}" var="board">
-      <div class="list"  data="${board.bno}">
-      	<span> ${board.title} </span>
+      <div>
+				
+			<c:if test="${fn:contains(board.notice, 'Y')}">
+  			<i class="fas fa-check"></i> 
+  		</c:if>
+		
+      	<span class="list" data="${board.bno}">  ${board.title}  </span>
       	<c:if test="${board.attachList !=null && board.attachList.size()>0 }">
       		<i class="fas fa-paperclip"></i>
       	</c:if>
-      	<span>[ ${board.replyCnt} ]</span>
+      	<span> <i class="far fa-comment-dots"></i> ${board.replyCnt}</span>
+      	
+      	
+      	
+      	<span> ${board.regdate}</span>
       </div>
    	 	<div>
-   <form id="actionForm" action="/group/board/${group_name}" method="get">
-   		<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">
-   		<input type="hidden" name="amount" value="${pageMaker.cri.amount}">
-   		
-   </form>
-   	
+
    </div>
    
     </c:forEach>
@@ -60,44 +85,75 @@ prefix="c" %>
       
       
       $(document).ready(function () {
-    	
-    	let actionForm = $('#actionForm')
-        let pageNum = actionForm.find('input[name="pageNum"]').val()
-        let amount = actionForm.find('input[name="amount"]').val()
+
+    		let actionForm = $('#actionForm')
+        let pageNum = "${cri.pageNum}"
+        let amount = "${cri.amount}"
         
         let loginUser= "${user}"
-        if(! loginUser){
-			console.log('로그인안됨')
-			alert("로그인 해야 접근 가능합니다")
-			location.href="/group/"
-		}else{
-			$.getJSON(
-				"/group/getMemberlistByGroup/${group_name}", (list) =>{
-					console.log(list)
-					console.log(loginUser)
-					let joinCheck = list.find( user => user.user_id === loginUser)
-					if(!joinCheck){
-						alert("그룹 회원만 접근 가능한 페이지입니다")
-						location.href="/group/"
+        
+				$.getJSON(
+					"/group/getMemberlistByGroup/${name}", (list) =>{
+						console.log(list.memberList)
+						console.log(loginUser)
+						let joinCheck = list.memberList.find( user => user.user_id === loginUser)
+						if(!joinCheck){
+							alert("그룹 회원만 접근 가능한 페이지입니다")
+							location.href="/group/" 
 					} 
 				})
-		}
+				
+				$('span.goGroup').click((e) => {
+					location.href =  `/group/${name}`;
+				})
 		
         $('.create').click(function(e){
-        	let group_name = '${cri}' ? "${cri.group_name}" : "${group_name}"
-        	location.href="/group/board/"+group_name+"/write"
+        	location.href="/group/board/${name}/write"
         })
+        
+        
         $('.list').click(function (e) {
-          bno = $(this).attr('data')          
-          location.href = "/group/board/${name}/"+bno+"/" +pageNum + "/" +amount
+          bno = $(this).attr('data')
+          let type = "${cri.type}"
+         	let keyword =  "${cri.keyword}"
+         	
+         	let url = type && keyword ? `/group/board/${name}/\${bno}/\${pageNum}/\${amount}/\${type}/\${keyword}` 
+         			:  `/group/board/${name}/\${bno}/\${pageNum}/\${amount}`
+         	 
+         	location.href = url  
         }) //list.click
         
         $('.pagenate a').click(function(e){
         	e.preventDefault()
+        	let type = "${cri.type}"
+        	let keyword =  "${cri.keyword}"
         	
         	let pageNum =$(this).attr('href')
-        	location.href = "/group/board/${name}/"+pageNum + "/" +amount
-        })
+        	let url = type && keyword ? `/group/board/${name}/\${pageNum}/\${amount}/\${type}/\${keyword}` 
+        			:  `/group/board/${name}/\${pageNum}/\${amount}`
+        	 
+        	location.href = url 
+        
+        })// a click
+				
+        let searchForm = $('form.searchForm')
+        $('button.searchForm').click((e) => {
+        	e.preventDefault()
+        	let type = searchForm.find("option:selected").val()
+        	let keyword =  $('input[name="keyword"]').val()
+        	if(!type){
+        		alert("옵션 종류를 선택하세요 ") 
+        	}else if (!keyword){
+        		alert("검색 키워드를 입력하세요 ")
+        	}else {
+        		let url = `/group/board/${name}/\${pageNum}/\${amount}/\${type}/\${keyword}`
+        		location.href = url 
+        	}
+        
+        })// search button click
+        
+				
+
       }) //docu
     </script>
   </body>

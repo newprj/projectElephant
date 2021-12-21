@@ -2,50 +2,70 @@ package com.green.listener;
 
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
-
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.green.vo.MessageDTO;
 
 import lombok.extern.log4j.Log4j;
-
 
 
 @Log4j
 @Component
 public class GroupChatHandler extends TextWebSocketHandler{
 	
-	private List<WebSocketSession> sessionList = new ArrayList<WebSocketSession>();
-	
-	
+	private Map<String, ArrayList<WebSocketSession>> roomList = new HashMap<>();
+	private Map<WebSocketSession, String> sessionList = new HashMap<>();
+	private Map<String, Set<String>> userList = new HashMap<>();
 
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception{
 		
-		log.info(" chatiing 을 위해 해당 페이지에 들어옴 " );
-		sessionList.add(session);
-		/*
-		 * for(WebSocketSession s : sessionList ) { s.sendMessage(new
-		 * TextMessage(session.getId() +": 입장 ")); }
-		 */
-		
-		
+		System.out.println(" chatiing 을 위해 해당 페이지에 들어옴 " );
 	}
+	
 	
 	// 전송했을 때 
 	@Override
 	public void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception{
+		ObjectMapper objectMapper = new ObjectMapper();
+		MessageDTO msg = objectMapper.readValue(message.getPayload(), MessageDTO.class);
 		
-		log.info(" 메시지 전송~~ ");
-		for(WebSocketSession s : sessionList) {
-			s.sendMessage(new TextMessage(message.getPayload()));
+		//json을 객체로 저장함 
+		System.out.println(message.getPayload());
+		if(roomList.get(msg.getGroup()) == null) {
+			ArrayList<WebSocketSession> sList = new ArrayList<WebSocketSession>();
+			sList.add(session);
+			roomList.put(msg.getGroup(), sList);
+			sessionList.put(session, msg.getGroup());
+		}else if(sessionList.get(session) == null ) {
+			roomList.get(msg.getGroup()).add(session);
+			sessionList.put(session, msg.getGroup());
+		}
+		
+		if(msg.getType().equals("open")) {
+			if( userList.get(msg.getGroup())== null) {
+				Set<String> userSet = new HashSet<String>();
+				userList.put(msg.getGroup(), userSet);
+			}
+			userList.get(msg.getGroup()).add(msg.getUser());
+		}else if(msg.getType().equals("close")) {
+			userList.get(msg.getGroup()).remove(msg.getUser());
+		}
+		
+		msg.setMember(userList.get(msg.getGroup()));
+		
+		for(WebSocketSession s : roomList.get(msg.getGroup())) {
+			s.sendMessage(new TextMessage(msg.getMember()+"-"+msg.getUser() + "-" +msg.getMsg() +"-"+msg.getSendTime()+ "-" +msg.getType()));
 		}
 	}
 	
@@ -54,11 +74,9 @@ public class GroupChatHandler extends TextWebSocketHandler{
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception{
 		
-		sessionList.remove(session);
-		/*
-		 * for(WebSocketSession s : sessionList) { s.sendMessage(new TextMessage(
-		 * session.getId() + ": 님 퇴장 ")); }
-		 */
+		if(sessionList.get(session) !=null) {
+			roomList.get(sessionList.get(session)).remove(session);
+		}
 		log.info(" 퇴장" );
 	}
 	

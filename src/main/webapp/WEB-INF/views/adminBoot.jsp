@@ -1,10 +1,11 @@
 <!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <html lang="en">
     <head>
-        <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title> SmartAdmin - Responsive admin template..</title>
-        <link rel="shortcut icon" href="/resources/img/favicon.ico">
+        <title>마이 페이지</title>
+        <link rel="shortcut icon" href="#">
         <!--STYLESHEET-->
         <!--=================================================-->
         <!--Roboto Slab Font [ OPTIONAL ] -->
@@ -38,16 +39,17 @@
                     <!--================================-->
                     <div class="navbar-header">
                         <a href="index.html" class="navbar-brand">
+                        <!--코끼리 아이콘 넣기-->
                             <i class="fa fa-cube brand-icon"></i>
                             <div class="brand-title">
-                                <span class="brand-text">SmartAdmin</span>
+                                <span class="brand-text">my page</span>
                             </div>
                         </a>
                     </div>
                     <!--================================-->
                     <!--End brand logo & name-->
                     <!--Navbar Dropdown-->
-                    <!--================================-->
+                    <!--==========메시지 알림 아이콘======================-->
                     <div class="navbar-content clearfix">
                         <ul class="nav navbar-top-links pull-left">
                             <!--Messages Dropdown-->
@@ -227,9 +229,11 @@
                             <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
                             <!--End notifications dropdown-->
                         </ul>
+                        
+                        
                         <ul class="nav navbar-top-links pull-right">
                             <!--Profile toogle button-->
-                            <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+                            <!--~~~~~~~~~~~~~~~이름, 사진, 크게~~~~~~~~~~~~~~~~~-->
                             <li class="hidden-xs" id="toggleFullscreen">
                                 <a class="fa fa-expand" data-toggle="fullscreen" href="#" role="button">
                                 <span class="sr-only">Toggle fullscreen</span>
@@ -241,7 +245,7 @@
                             <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
                             <li id="dropdown-user" class="dropdown">
                                 <a href="#" data-toggle="dropdown" class="dropdown-toggle text-right">
-                                    <span class="pull-right"> <img class="img-circle img-user media-object" src="img/av1.png" alt="Profile Picture"> </span>
+                                    <span class="pull-right"> <img class="img-circle img-user media-object" src="/resources/img/av1.png" alt="Profile Picture"> </span>
                                     <div class="username hidden-xs">John Doe</div>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right with-arrow">
@@ -266,6 +270,8 @@
                             <!--End user dropdown-->
                         </ul>
                     </div>
+                    
+                    
                     <!--================================-->
                     <!--End Navbar Dropdown-->
                     <nav class="navbar navbar-default megamenu">
@@ -289,7 +295,7 @@
                                 <!-- end standard drop down -->
                                 <!-- standard drop down -->
                                 <li class="dropdown">
-                                    <a href="#" data-toggle="dropdown" class="dropdown-toggle"> Ui Elements <b class="caret"></b></a>
+                                    <a href="#" data-toggle="dropdown" class="dropdown-toggle"> Q&A <b class="caret"></b></a>
                                     <ul class="dropdown-menu" role="menu">
                                         <li><a href="ui-animation.html"> CSS3 Animation </a></li>
                                         <li><a href="ui-panel.html">Panel </a></li>
@@ -311,7 +317,7 @@
                                 <!-- end standard drop down -->
                                 <!-- standard drop down -->
                                 <li class="dropdown">
-                                    <a href="#" data-toggle="dropdown" class="dropdown-toggle"> Pages <b class="caret"></b></a>
+                                    <a href="#" data-toggle="dropdown" class="dropdown-toggle"> group <b class="caret"></b></a>
                                     <ul class="dropdown-menu" role="menu">
                                         <li><a href="pages-faq.html"> FAQ </a></li>
                                         <li><a href="pages-gallery.html"> Gallery </a></li>
@@ -328,98 +334,14 @@
                                     <!-- end dropdown-menu -->
                                 </li>
                                 <!-- end standard drop down -->
-                                <!-- standard drop down -->
-                                <li class="dropdown">
-                                    <a href="#" data-toggle="dropdown" class="dropdown-toggle"> Tables <b class="caret"></b></a>
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li><a href="table-static.html"> Static Table </a></li>
-                                        <li><a href="table-datatable.html"> Data table </a></li>
-                                        <li><a href="table-footable.html"> Foo Table </a></li>
-                                    </ul>
-                                    <!-- end dropdown-menu -->
-                                </li>
-                                <!-- end standard drop down -->
-                                <!-- standard drop down -->
-                                <li class="dropdown">
-                                    <a href="#" data-toggle="dropdown" class="dropdown-toggle"> Forms <b class="caret"></b></a>
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li><a href="forms-layout.html"> Form Layout </a></li>
-                                        <li><a href="forms-switchery.html"> Form Switchery </a></li>
-                                        <li><a href="forms-components.html"> Form Components </a></li>
-                                        <li><a href="forms-validation.html"> Form Validation </a></li>
-                                        <li><a href="forms-wizard.html"> Form Wizard </a></li>
-                                    </ul>
-                                    <!-- end dropdown-menu -->
-                                </li>
-                                <!-- end standard drop down -->
-                                <!-- standard drop down -->
-                                <li class="dropdown">
-                                    <a href="#" data-toggle="dropdown" class="dropdown-toggle"> Charts <b class="caret"></b></a>
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li><a href="charts-flot.html"> Flot Chart </a></li>
-                                        <li><a href="charts-morris.html"> Morris Chart </a></li>
-                                    </ul>
-                                    <!-- end dropdown-menu -->
-                                </li>
-                                <!-- end standard drop down -->
+                                                             <!-- standard drop down -->
+                                
                                 <!-- standard drop down -->
                                 <li>
                                     <a href="calendar.html"> Calendar </a>
                                 </li>
                                 <!-- end standard drop down -->
-                                <!-- standard drop down -->
-                                <li>
-                                    <a href="ui-widgets.html"> Widgets </a>
-                                </li>
-                                <!-- end standard drop down -->
-                                <!-- standard drop down -->
-                                <li class="dropdown">
-                                    <a href="#" data-toggle="dropdown" class="dropdown-toggle"> Mail <b class="caret"></b></a>
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li><a href="mail-inbox.html"> Inbox </a></li>
-                                        <li><a href="mail-compose.html"> Compose Mail </a></li>
-                                        <li><a href="mail-mailview.html"> View Mail </a></li>
-                                    </ul>
-                                    <!-- end dropdown-menu -->
-                                </li>
-                                <!-- end standard drop down -->
-                                <!-- standard drop down -->
-                                <li class="dropdown">
-                                    <a href="#" data-toggle="dropdown" class="dropdown-toggle"> Maps <b class="caret"></b></a>
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li><a href="maps-gmap.html"> Google Map </a></li>
-                                        <li><a href="maps-vectormap.html"> Vector Map </a></li>
-                                    </ul>
-                                    <!-- end dropdown-menu -->
-                                </li>
-                                <!-- end standard drop down -->
-                                <!-- standard drop down -->
-                                <li class="dropdown">
-                                    <a href="#" data-toggle="dropdown" class="dropdown-toggle"> Menu Levels <b class="caret"></b></a>
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li><a href="#">Second Level</a></li>
-                                        <li><a href="#">Second Level</a></li>
-                                        <li class="dropdown-submenu">
-                                            <a href="#">Second Level</a>
-                                            <ul class="dropdown-menu">
-                                                <li class="dropdown-submenu">
-                                                    <a href="#">Third Level</a>
-                                                    <ul class="dropdown-menu">
-                                                        <li><a href="#">Fourth Level</a></li>
-                                                        <li><a href="#">Fourth Level</a></li>
-                                                    </ul>
-                                                </li>
-                                                <!-- end dropdown-submenu -->
-                                                <li><a href="#">Third Level</a></li>
-                                                <li><a href="#">Third level</a></li>
-                                            </ul>
-                                            <!-- end dropdown-menu -->
-                                        </li>
-                                        <li><a href="#">Creattica</a></li>
-                                    </ul>
-                                    <!-- end dropdown-menu -->
-                                </li>
-                                <!-- end standard drop down -->
+                               
                             </ul>
                             <!-- end nav navbar-nav -->
                         </div>
@@ -428,6 +350,8 @@
                     <!-- end navbar navbar-default megamenu -->
                 </div>
             </header>
+            
+            
             <!--===================================================-->
             <!--END NAVBAR-->
             <div class="boxed">
@@ -609,7 +533,6 @@
                                     <div class="panel-body">
                                        <div class="col-md-8">
                                         <!--Flot Spline Chart placeholder -->
-                                        <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
                                         <div id="flot-spline" style="height:275px;"></div>
                                         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
                                        </div> 
@@ -799,7 +722,7 @@
                             <div class="col-lg-12">
                                 <div class="panel">
                                     <div class="panel-heading">
-                                        <h3 class="panel-title"> Order List </h3>
+                                        <h3 class="panel-title">Letter</h3>
                                     </div>
                                     <div class="panel-body">
                                         <!--Default Tabs (Left Aligned)--> 
@@ -807,9 +730,8 @@
                                         <div class="tab-base">
                                             <!--Nav Tabs-->
                                             <ul class="nav nav-tabs">
-                                                <li class="active"> <a data-toggle="tab" href="#demo-lft-tab-1"> Top Selling </a> </li>
-                                                <li> <a data-toggle="tab" href="#demo-lft-tab-2">Most Viewed</a> </li>
-                                                <li> <a data-toggle="tab" href="#demo-lft-tab-3">Recent Orders</a> </li>
+                                                <li class="active"> <a data-toggle="tab" href="#demo-lft-tab-1"> 받은 쪽지 </a> </li>
+                                                <li> <a data-toggle="tab" href="#demo-lft-tab-2">보낸 쪽지</a> </li>
                                             </ul>
                                             <!--Tabs Content-->
                                             <div class="tab-content">
@@ -884,34 +806,7 @@
                                                                     </div>
                                                                 </td>
                                                             </tr>
-                                                            <tr>
-                                                                <td>5</td>
-                                                                <td>Design new theme</td>
-                                                                <td>28 May 2016</td>
-                                                                <td>
-                                                                    <div class="label label-table label-warning">Pending</div>
-                                                                </td>
-                                                                <td class="hidden-xs">Will DeBrandon</td>
-                                                                <td class="hidden-xs">
-                                                                    <div class="progress progress-striped progress-sm">
-                                                                        <div class="progress-bar progress-bar-danger" style="width: 55%;"></div>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>6</td>
-                                                                <td>Mockup Testing</td>
-                                                                <td>31 May 2016</td>
-                                                                <td>
-                                                                    <div class="label label-table label-warning">Pending</div>
-                                                                </td>
-                                                                <td class="hidden-xs">Alexander Flynn</td>
-                                                                <td class="hidden-xs">
-                                                                    <div class="progress progress-striped progress-sm">
-                                                                        <div class="progress-bar progress-bar-success" style="width: 75%;"></div>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
+                                                           
                                                         </tbody>
                                                     </table>
                                                     <!--===================================================--> 
@@ -979,27 +874,7 @@
                                                                 <td class="hidden-xs">13 Dec 1977</td>
                                                                 <td><span class="label label-table label-success">Active</span></td>
                                                             </tr>
-                                                            <tr>
-                                                                <td>Semantha</td>
-                                                                <td class="hidden-xs">Halladay</td>
-                                                                <td>Junior Technical Assistant</td>
-                                                                <td class="hidden-xs">30 Dec 1991</td>
-                                                                <td><span class="label label-table label-danger">Suspended</span></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>Stevan </td>
-                                                                <td class="hidden-xs">Hickle</td>
-                                                                <td>Business Services Sales Representative</td>
-                                                                <td class="hidden-xs">17 Oct 1987</td>
-                                                                <td><span class="label label-table label-dark">Disabled</span></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>Carolina </td>
-                                                                <td class="hidden-xs">Hickle</td>
-                                                                <td>Business Services Sales Representative</td>
-                                                                <td class="hidden-xs">17 Oct 1987</td>
-                                                                <td><span class="label label-table label-dark">Disabled</span></td>
-                                                            </tr>
+                                                            
                                                         </tbody>
                                                         <tfoot>
                                                             <tr>
@@ -1014,213 +889,7 @@
                                                     <!--===================================================-->
                                                     <!-- End Foo Table - Filtering -->
                                                 </div>
-                                                <div id="demo-lft-tab-3" class="tab-pane fade">
-                                                    <!--Hover Rows--> 
-                                                    <!--===================================================-->
-                                                    <table class="table table-hover table-vcenter">
-                                                        <thead>
-                                                            <tr>
-                                                                <th class="hidden-xs">&nbsp;</th>
-                                                                <th>Profile</th>
-                                                                <th>User ID</th>
-                                                                <th class="hidden-xs">Date</th>
-                                                                <th>Amount</th>
-                                                                <th class="hidden-xs">Email Address</th>
-                                                                <th>Status</th>
-                                                                <th class="hidden-xs">Download</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td class="hidden-xs">
-                                                                    <div class="checkbox">
-                                                                        <label class="form-checkbox form-icon active">
-                                                                        <input type="checkbox">
-                                                                        </label>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    <div class="media-object center"> <img src="img/av1.png" alt="" class="img-rounded img-sm"> </div>
-                                                                </td>
-                                                                <td> Semantha Armstrong </td>
-                                                                <td class="hidden-xs">3 Jan, 2013</td>
-                                                                <td>$239.85</td>
-                                                                <td class="hidden-xs">semantha@gmail.com</td>
-                                                                <td>
-                                                                    <div class="label label-table label-info">Block</div>
-                                                                </td>
-                                                                <td class="hidden-xs">
-                                                                    <!--Split Buttons Dropdown--> 
-                                                                    <!--===================================================-->
-                                                                    <div class="btn-group btn-group-xs">
-                                                                        <button class="btn btn-danger">Download</button>
-                                                                        <button class="btn btn-danger dropdown-toggle dropdown-toggle-icon" data-toggle="dropdown" type="button"> 
-                                                                        <i class="dropdown-caret fa fa-caret-down"></i> 
-                                                                        </button>
-                                                                        <ul class="dropdown-menu">
-                                                                            <li><a href="#">Action</a> </li>
-                                                                            <li><a href="#">Another action</a> </li>
-                                                                            <li><a href="#">Something else here</a> </li>
-                                                                            <li class="divider"></li>
-                                                                            <li><a href="#">Separated link</a> </li>
-                                                                        </ul>
-                                                                    </div>
-                                                                    <!--===================================================-->
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="hidden-xs">
-                                                                    <div class="checkbox">
-                                                                        <label class="form-checkbox form-icon active">
-                                                                        <input type="checkbox">
-                                                                        </label>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    <div class="media-object center"> <img src="img/av1.png" alt="" class="img-rounded img-sm"> </div>
-                                                                </td>
-                                                                <td> Jonathan Smith </td>
-                                                                <td class="hidden-xs">3 Jan, 2013</td>
-                                                                <td>$239.85</td>
-                                                                <td class="hidden-xs">jonathan@gmail.com</td>
-                                                                <td>
-                                                                    <div class="label label-table label-danger">On Hold</div>
-                                                                </td>
-                                                                <td class="hidden-xs">
-                                                                    <!--Split Buttons Dropdown--> 
-                                                                    <!--===================================================-->
-                                                                    <div class="btn-group btn-group-xs">
-                                                                        <button class="btn btn-danger">Download</button>
-                                                                        <button class="btn btn-danger dropdown-toggle dropdown-toggle-icon" data-toggle="dropdown" type="button"> 
-                                                                        <i class="dropdown-caret fa fa-caret-down"></i> 
-                                                                        </button>
-                                                                        <ul class="dropdown-menu">
-                                                                            <li><a href="#">Action</a> </li>
-                                                                            <li><a href="#">Another action</a> </li>
-                                                                            <li><a href="#">Something else here</a> </li>
-                                                                            <li class="divider"></li>
-                                                                            <li><a href="#">Separated link</a> </li>
-                                                                        </ul>
-                                                                    </div>
-                                                                    <!--===================================================-->
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="hidden-xs">
-                                                                    <div class="checkbox">
-                                                                        <label class="form-checkbox form-icon active">
-                                                                        <input type="checkbox">
-                                                                        </label>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    <div class="media-object center"> <img src="img/av1.png" alt="" class="img-rounded img-sm"> </div>
-                                                                </td>
-                                                                <td> Jacob Armstrong </td>
-                                                                <td class="hidden-xs">3 Jan, 2013</td>
-                                                                <td>$1395.85</td>
-                                                                <td class="hidden-xs">jacob@gmail.com</td>
-                                                                <td>
-                                                                    <div class="label label-table label-success">Approved</div>
-                                                                </td>
-                                                                <td class="hidden-xs">
-                                                                    <!--Split Buttons Dropdown--> 
-                                                                    <!--===================================================-->
-                                                                    <div class="btn-group btn-group-xs">
-                                                                        <button class="btn btn-danger">Download</button>
-                                                                        <button class="btn btn-danger dropdown-toggle dropdown-toggle-icon" data-toggle="dropdown" type="button"> 
-                                                                        <i class="dropdown-caret fa fa-caret-down"></i> 
-                                                                        </button>
-                                                                        <ul class="dropdown-menu">
-                                                                            <li><a href="#">Action</a> </li>
-                                                                            <li><a href="#">Another action</a> </li>
-                                                                            <li><a href="#">Something else here</a> </li>
-                                                                            <li class="divider"></li>
-                                                                            <li><a href="#">Separated link</a> </li>
-                                                                        </ul>
-                                                                    </div>
-                                                                    <!--===================================================-->
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="hidden-xs">
-                                                                    <div class="checkbox">
-                                                                        <label class="form-checkbox form-icon active">
-                                                                        <input type="checkbox">
-                                                                        </label>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    <div class="media-object center"> <img src="img/av1.png" alt="" class="img-rounded img-sm"> </div>
-                                                                </td>
-                                                                <td> Sandra Smith </td>
-                                                                <td class="hidden-xs">3 Jan, 2013</td>
-                                                                <td>$125.85</td>
-                                                                <td class="hidden-xs">Sandra@gmail.com</td>
-                                                                <td>
-                                                                    <div class="label label-table label-warning">Pending</div>
-                                                                </td>
-                                                                <td class="hidden-xs">
-                                                                    <!--Split Buttons Dropdown--> 
-                                                                    <!--===================================================-->
-                                                                    <div class="btn-group btn-group-xs">
-                                                                        <button class="btn btn-danger">Download</button>
-                                                                        <button class="btn btn-danger dropdown-toggle dropdown-toggle-icon" data-toggle="dropdown" type="button"> 
-                                                                        <i class="dropdown-caret fa fa-caret-down"></i> 
-                                                                        </button>
-                                                                        <ul class="dropdown-menu">
-                                                                            <li><a href="#">Action</a> </li>
-                                                                            <li><a href="#">Another action</a> </li>
-                                                                            <li><a href="#">Something else here</a> </li>
-                                                                            <li class="divider"></li>
-                                                                            <li><a href="#">Separated link</a> </li>
-                                                                        </ul>
-                                                                    </div>
-                                                                    <!--===================================================-->
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="hidden-xs">
-                                                                    <div class="checkbox">
-                                                                        <label class="form-checkbox form-icon active">
-                                                                        <input type="checkbox">
-                                                                        </label>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    <div class="media-object center"> <img src="img/av1.png" alt="" class="img-rounded img-sm"> </div>
-                                                                </td>
-                                                                <td> Sandra </td>
-                                                                <td class="hidden-xs">3 Jan, 2013</td>
-                                                                <td>$239.85</td>
-                                                                <td class="hidden-xs">Sandra@gmail.com</td>
-                                                                <td>
-                                                                    <div class="label label-table label-warning">Pending</div>
-                                                                </td>
-                                                                <td class="hidden-xs">
-                                                                    <!--Split Buttons Dropdown--> 
-                                                                    <!--===================================================-->
-                                                                    <div class="btn-group btn-group-xs">
-                                                                        <button class="btn btn-danger">Download</button>
-                                                                        <button class="btn btn-danger dropdown-toggle dropdown-toggle-icon" data-toggle="dropdown" type="button"> 
-                                                                        <i class="dropdown-caret fa fa-caret-down"></i> 
-                                                                        </button>
-                                                                        <ul class="dropdown-menu">
-                                                                            <li><a href="#">Action</a> </li>
-                                                                            <li><a href="#">Another action</a> </li>
-                                                                            <li><a href="#">Something else here</a> </li>
-                                                                            <li class="divider"></li>
-                                                                            <li><a href="#">Separated link</a> </li>
-                                                                        </ul>
-                                                                    </div>
-                                                                    <!--===================================================-->
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                    <!--===================================================--> 
-                                                    <!--End Hover Rows--> 
-                                                </div>
+                                                
                                             </div>
                                         </div>
                                         <!--===================================================--> 
@@ -1280,52 +949,52 @@
         <!--JAVASCRIPT-->
         <!--=================================================-->
         <!--jQuery [ REQUIRED ]-->
-        <script src="js/jquery-2.1.1.min.js"></script>
+        <script src="/resources/js/jquery-2.1.1.min.js"></script>
         <!--BootstrapJS [ RECOMMENDED ]-->
-        <script src="js/bootstrap.min.js"></script>
+        <script src="/resources/js/bootstrap.min.js"></script>
         <!--Fast Click [ OPTIONAL ]-->
-        <script src="plugins/fast-click/fastclick.min.js"></script>
+        <script src="/resources/plugins/fast-click/fastclick.min.js"></script>
         <!--Jquery Nano Scroller js [ REQUIRED ]-->
-        <script src="plugins/nanoscrollerjs/jquery.nanoscroller.min.js"></script>
+        <script src="/resources/plugins/nanoscrollerjs/jquery.nanoscroller.min.js"></script>
         <!--Metismenu js [ REQUIRED ]-->
-        <script src="plugins/metismenu/metismenu.min.js"></script>
+        <script src="/resources/plugins/metismenu/metismenu.min.js"></script>
         <!--Jasmine Admin [ RECOMMENDED ]-->
-        <script src="js/scripts.js"></script>
+        <script src="/resources/js/scripts.js"></script>
         <!--Switchery [ OPTIONAL ]-->
-        <script src="plugins/switchery/switchery.min.js"></script>
+        <script src="/resources/plugins/switchery/switchery.min.js"></script>
         <!--Jquery Steps [ OPTIONAL ]-->
-        <script src="plugins/parsley/parsley.min.js"></script>
+        <script src="/resources/plugins/parsley/parsley.min.js"></script>
         <!--Jquery Steps [ OPTIONAL ]-->
-        <script src="plugins/jquery-steps/jquery-steps.min.js"></script>
+        <script src="/resources/plugins/jquery-steps/jquery-steps.min.js"></script>
         <!--Bootstrap Select [ OPTIONAL ]-->
-        <script src="plugins/bootstrap-select/bootstrap-select.min.js"></script>
+        <script src="/resources/plugins/bootstrap-select/bootstrap-select.min.js"></script>
         <!--Bootstrap Wizard [ OPTIONAL ]-->
-        <script src="plugins/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
+        <script src="/resources/plugins/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
         <!--Masked Input [ OPTIONAL ]-->
-        <script src="plugins/masked-input/bootstrap-inputmask.min.js"></script>
+        <script src="/resources/plugins/masked-input/bootstrap-inputmask.min.js"></script>
         <!--Bootstrap Validator [ OPTIONAL ]-->
-        <script src="plugins/bootstrap-validator/bootstrapValidator.min.js"></script>
+        <script src="/resources/plugins/bootstrap-validator/bootstrapValidator.min.js"></script>
         <!--Flot Chart [ OPTIONAL ]-->
-        <script src="plugins/flot-charts/jquery.flot.min.js"></script>
-        <script src="plugins/flot-charts/jquery.flot.resize.min.js"></script>
-        <script src="plugins/flot-charts/jquery.flot.spline.js"></script>
-        <script src="plugins/moment/moment.min.js"></script>
-        <script src="plugins/moment-range/moment-range.js"></script>
-        <script src="plugins/flot-charts/jquery.flot.tooltip.min.js"></script>
+        <script src="/resources/plugins/flot-charts/jquery.flot.min.js"></script>
+        <script src="/resources/plugins/flot-charts/jquery.flot.resize.min.js"></script>
+        <script src="/resources/plugins/flot-charts/jquery.flot.spline.js"></script>
+        <script src="/resources/plugins/moment/moment.min.js"></script>
+        <script src="/resources/plugins/moment-range/moment-range.js"></script>
+        <script src="/resources/plugins/flot-charts/jquery.flot.tooltip.min.js"></script>
         <!--Flot Order Bars Chart [ OPTIONAL ]-->
-        <script src="plugins/flot-charts/jquery.flot.categories.js"></script>
+        <script src="/resources/plugins/flot-charts/jquery.flot.categories.js"></script>
         <!--Morris.js [ OPTIONAL ]-->
-        <script src="plugins/morris-js/morris.min.js"></script>
-        <script src="plugins/morris-js/raphael-js/raphael.min.js"></script>        
+        <script src="/resources/plugins/morris-js/morris.min.js"></script>
+        <script src="/resources/plugins/morris-js/raphael-js/raphael.min.js"></script>        
         <!--Easy Pie Chart [ OPTIONAL ]-->
-        <script src="plugins/easy-pie-chart/jquery.easypiechart.min.js"></script>
+        <script src="/resources/plugins/easy-pie-chart/jquery.easypiechart.min.js"></script>
         <!--Fullscreen jQuery [ OPTIONAL ]-->
-        <script src="plugins/screenfull/screenfull.js"></script>
+        <script src="/resources/plugins/screenfull/screenfull.js"></script>
         <!--Form Wizard [ SAMPLE ]-->
-        <script src="js/demo/index.js"></script>
+        <script src="/resources/js/demo/index.js"></script>
         <!--Form Wizard [ SAMPLE ]-->
-        <script src="js/demo/wizard.js"></script>
+        <script src="/resources/js/demo/wizard.js"></script>
         <!--Form Wizard [ SAMPLE ]-->
-        <script src="js/demo/form-wizard.js"></script>
+        <script src="/resources/js/demo/form-wizard.js"></script>
     </body>
 </html>

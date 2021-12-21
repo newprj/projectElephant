@@ -14,8 +14,9 @@
   </head>
   <script type="text/javascript">
 		$(document).ready(function(){
-			$("#submit").click(function(){
-				if($("#user_id").val()==""){
+			$("#submit").click(function(e){
+				
+				 if($("#user_id").val()==""){
 					alert("아이디를 입력해주세요.");
 					$("#user_id").focus();
 					return false;
@@ -29,8 +30,19 @@
 					alert("이름을 입력해주세요.");
 					$("#name").focus();
 					return false;
+				} 
+				
+				let res1 = $('.result .msg')[0].innerText
+				let res2 = $('.result2 .msg2')[0].innerText
+			 	if( res1 !== '사용 가능' || res2 !== "비밀번호 일치"){
+			 	
+			 		alert('아이디와 비밀번호를 확인하세요')
+					return false
 				}
+				
 			})
+			
+
 			$("#idCheck").click(function(){
 				var query = {user_id : $("#user_id").val()};
 				$.ajax({
@@ -41,17 +53,17 @@
 						if($("#user_id").val() == ""){
 							$(".result .msg").text("아이디를 입력해주세요")
 							$(".result .msg").attr("style", "color:#f00")
-							$("#submit").attr("disabled", "disabled")
+							
 						}
 						else if(data == 1){
 							$(".result .msg").text("아이디 중복")
 							$(".result .msg").attr("style", "color:#f00")
-							$("#submit").attr("disabled", "disabled")
+							
 						}
 						else{
 							$(".result .msg").text("사용 가능")
 							$(".result .msg").attr("style", "color:#00f")
-							$("#submit").removeAttr("disabled")
+							
 						}
 					}
 				})
@@ -59,35 +71,32 @@
 			$("#user_id").keyup(function(){
 				$(".result .msg").text("아이디를 확인해주세요")
 				$(".result .msg").attr("style", "color:#000")
-				$("#submit").attr("disabled", "disabled")
+				
 			})
 			$("#pwCheck").click(function(){
 				if($("#password2").val() != $("#password").val()){
 					$(".result2 .msg2").text("비밀번호가 일치하지 않습니다")
 					$(".result2 .msg2").attr("style", "color:#f00")
-					$("#submit").attr("disabled", "disabled")
+					
 				}
 				else{
 					$(".result2 .msg2").text("비밀번호 일치")
 					$(".result2 .msg2").attr("style", "color:#00f")
-					$("#submit").removeAttr("disabled")
 				}
 			})
 			$("#password").keyup(function(){
 				$(".result2 .msg2").text("비밀번호를 확인해주세요")
 				$(".result2 .msg2").attr("style", "color:#000")
-				$("#submit").attr("disabled", "disabled")
 			})
 			$("#password2").keyup(function(){
 				$(".result2 .msg2").text("비밀번호를 확인해주세요")
 				$(".result2 .msg2").attr("style", "color:#000")
-				$("#submit").attr("disabled", "disabled")
 			})
 		})
   </script>
   <body>
     <h4>회원등록</h4>
-      <form action="/user/register" method="post">
+      <form action="/user/register" method="post" class="register">
         <div class="form-group">
           <label for="user_id">아이디</label>
           <input type="text" class="form-control" name="user_id" id="user_id" />
@@ -116,7 +125,7 @@
           <label for="email">이메일</label>
           <input type="text" class="form-control" name="email" />
         </div>
-        <button class="btn btn-success" id="submit" disabled="disabled">가입</button>
+        <button class="btn btn-success" id="submit" >가입</button>
         <button class="btn btn-warning" type="button" onclick="location.href='login' ">취소</button>
         
       </form>

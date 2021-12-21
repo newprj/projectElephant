@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/core"
-prefix="c" %>
+prefix="c" %><%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %> 
 <!DOCTYPE html>
 <html>
 	<head>
@@ -39,6 +39,12 @@ prefix="c" %>
 			button[type="reset"]{
 				display : none;
 			}
+			 div.uploadResult > ul > li > div > img{
+			 	width: 50px;
+                height: 50px;
+                border-radius: 50%;
+			 }
+			 
 		</style>
 	</head>
 	<body>
@@ -57,6 +63,12 @@ prefix="c" %>
 				<label for="writer"> 저자 </label>
 				<input type="text" value="${board.writer}" />
 			</div>
+			${board.notice }
+			<div>
+			<fmt:formatDate value="${board.regdate}" pattern="yyyy MM dd" />
+			<br/> <fmt:formatDate value="${board.updateDate}" pattern="yyyy MM dd" />
+			<br>
+			</div>
 			<div>
 				<div class="content"> ${board.content} </div>	
 			
@@ -69,11 +81,18 @@ prefix="c" %>
 				</div>
 			</div>
 		</form>
-
+		
 		<h5>댓글</h5>
 		<div class="reply">
 			<c:forEach items="${replies}" var="reply">
-				<p class="reply" data-rno="${reply.rno}"><span > ${reply.reply} </span><span> ${reply.replyer}</span> <p>
+				<p class="reply" data-rno="${reply.rno}"><span > ${reply.reply} </span><span> ${reply.replyer}</span>
+				<span> 
+				<fmt:formatDate value="${reply.replydate}" pattern="yyyy MM dd" />
+				<c:if test="${reply.updateDate != null }">
+				수정일 : <fmt:formatDate value="${reply.updateDate}" pattern="yyyy MM dd" /> 
+				</c:if>
+				</span> <br/>
+				
 			</c:forEach>
 		</div>
 		<c:if test="${user eq board.writer}">
@@ -118,23 +137,18 @@ prefix="c" %>
 			   
 			   
 		   let loginUser= "${user}"
-		  	if(! loginUser){
-				console.log('로그인안됨')
-				alert("로그인 해야 접근 가능합니다")
-				location.href="/group/"
-			}else{
-				
+		  	
 				$.getJSON(
 					"/group/getMemberlistByGroup/${cri.group_name}", (list) =>{
 						console.log(list)
 						console.log(loginUser)
-						let joinCheck = list.find( user => user.user_id === loginUser)
+						let joinCheck = list.memberList.find( user => user.user_id === loginUser)
 						if(!joinCheck){
 							alert("그룹 회원만 접근 가능한 페이지입니다")
 							location.href="/group/"
 						} 
 					})
-			}
+			
 	   
 //			 let attachList = [];
 		
@@ -145,16 +159,12 @@ prefix="c" %>
 					files.map( file => {
 //						attachList.push(file) // 수정할때 넣음
 						if(file.fileType){
-							let fileCallpath = encodeURIComponent(
-									file.uploadPath + "/_s" + file.uuid + "_" + file.fileName
-								);
+							let fileCallpath = encodeURIComponent(`\${file.uploadPath}/\${file.uuid}_\${file.fileName}`)
 							str += `<li><div><a href='/download?fileName=\${fileCallpath}'><span>\${file.fileName}</span></a>`;
 							str += `<img src='/display?fileName=\${fileCallpath}'></div></li>`
 						}
 						else{
-							let fileCallpath = encodeURIComponent(
-									file.uploadPath + "/" + file.uuid + "_" + file.fileName
-								);
+							let fileCallpath =encodeURIComponent(`\${file.uploadPath}/\${file.uuid}_\${file.fileName}`)
 							str += `<li><div><a href='/download?fileName=\${fileCallpath}'><span>\${file.fileName}</span></a></div></li>`;
 						}
 					})//map
@@ -173,8 +183,9 @@ prefix="c" %>
 					type: "delete",
 					url: "/group/board/${cri.bno}",
 					success: () => {
-						location.href =
-							"/group/board/${cri.group_name}/${cri.pageNum}/${cri.amount}";
+						let url = "/group/board/${cri.group_name}/${cri.pageNum}/${cri.amount}"
+						url += "${cri.keyword}" ? "/${cri.type}/${cri.keyword}" : ""
+						location.href = url
 					},
 					error: (xhr, status, er) => {
 						console.log(status);
@@ -193,8 +204,11 @@ prefix="c" %>
 			// 목록 go 
 			$(".go_board").click((e) => {
 				e.preventDefault();
-				location.href =
-					"/group/board/${cri.group_name}/${cri.pageNum}/${cri.amount}";
+				
+				let url = "/group/board/${cri.group_name}/${cri.pageNum}/${cri.amount}"
+				url += "${cri.keyword}" ? "/${cri.type}/${cri.keyword}" : ""
+				location.href = url
+		
 			});
 			
 			// 리플폼 데이터 얻기
@@ -220,7 +234,6 @@ prefix="c" %>
 						$('button[type="reset"]').trigger("click");
 						$('.modal').hide();
 						location.reload()
-						/* $('div.reply').load(window.location.href + ' div.reply') */
 					},
 					error: (xhr, status, er) => console.log(xhr),
 				});
@@ -248,8 +261,10 @@ prefix="c" %>
 			// 글 수정하러가기
 			$(".go_modify").click(function (e) {
 				e.preventDefault();
-				location.href =
-					"/group/modify/${cri.group_name}/${cri.bno}/${cri.pageNum}/${cri.amount}";
+				let url = "/group/board/modify/${cri.group_name}/${cri.bno}/${cri.pageNum}/${cri.amount}"
+				url += "${cri.keyword}"? "/${cri.type}/${cri.keyword}" : ""
+				location.href = url
+				
 			}); //modify
 			
 			// 댓글 수정

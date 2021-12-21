@@ -8,17 +8,40 @@
 		<selectKey keyProperty="cno" order="BEFORE" resultType="long">
 			select seq_cno.nextval from dual
 		</selectKey>
-		insert into tbl_groupuser (cno, user_id, group_name)
-			values(#{cno}, #{user_id}, #{group_name})
+		insert into tbl_groupuser (cno, user_id, group_name, leader, authorized)
+			values(#{cno}, #{user_id}, #{group_name}, #{leader}, #{authorized, jdbcType=VARCHAR})
 	</insert>
 	
 	<select id="listByGroup" resultType="com.green.vo.GUserVO">
 		select * from tbl_groupuser where group_name= #{group_name}
 	</select>
 	
+	
 	<select id="listByUSer" resultType="com.green.vo.GUserVO">
 		select * from tbl_groupuser where user_id=#{user_id}
 	</select>
+	
+	
+	
+	<select id="read" resultType="com.green.vo.GUserVO">
+		select * from tbl_groupuser where group_name=#{group_name}
+	</select> 
+	
+	<update id="update">
+		update tbl_groupuser set authorized=#{authorized} where user_id=#{user_id} and group_name=#{group_name}
+	</update>
+	
+	<update id="remove">
+		update tbl_groupuser set authorized=#{authorized} where user_id=#{user_id}
+	</update>
+	
+	<delete id="delete">
+		delete from tbl_groupuser where user_id = #{user_id}
+	</delete> 
+	
+	<select id="memberLimit" resultType ="int">
+		select count(authorized) from tbl_groupuser where authorized = 'Y' and group_name = #{group_name}
+	</select>  
 	
 	
 </mapper>

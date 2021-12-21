@@ -73,14 +73,8 @@ public class MypageController {
 	@GetMapping("/admin")
 	public String adminHome(Model model, HttpServletResponse response,HttpSession session) {
 		UserVO login= (UserVO) session.getAttribute("user");
-		log.info("오늘 방문자"+session.getAttribute("todayCnt"));
-		log.info(""+ session.getAttribute("totalCnt"));
-		log.info("id="+login.getUser_id());
-		
-		log.info("admin page");
 		String id=login.getUser_id();
 		if(id==null || !(id.equals("admin"))) {
-			log.info("관리자가 아닌 접근");
 			response.setContentType("text/html; charset=UTF-8");
             PrintWriter out;
 			try {
@@ -100,12 +94,35 @@ public class MypageController {
 		model.addAttribute("week",visitService.weekCnt());
 		model.addAttribute("visit",visitService.todayCnt());
 		model.addAttribute("user",id);
-		model.addAttribute("list",userService.allList());
+		model.addAttribute("list",userService.allList());	//allUser로 넘김
 		model.addAttribute("group",gService.showAll());
 		model.addAttribute("qna",qnaService.list());
 		model.addAttribute("letter",letterService.myLetter(id));
 		model.addAttribute("sendletter",letterService.sendLetter(id));
 		return "/mypage/admin";
+	}
+	
+	@GetMapping("/allUser")
+	public String allUser(Model model,HttpServletResponse response,HttpSession session) {
+		UserVO login= (UserVO) session.getAttribute("user");
+		String id=login.getUser_id();
+		if(id==null || !(id.equals("admin"))) {
+			response.setContentType("text/html; charset=UTF-8");
+            PrintWriter out;
+			try {
+				out = response.getWriter();
+				out.println("<script>alert('관리자가 아닌 접근입니다.'); history.go(-1);</script>");
+	            out.flush();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+            
+			return "redirect:/user/login";
+		}
+		
+		model.addAttribute("user",id);
+		model.addAttribute("list",userService.allList());
+		return "/mypage/allUser";
 	}
 	
 	@ResponseBody

@@ -12,18 +12,18 @@
 <h1>후기 게시판 상세 페이지</h1>
 <body>
 	번호 : ${detail.rno}<br>
+	작성자 : ${detail.writer}<br>
 	모임명 : ${detail.group_name}<br>
 	제목 : ${detail.title}<br>
 	내용 : ${detail.content}<br>
-	작성자 : ${detail.writer}<br>
 	작성일 : <fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${detail.regdate}"/><br>
-	
 	첨부파일 : <c:forEach items="${attachFile}" var="attachFile">
-		 <a href="/upload/download?uuid=${attachFile.uuid}">${attachFile.fileName}</a> / 
+		[ <a href="/reviewUpload/download?uuid=${attachFile.uuid}">${attachFile.fileName}</a> ]
 	</c:forEach> <br>
 	<button type="button" id="modifyBtn">수정</button>
 	<button type="button" id="homeBtn">후기 홈으로</button>
 	<hr>
+	<input type="hidden" id="userCheck" value='${login}'>
 	<div class="container">
 		<label for="content">댓글</label>
 		<form name="replyInsertForm">
@@ -40,21 +40,29 @@
 	
 </body>
 <script type="text/javascript">
+	
+	var user = $('#userCheck').val()
 	var rno = '${detail.rno}'
 	
 	$('[name=replyInsertBtn]').click(function(){
 		var insertData = $('[name=replyInsertForm]').serialize();
 		replyInsert(insertData);
 	})
-	
 	$('#modifyBtn').click(function () {
 	    location.href = '/review/update?no='+${detail.rno}
     }) 
-    
+  
     $('#homeBtn').click(function () {
 	    location.href = '/review/list'
     }) 
-    	
+    
+    $('[name=content]').click(function(){
+    	if(user == "cantLogin"){
+			alert("로그인 후 이용해주세요")
+			return false;
+		}
+    })
+	
     	
 	function replyList(){
 		$.ajax({
