@@ -1,11 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core"
-prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<script  src="https://code.jquery.com/jquery-3.6.0.js"></script> 
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>마이 페이지</title>
-        <link rel="shortcut icon" href="#">
+prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %> 
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+<jsp:useBean id="today" class="java.util.Date" />
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title> admin page</title>
+        <link rel="shortcut icon" href="/resources/img/favicon.ico">
         <!--STYLESHEET-->
         <!--=================================================-->
         <!--Roboto Slab Font [ OPTIONAL ] -->
@@ -30,9 +33,13 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
         <script src="/resources/plugins/pace/pace.min.js"></script>
 <!DOCTYPE html>
 <html>
+<head>
+<meta charset="UTF-8">
 <style>
 
-.letter_modal {
+
+
+.modal,.letter_modal {
 	display:none;
 	position: fixed;
 	z-index: 1;
@@ -55,16 +62,13 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 }
 
 
-
-
 </style>
-<head>
+<title>관리자 페이지</title>
 
-<meta charset="UTF-8">
-<title>마이페이지</title>
 </head>
 <body>
-<div id="container" class="effect mainnav-full">
+	
+	<div id="container" class="effect mainnav-full">
 
     <!--NAVBAR 해더-->
     <!--===================================================-->
@@ -77,13 +81,10 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
                 <!--코끼리 아이콘 넣기-->
                     <i class="fa fa-cube brand-icon"></i>
                     <div class="brand-title">
-                        <span class="brand-text">${user.name}님 page</span>
+                        <span class="brand-text">관리자 페이지</span>
                     </div>
                 </a>
             </div>
-            <!--================================-->
-            <!--End brand logo & name-->
-            <!--Navbar Dropdown-->
             <!--==========메시지 알림 아이콘======================-->
             <div class="navbar-content clearfix">
                 <ul class="nav navbar-top-links pull-left">
@@ -327,10 +328,13 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
                             </ul>
                             <!-- end dropdown-menu -->
                         </li>
+                        <li>
+                            <a href="calendar.html"> Users </a>
+                        </li>
                         <!-- end standard drop down -->
                         <!-- standard drop down -->
                         <li class="dropdown">
-                            <a href="#" data-toggle="dropdown" class="dropdown-toggle"> Q&A <b class="caret"></b></a>
+                            <a href="#" data-toggle="dropdown" class="dropdown-toggle"> Group <b class="caret"></b></a>
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="ui-animation.html"> CSS3 Animation </a></li>
                                 <li><a href="ui-panel.html">Panel </a></li>
@@ -352,7 +356,7 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
                         <!-- end standard drop down -->
                         <!-- standard drop down -->
                         <li class="dropdown">
-                            <a href="#" data-toggle="dropdown" class="dropdown-toggle"> group <b class="caret"></b></a>
+                            <a href="#" data-toggle="dropdown" class="dropdown-toggle"> Q&A <b class="caret"></b></a>
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="pages-faq.html"> FAQ </a></li>
                                 <li><a href="pages-gallery.html"> Gallery </a></li>
@@ -369,12 +373,12 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
                             <!-- end dropdown-menu -->
                         </li>
                         <!-- end standard drop down -->
-                                                     <!-- standard drop down -->
                         
                         <!-- standard drop down -->
                         <li>
                             <a href="calendar.html"> Calendar </a>
                         </li>
+                        
                         <!-- end standard drop down -->
                        
                     </ul>
@@ -386,324 +390,222 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
         </div>
     </header>
     
-    
-    <!--===================================================-->
-    <!--END NAVBAR-->
-	
-	
-	<nav>
-		<h4 style='float:right;'><a href="/group/">스터디</a></h4>
-		<h4 style='float:right;'><a href="/qna/list">Q&A</a></h4>
-		<h4 style='float:right;'><a href="/user/logout">로그아웃</a></h4>
-	</nav>
-	
-	<!--=====================내용==============================-->
-	<div class="pageheader">
-         <h3><i class="fa fa-home"></i> Dashboard </h3>
-         <div class="breadcrumb-wrapper">
-             <span class="label">You are here:</span>
-             <ol class="breadcrumb">
-                 <li> <a href="#"> Home </a> </li>
-                 <li class="active"> Dashboard </li>
-             </ol>
-         </div>
-     </div>
-	<div id="page-content">
-		<div class="row">
-           <div class="col-md-3 col-sm-6 col-xs-12">
-               <div class="panel">
-                   <div class="panel-body">
-                       <div class="row">
-                           <div class="col-md-9 col-sm-9 col-xs-10">
-                               <h3 class="mar-no"> <span class="counter">내가 가입한 그룹</span></h3>
-                               <p class="mar-ver-5"> Traffic this month </p>
+	<div id="content-container">
+       <div id="profilebody">
+           <div class="pad-all animated fadeInDown">
+               <div class="row">
+                   <div class="col-lg-2 col-sm-6 col-md-6 col-xs-12">
+                       <div class="panel panel-default mar-no">
+                           <div class="panel-body">
+                               <a href="JavaScript:void(0);">
+                                   <div class="pull-left">
+                                       <p class="profile-title text-bricky">Users</p>
+                                   </div>
+                                   <div class="pull-right text-bricky"> <i class="fa fa-users fa-4x"></i> </div>
+                               </a>
                            </div>
-                           <div class="col-md-3 col-sm-3 col-xs-2"> <i class="fa fa-shopping-cart fa-3x text-info"></i> </div>
                        </div>
-                       <div class="progress progress-striped progress-sm">
-                           <div style="width: 60%;" aria-valuemax="100" aria-valuemin="0" aria-valuenow="60" role="progressbar" class="progress-bar"> <span class="sr-only">60% Complete</span> </div>
-                       </div>
-                       <p> 4% higher than last month </p>
                    </div>
-               </div>
-           </div>
-           <div class="col-md-3 col-sm-6 col-xs-12">
-               <div class="panel">
-                   <div class="panel-body">
-                       <div class="row">
-                           <div class="col-md-9 col-sm-9 col-xs-10">
-                               <h3 class="mar-no"> <span class="counter">내 게시물</span></h3>
-                               <p class="mar-ver-5">Server Load</p>
+                   <div class="col-lg-2 col-sm-6 col-md-6 col-xs-12">
+                       <div class="panel panel-default mar-no">
+                           <div class="panel-body">
+                               <a href="JavaScript:void(0);">
+                                   <div class="pull-left">
+                                       <p class="profile-title text-bricky">Inbox</p>
+                                   </div>
+                                   <div class="pull-right text-bricky"> <i class="fa fa-envelope fa-4x"></i> </div>
+                               </a>
                            </div>
-                           <div class="col-md-3 col-sm-3 col-xs-2"> <i class="fa fa-envelope fa-3x text-danger"></i> </div>
                        </div>
-                       <div class="progress progress-striped progress-sm">
-                           <div style="width: 60%;" aria-valuemax="100" aria-valuemin="0" aria-valuenow="60" role="progressbar" class="progress-bar progress-bar-danger"> <span class="sr-only">60% Complete</span> </div>
-                       </div>
-                       <p> 4% higher than last month </p>
                    </div>
-               </div>
-           </div>
-           <div class="col-md-3 col-sm-6 col-xs-12">
-               <div class="panel widget">
-                   <div class="panel-body">
-                       <div class="row">
-                           <div class="col-md-9 col-sm-9 col-xs-10">
-                               <h3 class="mar-no"> <span class="counter">내 댓글</span></h3>
-                               <p class="mar-ver-5"> Total Sales </p>
+                   <div class="col-lg-2 col-sm-6 col-md-6 col-xs-12">
+                       <div class="panel panel-default mar-no">
+                           <div class="panel-body">
+                               <a href="JavaScript:void(0);">
+                                   <div class="pull-left">
+                                       <p class="profile-title text-bricky">FAQ</p>
+                                   </div>
+                                   <div class="pull-right text-bricky"> <i class="fa fa-headphones fa-4x"></i> </div>
+                               </a>
                            </div>
-                           <div class="col-md-3 col-sm-3 col-xs-2"> <i class="fa fa-users fa-3x text-success"></i> </div>
                        </div>
-                       <div class="progress progress-striped progress-sm">
-                           <div style="width: 60%;" aria-valuemax="100" aria-valuemin="0" aria-valuenow="60" role="progressbar" class="progress-bar progress-bar-success"> <span class="sr-only">60% Complete</span> </div>
+                   </div>
+                   <div class="col-lg-2 col-sm-6 col-md-6 col-xs-12">
+                       <div class="panel panel-default mar-no">
+                           <div class="panel-body">
+                               <a href="JavaScript:void(0);">
+                                   <div class="pull-left">
+                                       <p class="profile-title text-bricky">Settings</p>
+                                   </div>
+                                   <div class="pull-right text-bricky"> <i class="fa fa-cogs fa-4x"></i> </div>
+                               </a>
+                           </div>
                        </div>
-                       <p> 4% higher than last month </p>
+                   </div>
+                   <div class="col-lg-2 col-sm-6 col-md-6 col-xs-12">
+                       <div class="panel panel-default mar-no">
+                           <div class="panel-body">
+                               <a href="JavaScript:void(0);">
+                                   <div class="pull-left">
+                                       <p class="profile-title text-bricky">Calender</p>
+                                   </div>
+                                   <div class="pull-right text-bricky"> <i class="fa fa-calendar fa-4x"></i> </div>
+                               </a>
+                           </div>
+                       </div>
+                   </div>
+                   <div class="col-lg-2 col-sm-6 col-md-6 col-xs-12">
+                       <div class="panel panel-default mar-no">
+                           <div class="panel-body">
+                               <a href="JavaScript:void(0);">
+                                   <div class="pull-left">
+                                       <p class="profile-title text-bricky">Pictures</p>
+                                   </div>
+                                   <div class="pull-right text-bricky"> <i class="fa fa-picture-o fa-4x"></i> </div>
+                               </a>
+                           </div>
+                       </div>
                    </div>
                </div>
            </div>
        </div>
+      <div class="pageheader">
+          <h3><i class="fa fa-home"></i> Directory </h3>
+          <div class="breadcrumb-wrapper">
+              <span class="label">You are here:</span>
+              <ol class="breadcrumb">
+                  <li> <a href="#"> Home </a> </li>
+                  <li class="active"> Directory </li>
+              </ol>
+          </div>
+      </div>
+     
+       <div id="page-content">
+           <div class="well">
+               <div class="row">
+                   <div class="col-sm-9">
+                       <input placeholder="Who are you looking for?" class="form-control" type="text">
+                   </div>
+                   <div class="col-sm-3">
+                       <div class="form-group nm">
+                           <select class="form-control" id="source">
+                               <option value="Name">Full Name</option>
+                              <option value="position">Position</option>
+                               <option value="company">Company</option>
+                           </select>
+                       </div>
+                   </div>
+               </div>
+           </div>
+           
+           <div class="row" >
+         		<c:forEach items="${list}" var="i" varStatus="status" >
+               <div class="col-md-3"  style="float:left;" >
+                   <div class="panel panel-default" >
+                       <div class="panel-body np">
+                           <img src="/resources/img/photos/big-user-image.jpg" alt="Cover" class="img-responsive">
+                           <div class="text-center pad-btm">
+                               <!-- panel body -->
+                               <h3>${i.name}</h3>
+                           </div>
+                           <ul class="menu-items">
+                               <li>
+                                   <a href="javascript:void(0)" class="clearfix">
+                                   <i class="fa fa-bell-o fa-lg"></i> New notifications ?
+                                   <span class="label label-danger label-circle pull-right">82</span>
+                                   </a>
+                               </li>
+                               <li>
+                                   <a href="javascript:void(0)" class="clearfix">
+                                   <i class="fa fa-user fa-lg"></i> profile
+                                   <span class="label label-success label-circle pull-right">13</span>
+                                   </a>
+                               </li>
+                               <li>
+                                   <a href="javascript:void(0)" class="susp">
+                                   <i class="fa fa-calendar fa-lg"></i> status
+                                   <span class="label label-warning label-circle pull-right">
+                                   <c:choose>
+										<c:when test="${i.suspension eq 'Y'}">정지</c:when>
+										<c:otherwise>활동중</c:otherwise>
+									</c:choose>	
+                                   </span>
+                                   </a>
+                               </li>
+                               <li>
+                                   <a href="javascript:void(0)" class="letterBtn">
+                                   <i class="fa fa-envelope fa-lg"></i> message
+                                   </a>
+                               </li>
+                           </ul>
+                       </div>
+                   </div>
+               </div>
+          		</c:forEach>
+           </div>
+         </div>
+       </div>
+    
+    <footer id="footer">
+        <!-- Visible when footer positions are fixed -->
+        <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+        <div class="show-fixed pull-right">
+            <ul class="footer-list list-inline">
+                <li>
+                    <p class="text-sm">SEO Proggres</p>
+                    <div class="progress progress-sm progress-light-base">
+                        <div style="width: 80%" class="progress-bar progress-bar-danger"></div>
+                    </div>
+                </li>
+                <li>
+                    <p class="text-sm">Online Tutorial</p>
+                    <div class="progress progress-sm progress-light-base">
+                        <div style="width: 80%" class="progress-bar progress-bar-primary"></div>
+                    </div>
+                </li>
+                <li>
+                    <button class="btn btn-sm btn-dark btn-active-success">Checkout</button>
+                </li>
+            </ul>
+        </div>
+        <div class="hide-fixed pull-right pad-rgt">Currently v2.2</div>
+        <p class="pad-lft">&#0169; 2015 Your Company</p>
+    </footer>
+    <button id="scroll-top" class="btn"><i class="fa fa-chevron-up"></i></button>
+ </div>
+	
+	
+	
+	<!-- 유저 정지 모달 -->
+	<div class="modal" id="modal" >
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" style='float:right;'>X</button>
+					<h4 class="modal-title">유저 정지 </h4>
+				</div>
+				<div class="modal-body">
+					<div class="modal-group">
+						<label>ID</label><br/>
+						<input name="modelId"/>
+					</div>
+					<div class="modal-group">
+						<label>이유</label><br/>
+						<textarea name="modalContent"></textarea>
+						
+					</div>
+					<div class="modal-group">
+						<label>날짜</label><br/>
+						<input name="modalDate"/>
+					</div>
+				</div><br/>
+				<div class="modal-footer">
+					<button type="button" id="register">등록</button>
+					<button type="button" class="close">닫기</button>
+				</div>
+				
+		</div>
 	</div>
 	
-	<div id="division">
-		<h2 id="title">내가 가입한 그룹</h2>
-		<table>
-			<thead>
-				<tr>
-				  <th>no.</th>
-				  <th>그룹이름</th>
-				  <th>승인</th>
-	              <th></th>
-				</tr>
-			</thead>
-			<tbody id="groupBody">
-				<c:forEach items="${myGroup}" var="i" varStatus="status"  begin="0" end='9'>
-						<tr>
-							<td>${status.count}</td>
-							<td>${i.group_name}</td>
-							<td>${i.authorized}</td>
-							<td></td>
-						</tr>
-				</c:forEach>
-			</tbody>
-		</table>
-	</div>
-	
-	
-	
-	<div id="division">
-		<h2 id="title">내정보</h2>
-		<button onclick="location='/user/modify'">정보 수정</button>
-		<table>
-			<thead>
-				<tr>
-				  <th>아이디</th>
-	              <th>이름</th>
-	              <th>이메일</th>
-	              <th>가입일</th>
-				</tr>
-			</thead>
-				<tr>
-					<td>${user.user_id}</td>
-					<td >${user.name}</td>
-					<td>${user.email}</td>
-					<td></td>
-				</tr>
-		</table>
-	</div>
-	
-	
-	<div id="division">
-		<h2 id="title">내 게시물</h2>
-		<ul>
-			<li>
-				스터디
-				<table>
-					<thead>
-						<tr>
-						  <th>no.</th>
-						  <th>그룹 이름</th>
-						  <th>제목</th>
-			              <th>날짜</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>${status.count}</td>
-							<td>${i.group_name}</td>
-							<td>${i.title}</td>
-							<td><fmt:formatDate value="${i.regdate}" pattern="yyyy-MM-dd a hh:mm" /></td>
-						</tr>
-					</tbody>
-				</table>
-			</li>
-			<li>
-				스터디 게시물
-				<table>
-					<thead>
-						<tr>
-						  <th>no.</th>
-						  <th>그룹 이름</th>
-						  <th>제목</th>
-			              <th>날짜</th>
-						</tr>
-					</thead>
-					<c:forEach items="${myBoard}" var="i" varStatus="status"  begin="0" end='9'>
-						<tr>
-							<td>${status.count}</td>
-							<td>${i.group_name}</td>
-							<td>${i.title}</td>
-							<td><fmt:formatDate value="${i.regdate}" pattern="yyyy-MM-dd a hh:mm" /></td>
-						</tr>
-					</c:forEach>
-				</table>
-			</li>
-			<li>
-				Q&A 게시물
-				<table>
-					<thead>
-						<tr>
-						  <th>no.</th>
-						  <th>Q&A 제목</th>
-			              <th>날짜</th>
-						</tr>
-					</thead>
-					<c:forEach items="${myqna}" var="i" varStatus="status"  begin="0" end='9'>
-						<tr>
-							<td>${status.count}</td>
-							<td><a href="/qna/detail?qno=${i.qno}">${i.title}</a></td>
-							<td><fmt:formatDate value="${i.reg_date}" pattern="yyyy-MM-dd a hh:mm" /></td>
-						</tr>
-					</c:forEach>
-				</table>
-			</li>
-		</ul>
-	
-	</div>
-	
-	<div id="division">
-		<h2 id="title">내 댓글</h2>
-		<ul>
-			<li>
-				<table id="boardReply">
-					<thead>
-						<tr>
-						  <th>no.</th>
-						  <th>댓글</th>
-			              <th>날짜</th>
-						</tr>
-					</thead>
-					<c:forEach items="${boardReply}" var="i" varStatus="status"  begin="0" end='9'>
-						<tr>
-							<td>${status.count}</td>
-							<td>${i.reply}</td>
-							<td><fmt:formatDate value="${i.replydate}" pattern="yyyy-MM-dd a hh:mm" /></td>
-						</tr>
-					</c:forEach>
-				</table>
-			</li>
-			
-			<li>
-				<table id="qnaReply">
-					<thead>
-						<tr>
-						  <th>no.</th>
-						  <th>댓글</th>
-			              <th>날짜</th>
-						</tr>
-					</thead>
-					<c:forEach items="${qnaReply}" var="i" varStatus="status"  begin="0" end='9'>
-						<tr>
-							<td>${status.count}</td>
-							<td><a href="/qna/detail?qno=${i.qno}">${i.r_content}</a></td>
-							<td><fmt:formatDate value="${i.r_reg_date}" pattern="yyyy-MM-dd a hh:mm" /></td>
-						</tr>
-					</c:forEach>
-				</table>
-			</li>
-		</ul>
-	</div>
-	
-	<div class="row">
-    	<div class="col-lg-12">
-	        <div class="panel">
-	            <div class="panel-heading">
-	                <h3 class="panel-title">Letter</h3>
-	            </div>
-	            <div class="panel-body">
-	                <div class="tab-base">
-	                    <ul class="nav nav-tabs">
-	                        <li class="active"> <a data-toggle="tab" href="#demo-lft-tab-1"> 받은 쪽지 </a> </li>
-	                        <li> <a data-toggle="tab" href="#demo-lft-tab-2">보낸 쪽지</a> </li>
-	                        <li><a data-toggle="tab" class="letterBtn" >쪽지 보내기</a></li>
-	                    </ul>
-	                    <!--Tabs Content-->
-	                    <div class="tab-content">
-	                        <div id="demo-lft-tab-1" class="tab-pane fade active in">
-	                        	<table class="table table-hover table-vcenter">
-	                            	<thead>
-	                                	<tr>
-	                                    	<th>no.</th>
-											<th>보낸 id</th>
-											<th>내용</th>
-									         <th>날짜</th>
-									         <th></th>
-	                                   </tr>
-	                                </thead>
-	                                <tbody>
-	                                	<c:forEach items="${letter}" var="i" varStatus="status"  begin="0" end='9'>
-											<tr>
-												<td>${status.count}</td>
-												<td id='userId${status.index}'>${i.writer}</td>
-												<td>${i.content}</td>
-												<td><fmt:formatDate value="${i.reg_date}" pattern="yyyy-MM-dd a hh:mm" /></td>
-												<td><button class='letterBtn'>답장</button></td>
-											</tr>
-										</c:forEach>
-	                               </tbody>
-	                            </table>
-	                            <!--===================================================--> 
-	                            <!--End Hover Rows--> 
-	                        </div>
-	                        <div id="demo-lft-tab-2" class="tab-pane fade">
-	                        	<table id="demo-foo-filtering" class="table table-bordered table-hover toggle-circle" data-page-size="7">
-	                            	<thead>
-	                                	<tr>
-	                                    	<th>no.</th>
-											<th>받는 id</th>
-											<th>내용</th>
-									         <th>날짜</th>
-									         <th></th>
-	                                    </tr>
-	                                </thead>
-	                            	<tbody>
-	                                	<c:forEach items="${sendletter}" var="i" varStatus="status"  begin="0" end='9'>
-											<tr>
-												<td>${status.count}</td>
-												<td>${i.recipient}</td>
-												<td>${i.content}</td>
-												<td><fmt:formatDate value="${i.reg_date}" pattern="yyyy-MM-dd a hh:mm" /></td>
-												<td><button data-lno='${i.lno}' class='deleLetter'>삭제</button></td>
-											</tr>
-										</c:forEach>
-	                                </tbody>
-	                                <tfoot>
-	                                    <tr>
-	                                        <td colspan="5">
-	                                            <div class="text-right">
-	                                                <ul class="pagination"></ul>
-	                                            </div>
-	                                        </td>
-	                                    </tr>
-	                                </tfoot>
-	                            </table>
-	                        </div>
-	                    </div>
-	                </div>
-	            </div>
-	        </div>
-    	</div>
-	</div>
-
 	<!-- 쪽지 모달 -->
 	<div class="letter_modal" id="letter_modal" >
 			<div class="modal-content">
@@ -737,10 +639,8 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 				
 		</div>
 	</div>
-</div>
-	 <!--=================================================-->
-        <!--jQuery [ REQUIRED ]-->
-        <script src="/resources/js/jquery-2.1.1.min.js"></script>
+
+	 <script src="/resources/js/jquery-2.1.1.min.js"></script>
         <!--BootstrapJS [ RECOMMENDED ]-->
         <script src="/resources/js/bootstrap.min.js"></script>
         <!--Fast Click [ OPTIONAL ]-->
@@ -753,52 +653,71 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
         <script src="/resources/js/scripts.js"></script>
         <!--Switchery [ OPTIONAL ]-->
         <script src="/resources/plugins/switchery/switchery.min.js"></script>
-        <!--Jquery Steps [ OPTIONAL ]-->
-        <script src="/resources/plugins/parsley/parsley.min.js"></script>
-        <!--Jquery Steps [ OPTIONAL ]-->
-        <script src="/resources/plugins/jquery-steps/jquery-steps.min.js"></script>
         <!--Bootstrap Select [ OPTIONAL ]-->
         <script src="/resources/plugins/bootstrap-select/bootstrap-select.min.js"></script>
-        <!--Bootstrap Wizard [ OPTIONAL ]-->
-        <script src="/resources/plugins/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
-        <!--Masked Input [ OPTIONAL ]-->
-        <script src="/resources/plugins/masked-input/bootstrap-inputmask.min.js"></script>
-        <!--Bootstrap Validator [ OPTIONAL ]-->
-        <script src="/resources/plugins/bootstrap-validator/bootstrapValidator.min.js"></script>
-        <!--Flot Chart [ OPTIONAL ]-->
-        <script src="/resources/plugins/flot-charts/jquery.flot.min.js"></script>
-        <script src="/resources/plugins/flot-charts/jquery.flot.resize.min.js"></script>
-        <script src="/resources/plugins/flot-charts/jquery.flot.spline.js"></script>
-        <script src="/resources/plugins/moment/moment.min.js"></script>
-        <script src="/resources/plugins/moment-range/moment-range.js"></script>
-        <script src="/resources/plugins/flot-charts/jquery.flot.tooltip.min.js"></script>
-        <!--Flot Order Bars Chart [ OPTIONAL ]-->
-        <script src="/resources/plugins/flot-charts/jquery.flot.categories.js"></script>
-        <!--Morris.js [ OPTIONAL ]-->
-        <script src="/resources/plugins/morris-js/morris.min.js"></script>
-        <script src="/resources/plugins/morris-js/raphael-js/raphael.min.js"></script>        
-        <!--Easy Pie Chart [ OPTIONAL ]-->
-        <script src="/resources/plugins/easy-pie-chart/jquery.easypiechart.min.js"></script>
         <!--Fullscreen jQuery [ OPTIONAL ]-->
         <script src="/resources/plugins/screenfull/screenfull.js"></script>
-        <!--Form Wizard [ SAMPLE ]-->
-        <script src="/resources/js/demo/index.js"></script>
-        <!--Form Wizard [ SAMPLE ]-->
-        <script src="/resources/js/demo/wizard.js"></script>
-        <!--Form Wizard [ SAMPLE ]-->
-        <script src="/resources/js/demo/form-wizard.js"></script>
 </body>
- <script>
- 	$(document).ready(function () {
- 		
- 		if('${user}'==null){
- 			alert("로그인 후 이용하세요")
- 			location.href="/user/login";
- 		}
- 		
- 		/* 쪽지 */
- 		var today=new Date()
- 		
+<script type="text/javascript">
+	
+	$(document).ready(function () {
+		
+				
+		var modal=$(".modal")
+		var modalContent=modal.find("textarea[name='modalContent']")
+		var modalId=modal.find("input[name='modelId']")
+		var modalDate=modal.find("input[name='modalDate']")
+		var today=new Date()
+		
+		/* 회원정지 */
+		$(".susp").click(function(){
+			console.log('회원정지 버튼 눌림')
+			modalDate.closest('div').hide()
+			$(".modal").show()
+			var idx=$(".susp").index(this)
+			var uid=$("#userId"+idx).text()
+			modalId.val(uid)
+			
+			var suspension=''
+			if($(this).text().trim()=='정지'){
+				suspension='N'
+				$("#register").text("정지 해제")
+			}
+			else if (($(this).text().trim()=='활동중')) {
+				suspension='Y'
+				$("#register").text("정지")
+			}
+			
+			$("#register").off('click').on('click',function(){
+				
+				var form={
+						user_id:modalId.val(),
+						suspension:suspension,
+						suspContent:modalContent.val(),
+						suspDate:today,
+				}
+				console.log(form)
+				$.ajax({
+					url:"/mypage/susp",
+					type:"post",
+					data:JSON.stringify(form),
+					contentType:"application/json; charset=utf-8",
+					dataType:"text",
+					success:function(result){
+						$("#modal").hide();
+						location.reload();
+					},
+					error:function(){
+						alert("실패")
+					}
+				}) 
+			})
+		})
+		
+		
+		
+		
+		/* 쪽지 */
 		var letterModal=$(".letter_modal")
 		var modalwriteId=letterModal.find("input[name='writeId']")
 		var modalrecipientId=letterModal.find("input[name='recipientId']")
@@ -810,13 +729,11 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 			
 			letterDate.closest('div').hide()
 			$(".letter_modal").show()
-			var idx=$(".letterBtn").index(this)
+			var idx=$(this).data("idx")
 			var uid=$("#userId"+idx).text()
 			
-			console.log(idx)
-			console.log('${user.user_id}')
 			
-			modalwriteId.val('${user.user_id}')
+			modalwriteId.val('${user}')
 			modalrecipientId.val(uid)
 						
 			$("#letterRegister").off('click').on('click',function(){
@@ -847,6 +764,7 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 		
 		
 		$(".close").click(function(){
+			$(".modal").hide()
 			$(".letter_modal").hide()
 			
 		})
@@ -861,32 +779,30 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 			$("#"+tab_id).addClass('current');
 		})
 		
-		
 		$(".deleLetter").click(function(){
+			console.log("삭제버튼 눌림")
 			var lno=$(this).data('lno')
 			var data={
-		 			lno:lno,
-					writer:'${user.user_id}'
-				}
-		 		console.log(data)
+					lno:lno,
+					writer:'${user}'
+			}
+			console.log(data)
 			$.ajax({
 				url:"/mypage/deleLetter",
 				type:"post",
 				data:JSON.stringify(data),
 				contentType:"application/json; charset=utf-8",
 				success:function(){
-					alert("성공")
 					location.reload();
 				},
 				error:function(){
 					alert("실패")
 				}
 			}) 
-		})//ajax
+		})
 		
 		
-		
+	})
 
- 	 })	
 </script>
 </html>
