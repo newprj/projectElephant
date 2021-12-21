@@ -100,12 +100,18 @@ public class MypageController {
 		model.addAttribute("week",visitService.weekCnt());
 		model.addAttribute("visit",visitService.todayCnt());
 		model.addAttribute("user",id);
-		model.addAttribute("list",userService.allList());
+		model.addAttribute("list",userService.allList());	//allUser로 넘김
 		model.addAttribute("group",gService.showAll());
 		model.addAttribute("qna",qnaService.list());
 		model.addAttribute("letter",letterService.myLetter(id));
 		model.addAttribute("sendletter",letterService.sendLetter(id));
 		return "/mypage/admin";
+	}
+	
+	@GetMapping("/allUser")
+	public String allUser(Model model) {
+		model.addAttribute("list",userService.allList());
+		return "/mypage/allUser";
 	}
 	
 	@ResponseBody
