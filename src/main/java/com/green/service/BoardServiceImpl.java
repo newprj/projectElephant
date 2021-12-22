@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.green.mapper.BoardMapper;
 import com.green.mapper.FileMapper;
@@ -93,11 +94,16 @@ public class BoardServiceImpl implements BoardService{
 		return modifyResult;
 	}
 
+	@Transactional
 	@Override
 	public int delete(Long bno) {
 		// TODO Auto-generated method stub
 		fileMapper.deleteAllByBno(bno);
+<<<<<<< HEAD
 		
+=======
+		replyMapper.deleteReplyByBno(bno);
+>>>>>>> 42c0288bda6bf3deba49031f6483fccc5410a286
 		return mapper.delete(bno);
 	}
 
