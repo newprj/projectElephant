@@ -18,8 +18,7 @@ prefix="c" %>
       align-items: center;
       padding: 50px 0;
     }
-      div.wrapper{
-      
+    div.wrapper{ 
   		width : 85%;
   		height :90%;
       background-color: white;

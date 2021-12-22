@@ -72,7 +72,7 @@ public class MapperTestForDummyData {
 		});
 	}
 	
-	//그룹 생성 =>  20번까지 승인함(오라클)
+	//그룹 생성
 //	@Test
 	public void makeGroup() {
 		String [] subject = {"코딩", "그림", "공부", "맛집", "피아노", "독서", "공연", "운동", "요가"};
@@ -94,8 +94,7 @@ public class MapperTestForDummyData {
 			gUserVO.setLeader("Y");
 			guMapper.groupSignUp(gUserVO);
 		});
-		
-		//30번까지 
+
 		
 	}
 	
@@ -108,7 +107,7 @@ public class MapperTestForDummyData {
 		});
 	}
 	
-	//지원하기 => 오라클에서 적당히 승인
+	//지원하기
 //	@Test
 	public void groupSignUP() {
 		

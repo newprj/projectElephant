@@ -43,6 +43,7 @@ import lombok.extern.slf4j.Slf4j;
 
 
 
+
 @RestController
 @RequestMapping("/group/*")
 @Slf4j
@@ -281,7 +282,13 @@ public class GRestController {
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
-
+		try {
+			List<BoardVO> notice = boardService.showList(cri.getGroup_name())
+					.stream().filter(i -> i.getNotice()=='Y').collect(Collectors.toList());
+			mv.addObject("notice", notice);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 		
 		return mv;
 	}
