@@ -29,11 +29,7 @@ pageEncoding="UTF-8"%>
 
 
 		<style>
-			div.uploadResult > ul > li > div > img {
-				width: 50px;
-				height: 50px;
-				border-radius: 50%;
-			}
+			
 			body {
 				background-color: #f6f9fc;
 				font-family: "Noto Sans KR", sans-serif, -apple-system,
@@ -91,6 +87,11 @@ pageEncoding="UTF-8"%>
 			}
 			.fileBtn{
 				cursor: pointer;
+			}
+			div.uploadResult > ul > li > div > img {
+				width: 50px;
+				height: 50px;
+				border-radius: 50%;
 			}
 		</style>
 	</head>

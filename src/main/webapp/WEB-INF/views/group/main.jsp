@@ -45,6 +45,7 @@ prefix="c" %>
 		<style>
 			html,
 			body {
+				background-color: #f6f9fc;
 				padding: 20px 0;
 				width: 100%;
 				height: 100%;
@@ -65,6 +66,12 @@ prefix="c" %>
 				font-size: 0;
 				text-align: center;
 				list-style: none;
+				background-color: white;
+				box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11),
+					0 1px 3px rgba(0, 0, 0, 0.08);
+				overflow-x: hidden;
+				overflow-y: auto;
+        padding-bottom: 3rem;
 			}
 
 			.group {
@@ -222,23 +229,22 @@ prefix="c" %>
 				<button>create</button>
 			</a>
 		</c:if>
-	<div class="porto-bg-eleven common-pad">
-	<article class="text-left ">
-		<div id="filter" class="clearfix">
-			<div id="filter_wrapper">
-				<ul id="portfolioFilter">
-					<li class="active"> <span data-sort="recent" class="current"> 최신순 </span></a></li>
-					<li class="separator" >/</li>
-					<li><span data-sort="pop" > 지원자 많은 순 </span></li>
-					<li class="separator" >/</li>
-					<li><span data-sort="complete"> 모집이 완료된 그룹 </span></li>
-				</ul>
-			</div>
+	
+		<div class="porto-bg-eleven common-pad">
+			<article class="text-left ">
+				<div id="filter" class="clearfix">
+					<div id="filter_wrapper">
+						<ul id="portfolioFilter">
+							<li class="active"> <span data-sort="recent" class="current"> 최신순 </span></a></li>
+							<li class="separator" >/</li>
+							<li><span data-sort="pop" > 지원자 많은 순 </span></li>
+							<li class="separator" >/</li>
+							<li><span data-sort="complete"> 모집이 완료된 그룹 </span></li>
+						</ul>
+					</div>
+				</div>
+			</article>
 		</div>
-	</article>
-</div>
-		
-
 			<ul class="group-list">
 				<c:forEach items="${group}" var="group">
 					<li class="group">
