@@ -31,10 +31,10 @@ DROP TABLE TBL_CALENDAR CASCADE CONSTRAINTS;
 drop sequence SEQ_CNO;
 
 commit; 
-
+select * from tbl_group where authorized='Y' order by gno desc;
 select * from TBL_GROUP order by gno desc;
 select * from TBL_USER;
-select * from TBL_GROUPUSER where group_name='¿îµ¿56';
+select * from TBL_GROUPUSER;
 select * from BOARD_FILE;
 select * from TBL_BOARD;
 select * from BOARD_REPLY;

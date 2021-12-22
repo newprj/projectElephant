@@ -232,6 +232,7 @@ public class GRestController {
 		ModelAndView mv = new ModelAndView("/group/study");
 		try {
 			UserVO user = (UserVO) session.getAttribute("user");
+			mv.addObject("group", groupService.showOne(group_name));
 			mv.addObject("user", user.getUser_id());
 			mv.addObject("board", boardService.showList(group_name));
 			

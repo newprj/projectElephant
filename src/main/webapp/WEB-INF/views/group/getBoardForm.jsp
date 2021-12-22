@@ -101,7 +101,7 @@ prefix="c" %><%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 		<button class="go_board">목록</button>
 		<button class="reply">모달을 띄우자</button>
 		
-		<h3> 댓글/ 등록/ 수정 / 삭제 후 location reload => element 삽입, 삭제로 바꿔보기  </h3>
+
 		<div class="modal">
 			<div class="modal_content">
 				<span> X </span>

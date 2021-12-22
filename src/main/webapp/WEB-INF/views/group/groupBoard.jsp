@@ -159,8 +159,11 @@ ul#portfolioFilter span {
 			<h2 class="group_name">  ${group.group_name} </h2>
 			<p> ${group.leader}</p>
 			<p> ${group.subject }</p>
+			<hr>
+			<div>
 			<span> <i class="fas fa-eye"></i> ${group.viewCnt} </span>
 			<span> 🙋‍♀  ${group.applicantCnt} <i class="far fa-hand-peace"> ${group.joinedCnt}</i>/ ${group.member_number}</span>
+			</div>
 	</div>
 	</li>
 </c:forEach>

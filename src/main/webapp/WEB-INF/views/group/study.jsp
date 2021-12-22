@@ -19,37 +19,67 @@ prefix="c" %>
       padding: 50px 0;
     }
       div.wrapper{
-      padding: 30px;
-  		width : 80%;
+      
+  		width : 85%;
+  		height :90%;
       background-color: white;
       box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0,0,0,0.08); 
+		  overflow-x:hidden; 
+		  overflow-y:auto; 
+		  display: flex;
+      flex-direction: row;
+      align-items: center;
     }
+    div.left{
+    	flex : 1;
+    	height : 100%;
+    	width : 30%;
+			background-size: cover;
+    }
+    div.center{
+    	flex: 3;
+    }
+    div.right{
+    	flex : 1;
+    }
+    
     </style>
 	</head>
 	<body>
 	<div class="wrapper">
-		<div class="title">
-			<h3> ${group_name} </h3>
+		<div style="background-image: url(${group.profile})" class="left">
+		 	뭐 아무것도 안나오니? ${group.profile}
 		</div>
-		<div class="member">
+		<div class="center">
+			<div class="title">
+				<h3> ${group_name} </h3>
+			</div>
+			<div class="member">
 		
-		</div>
+			</div>
 	
-		<p><a href="/group/"> 메인 </a></p>
-		<c:choose>
-			<c:when test="${board.size() > 0 }">
-				<c:forEach items="${board}" var="board">
-					<div>${board.title}</div>
-				</c:forEach>
-			</c:when>
-			<c:otherwise>
-				<div>등록된 공지글이 없습니다</div>
-			</c:otherwise>
-		</c:choose>
-		<div>
-			<a href="/group/board/${group_name}"> ${group_name} 게시판 </a>
-		</div>
-
+			<p><a href="/group/"> 메인 </a></p>
+			<c:choose>
+				<c:when test="${board.size() > 0 }">
+					<c:forEach items="${board}" var="board">
+						<div>${board.title}</div>
+					</c:forEach>
+				</c:when>
+				<c:otherwise>
+					<div>등록된 공지글이 없습니다</div>
+				</c:otherwise>
+			</c:choose>
+			<div>
+				<a href="/group/board/${group_name}"> ${group_name} 게시판 </a>
+			</div>
+		
+			<div>
+				<div>
+					<button class="getChat"> 채팅 입장</button>
+				</div>
+			</div>
+	</div>
+	<div class="right">
 		<div class="event">
 			<h4>최근일정</h4>
 			<div>
@@ -60,20 +90,16 @@ prefix="c" %>
 			</div>
 			<a href="/group/test/${group_name}"> ... 일정 더보기 </a>
 		</div>
-
-
-		<div>
-			<div>
-				<button class="getChat"> 채팅 입장</button>
-			</div>
-		</div>
-		</div>
+	</div>		
+</div>
 	</body>
 
 	<script>
 
 		let loginUser = "${user}";
 		let group = "${group_name}";
+		
+		
 
 		$.getJSON(`/group/getMemberlistByGroup/\${group}`, (list) => {
 			let joinCheck = list.memberList.find( user => user.user_id === loginUser)

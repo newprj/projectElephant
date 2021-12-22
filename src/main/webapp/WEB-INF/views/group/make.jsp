@@ -45,7 +45,7 @@ pageEncoding="UTF-8"%>
       margin:auto;
       display:block;
     }
-    }
+    
     
     span.profile {
       background-color: #000;
