@@ -10,6 +10,7 @@ pageEncoding="UTF-8"%>
 	<script src="/resources/static/fullcalendar/moment.js"></script>
 <script src="https://unpkg.com/@popperjs/core@2"></script><!-- tippy 사용 위찬 연결-->
 <script src="https://unpkg.com/tippy.js@6"></script><!-- tippy 사용 위찬 연결-->
+
 	
 	<script src="//code.jquery.com/jquery-3.6.0.js"></script>
 	<style>
@@ -44,6 +45,7 @@ pageEncoding="UTF-8"%>
 				display : none;			
 			}
 
+
 			
 	</style>
 	<head>
@@ -51,12 +53,16 @@ pageEncoding="UTF-8"%>
 		<title>Insert title here</title>
 	</head>
 	<body>
+	 
 	<h1> 일정 캘린더 </h1>
+	<span class='goGroup' style ="cursor:pointer"}>그룹별 페이지</span>
 	<div> <!-- 캘린더 div  -->
 		<div id="reload">
 			<div id="calendar"></div>
 		</div>
 	</div>
+	
+	
 	<div class="modal">
 		<div class="modal_content">
 		
@@ -69,7 +75,7 @@ pageEncoding="UTF-8"%>
 				<div>
 					<label for=""> 색</label>
 					<select name="color">
-						<option>선택</option>
+						<option value=''>선택</option>
 						<option value="#D25565" style="color: #d25565">빨간색</option>
 						<option value="#9775fa" style="color: #9775fa">보라색</option>
 						<option value="#ffa94d" style="color: #ffa94d">주황색</option>
@@ -104,15 +110,16 @@ pageEncoding="UTF-8"%>
 				</div>
 				<div>
 					<label> group </label>
-					<input type="text" name="group_" value="${group.group_name}" />
+					<input type="text" name="group_" value="${group.group_name}" readonly/>
 				</div>
 				<div>
-				<label> 스터디장 </label>
-				<input type="text" name="user_" value="${group.leader}"/>
+				<label> 멤버 </label>
+				<input type="text" name="user_" value="${user}"/>
 				</div>
 				<div>
 					<c:forEach items="${member}" var="member">
-						<label><input type="checkbox" name="member" value="${member.user_id}"> ${member.user_id}</label>
+						<label><input type="checkbox" name="member" value="${member.user_id}"/>
+						${member.user_id}</label>
 					</c:forEach>
 				</div>
 			<div>
@@ -124,34 +131,31 @@ pageEncoding="UTF-8"%>
 			</form>
 		</div>
 		</div>
+		<button class="ddd"> ㅇㅇ </button>
 		<script>
 			document.addEventListener("DOMContentLoaded", function () {
 				
 				const modal = $('.modal')
 				const Calendar = FullCalendar.Calendar
 				const group = "${group.group_name}";
+				const loginUser ="${user}"
 				
-				let loginUser= "${user}"
-				  	if(! loginUser){
-						console.log('로그인안됨')
-						alert("로그인 해야 접근 가능합니다")
-						location.href="/group/"
-					}else{
-						console.log("로그인됨")
-						$.getJSON(
-							"/group/getMemberlistByGroup/"+group, (list) =>{
-								console.log(list)
-								console.log(loginUser)
-								let joinCheck = list.find( user => user.user_id === loginUser)
-								if(!joinCheck){
-									alert("그룹 회원만 접근 가능한 페이지입니다")
-									location.href="/group/"
-								}
-							})
-					}
+				$.getJSON(
+					"/group/getMemberlistByGroup/"+group, (list) =>{
+						console.log(list)
+						console.log(loginUser)
+						let joinCheck = list.memberList.find( user => user.user_id === loginUser)
+						if(!joinCheck){
+							alert("그룹 회원만 접근 가능한 페이지입니다")
+							location.href="/group/"
+						}
+					})
 				
-				
-				
+					$('span.goGroup').click((e) => {
+					location.href =  `/group/${group.group_name}`;
+				})
+					
+					
 				// 이벤트 렌더 위해 가지고 옴 => 이거 클로저 가능할것같은데
 				const getEvent = (data) => {
 					let result;
@@ -179,7 +183,6 @@ pageEncoding="UTF-8"%>
 					}));
 			
 				let event = getEvent(group);
-				
 				
 				// 이벤트 폼데이터 => 객체 반환을 위한 함수
 				const getFormData = () => {
@@ -238,25 +241,29 @@ pageEncoding="UTF-8"%>
 					$('button.modify').hide()
 					$('button.delete').hide()
 					$('button[type="submit"]').show()
+					$('input[name="member"][value=${user}]').prop("checked",true)
 					modal.show()
 				}
 				
 				// 이벤트 호버했을 때 설명 띄움
 				const eventHoverHandeler = (info) => {
+					console.log(info)
 					let desc = info.event._def.extendedProps.description_
 					let title = info.event._def.title
 					let member = info.event._def.extendedProps.member_
 				
-					let str = '<div class="tippy"><div><span>' +title+ '</span></div>'
-					str += '<div> <span>'+ desc+ '</span> </div><div>'
+					let str = '<div class="tippy"><div><span>'+ desc+ '</span> </div><div>'
 					if(member) member.split(",").map( (mem) => str += '<span class="mem">'+mem+'</span>')
 					str += '</div></div>'
 					tippy(info.el, {
-			                content: str,
-			                allowHTML: true,
+			      content: str,
+			      allowHTML: true,
 			                
-			            })
+			       })
+			    
 				}
+
+				
 				
 				// 빈 함수 쓸려나? // 처음 이벤트가 렌더될때 호출됨 
 				const eventMountHandler =() => {
@@ -362,12 +369,19 @@ pageEncoding="UTF-8"%>
 					
 					e.preventDefault();
 					let eventForm = getFormData();
-					
-					let cid = eventSubmit(eventForm);
-					let newEvent = calToEvent([{...eventForm, cid}])
-					calendar.addEventSource(newEvent) 
-					
-					$('button[type="reset"]').trigger("click")
+					delete eventForm.member_
+					delete eventForm.cid
+					delete eventForm.endDate
+					if( Object.values(eventForm).filter(val => val=='').length > 0) {
+						alert(" 모두 입력 해주세요 ")
+					}else{
+						let eventForm = getFormData();
+						
+						let cid = eventSubmit(eventForm);
+						let newEvent = calToEvent([{...eventForm, cid}])
+						calendar.addEventSource(newEvent) 
+						$('button[type="reset"]').trigger("click")
+					}
 				});//submit click
 				
 				// 캘린더 렌더
@@ -393,6 +407,9 @@ pageEncoding="UTF-8"%>
 				}); //calender
 				calendar.render();
 			}); //event
+			
+			
+			//calendar.refetchEvents()
 		</script>
 	</body>
 </html>

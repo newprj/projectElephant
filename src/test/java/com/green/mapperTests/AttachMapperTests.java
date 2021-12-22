@@ -1,12 +1,14 @@
 package com.green.mapperTests;
 
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.green.mapper.ReviewAttachFileMapper;
-import com.green.vo.ReviewAttachFileDTO;
+import com.green.mapper.AttachFileMapper;
+import com.green.vo.AttachFileDTO;
+import com.green.vo.ReviewVO;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -16,11 +18,11 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 public class AttachMapperTests {
 	@Setter(onMethod_=@Autowired)
-	private ReviewAttachFileMapper mapper;
+	private AttachFileMapper mapper;
 	
 	//@Test
 	public void insertTest() {
-		ReviewAttachFileDTO dto = new ReviewAttachFileDTO();
+		AttachFileDTO dto = new AttachFileDTO();
 		dto.setFileName("file");
 		dto.setUploadPath("c드라이브");
 		dto.setUuid("1234");

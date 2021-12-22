@@ -1,7 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> <%@ taglib prefix="c"
 uri="http://java.sun.com/jsp/jstl/core"%>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<link href="/resources/assets/css/bootstrap.css" rel="stylesheet">
+<link href="/resources/assets/css/bootstrap-theme.css" rel="stylesheet">
 
+<link href="/resources/assets/css/simple-line-icons.css" rel="stylesheet">
+<link href="/resources/stylesheets/responsive-nav.css" rel="stylesheet">
+<link href="/resources/stylesheets/responsive-nav.css" rel="stylesheet">
+<link href="/resources/stylesheets/quotes.css" rel="stylesheet">
+<link href="/resources/stylesheets/services.css" rel="stylesheet">
+<link href="/resources/stylesheets/animate.css" rel="stylesheet">
+<link href="/resources/stylesheets/effects.css" rel="stylesheet">
+<link href="/resources/stylesheets/jquery.easy-pie-chart.css" rel="stylesheet">
+<link href="/resources/stylesheets/sidemenu.css" rel="stylesheet">
+<link href="/resources/stylesheets/slidingmenu.css" rel="stylesheet">
+<link href="/resources/stylesheets/metro-panel.css" rel="stylesheet">
+<link href="/resources/stylesheets/style.css" rel="stylesheet">
+<script src="/resources/javascripts/modernizr.custom.menu.js"></script>
+<script src="/resources/javascripts/modernizr.custom.quotes.js"></script>
+<script src="/resources/javascripts/modernizr.custom.services.js"></script>
 <!DOCTYPE html>
 <html>
   <head>
@@ -14,17 +31,45 @@ uri="http://java.sun.com/jsp/jstl/core"%>
 	<script src="/resources/image-drop.min.js"></script>
   </head>
   <body>
-    <form>
-      그룹명 <input type="text" name="group_name" /><br />
-   <input type="hidden" name="writer" value="${login}"/>
-      제목 <input type="text" name="title" /><br />
-      <div id="editor" style="max-height: 400px; overflow: auto"></div>
-      <br />
-      <input type="file" name="uploadFile" multiple /><br>
-      <hr>
-      <button type="button" id="create">등록하기</button>
-      <button type="button" onclick="location.href='/review/list'">돌아가기</button>
-    </form>
+  <div class="row">
+	    <article class="col-md-12 text-left">
+	      <h2 class="page-heading">후기 등록 페이지</h2>
+	      <div class="liner"><span></span></div>
+	    </article>
+	</div>
+  <form>
+  	<div class="container">
+			<section id="container">				
+				<div class="form-group">
+					<label for="group_name" class="col-sm-2 control-label">그룹명</label>
+					<input type="text" id="group_name" name="group_name" class="form-control"/>
+				</div>
+				<div class="form-group">
+					<input type="hidden" name="writer" value="${login}"/>
+				</div>
+				<div class="form-group">
+					<label for="title" class="col-sm-2 control-label">제목</label>
+					<input type="text" id="title" name="title" class="form-control"/>
+				</div>
+				<div class="form-group">
+					<div id="editor" style="max-height: 400px; overflow: auto"></div>
+				</div>
+				<div class="form-group">
+					<input type="file" name="uploadFile" multiple /><br>
+				</div>
+				<div class="form-group">
+					<label for="attachFile" class="col-sm-2 control-label">첨부파일</label>
+					<c:forEach items="${attachFile}" var="attachFile">
+						[ <a href="/reviewUpload/download?uuid=${attachFile.uuid}">${attachFile.fileName}</a> ]
+					</c:forEach> <br>
+				</div>
+				<div>
+					<button type="button" id="create" class="btn btn-primary">등록하기</button>
+     			 <button type="button" class="btn btn-primary" onclick="location.href='/review/list'">목록</button>
+				</div>
+			</section>
+		</div>
+	</form>
   </body>
   <script>
   

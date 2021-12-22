@@ -65,6 +65,12 @@
 	    <async-supported>true</async-supported>
 	</servlet>
 
+	
+	<listener> 
+	   <listener-class>com.green.listener.VisitCounter</listener-class> 
+	</listener> 
+
+
 </web-app>
 
 

@@ -3,40 +3,89 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<link href="/resources/assets/css/bootstrap.css" rel="stylesheet">
+<link href="/resources/assets/css/bootstrap-theme.css" rel="stylesheet">
+
+<link href="/resources/assets/css/simple-line-icons.css" rel="stylesheet">
+<link href="/resources/stylesheets/responsive-nav.css" rel="stylesheet">
+<link href="/resources/stylesheets/responsive-nav.css" rel="stylesheet">
+<link href="/resources/stylesheets/quotes.css" rel="stylesheet">
+<link href="/resources/stylesheets/services.css" rel="stylesheet">
+<link href="/resources/stylesheets/animate.css" rel="stylesheet">
+<link href="/resources/stylesheets/effects.css" rel="stylesheet">
+<link href="/resources/stylesheets/jquery.easy-pie-chart.css" rel="stylesheet">
+<link href="/resources/stylesheets/sidemenu.css" rel="stylesheet">
+<link href="/resources/stylesheets/slidingmenu.css" rel="stylesheet">
+<link href="/resources/stylesheets/metro-panel.css" rel="stylesheet">
+<link href="/resources/stylesheets/style.css" rel="stylesheet">
+<script src="/resources/javascripts/modernizr.custom.menu.js"></script>
+<script src="/resources/javascripts/modernizr.custom.quotes.js"></script>
+<script src="/resources/javascripts/modernizr.custom.services.js"></script>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+	
 </head>
-<h1>후기 게시판 상세 페이지</h1>
 <body>
-	번호 : ${detail.rno}<br>
-	작성자 : ${detail.writer}<br>
-	모임명 : ${detail.group_name}<br>
-	제목 : ${detail.title}<br>
-	내용 : ${detail.content}<br>
-	작성일 : <fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${detail.regdate}"/><br>
-	첨부파일 : <c:forEach items="${attachFile}" var="attachFile">
-		[ <a href="/reviewUpload/download?uuid=${attachFile.uuid}">${attachFile.fileName}</a> ]
-	</c:forEach> <br>
-	<button type="button" id="modifyBtn">수정</button>
-	<button type="button" id="homeBtn">후기 홈으로</button>
-	<hr>
-	<input type="hidden" id="userCheck" value='${login}'>
-	<div class="container">
-		<label for="content">댓글</label>
-		<form name="replyInsertForm">
-			<input type="hidden" name="rno" value="${detail.rno}"/>
-			<input type="text" name="content" placeholder="내용을 입력하세요"/>
-			<span class="input-group-btn">
-				<button type="button" name="replyInsertBtn">등록</button>
-			</span>
-		</form>
+	<div class="row">
+	    <article class="col-md-12 text-left">
+	      <h2 class="page-heading">후기 상세 페이지</h2>
+	      <div class="liner"><span></span></div>
+	    </article>
 	</div>
 	<div class="container">
-		<div class="replyList"></div>
-	</div>
+			<section id="container">				
+				<div class="form-group">
+					<label for="title" class="col-sm-2 control-label">제목</label>
+					<input type="text" id="title" name="title" class="form-control" value="${detail.title}" readonly="readonly" />
+				</div>
+				<div class="form-group">
+					<label for="title" class="col-sm-2 control-label">내용</label><br>
+					${detail.content}" 
+				</div>
+				<div class="form-group">
+					<label for="writer" class="col-sm-2 control-label">작성자</label>
+					<input type="text" id="writer" name="writer" class="form-control" value="${detail.writer}"  readonly="readonly"/>
+				</div>
+				<div class="form-group">
+					<label for="group_name" class="col-sm-2 control-label">그룹명</label>
+					<input type="text" id="group_name" name="group_name" class="form-control" value="${detail.group_name}"  readonly="readonly"/>
+				</div>
+				<div class="form-group">
+					<label for="regdate" class="col-sm-2 control-label">작성날짜</label>
+					<fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${detail.regdate}"/>	
+				</div>
+				<div class="form-group">
+					<label for="attachFile" class="col-sm-2 control-label">첨부파일</label>
+					<c:forEach items="${attachFile}" var="attachFile">
+						[ <a href="/reviewUpload/download?uuid=${attachFile.uuid}">${attachFile.fileName}</a> ]
+					</c:forEach> <br>
+				</div>
+				<div>
+					<button type="button" class="update_btn btn btn-warning" id="modifyBtn">수정</button>
+					<button type="button" class="list_btn btn btn-primary"id="homeBtn">목록</button>	
+				</div>
+				<input type="hidden" id="userCheck" value='${login}'>
+		
+				<br>
+				<div class="container">
+					<label>댓 글 </label>
+					<div class="replyList"></div>
+				</div>
+				<div class="form-group">
+					<label for="content">댓글</label>
+						<form name="replyInsertForm">
+							<input type="hidden" name="rno" value="${detail.rno}"/>
+							<input type="text" name="content" placeholder="내용을 입력하세요" class="form-control"/>
+							<span class="input-group-btn">
+								<button type="button" name="replyInsertBtn" class="btn btn-primary">등록</button>
+							</span>
+						</form>
+				</div>
+				</section>
+		</div>
 	
 </body>
 <script type="text/javascript">
@@ -45,6 +94,10 @@
 	var rno = '${detail.rno}'
 	
 	$('[name=replyInsertBtn]').click(function(){
+		if($('[name=content]').val()==""){
+		alert("내용을 입력해 주세요")
+		return false;
+		}
 		var insertData = $('[name=replyInsertForm]').serialize();
 		replyInsert(insertData);
 	})
@@ -148,7 +201,5 @@
 	$(document).ready(function(){
 		replyList()
 	});
-	 
 
-	
 </script>

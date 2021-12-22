@@ -31,11 +31,11 @@ pageEncoding="UTF-8"%>
 			<form>
 				<div>
 					<label>title</label>
-					<input name="title" />
+					<input name="title" required/>
 				</div>
 				<div>
 					<label>writer</label>
-					<input name="writer" value="${user}" />
+					<input name="writer" value="${user}" readonly/>
 				</div>
 				<div>
 					<label>공지사항 </label>
@@ -61,7 +61,7 @@ pageEncoding="UTF-8"%>
 			$(document).ready(function (e) {
 				var myEditor = document.querySelector("#editor");
 				const uploadClone = $(".file").clone();
-			
+			  const loginUser = "${user}"
 					$.getJSON("/group/getMemberlistByGroup/${group_name}", (list) => {
 						console.log(list);
 						console.log(loginUser);
@@ -72,6 +72,7 @@ pageEncoding="UTF-8"%>
 						}
 					});//get Json
 		
+
 				// input file이 변할때
 				$('input[type="file"]').change(function (e) {
 					let formData = new FormData();
@@ -120,26 +121,39 @@ pageEncoding="UTF-8"%>
 				// 글 작성
 				$(".create").click(function (e) {
 					e.preventDefault();
-					board = {
-						title: $('input[name="title"]').val(),
-						content: myEditor.children[0].innerHTML,
-						writer: $('input[name="writer"]').val(),
-						group_name: "${group_name}",
-						attachList,
-						notice: $('input[name="notice"]').is(":checked") ? "Y" : "N",
-					};
-					console.log(board);
-					$.ajax({
-						type: "post",
-						url: "/group/board/",
-						data: JSON.stringify(board),
-						contentType: "application/json; charset=utf-8",
-						success: () => (location.href = "/group/board/${group_name}"),
-						error: (xhr, staturs, er) => {
-							console.log(xhr);
+					
+					const title =$('input[name="title"]').val()
+					const content =  myEditor.children[0].innerHTML
+					
+					if(title == '' || content == '<p><br></p>'){
+						if(title == ''){
+							$('input[name="title"]').focus()
+						}else{
+							myEditor.children[0].focus()
+						}
+					}else{
+						board = {
+							title,
+							content,
+							writer: $('input[name="writer"]').val(),
+							group_name: "${group_name}",
+							attachList,
+							notice: $('input[name="notice"]').is(":checked") ? "Y" : "N",
+						};
+						console.log(board);
+						$.ajax({
+							type: "post",
+							url: "/group/board/",
+							data: JSON.stringify(board),
+							contentType: "application/json; charset=utf-8",
+							success: () => (location.href = "/group/board/${group_name}"),
+							error: (xhr, staturs, er) => {
+								console.log(xhr);
 						},
-					}); //ajax
+					}); //ajax  
+					}//else
 				}); //click
+
 				const imageHandler = (e) => {
 					console.log(e);
 					let input = $('<input type="file" accept="image/*">');
@@ -149,6 +163,7 @@ pageEncoding="UTF-8"%>
 						let uploadFile = $(input)[0].files[0];
 						console.log("uploadFile", uploadFile);
 						formData.append("uploadFile", uploadFile);
+
 						$.ajax({
 							type: "post",
 							url: "/upload",
@@ -156,6 +171,7 @@ pageEncoding="UTF-8"%>
 							contentType: false,
 							data: formData,
 							dataType: "json",
+
 							success: (res) => {
 								console.log("2)");
 								console.log(res);
@@ -163,6 +179,7 @@ pageEncoding="UTF-8"%>
 									`\${res[0].uploadPath}/\${res[0].uuid}_\${res[0].fileName}`
 								);
 								const IMG_URL = `/display?fileName=\${encodURL}`;
+
 								let range = quill.getSelection();
 								console.log(range);
 								quill.insertEmbed(range, "image", IMG_URL);
@@ -171,6 +188,7 @@ pageEncoding="UTF-8"%>
 						}); // ajax
 					}); // click
 				}; //imageHandletr
+
 				const toolbarOptions = [
 					[{ header: [1, 2, 3, 4, 5, 6, false] }],
 					[{ list: "ordered" }, { list: "bullet" }],
@@ -190,6 +208,7 @@ pageEncoding="UTF-8"%>
 						},
 					},
 				});
+
 				let toolbar = quill.getModule("toolbar");
 				toolbar.addHandler("image", imageHandler);
 			}); // docu ready

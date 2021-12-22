@@ -4,6 +4,16 @@
 prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %> 
 <script
   src="https://code.jquery.com/jquery-3.6.0.js"></script>
+  
+<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+<script src="//code.jquery.com/jquery-3.6.0.js"></script>
+<link
+	href="https://cdn.quilljs.com/1.3.6/quill.snow.css"
+	rel="stylesheet"
+/>
+<script src="/resources/image-resize.min.js"></script>
+<script src="/resources/image-drop.min.js"></script>
+<script src="/resources/js/fileUpload.js" type="text/javascript"></script>
 
 <!DOCTYPE html>
 <html>
@@ -42,7 +52,8 @@ li {
 		</div>
 		<div>
 			<label for="q_content">내용</label>
-			<textarea name="q_content"></textarea>
+			<div id="editor" style="max-height: 400px; overflow: auto"></div>
+			<input name="q_content" type="hidden" />
 		</div>
 		<div>
 			<div class="panel-heading">첨부파일</div>
@@ -64,22 +75,28 @@ li {
 	</form>
 </body>
 
-<script type="text/javascript">
+<script>
+
 	var today=new Date()
 	
 	console.log(today)	
 	var choice=''
 	var p=''
+
 	var selectOption=function(value){
-		if(value=='private')
-			$("#pwd").attr("disabled",false)
-		else
-			$("#pwd").attr("disabled",true)
-		p=value
-		choice="<input type='hidden' name='p_group' id='p_group' value='"+value+"'/>"
-		console.log(choice)
-		console.log($("#pwd").val())
-	}
+	if(value=='private')
+		$("#pwd").attr("disabled",false)
+	else
+		$("#pwd").attr("disabled",true)
+	p=value
+	choice="<input type='hidden' name='p_group' id='p_group' value='"+value+"'/>"
+	console.log(choice)
+	console.log($("#pwd").val())
+}
+$(document).ready(function () {
+	
+	let myEditor = document.querySelector("#editor");
+	
 	
 	
 	var regex=new RegExp("(.*?)\.(exe|sh|alz)$");
@@ -96,59 +113,18 @@ li {
 			return false
 		}
 		return true
-	}
-	/* 썸네일 처리 */
-	function showUploadResult(uploadResultArr){
-		if(!uploadResultArr || uploadResultArr.length==0 ){return;}
-		var uploadUL=$(".uploadResult ul")
-		var str=""
-		
-		$(uploadResultArr).each(function(i,obj){
-
-			if(obj.fileType){
-				var fileCallPath=encodeURIComponent(obj.uploadPath+"/"+obj.uuid+"_"+obj.fileName)
-				str+="<li data-path='"+obj.uploadPath+"'"
-				str+=" data-uuid='"+obj.uuid+"' data-filename='"+obj.fileName+"' data-type='"+obj.fileType+"'"
-				str+="><div>"
-				str+="<img src='/upload/display?fileName="+fileCallPath+"'  style=' width:50px; height:50px;'>"
-				str+="<span> "+obj.fileName+"</span>"
-				str+="<button type='button' data-file=\'"+fileCallPath+"\' data-type='image' class='btn-circle'><i>X</i></button></br>"
-				str+="</div>"	
-				str+="</li>"
-			}
-			else{
-				var fileCallPath=encodeURIComponent(obj.uploadPath+"/"+obj.uuid+"_"+obj.fileName)
-				var fileLink=fileCallPath.replace(new RegExp(/\\/g),"/")
-				str+="<li data-path='"+obj.uploadPath+"'"
-				str+=" data-uuid='"+obj.uuid+"' data-filename='"+obj.fileName+"' data-type='"+obj.fileType+"'"
-				str+="><div>"
-				str+="<img src='/resources/img/attach.png' style=' width:15px; height:15px;'></a>"
-				str+="<span> "+obj.fileName+"</span>"
-				str+="<button type='button' data-file=\'"+fileCallPath+"\' data-type='file' class='btn-circle'><i>X</i></button></br>"
-				str+="</div>"	
-				str+="</li>"
-			}
-		})
-		uploadUL.append(str)
-	}
+	}	
 	
-	
-	$(document).ready(function () {
-		
+	const imageHandler = (e) => {
 		/* 파일 등록 */
-		$("input[type='file']").change(function(e){
+		let input = $('<input type="file" accept="image/*">');
+		input.click();
+		$(input).change(function(e){
 			console.log("파일 등록")
-			var formData=new FormData()
-			var inputFile=$("input[name='uploadFile']")
-			var files=inputFile[0].files
+			let formData=new FormData()
+			let uploadFile=$(input)[0].files[0];
+			formData.append("uploadFile", uploadFile);
 			
-			for(var i=0; i<files.length; i++){
-				if(!checkExtension(files[i].name, files[i].size)){
-					return false
-				}
-				formData.append("uploadFile",files[i])
-				console.log(formData)
-			}
 			$.ajax({
 				url:'/upload/uploadAjaxAction',
 				processData:false,
@@ -156,16 +132,23 @@ li {
 				data:formData,
 				type:'post',
 				dataType:'json',
-				enctype: 'multipart/form-data',
-				success:function(result){
-					showUploadResult(result);
+				success:function(res){
+					const IMG_URL =
+						"/upload/display?fileName=" +
+						encodeURIComponent(
+							res[0].uploadPath + "/" + res[0].uuid + "_" + res[0].fileName
+						);
+
+					let range = quill.getSelection();
+					console.log(range);
+					quill.insertEmbed(range, "image", IMG_URL);
 				},
 				error:function(){
 					alert("실패")
 				}
 			})
 		})
-		
+	};
 		/* 파일 삭제 */
 		$(".uploadResult").on("click","button",function(e){
 			console.log('파일 삭제')
@@ -200,13 +183,16 @@ li {
 				$(".uploadResult ul li").each(function(i,obj){
 					var jobj=$(obj)
 					console.log(jobj.data("filename"))
-					alert(obj)
+					
 					str+="<input type='hidden' name='attachList["+i+"].fileName' value='"+jobj.data("filename")+"'>"
 					str+="<input type='hidden' name='attachList["+i+"].uuid' value='"+jobj.data("uuid")+"'>"
 					str+="<input type='hidden' name='attachList["+i+"].uploadPath' value='"+jobj.data("path")+"'>"
 					str+="<input type='hidden' name='attachList["+i+"].fileType' value='"+jobj.data("type")+"'>"
 				})
 				
+				
+				$('input[name="q_content"]').val(myEditor.children[0].innerHTML);
+				console.log($('input[name="q_content"]').val());
 				$("form").append(str);
 				$("form").append(choice);
 				$("form").append("<input type='hidden' name='reg_date' pattern ='yy/MM/dd hh:mm' value='"+today+"'>");
@@ -218,6 +204,30 @@ li {
 			
 			
 		})
+		const toolbarOptions = [
+			[{ header: [1, 2, 3, 4, 5, 6, false] }],
+			[{ list: "ordered" }, { list: "bullet" }],
+			["bold", "italic", "underline", "strike"],
+			[{ color: [] }, { background: [] }],
+			[{ align: [] }],
+			["image"],
+			["clean"],
+		];
+
+		
+		let quill = new Quill("#editor", {
+			theme: "snow",
+			modules: {
+				toolbar: toolbarOptions,
+				imageDrop: true,
+				imageResize: {
+					displaySize: true,
+				},
+			},
+		});
+
+		let toolbar = quill.getModule("toolbar");
+		toolbar.addHandler("image", imageHandler);
 		
 	})
 	

@@ -27,10 +27,10 @@
 
 	<select id="listqnaWithPaging" resultType="com.green.vo.QnaVO">
 		<![CDATA[
-			select qno, title, writer,q_content,reg_date,up_date,pwd,p_group
+			select qno, title, writer,q_content,reg_date,up_date,pwd,p_group,hit
 			from (
 			    select /*+ index_desc(qna_tbl pk_qno) */
-				    rownum rn, qno, title, writer,q_content,reg_date,up_date,pwd,p_group
+				    rownum rn, qno, title, writer,q_content,reg_date,up_date,pwd,p_group,hit
 				    	from 
 				    	(select * from  qna_tbl 
 					    	order by up_date desc nulls LAST
@@ -74,10 +74,17 @@
 	</delete>
 	
 	<select id="totalCount" resultType="int">
-		select count(*) from qna_tbl where <include refid="criteria"></include> qno>0
+		select count(*) from qna_tbl where 
+		<include refid="criteria"></include>
+		qno>0
 	</select>
 	
 	<select id="myQna" resultType="com.green.vo.QnaVO">
 		select *from qna_tbl where writer=#{writer}
 	</select>
+	
+	<update id="updateHit">
+		update qna_tbl set hit=#{hit}+1 where qno=#{qno}
+	</update>
+	
 </mapper>

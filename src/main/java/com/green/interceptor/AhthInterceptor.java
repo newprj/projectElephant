@@ -6,13 +6,10 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import com.green.controller.CPageController;
-
 import lombok.extern.log4j.Log4j;
-import lombok.extern.slf4j.Slf4j;
 
 
-@Slf4j
+@Log4j
 public class AhthInterceptor extends HandlerInterceptorAdapter{
 	
 	

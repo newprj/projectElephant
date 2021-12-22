@@ -28,7 +28,8 @@
 		delete board_reply where rno=#{rno}
 	</delete>
 
-	<select id="myReply" resultType="com.green.vo.BoardReplyVO">
+	<select id="myReply" resultType="com.green.vo.ReplyVO">
 		select *from board_reply where replyer=#{replyer}
 	</select>
 </mapper>
+

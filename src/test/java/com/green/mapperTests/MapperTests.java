@@ -1,7 +1,10 @@
 package com.green.mapperTests;
 
+import java.sql.Date;
 import java.util.List;
+import java.util.function.IntConsumer;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,14 +20,15 @@ import com.green.mapper.UserMapper;
 import com.green.vo.BoardReplyVO;
 import com.green.vo.BoardVO;
 import com.green.vo.Criteria;
-import com.green.vo.FileVO;
+
 import com.green.vo.GUserVO;
 import com.green.vo.GroupVO;
-import com.green.vo.UserVO;
+
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
-import oracle.net.aso.b;
+
+
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
@@ -60,6 +64,7 @@ public class MapperTests {
 	}
 	
 	
+	
 	//@Test
 	public void replyupdateTest() {
 		BoardReplyVO vo = replyMapper.getReplyOne(22L);
@@ -91,11 +96,10 @@ public class MapperTests {
 		}
 	}
 	
-	@Test
+//	@Test
 	public void showAllTest() {
 		
-		List<BoardVO> voList = bMapper.showList("그루비룸");
-		 List<BoardVO> size = voList.stream().filter(vo -> vo.getNotice() == 'N').collect(Collectors.toList());
+		
 		
 	}
 	
@@ -122,18 +126,18 @@ public class MapperTests {
 	
 	
 
-//	
+
 //	@Test
 	public void makegroupTest() {
-		for(int i=0; i<10; i++) {
+		for(int i=0; i<30; i++) {
 			GroupVO groupVO = new GroupVO();
 			groupVO.setGroup_name("테스트" + i);
-			groupVO.setDescription("test description " + i);
+			groupVO.setDescription("<p>말하면 니가 아니</p>" + i);
 			groupVO.setLeader("aaa");
 			groupVO.setMember_number(4);
-			groupVO.setSubject(" test ");
+			groupVO.setSubject("test"+i);
 			gMapper.makeGroup(groupVO);
-			
+
 		}
 	}
 	
@@ -160,5 +164,56 @@ public class MapperTests {
 		gMapper.deleteGroup("1");
 	}
 	
+	
+	//@Test
+	public void registerTEst() {
+		IntStream.rangeClosed(1, 100).forEach( i -> {
+			BoardVO vo = new BoardVO();
+			vo.setGroup_name("테스트29");
+			vo.setNotice('N');
+			vo.setTitle("테스트 타이틀" +i);
+			vo.setContent(" 내용" );
+			vo.setWriter("test");
+			bMapper.register(vo);
+		});
+		
+	}
+	
+	
+	//@Test
+	public void group() {
+		List<GroupVO> list = gMapper.showAll();
+		list.forEach(i -> {
+			 guMapper.listByGroup(i.getGroup_name())
+				.stream().filter( vo -> vo.getAuthorized().equals("Y")).collect(Collectors.toList())
+				.forEach(v -> log.info("  " + v));
+		});
+		
+	}
+	//@Test 
+	public void testSearck() {
+		Criteria cri = new Criteria();
+		cri.setGroup_name("테스트그룹");
+		cri.setKeyword("내용");
+		cri.setType("TC");
+		bMapper.getListWithPaging(cri).forEach(i->System.out.println(i));
+	}
+	
+	//@Test
+	public void testShow() {
+		gMapper.showLatest20();
+	}
 
+	//@Test
+	public void testPagingGgroup() {
+		Criteria cri = new Criteria();
+		
+		
+		gMapper.getListWithPaging(cri).forEach(i -> System.out.println(i+"======================================================="));
+	}
+	
+	@Test
+	public void test() {
+		bMapper.showList("독서2").forEach(i-> log.info(" 노티스 왜 못가져오ㅑ? " +i.getNotice()));
+	}
 }

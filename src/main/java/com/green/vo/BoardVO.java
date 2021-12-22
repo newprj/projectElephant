@@ -25,7 +25,9 @@ public class BoardVO {
     private Date regdate;
     private Date updateDate;
     private char notice;
-
+    private Long viewCnt;
+    
     private List<FileVO> attachList;
     private int replyCnt;
+    
 }

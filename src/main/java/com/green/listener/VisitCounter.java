@@ -1,41 +1,51 @@
 package com.green.listener;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.annotation.WebListener;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpSessionBindingEvent;
+import javax.servlet.http.HttpSessionBindingListener;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
-import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
-import org.springframework.web.context.support.WebApplicationContextUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.green.mapper.VisitMapper;
-import com.green.vo.VisitCountVO;
+import com.green.service.GUserService;
+import com.green.service.VisitService;
 
+import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+@WebListener
 public class VisitCounter implements HttpSessionListener{
 
-	@Override
-	public void sessionCreated(HttpSessionEvent arg0) {
-		HttpSession session = arg0.getSession();
-        WebApplicationContext wac = WebApplicationContextUtils.getRequiredWebApplicationContext(session.getServletContext());
-        //등록되어있는 빈을 사용할수 있도록 설정해준다
-        HttpServletRequest req = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
-        //request를 파라미터에 넣지 않고도 사용할수 있도록 설정
-        VisitMapper visitCountDAO = (VisitMapper)wac.getBean("insertVisitor");
-        VisitCountVO vo = new VisitCountVO();
-        vo.setVisit_ip(req.getRemoteAddr());
-        vo.setVisit_agent(req.getHeader("User-Agent"));//브라우저 정보
-        vo.setVisit_refer(req.getHeader("referer"));//접속 전 사이트 정보
-        visitCountDAO.insertVisitor(vo);
-		
-		
+	
+	public static int count;
+	
+	public static int getCount() {
+	    return count;
+	}
+	
+	public void sessionCreated(HttpSessionEvent event) {
+	    //세션이 만들어질 때 호출
+	    HttpSession session = event.getSession(); //request에서 얻는 session과 동일한 객체
+	    //session.setMaxInactiveInterval(60*20);
+	    
+	    count++;
+
+	    session.getServletContext().log(session.getId() + " 세션생성 " + ", 접속자수 : " + count);
+	}
+	
+	public void sessionDestroyed(HttpSessionEvent event) {
+	    //세션이 소멸될 때 호출
+	    count--;
+	    if(count<0)
+	        count=0;
+	     
+	    HttpSession session = event.getSession();
+	    session.getServletContext().log(session.getId() + " 세션소멸 " + ", 접속자수 : " + count);
 	}
 
-	@Override
-	public void sessionDestroyed(HttpSessionEvent se) {
-		// TODO Auto-generated method stub
-		
-	}
 
 }

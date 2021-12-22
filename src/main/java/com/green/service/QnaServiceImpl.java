@@ -41,7 +41,7 @@ public class QnaServiceImpl implements QnaService{
 	public void insertQna(QnaVO vo) {
 		log.info("2) 서비스에서 insert 하기 "+vo);
 		mapper.insertQnaKey(vo);
-
+		
 		if(vo.getAttachList()==null || vo.getAttachList().size()<=0) {
 			return;
 		}
@@ -146,6 +146,13 @@ public class QnaServiceImpl implements QnaService{
 	public List<QnaVO> myQna(String writer) {
 		// TODO Auto-generated method stub
 		return mapper.myQna(writer);
+	}
+
+
+	@Override
+	public int updateHit(Long qno, Long hit) {
+		// TODO Auto-generated method stub
+		return mapper.updateHit(qno, hit);
 	}
 
 	

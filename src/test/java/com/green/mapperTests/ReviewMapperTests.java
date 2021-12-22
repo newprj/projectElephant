@@ -63,17 +63,11 @@ public class ReviewMapperTests {
 		mapper.rnoRead();
 	}
 	
-	//@Test
+	@Test
 	public void getReplyCount() {
 		for(long i=0;i<300;i++) {
 		mapper.updateReplyCount(i);
 		}
-	}
-	
-	@Test
-	public void attachFile() {
-		mapper.attachedFile(231l);
-		
 	}
 	
 }

@@ -24,13 +24,22 @@ pageEncoding="UTF-8"%>
 	<body>
 		<form method="post" >
 			<div>
+				<label> 대표 이미지 </label>
+				<div class="profile">
+					<img class="profile" src="${one.profile}">
+				</div>
+				<span style="cursor: pointer;" class="profile">이미지 바꾸기 </span>
+			
+			</div>
+			<input type="hidden" name="profile" value="${one.profile}">
+			<div>
 				<label for=""> 그룹 이름 </label>
-				<input type="text" name="group_name" value = "${one.group_name}"/>
+				<input type="text" name="group_name" value = "${one.group_name}" readonly/>
 			</div>
 			
 			<div>
 				<label for=""> 리더 </label>
-				<input type="text" name="leader" value="${user.user_id}" />
+				<input type="text" name="leader" value="${user.user_id}" readonly/>
 			</div>
 			<div>
 				<label for=""> 주제 </label>
@@ -50,12 +59,49 @@ pageEncoding="UTF-8"%>
 			</div>
 		</form>
 	</body>
-ggg
+
 	<script>
 		$(document).ready(function (e) {
 			
 			let result;
 			let myEditor = document.querySelector("#editor");
+		
+			$('span.profile').click((e) => {
+				let profileImg= $('<input type="file" accept="image/*">');
+				profileImg.click()
+				$(profileImg).change(function (e) {
+					let formData = new FormData();
+					let uploadFile = $(profileImg)[0].files[0];
+					formData.append("uploadFile", uploadFile);
+
+					$.ajax({
+						type: "post",
+						url: "/upload",
+						processData: false,
+						contentType: false,
+						data: formData,
+						dataType: "json",
+
+						success: (res) => {
+							console.log(" 2 프로필)");
+							console.log(res);
+							const encodeURI = encodeURIComponent(`\${res[0].uploadPath}/\${res[0].uuid}_\${res[0].fileName}`)
+							const IMG_URL = `/display?fileName=\${encodeURI}`
+							console.log(IMG_URL)
+							$('input[name="profile"]').val(IMG_URL)
+							$('div.profile')[0].innerHTML =''
+							const newProfile= $(`<img class="profile" src="\${IMG_URL}">`)
+							$('div.profile').append(newProfile)
+							$('img.profile').css({ "height" : "200px "})
+						},
+						error: (xhr, status, er) => console.log(xhr),
+					}); // ajax
+				}); // change
+				
+			})//click
+			
+			
+			
 			
 			const imageHandler = (e) => {
 				console.log(e);
@@ -66,7 +112,7 @@ ggg
 					let uploadFile = $(input)[0].files[0];
 
 					formData.append("uploadFile", uploadFile);
-
+	
 					$.ajax({
 						type: "post",
 						url: "/upload",
@@ -83,7 +129,7 @@ ggg
 								encodeURIComponent(
 									res[0].uploadPath + "/" + res[0].uuid + "_" + res[0].fileName
 								);
-
+							
 							let range = quill.getSelection();
 							console.log(range);
 							quill.insertEmbed(range, "image", IMG_URL);
@@ -126,30 +172,32 @@ ggg
 			
 			$('button').click((e)=>{
 				e.preventDefault()
-				console.log(" hhhh")
+				if ( "${user.user_id}" !== "${one.leader}"){
+					alert(" 작성자가 아니면 수정할 수 없습니다 ")
+					return false;
+				}
 				const data = {
 					gno : '${one.gno}',
+					group_name : "${one.group_name}",
 					leader : $("input[name='leader']").val(),
 					subject : $('input[name="subject"]').val(),
 					description : myEditor.children[0].innerHTML,
-					member_number : $('input[name="member_number"]').val()
+					member_number : $('input[name="member_number"]').val(),
+					profile : $('input[name="profile"]').val()
+					
 				}
 					$.ajax({
 						type: "PUT",
-						url: "/group/board/${one.gno}",
+						url: "/group/gather/${one.group_name}/modify",
 						data: JSON.stringify(data),
 						contentType: "application/json; charset=utf-8",
-						success: () =>
-							(location.href =
-								"//"),
+						success: () =>location.href = "/group/gather/${one.group_name}",
 						error: (xhr, status, er) => {
 							console.log(status); 
 						}, //error
 					}); //ajax
 				}); // modify c*/
-				
-				
-			})// button click
+
 			
 			
 			

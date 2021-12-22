@@ -19,7 +19,12 @@ public class GroupVO {
     private String subject;
     private String description;
     private int member_number;
+    private Long viewCnt;
 
     private String authorized;
+    private String profile;
+    
+    private int applicantCnt;
+    private int joinedCnt;
 
 }

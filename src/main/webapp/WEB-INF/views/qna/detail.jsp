@@ -62,20 +62,12 @@ li {
 		</div>
 		<div>
 			<label for="q_content">내용</label>
-			<textarea name="q_content"  readonly="readonly" >${get.q_content}</textarea>
-		</div>
-		<!-- 첨부파일 사진 -->
-		<div class="row col-lg-12">
-			<div class="panel panel-default">
-				<div class="panel-heading">첨부파일</div>
-				<div class="panel-body">
-					<div class="uploadResult">
+			${get.q_content}
+			<div class="uploadResult">
 						<ul></ul>
-					</div>
-				</div>
 			</div>
-			
 		</div>
+		
 		<div class="bigPictureWrapper">
 			<div class="bigPicture">
 			</div>
@@ -139,6 +131,7 @@ li {
 					<button type="button" id="register">등록</button>
 					<button type="button" class="close">닫기</button>
 				</div>
+				
 		</div>
 	</div>
 	

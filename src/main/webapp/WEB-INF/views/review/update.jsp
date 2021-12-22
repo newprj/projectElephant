@@ -4,34 +4,80 @@ uri="http://java.sun.com/jsp/jstl/core"%>
 <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet" />
 <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 <script src="/resources/js/fileUpload.js" type="text/javascript"></script>
+<link href="/resources/assets/css/bootstrap.css" rel="stylesheet">
+<link href="/resources/assets/css/bootstrap-theme.css" rel="stylesheet">
+
+<link href="/resources/assets/css/simple-line-icons.css" rel="stylesheet">
+<link href="/resources/stylesheets/responsive-nav.css" rel="stylesheet">
+<link href="/resources/stylesheets/responsive-nav.css" rel="stylesheet">
+<link href="/resources/stylesheets/quotes.css" rel="stylesheet">
+<link href="/resources/stylesheets/services.css" rel="stylesheet">
+<link href="/resources/stylesheets/animate.css" rel="stylesheet">
+<link href="/resources/stylesheets/effects.css" rel="stylesheet">
+<link href="/resources/stylesheets/jquery.easy-pie-chart.css" rel="stylesheet">
+<link href="/resources/stylesheets/sidemenu.css" rel="stylesheet">
+<link href="/resources/stylesheets/slidingmenu.css" rel="stylesheet">
+<link href="/resources/stylesheets/metro-panel.css" rel="stylesheet">
+<link href="/resources/stylesheets/style.css" rel="stylesheet">
+<script src="/resources/javascripts/modernizr.custom.menu.js"></script>
+<script src="/resources/javascripts/modernizr.custom.quotes.js"></script>
+<script src="/resources/javascripts/modernizr.custom.services.js"></script>
 <!DOCTYPE html>
 <html>
   <head>
     <meta charset="UTF-8" />
     <title>Insert title here</title>
   </head>
-  <h1>후기 수정 페이지</h1>
   <body>
-    <form>
-      번호 <input type="text" name="rno" value="${read.rno}" readonly /><br />
-      그룹명 <input type="text" name="group_name" value="${read.group_name}" /><br />
-      제목 <input type="text" name="title" value="${read.title}" /><br />
-   <input type="hidden" name="writer" value="${read.writer}" /> <br />
-      <div id="editor" style="max-height: 400px; overflow: auto"></div>
-      <br />
-      <%-- 내용 <input type="text" name="content" value="${read.content}" /><br />
-      --%>
-
-      <input type="file" name="uploadFile" multiple="multiple" /><br />
-      <br />
-      첨부파일 삭제 :
-      <c:forEach items="${attachFile}" var="attachFile">
-        <div class="delete" name="${attachFile.uuid}">${attachFile.fileName}</div>
-      </c:forEach>
-      <br />
-      <button type="button" id="update">수정완료</button>
-      <button type="button" onclick="location.href='/review/list'">홈으로</button>
-    </form>
+  <div class="row">
+	    <article class="col-md-12 text-left">
+	      <h2 class="page-heading">후기 수정 페이지</h2>
+	      <div class="liner"><span></span></div>
+	    </article>
+	</div>
+  <form>
+  	<div class="container">
+			<section id="container">				
+				<div class="form-group">
+					<label for="rno" class="col-sm-2 control-label">번호</label>
+					<input type="text" id="rno" name="rno" class="form-control" value="${read.rno}" readonly/>
+				</div>
+				<div class="form-group">
+					<label for="group_name" class="col-sm-2 control-label">그룹명</label>
+					<input type="text" id="group_name" name="group_name" value="${read.group_name}" class="form-control"/>
+				</div>
+				<div class="form-group">
+					<input type="hidden" name="writer" value="${login}"/>
+				</div>
+				<div class="form-group">
+					<label for="title" class="col-sm-2 control-label">제목</label>
+					<input type="text" id="title" name="title" value="${read.title}" class="form-control"/>
+				</div>
+				<div class="form-group">
+					<div id="editor" style="max-height: 400px; overflow: auto"></div>
+				</div>
+				<div class="form-group">
+					<input type="file" name="uploadFile" multiple />
+				</div>
+				<div class="form-group">
+					<label for="attachFile" class="col-sm-2 control-label">첨부파일</label>
+					<c:forEach items="${attachFile}" var="attachFile">
+						[ <a href="/reviewUpload/download?uuid=${attachFile.uuid}">${attachFile.fileName}</a> ]
+					</c:forEach> 
+				</div>
+				<div class="form-group">
+					<label for="attachFileDelete" class="col-sm-2 control-label">첨부파일 삭제</label>
+					<c:forEach items="${attachFile}" var="attachFile">
+				        <div class="delete" name="${attachFile.uuid}">${attachFile.fileName}</div>
+				     </c:forEach>
+				</div>
+				<div>
+					<button type="button" id="update" class="btn btn-primary">등록하기</button>
+     				<button type="button" class="btn btn-primary" onclick="location.href='/review/list'">목록</button>
+				</div>
+			</section>
+		</div>
+	</form> 
   </body>
   <script>
     var regex = new RegExp('(.*?)\.(exe|sh|alz)$') //정규 표현식
