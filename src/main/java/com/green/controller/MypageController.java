@@ -130,7 +130,7 @@ public class MypageController {
 	}
 	
 	@GetMapping("/allQna")
-	public String allQna(Model model,HttpServletResponse response,HttpSession session) {
+	public String allQna(Model model,Criteria cri,HttpServletResponse response,HttpSession session) {
 		UserVO login= (UserVO) session.getAttribute("user");
 		String id=login.getUser_id();
 		if(id==null || !(id.equals("admin"))) {
@@ -147,7 +147,10 @@ public class MypageController {
 			return "redirect:/user/login";
 		}
 		
-		model.addAttribute("qna",qnaService.list());	
+		int total=qnaService.totalCount(cri);
+		
+		model.addAttribute("qna",qnaService.listqnaWithPaging(cri));
+		model.addAttribute("pageMarker",new PageDTO(cri, total));
 		model.addAttribute("user",id);
 		return "/mypage/allQna";
 	}
