@@ -136,7 +136,8 @@ $(document).ready(function () {
 					const IMG_URL =
 						"/upload/display?fileName=" +
 						encodeURIComponent(
-							res[0].uploadPath + "/" + res[0].uuid + "_" + res[0].fileName
+							res[0].uploadPath + "/" + res[0].uuid + "_" + res[0].fileName +
+							
 						);
 
 					let range = quill.getSelection();

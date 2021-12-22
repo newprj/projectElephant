@@ -162,34 +162,6 @@
 	</div>
 	
 	
-	
-	
-	<div class='qna'>
-		<h3><a href='/qna/list'>Q&A 리스트</a></h3>
-		<table>
-			<thead>
-				<tr>
-				  <th>no.</th>
-	              <th>제목</th>
-				  <th>비밀번호</th>
-	              <th>아이디</th>
-	              <th>등록일</th>
-	              <th>조회수</th>
-				</tr>
-			</thead>
-			<c:forEach items="${qna}" var="i" varStatus="status" begin="0" end='9'>
-				<tr>
-					<td>${status.count}</td>
-					<td><a href="/qna/detail?qno=${i.qno}">${i.title}</a></td>
-					<td>${i.pwd}</td>
-					<td>${i.writer}</td>
-					<td><fmt:formatDate value="${i.up_date}" pattern="yyyy-MM-dd a hh:mm" /></td>
-					<td style="text-align:center;" >${i.hit}</td>
-				</tr>
-			</c:forEach>
-		</table>
-	</div>
-	
 	<div class="row">
     	<div class="col-lg-12">
 	        <div class="panel">
