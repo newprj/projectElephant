@@ -20,7 +20,7 @@
 		<![CDATA[
 	    select 
 	     /*+ index_desc(tbl_group PK_GROUP) */
-	    rownum rn, gno, group_name, leader, subject, description, member_number, authorized, viewcnt, regdate 
+	    rownum rn, gno, group_name, leader, subject, description, member_number, authorized, viewcnt, regdate, profile
 	    from tbl_group 
 	    where authorized ='Y' and rownum <=12
 	   ]]>

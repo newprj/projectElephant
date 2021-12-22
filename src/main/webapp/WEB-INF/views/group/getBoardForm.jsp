@@ -49,7 +49,6 @@ prefix="c" %><%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 	</head>
 	<body>
 		<div>
-		<h1> 글 읽기 페이지  </h1>
 		<form>
 			<div>
 				<label for="title"> 제목 </label>

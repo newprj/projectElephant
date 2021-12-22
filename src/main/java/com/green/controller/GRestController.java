@@ -1,6 +1,5 @@
 package com.green.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -83,24 +81,12 @@ public class GRestController {
 			e.printStackTrace();
 		}
 		try {
-			List<GroupVO> groups = groupService.showAll();
-			// 그룹에 지원자 수, 가입 수 넣기
-			groups.forEach(i -> {
-				i.setApplicantCnt(groupUserService.listByGroupAll(i.getGroup_name()).size());
-				i.setJoinedCnt(groupUserService.listByGroup(i.getGroup_name()).size());
-			});
-			// 모집이 끝난 그룹과 구분
-			List<GroupVO> recruiteCompletedGroup = groups.stream().filter( i -> 
-				i.getMember_number() <= groupUserService.listByGroup(i.getGroup_name()).size())
-				.collect(Collectors.toList());
 			List<GroupVO> show20 = groupService.showLatest20();
-			
 			show20.forEach(i -> {
 				i.setApplicantCnt(groupUserService.listByGroupAll(i.getGroup_name()).size());
 				i.setJoinedCnt(groupUserService.listByGroup(i.getGroup_name()).size());
 			});
 			mv.addObject("group", show20);
-			mv.addObject("completed", recruiteCompletedGroup);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -155,8 +141,8 @@ public class GRestController {
 	
 	// 모든 그룹 가지고 오기
 	@GetMapping(value ="/main/getGroupAll")
-	public ResponseEntity<List<GroupVO>> getAllGroups(){
-		
+	public ResponseEntity<Map<String, List<GroupVO>>> getAllGroups(){
+		Map<String, List<GroupVO>> mapOfgroups = new HashMap<String, List<GroupVO>>();
 		log.info("모든 그룹 가지고 오기 ");
 		try{
 			List<GroupVO> groups = groupService.showAll();
@@ -169,13 +155,17 @@ public class GRestController {
 			List<GroupVO> recruitingGroup = groups.stream().filter( i -> 
 				i.getMember_number() > groupUserService.listByGroup(i.getGroup_name()).size())
 					.collect(Collectors.toList());
-			return new ResponseEntity<List<GroupVO>>(recruitingGroup, HttpStatus.OK);
+			recruitingGroup.forEach(i -> groups.remove(i));
+			mapOfgroups.put("recruiting",recruitingGroup );
+			mapOfgroups.put("completed", groups);
+			return new ResponseEntity<Map<String,List<GroupVO>>>(mapOfgroups, HttpStatus.OK);
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;
-		
 	}
+	
+	
 	
 	// 그룹별 가입 유저 가지고 오기 
 	@GetMapping(value ="/getMemberlistByGroup/{group_name}")

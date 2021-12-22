@@ -9,11 +9,32 @@ prefix="c" %>
 		<title>Insert title here</title>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.js"></script>
+		<style>
+		body{
+      background-color: #f6f9fc;
+      font-family: 'Noto Sans KR', sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; 
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 50px 0;
+    }
+      div.wrapper{
+      padding: 30px;
+  		width : 80%;
+      background-color: white;
+      box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0,0,0,0.08); 
+    }
+    </style>
 	</head>
 	<body>
-		<h1>스터디별 페이지</h1>
-		<div class="member"></div>
-
+	<div class="wrapper">
+		<div class="title">
+			<h3> ${group_name} </h3>
+		</div>
+		<div class="member">
+		
+		</div>
+	
 		<p><a href="/group/"> 메인 </a></p>
 		<c:choose>
 			<c:when test="${board.size() > 0 }">
@@ -45,6 +66,7 @@ prefix="c" %>
 			<div>
 				<button class="getChat"> 채팅 입장</button>
 			</div>
+		</div>
 		</div>
 	</body>
 
