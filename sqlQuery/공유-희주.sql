@@ -197,3 +197,7 @@ create table tbl_visitor(
     in_date Date
 );
 create SEQUENCE v_seq;
+
+-------- 유저테이블 가입시 날짜
+alter table tbl_user add reg_date timestamp;
+

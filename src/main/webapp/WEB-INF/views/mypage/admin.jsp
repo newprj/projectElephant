@@ -130,7 +130,7 @@
 	
 	<div class='study'>
 		<h3 ><a href='/group/'>스터디 승인 리스트</a></h3>
-	<h5>스터디장이 승인 요청한 것만 띄우기</h5>
+		<h5>스터디장이 승인 요청한 것만 띄우기</h5>
 		<table>
 			<thead>
 				<tr>
@@ -165,7 +165,7 @@
 	
 	
 	<div class='qna'>
-	<h3><a href='/qna/list'>Q&A 리스트</a></h3>
+		<h3><a href='/qna/list'>Q&A 리스트</a></h3>
 		<table>
 			<thead>
 				<tr>
@@ -246,7 +246,7 @@
 	                                	<c:forEach items="${sendletter}" var="i" varStatus="status"  begin="0" end='9'>
 											<tr>
 												<td>${status.count}</td>
-												<td>${i.recipient}</td>
+												<td id="userId${status.index}">${i.recipient}</td>
 												<td>${i.content}</td>
 												<td><fmt:formatDate value="${i.reg_date}" pattern="yyyy-MM-dd a hh:mm" /></td>
 												<td><button data-lno='${i.lno}' class='deleLetter'>삭제</button></td>
@@ -275,41 +275,11 @@
 
 
 	
-	<!-- 유저 정지 모달 -->
-	<div class="modal" id="modal" >
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" style='float:right;'>X</button>
-					<h4 class="modal-title">유저 정지 </h4>
-				</div>
-				<div class="modal-body">
-					<div class="modal-group">
-						<label>ID</label><br/>
-						<input name="modelId"/>
-					</div>
-					<div class="modal-group">
-						<label>이유</label><br/>
-						<textarea name="modalContent"></textarea>
-						
-					</div>
-					<div class="modal-group">
-						<label>날짜</label><br/>
-						<input name="modalDate"/>
-					</div>
-				</div><br/>
-				<div class="modal-footer">
-					<button type="button" id="register">등록</button>
-					<button type="button" class="close">닫기</button>
-				</div>
-				
-		</div>
-	</div>
-	
 	<!-- 쪽지 모달 -->
 	<div class="letter_modal" id="letter_modal" >
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close" style='float:right;'>X</button>
+					<button type="button" class="closeBtn" style='float:right;'>X</button>
 					<h4 class="modal-title">쪽지 </h4>
 				</div>
 				<div class="modal-body">
@@ -333,72 +303,19 @@
 				</div><br/>
 				<div class="modal-footer">
 					<button type="button" id="letterRegister">등록</button>
-					<button type="button" class="close">닫기</button>
+					<button type="button" class="closeBtn">닫기</button>
 				</div>
 				
 		</div>
 	</div>
-</div>
-		<%@ include file="../includes/admin_footer.jsp" %>
+
+		<%@ include file="../includes/admin_footer.jsp" %> 
 </body>
 <script type="text/javascript">
 	
 	$(document).ready(function () {
 		
-				
-		var modal=$(".modal")
-		var modalContent=modal.find("textarea[name='modalContent']")
-		var modalId=modal.find("input[name='modelId']")
-		var modalDate=modal.find("input[name='modalDate']")
 		var today=new Date()
-		
-		/* 댓글 */
-		$(".susp").click(function(){
-			console.log('회원정지 버튼 눌림')
-			modalDate.closest('div').hide()
-			$(".modal").show()
-			var idx=$(".susp").index(this)
-			var uid=$("#userId"+idx).text()
-			modalId.val(uid)
-			
-			var suspension=''
-			if($(this).text().trim()=='정지'){
-				suspension='N'
-				$("#register").text("정지 해제")
-			}
-			else if (($(this).text().trim()=='활동중')) {
-				suspension='Y'
-				$("#register").text("정지")
-			}
-			
-			$("#register").off('click').on('click',function(){
-				
-				var form={
-						user_id:modalId.val(),
-						suspension:suspension,
-						suspContent:modalContent.val(),
-						suspDate:today,
-				}
-				console.log(form)
-				$.ajax({
-					url:"/mypage/susp",
-					type:"post",
-					data:JSON.stringify(form),
-					contentType:"application/json; charset=utf-8",
-					dataType:"text",
-					success:function(result){
-						$("#modal").hide();
-						location.reload();
-					},
-					error:function(){
-						alert("실패")
-					}
-				}) 
-			})
-		})
-		
-		
-		
 		
 		/* 쪽지 */
 		var letterModal=$(".letter_modal")
@@ -412,12 +329,11 @@
 			
 			letterDate.closest('div').hide()
 			$(".letter_modal").show()
-			var idx=$(this).data("idx")
+			var idx=$(".letterBtn").index(this)
 			var uid=$("#userId"+idx).text()
-			
-			
+
 			modalwriteId.val('${user}')
-			modalrecipientId.val(uid)
+			/* modalrecipientId.val(uid) */
 						
 			$("#letterRegister").off('click').on('click',function(){
 				
@@ -446,7 +362,7 @@
 		})
 		
 		
-		$(".close").click(function(){
+		$(".closeBtn").click(function(){
 			$(".modal").hide()
 			$(".letter_modal").hide()
 			

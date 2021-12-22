@@ -48,7 +48,7 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
             <!--Brand logo & name-->
             <!--================================-->
             <div class="navbar-header">
-                <a href="index.html" class="navbar-brand">
+                <a href="/mypage/admin" class="navbar-brand">
                 <!--코끼리 아이콘 넣기-->
                     <i class="fa fa-cube brand-icon"></i>
                     <div class="brand-title">
@@ -242,21 +242,11 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
                 
                 
                 <ul class="nav navbar-top-links pull-right">
-                    <!--Profile toogle button-->
-                    <!--~~~~~~~~~~~~~~~이름, 사진, 크게~~~~~~~~~~~~~~~~~-->
-                    <li class="hidden-xs" id="toggleFullscreen">
-                        <a class="fa fa-expand" data-toggle="fullscreen" href="#" role="button">
-                        <span class="sr-only">Toggle fullscreen</span>
-                        </a>
-                    </li>
-                    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-                    <!--End Profile toogle button-->
-                    <!--User dropdown-->
-                    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+                    
                     <li id="dropdown-user" class="dropdown">
                         <a href="#" data-toggle="dropdown" class="dropdown-toggle text-right">
-                            <span class="pull-right"> <img class="img-circle img-user media-object" src="/resources/img/av1.png" alt="Profile Picture"> </span>
-                            <div class="username hidden-xs">John Doe</div>
+                            <span class="pull-right"> <img class="img-circle img-user media-object" src="/resources/img/user.png" alt="Profile Picture"> </span>
+                            <div class="username hidden-xs">Admin</div>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right with-arrow">
                             <!-- User dropdown menu -->
@@ -290,67 +280,24 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
                     <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
                     </button>
                 </div>
-                <!-- end navbar-header -->
                 <div id="defaultmenu" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <!-- standard drop down -->
-                        <li class="dropdown">
-                            <a href="#" data-toggle="dropdown" class="dropdown-toggle"> Home <b class="caret"></b></a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="index.html">Dashboard V1 </a></li>
-                                <li><a href="dashboard-v2.html">Dashboard V2 </a></li>
-                            </ul>
-                            <!-- end dropdown-menu -->
+                        <li>
+                            <a href="/group/" > Home </a>
                         </li>
                         <li>
                             <a href="/mypage/allUser"> Users </a>
                         </li>
-                        <!-- end standard drop down -->
-                        <!-- standard drop down -->
-                        <li class="dropdown">
-                            <a href="#" data-toggle="dropdown" class="dropdown-toggle"> Group <b class="caret"></b></a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="ui-animation.html"> CSS3 Animation </a></li>
-                                <li><a href="ui-panel.html">Panel </a></li>
-                                <li><a href="ui-xeditable.html"> X-Editable </a></li>
-                                <li><a href="ui-button.html">Buttons </a></li>
-                                <li><a href="ui-fontawesome.html"> FontAwesome </a></li>
-                                <li><a href="ui-icons.html">Icons</a></li>
-                                <li><a href="ui-components.html"> Components </a></li>
-                                <li><a href="ui-timeline.html">Timeline </a></li>
-                                <li><a href="ui-nested-lists.html"> Nested Lists </a></li>
-                                <li><a href="ui-grids.html"> Grids</a></li>
-                                <li><a href="ui-tab.html"> Tab </a></li>
-                                <li><a href="ui-accordions.html">Accordions </a></li>
-                                <li><a href="ui-dragdrop.html"> Draggable Panel</a></li>
-                                <li><a href="ui-typography.html"> Typography </a></li>
-                            </ul>
-                            <!-- end dropdown-menu -->
-                        </li>
-                        <!-- end standard drop down -->
-                        <!-- standard drop down -->
-                        <li class="dropdown">
-                            <a href="#" data-toggle="dropdown" class="dropdown-toggle"> Q&A <b class="caret"></b></a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="pages-faq.html"> FAQ </a></li>
-                                <li><a href="pages-gallery.html"> Gallery </a></li>
-                                <li><a href="pages-directory.html"> User Directory </a></li>
-                                <li><a href="pages-profile.html"> User Profile</a></li>
-                                <li><a href="pages-invoice.html"> Invoice </a></li>
-                                <li><a href="pages-login.html">Login</a></li>
-                                <li><a href="pages-register.html"> Register </a></li>
-                                <li><a href="pages-password-reminder.html"> Password Reminder </a></li>
-                                <li><a href="pages-lock-screen.html"> Lock Screen </a></li>
-                                <li><a href="pages-404.html"> 404 Error </a></li>
-                                <li><a href="pages-500.html"> 505 Error </a></li>
-                            </ul>
-                            <!-- end dropdown-menu -->
-                        </li>
-                        <!-- end standard drop down -->
-                        
-                        <!-- standard drop down -->
                         <li>
-                            <a href="/mypage/allUser"> Message </a>
+                            <a href="#"> Group</a>
+                            
+                        </li>
+                        <li>
+                            <a href="#" > Q&A </a>
+                            
+                        </li>
+                        <li>
+                            <a href="#"> Message </a>
                         </li>
                         <li>
                             <a href="calendar.html"> Calendar </a>

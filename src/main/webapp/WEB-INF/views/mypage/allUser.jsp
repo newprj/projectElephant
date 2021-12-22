@@ -32,7 +32,6 @@
 <title>관리자 페이지</title>
 
 </head>
-	
       <div class="pageheader">
           <h3><i class="fa fa-home"></i> Users </h3>
           <div class="breadcrumb-wrapper">
@@ -45,22 +44,24 @@
       </div>
      
        <div id="page-content">
-           <div class="well">
+           <form class="well" action="/mypage/allUser" method="get">
                <div class="row">
                    <div class="col-sm-9">
-                       <input placeholder="Who are you looking for?" class="form-control" type="text">
+                       <input placeholder="Who are you looking for?" id="keyword"   name="keyword" class="form-control" type="text">
                    </div>
                    <div class="col-sm-3">
                        <div class="form-group nm">
-                           <select class="form-control" id="source">
-                               <option value="Name">Full Name</option>
-                              <option value="position">Position</option>
-                               <option value="company">Company</option>
+                           <select class="form-control" id="source"  name="type">
+                               <option value="I" <c:out value="${pageMaker.cri.type eq 'I' ?'selected':''}"/>>ID</option>
+                              <option value="N" <c:out value="${pageMaker.cri.type eq 'N' ?'selected':''}"/>>이름</option>
+                               <option value="D" <c:out value="${pageMaker.cri.type eq 'D' ?'selected':''}"/>>가입일</option>
                            </select>
                        </div>
                    </div>
+                   <input type="hidden" name="pageNum" value='${pageMarker.cri.pageNum}'>
+        			<input type="hidden" name="amount" value='${pageMarker.cri.amount}'>
                </div>
-           </div>
+           </form>
            
            <div class="row" >
          		<c:forEach items="${list}" var="i" varStatus="status" >
@@ -123,7 +124,7 @@
 	<div class="modal" id="modal" >
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close" style='float:right;'>X</button>
+					<button type="button" class="closeBtn" style='float:right;'>X</button>
 					<h4 class="modal-title">유저 정지 </h4>
 				</div>
 				<div class="modal-body">
@@ -143,7 +144,7 @@
 				</div><br/>
 				<div class="modal-footer">
 					<button type="button" id="register">등록</button>
-					<button type="button" class="close">닫기</button>
+					<button type="button" class="closeBtn">닫기</button>
 				</div>
 				
 		</div>
@@ -153,7 +154,7 @@
 	<div class="letter_modal" id="letter_modal" >
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close" style='float:right;'>X</button>
+					<button type="button" class="closeBtn" style='float:right;'>X</button>
 					<h4 class="modal-title">쪽지 </h4>
 				</div>
 				<div class="modal-body">
@@ -177,17 +178,60 @@
 				</div><br/>
 				<div class="modal-footer">
 					<button type="button" id="letterRegister">등록</button>
-					<button type="button" class="close">닫기</button>
+					<button type="button" class="closeBtn">닫기</button>
 				</div>
 				
 		</div>
 	</div>
 
+	<div style="text-align:center;">
+		<ul class="pagination">
+			<c:if test="${pageMarker.prev}">
+				<li class="paginate_btn previous"><a href="${pageMarker.startPage -1}">이전</a>
+				</li>
+			</c:if>
+			
+			<c:forEach var="num" begin="${pageMarker.startPage}" end="${pageMarker.endPage}">
+				<li class="paginate_btn ${pageMarker.cri.pageNum==num ? "active": "" }">
+					<a href="${num}">${num}</a>
+				</li>
+			</c:forEach>
+			
+			<c:if test="${pageMarker.next}">
+				<li class="paginate_btn next"><a href="${pageMarker.endPage +1}">다음</a></li>
+			</c:if>
+		</ul>
+	</div>
+	
+	<form id='actionForm' action="/mypage/allUser" method="get" >
+		<input type="hidden" name='pageNum' value='${pageMarker.cri.pageNum}'/>
+		<input type="hidden" name='amount' value='${pageMarker.cri.amount}'/>
+		<input type="hidden" name='type' value='${pageMarker.cri.type}'/>
+		<input type="hidden" name='keyword' value='${pageMarker.cri.keyword}'/>
+	</form>
 	<%@ include file="../includes/admin_footer.jsp" %> 
 </body>
 <script type="text/javascript">
 	
 	$(document).ready(function () {
+		
+		/* 검색 */
+		$("#keyword").change(function(e){
+			e.preventDefault();
+			$(".well").find("input[name='pageNum']").val("1")
+			$(".well").submit()
+		})
+		
+		/* 페이지이동 */
+		$(".paginate_btn a").click(function(e){
+			e.preventDefault();
+			
+			var thisis=$(this).attr("href")
+			console.log(thisis)
+			
+			$("#actionForm").find("input[name='pageNum']").val(thisis)
+			$("#actionForm").submit()
+		})
 		
 				
 		var modal=$(".modal")
@@ -292,7 +336,7 @@
 		})
 		
 		
-		$(".close").click(function(){
+		$(".closeBtn").click(function(){
 			$(".modal").hide()
 			$(".letter_modal").hide()
 			
@@ -329,6 +373,7 @@
 				}
 			}) 
 		})
+		
 		
 		
 	})

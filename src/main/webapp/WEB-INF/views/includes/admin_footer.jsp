@@ -1,6 +1,5 @@
- <footer id="footer">
-        <!-- Visible when footer positions are fixed -->
-        <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+
+ 	<!-- <footer id="footer">
         <div class="show-fixed pull-right">
             <ul class="footer-list list-inline">
                 <li>
@@ -22,7 +21,7 @@
         </div>
         <div class="hide-fixed pull-right pad-rgt">Currently v2.2</div>
         <p class="pad-lft">&#0169; 2015 Your Company</p>
-    </footer>
+    </footer> -->
     <button id="scroll-top" class="btn"><i class="fa fa-chevron-up"></i></button>
 
    

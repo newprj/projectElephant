@@ -34,9 +34,11 @@ import com.green.service.QnaService;
 import com.green.service.ReplyService;
 import com.green.service.UserService;
 import com.green.service.VisitService;
+import com.green.vo.Criteria;
 import com.green.vo.GUserVO;
 import com.green.vo.GroupVO;
 import com.green.vo.LetterVO;
+import com.green.vo.PageDTO;
 import com.green.vo.UserVO;
 
 import lombok.Setter;
@@ -103,7 +105,7 @@ public class MypageController {
 	}
 	
 	@GetMapping("/allUser")
-	public String allUser(Model model,HttpServletResponse response,HttpSession session) {
+	public String allUser(Model model,Criteria cri,HttpServletResponse response,HttpSession session) {
 		UserVO login= (UserVO) session.getAttribute("user");
 		String id=login.getUser_id();
 		if(id==null || !(id.equals("admin"))) {
@@ -119,9 +121,11 @@ public class MypageController {
             
 			return "redirect:/user/login";
 		}
-		
+
+		int total=userService.totalCount(cri);
 		model.addAttribute("user",id);
-		model.addAttribute("list",userService.allList());
+		model.addAttribute("list",userService.listWithPaging(cri));
+		model.addAttribute("pageMarker",new PageDTO(cri, total));
 		return "/mypage/allUser";
 	}
 	
