@@ -5,8 +5,11 @@
 <mapper namespace="com.green.mapper.UserMapper">
 
 	<insert id="register">
+		<selectKey keyProperty="uno" order="BEFORE" resultType="long">
+			select seq_uno.nextval from dual
+		</selectKey>
 		insert into tbl_user(uno, user_id, password, name,  email) 
-			values(seq_uno.nextval, #{user_id},#{password},#{name},#{email})
+			values(#{uno}, #{user_id},#{password},#{name},#{email})
 	</insert>
 	
 	<update id="modify">

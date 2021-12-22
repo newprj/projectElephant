@@ -108,6 +108,11 @@
 	</update>
 	
 	
+	<select id="allList" resultType="com.green.vo.GroupVO">
+		select * from tbl_group
+	</select>
+	
+	
 	
 </mapper>
 

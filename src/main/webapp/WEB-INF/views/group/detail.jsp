@@ -90,7 +90,8 @@ prefix="c" %>
 					signupform = {
           	user_id: $('input[name="user_id"]').val(),
          		group_name: '${one.group_name}',
-         		leader : "N"
+         		leader : "N",
+         		authorized :"N"
         	}
          
         signupGroup(signupform)
