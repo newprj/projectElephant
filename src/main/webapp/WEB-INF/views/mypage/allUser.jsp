@@ -5,7 +5,7 @@
 <style>
 
 
- .modal,.letter_modal {
+ #modal,#letter_modal {
 	display:none;
 	position: fixed;
 	z-index: 9999;
@@ -18,7 +18,7 @@
 	background-color:rgba(0,0,0,0.4);
 }
 
-.modal-content{
+#modal-content{
 	background-color:#fefefe;
 	margin:15% auto;
 	padding: 20px;
@@ -118,13 +118,44 @@
          </div>
        
     
-   
-
-	
-	
 	
 	<!-- 유저 정지 모달 -->
-	<div class="modal" id="modal" >
+	
+	<div class="col-lg-6 col-sm-12 col-md-6 col-xs-12" id="modal">
+      <div class="panel" id="modal-content">
+          <div class="panel-heading">
+              <h3 class="panel-title"> 유저 정지/해지 </h3>
+          </div>
+          <div class="panel-body">
+              <form class="form-horizontal form-bordered">
+                  <div class="form-group nb">
+                      <label class="control-label col-md-2">ID</label>
+                     <div class="col-md-10">
+                          <input type="text" class="form-control " name="modelId">
+                      </div>
+                  </div>
+                  <div class="form-group nb">
+                      <label class="control-label col-md-2">이유</label>
+                      <div class="col-md-10">
+                          <textarea type="text" class="form-control " name="modalContent"></textarea>
+                      </div>
+                  </div>
+                  <div class="form-group nb">
+                     
+                      <div class="col-md-10">
+                          <input type="text"  class="form-control " name="modalDate">
+                      </div>
+                  </div>
+                  <div id="demo-summernote"></div>
+                  <div class="pad-top"> 
+                      <button class="btn btn-info" id="register"><i class="fa fa-send"></i> Send </button>
+                       <button class="btn btn-default" ><i class="fa fa-remove"></i> Close </button>
+				 </div>
+                </form>
+            </div>
+        </div>
+    </div>
+	<!-- <div class="modal" id="modal" >
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="closeBtn" style='float:right;'>X</button>
@@ -151,41 +182,43 @@
 				</div>
 				
 		</div>
-	</div>
-	
+	</div> -->
 	<!-- 쪽지 모달 -->
-	<div class="letter_modal" id="letter_modal" >
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="closeBtn" style='float:right;'>X</button>
-					<h4 class="modal-title">쪽지 </h4>
-				</div>
-				<div class="modal-body">
-					<div class="modal-group">
-						<label>보내는 사람</label><br/>
-						<input name="writeId"/>
-					</div>
-					<div class="modal-group">
-						<label>받는 사람</label><br/>
-						<input name="recipientId"/>
-					</div>
-					<div class="modal-group">
-						<label>내용</label><br/>
-						<textarea name="letterContent"></textarea>
-						
-					</div>
-					<div class="modal-group">
-						<label>날짜</label><br/>
-						<input name="letterDate"/>
-					</div>
-				</div><br/>
-				<div class="modal-footer">
-					<button type="button" id="letterRegister">등록</button>
-					<button type="button" class="closeBtn">닫기</button>
-				</div>
-				
-		</div>
-	</div>
+	<div class="col-lg-6 col-sm-12 col-md-6 col-xs-12" id="letter_modal">
+      <div class="panel" id="modal-content">
+          <div class="panel-heading">
+              <h3 class="panel-title"> Message </h3>
+          </div>
+          <div class="panel-body">
+              <form class="form-horizontal form-bordered">
+                  <div class="form-group nb">
+                      <label class="control-label col-md-2">보내는 사람</label>
+                     <div class="col-md-10">
+                          <input type="text" class="form-control " name="writeId">
+                      </div>
+                  </div>
+                  <div class="form-group nb">
+                      <label class="control-label col-md-2">받는사람</label>
+                      <div class="col-md-10">
+                          <input type="text" class="form-control " name="recipientId">
+                      </div>
+                  </div>
+                  <div class="form-group nb">
+                      <label class="control-label col-md-2" >내용</label>
+                      <div class="col-md-10">
+                          <textarea  class="form-control " name="letterContent"></textarea>
+                      </div>
+                  </div>
+                  <div id="demo-summernote"></div>
+                  <div class="pad-top"> 
+                      <button class="btn btn-info" id="letterRegister"><i class="fa fa-send"></i> Send </button>
+                       <button class="btn btn-default" ><i class="fa fa-remove"></i> Close </button>
+				 </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
 
 	<div style="text-align:center;">
 		<ul class="pagination">
@@ -240,7 +273,7 @@
 		})
 		
 				
-		var modal=$(".modal")
+		var modal=$("#modal")
 		var modalContent=modal.find("textarea[name='modalContent']")
 		var modalId=modal.find("input[name='modelId']")
 		var modalDate=modal.find("input[name='modalDate']")
@@ -250,7 +283,7 @@
 		$(".susp").click(function(e){
 			console.log('회원정지 버튼 눌림')
 			modalDate.closest('div').hide()
-			$(".modal").show()
+			$("#modal").show()
 			
 			var idx=$(".susp").index(this)
 			var uid=$("#userId"+idx).text()
@@ -298,7 +331,7 @@
 		
 		
 		/* 쪽지 */
-		var letterModal=$(".letter_modal")
+		var letterModal=$("#letter_modal")
 		var modalwriteId=letterModal.find("input[name='writeId']")
 		var modalrecipientId=letterModal.find("input[name='recipientId']")
 		var letterDate=letterModal.find("input[name='letterDate']")
@@ -308,7 +341,7 @@
 			console.log('쪽지 버튼 눌림')
 			
 			letterDate.closest('div').hide()
-			$(".letter_modal").show()
+			$("#letter_modal").show()
 			var idx=$(".letterBtn").index(this)
 			var uid=$("#userId"+idx).text()
 			
@@ -342,11 +375,7 @@
 		})
 		
 		
-		$(".closeBtn").click(function(){
-			$(".modal").hide()
-			$(".letter_modal").hide()
-			
-		})
+
 		
 		$('ul.tabs li').click(function(){
 			var tab_id = $(this).attr('data-tab');
