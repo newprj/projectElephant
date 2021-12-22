@@ -10,7 +10,9 @@ public interface ReplyMapper {
 	public BoardReplyVO getReplyOne(Long rno);
 	public int registerReply(BoardReplyVO vo);
 	public int updateReply(BoardReplyVO vo);
+	
 	public int deleteReply(Long rno);
-
+	public int deleteReplyByBno(Long bno);
+	
 	public List<BoardReplyVO> myReply(String replyer);
 }
