@@ -149,7 +149,7 @@ prefix="c" %>
 				</div>
 			</div>
 			<div class="button">
-				<button class="create btn btn-default">수정</button>
+				<button class="modify btn btn-default">수정</button>
 				<button type="reset" class="btn btn-default">리셋</button>
 				<button class="btn btn-default go_board">리셋</button>
 			</div>
