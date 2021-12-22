@@ -121,9 +121,7 @@
             </div>
         </div>	
      </div>
-	<nav>
-		<h5 id='today'><fmt:formatDate value="<%= today %>" pattern="yyyy-MM-dd" /> 방문자 :  ${visit}명 </h5>
-	</nav>
+	
 	<h3>방문자 평균 그래프로 보이게</h3>
 	
 	

@@ -154,6 +154,33 @@ public class MypageController {
 		model.addAttribute("user",id);
 		return "/mypage/allQna";
 	}
+	
+	@GetMapping("/allMessage")
+	public String allMessage(Model model,Criteria cri,HttpServletResponse response,HttpSession session) {
+		UserVO login= (UserVO) session.getAttribute("user");
+		String id=login.getUser_id();
+		if(id==null || !(id.equals("admin"))) {
+			response.setContentType("text/html; charset=UTF-8");
+            PrintWriter out;
+			try {
+				out = response.getWriter();
+				out.println("<script>alert('관리자가 아닌 접근입니다.'); history.go(-1);</script>");
+	            out.flush();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+            
+			return "redirect:/user/login";
+		}
+		
+		
+		int total=qnaService.totalCount(cri);
+		model.addAttribute("pageMarker",new PageDTO(cri, total));
+		
+		return "/mypage/allMessage";
+	}
+	
+	
 	@ResponseBody
 	@PostMapping(value="/susp" , consumes = "application/json", produces = {MediaType.TEXT_PLAIN_VALUE})
 	public ResponseEntity<String> suspInsert(@RequestBody UserVO vo){

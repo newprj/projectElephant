@@ -278,7 +278,7 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 	                            
 	                        </li>
 	                        <li>
-	                            <a href="#"> Message </a>
+	                            <a href="/mypage/allMessage"> Message </a>
 	                        </li>
 	                        <li>
 	                            <a href="calendar.html"> Calendar </a>
