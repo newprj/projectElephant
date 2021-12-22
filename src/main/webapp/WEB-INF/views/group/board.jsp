@@ -33,7 +33,7 @@ uri="http://java.sun.com/jsp/jstl/functions"%>
 				padding: 50px 0;
 			}
 			div.wrapper {
-				width: 85%;
+				width: 70%;
 				height: 90%;
 				background-color: white;
 				box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11),
@@ -64,12 +64,19 @@ uri="http://java.sun.com/jsp/jstl/functions"%>
 				border-radius: 50%;
 				color: #fff;
 			}
+			div.head{
+				color: #000;
+    		border-left: 5px solid #5ec2dd;
+				padding: 10px 3em 8px 15px;
+				margin-bottom: 10px;
+			}
  
+
 		</style>
 	</head>
 	<body>
 		<div class="wrapper">
-			<div class="alert alert-info media fade in">
+			<div class="head">
 				<div class="media-left">
 					<img
 						src="/resources/img/elephantIcon.png"
@@ -139,7 +146,7 @@ uri="http://java.sun.com/jsp/jstl/functions"%>
 						<tbody>
               <c:if test="${notice.size() > 0 || notice ne null}">
                 <c:forEach items="${notice}" var="board">
-                  <tr class="table-primary">
+                  <tr class="table-active">
                     <td></td>
                     <td>
                       <i class="fas fa-check"></i>
