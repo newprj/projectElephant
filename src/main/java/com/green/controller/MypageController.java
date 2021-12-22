@@ -121,7 +121,7 @@ public class MypageController {
             
 			return "redirect:/user/login";
 		}
-
+		cri.setAmount(12);
 		int total=userService.totalCount(cri);
 		model.addAttribute("user",id);
 		model.addAttribute("list",userService.listWithPaging(cri));

@@ -155,34 +155,7 @@
             </div>
         </div>
     </div>
-	<!-- <div class="modal" id="modal" >
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="closeBtn" style='float:right;'>X</button>
-					<h4 class="modal-title">유저 정지 </h4>
-				</div>
-				<div class="modal-body">
-					<div class="modal-group">
-						<label>ID</label><br/>
-						<input name="modelId"/>
-					</div>
-					<div class="modal-group">
-						<label>이유</label><br/>
-						<textarea name="modalContent"></textarea>
-						
-					</div>
-					<div class="modal-group">
-						<label>날짜</label><br/>
-						<input name="modalDate"/>
-					</div>
-				</div><br/>
-				<div class="modal-footer">
-					<button type="button" id="register">등록</button>
-					<button type="button" class="closeBtn">닫기</button>
-				</div>
-				
-		</div>
-	</div> -->
+	
 	<!-- 쪽지 모달 -->
 	<div class="col-lg-6 col-sm-12 col-md-6 col-xs-12" id="letter_modal">
       <div class="panel" id="modal-content">
