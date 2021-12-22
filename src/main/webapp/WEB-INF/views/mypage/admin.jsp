@@ -34,8 +34,9 @@
 
 </head>
 	
-	
-	
+
+<div class="boxed">
+<div id="content-container">
 	<div class="pageheader">
          <h3><i class="fa fa-home"></i> Dashboard </h3>
          <div class="breadcrumb-wrapper">
@@ -89,7 +90,7 @@
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-md-9 col-sm-9 col-xs-10">
-                                <h3 class="mar-no"> <span class="counter">Q&A 수</span></h3>
+                                <h3 class="mar-no"> <span class="counter">Q&A </span></h3>
                                 <p class="mar-ver-5"> Total Sales </p>
                             </div>
                             <div class="col-md-3 col-sm-3 col-xs-2"> <i class="fa fa-question fa-3x text-success"></i> </div>
@@ -106,8 +107,8 @@
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-md-9 col-sm-9 col-xs-10">
-                                <h3 class="mar-no"> <span class="counter">방문자 수 </span></h3>
-                                <p class="mar-ver-5"> Search Traffic</p>
+                                <h3 class="mar-no"> <span class="counter"> ${visit}명</span></h3>
+                                <p class="mar-ver-5"> 방문자 수 </p>
                             </div>
                             <div class="col-md-3 col-sm-3 col-xs-2"> <i class="fa fa-users fa-3x text-info"></i> </div>
                         </div>
@@ -121,7 +122,6 @@
         </div>	
      </div>
 	<nav>
-		<h5><a href="/user/logout">로그아웃</a></h5>
 		<h5 id='today'><fmt:formatDate value="<%= today %>" pattern="yyyy-MM-dd" /> 방문자 :  ${visit}명 </h5>
 	</nav>
 	<h3>방문자 평균 그래프로 보이게</h3>
@@ -194,7 +194,7 @@
     	<div class="col-lg-12">
 	        <div class="panel">
 	            <div class="panel-heading">
-	                <h3 class="panel-title">Letter</h3>
+	                <h3 class="panel-title">최근 쪽지</h3>
 	            </div>
 	            <div class="panel-body">
 	                <div class="tab-base">
@@ -217,7 +217,7 @@
 	                                   </tr>
 	                                </thead>
 	                                <tbody>
-	                                	<c:forEach items="${letter}" var="i" varStatus="status"  begin="0" end='9'>
+	                                	<c:forEach items="${letter}" var="i" varStatus="status"  begin="0" end='5'>
 											<tr>
 												<td>${status.count}</td>
 												<td id='userId${status.index}'>${i.writer}</td>
@@ -308,9 +308,10 @@
 				
 		</div>
 	</div>
+	</div>
+</div>
+	<%@ include file="../includes/admin_footer.jsp" %> 
 
-		<%@ include file="../includes/admin_footer.jsp" %> 
-</body>
 <script type="text/javascript">
 	
 	$(document).ready(function () {

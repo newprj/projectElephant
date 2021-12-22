@@ -1,33 +1,33 @@
+
 <!DOCTYPE html>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<html lang="en">
+<html lang="zxx">
     <head>
+        <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>마이 페이지</title>
-        <link rel="shortcut icon" href="#">
+        <title> FAQ | SmartAdmin - Responsive admin template..</title>
+        <link rel="shortcut icon" href="img/favicon.ico">
         <!--STYLESHEET-->
         <!--=================================================-->
         <!--Roboto Slab Font [ OPTIONAL ] -->
         <link href="http://fonts.googleapis.com/css?family=Roboto+Slab:400,300,100,700" rel="stylesheet">
         <link href="http://fonts.googleapis.com/css?family=Roboto:500,400italic,100,700italic,300,700,500italic,400" rel="stylesheet">
         <!--Bootstrap Stylesheet [ REQUIRED ]-->
-        <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/bootstrap.min.css" rel="stylesheet">
         <!--Jasmine Stylesheet [ REQUIRED ]-->
-        <link href="/resources/css/style.css" rel="stylesheet">
+        <link href="css/style.css" rel="stylesheet">
         <!--Font Awesome [ OPTIONAL ]-->
-        <link href="/resources/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+        <link href="plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet">
         <!--Switchery [ OPTIONAL ]-->
-        <link href="/resources/plugins/switchery/switchery.min.css" rel="stylesheet">
+        <link href="plugins/switchery/switchery.min.css" rel="stylesheet">
         <!--Bootstrap Select [ OPTIONAL ]-->
-        <link href="/resources/plugins/bootstrap-select/bootstrap-select.min.css" rel="stylesheet">
+        <link href="plugins/bootstrap-select/bootstrap-select.min.css" rel="stylesheet">
         <!--Demo [ DEMONSTRATION ]-->
-        <link href="/resources/css/demo/jasmine.css" rel="stylesheet">
-        <!--SCRIPT-->
+        <link href="css/demo/jasmine.css" rel="stylesheet">
+        <!--/STYLESHEET-->
         <!--=================================================-->
         <!--Page Load Progress Bar [ OPTIONAL ]-->
-        <link href="/resources/plugins/pace/pace.min.css" rel="stylesheet">
-        <script src="/resources/plugins/pace/pace.min.js"></script>
+        <link href="plugins/pace/pace.min.css" rel="stylesheet">
+        <script src="plugins/pace/pace.min.js"></script>
     </head>
     <body>
         <div id="container" class="effect mainnav-full">
@@ -39,17 +39,16 @@
                     <!--================================-->
                     <div class="navbar-header">
                         <a href="index.html" class="navbar-brand">
-                        <!--코끼리 아이콘 넣기-->
                             <i class="fa fa-cube brand-icon"></i>
                             <div class="brand-title">
-                                <span class="brand-text">my page</span>
+                                <span class="brand-text">SmartAdmin</span>
                             </div>
                         </a>
                     </div>
                     <!--================================-->
                     <!--End brand logo & name-->
                     <!--Navbar Dropdown-->
-                    <!--==========메시지 알림 아이콘======================-->
+                    <!--================================-->
                     <div class="navbar-content clearfix">
                         <ul class="nav navbar-top-links pull-left">
                             <!--Messages Dropdown-->
@@ -72,7 +71,7 @@
                                                     <a href="#" class="media">
 
                                                         <div class="media-left">
-                                                            <img src="/resources/img/av2.png" alt="Profile Picture" class="img-circle img-sm">
+                                                            <img src="img/av2.png" alt="Profile Picture" class="img-circle img-sm">
                                                         </div>
                                                         <div class="media-body">
                                                             <div class="text-nowrap">Andy sent you a message</div>
@@ -84,7 +83,7 @@
                                                 <li>
                                                     <a href="#" class="media">
                                                         <div class="media-left">
-                                                            <img src="/resources/img/av4.png" alt="Profile Picture" class="img-circle img-sm">
+                                                            <img src="img/av4.png" alt="Profile Picture" class="img-circle img-sm">
                                                         </div>
                                                         <div class="media-body">
                                                             <div class="text-nowrap">Lucy sent you a message</div>
@@ -96,7 +95,7 @@
                                                 <li>
                                                     <a href="#" class="media">
                                                         <div class="media-left">
-                                                            <img src="/resources/img/av3.png" alt="Profile Picture" class="img-circle img-sm">
+                                                            <img src="img/av3.png" alt="Profile Picture" class="img-circle img-sm">
                                                         </div>
                                                         <div class="media-body">
                                                             <div class="text-nowrap">Jackson sent you a message</div>
@@ -108,7 +107,7 @@
                                                 <li>
                                                     <a href="#" class="media">
                                                         <div class="media-left">
-                                                            <img src="/resources/img/av6.png" alt="Profile Picture" class="img-circle img-sm">
+                                                            <img src="img/av6.png" alt="Profile Picture" class="img-circle img-sm">
                                                         </div>
                                                         <div class="media-body">
                                                             <div class="text-nowrap">Donna sent you a message</div>
@@ -120,7 +119,7 @@
                                                 <li>
                                                     <a href="#" class="media">
                                                         <div class="media-left">
-                                                            <img src="/resources/img/av4.png" alt="Profile Picture" class="img-circle img-sm">
+                                                            <img src="img/av4.png" alt="Profile Picture" class="img-circle img-sm">
                                                         </div>
                                                         <div class="media-body">
                                                             <div class="text-nowrap">Lucy sent you a message</div>
@@ -132,7 +131,7 @@
                                                 <li>
                                                     <a href="#" class="media">
                                                         <div class="media-left">
-                                                            <img src="/resources/img/av3.png" alt="Profile Picture" class="img-circle img-sm">
+                                                            <img src="img/av3.png" alt="Profile Picture" class="img-circle img-sm">
                                                         </div>
                                                         <div class="media-body">
                                                             <div class="text-nowrap">Jackson sent you a message</div>
@@ -229,11 +228,9 @@
                             <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
                             <!--End notifications dropdown-->
                         </ul>
-                        
-                        
                         <ul class="nav navbar-top-links pull-right">
                             <!--Profile toogle button-->
-                            <!--~~~~~~~~~~~~~~~이름, 사진, 크게~~~~~~~~~~~~~~~~~-->
+                            <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
                             <li class="hidden-xs" id="toggleFullscreen">
                                 <a class="fa fa-expand" data-toggle="fullscreen" href="#" role="button">
                                 <span class="sr-only">Toggle fullscreen</span>
@@ -245,7 +242,7 @@
                             <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
                             <li id="dropdown-user" class="dropdown">
                                 <a href="#" data-toggle="dropdown" class="dropdown-toggle text-right">
-                                    <span class="pull-right"> <img class="img-circle img-user media-object" src="/resources/img/av1.png" alt="Profile Picture"> </span>
+                                    <span class="pull-right"> <img class="img-circle img-user media-object" src="img/av1.png" alt="Profile Picture"> </span>
                                     <div class="username hidden-xs">John Doe</div>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right with-arrow">
@@ -270,8 +267,6 @@
                             <!--End user dropdown-->
                         </ul>
                     </div>
-                    
-                    
                     <!--================================-->
                     <!--End Navbar Dropdown-->
                     <nav class="navbar navbar-default megamenu">
@@ -295,7 +290,7 @@
                                 <!-- end standard drop down -->
                                 <!-- standard drop down -->
                                 <li class="dropdown">
-                                    <a href="#" data-toggle="dropdown" class="dropdown-toggle"> Q&A <b class="caret"></b></a>
+                                    <a href="#" data-toggle="dropdown" class="dropdown-toggle"> Ui Elements <b class="caret"></b></a>
                                     <ul class="dropdown-menu" role="menu">
                                         <li><a href="ui-animation.html"> CSS3 Animation </a></li>
                                         <li><a href="ui-panel.html">Panel </a></li>
@@ -317,7 +312,7 @@
                                 <!-- end standard drop down -->
                                 <!-- standard drop down -->
                                 <li class="dropdown">
-                                    <a href="#" data-toggle="dropdown" class="dropdown-toggle"> group <b class="caret"></b></a>
+                                    <a href="#" data-toggle="dropdown" class="dropdown-toggle"> Pages <b class="caret"></b></a>
                                     <ul class="dropdown-menu" role="menu">
                                         <li><a href="pages-faq.html"> FAQ </a></li>
                                         <li><a href="pages-gallery.html"> Gallery </a></li>
@@ -334,14 +329,98 @@
                                     <!-- end dropdown-menu -->
                                 </li>
                                 <!-- end standard drop down -->
-                                                             <!-- standard drop down -->
-                                
+                                <!-- standard drop down -->
+                                <li class="dropdown">
+                                    <a href="#" data-toggle="dropdown" class="dropdown-toggle"> Tables <b class="caret"></b></a>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a href="table-static.html"> Static Table </a></li>
+                                        <li><a href="table-datatable.html"> Data table </a></li>
+                                        <li><a href="table-footable.html"> Foo Table </a></li>
+                                    </ul>
+                                    <!-- end dropdown-menu -->
+                                </li>
+                                <!-- end standard drop down -->
+                                <!-- standard drop down -->
+                                <li class="dropdown">
+                                    <a href="#" data-toggle="dropdown" class="dropdown-toggle"> Forms <b class="caret"></b></a>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a href="forms-layout.html"> Form Layout </a></li>
+                                        <li><a href="forms-switchery.html"> Form Switchery </a></li>
+                                        <li><a href="forms-components.html"> Form Components </a></li>
+                                        <li><a href="forms-validation.html"> Form Validation </a></li>
+                                        <li><a href="forms-wizard.html"> Form Wizard </a></li>
+                                    </ul>
+                                    <!-- end dropdown-menu -->
+                                </li>
+                                <!-- end standard drop down -->
+                                <!-- standard drop down -->
+                                <li class="dropdown">
+                                    <a href="#" data-toggle="dropdown" class="dropdown-toggle"> Charts <b class="caret"></b></a>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a href="charts-flot.html"> Flot Chart </a></li>
+                                        <li><a href="charts-morris.html"> Morris Chart </a></li>
+                                    </ul>
+                                    <!-- end dropdown-menu -->
+                                </li>
+                                <!-- end standard drop down -->
                                 <!-- standard drop down -->
                                 <li>
                                     <a href="calendar.html"> Calendar </a>
                                 </li>
                                 <!-- end standard drop down -->
-                               
+                                <!-- standard drop down -->
+                                <li>
+                                    <a href="ui-widgets.html"> Widgets </a>
+                                </li>
+                                <!-- end standard drop down -->
+                                <!-- standard drop down -->
+                                <li class="dropdown">
+                                    <a href="#" data-toggle="dropdown" class="dropdown-toggle"> Mail <b class="caret"></b></a>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a href="mail-inbox.html"> Inbox </a></li>
+                                        <li><a href="mail-compose.html"> Compose Mail </a></li>
+                                        <li><a href="mail-mailview.html"> View Mail </a></li>
+                                    </ul>
+                                    <!-- end dropdown-menu -->
+                                </li>
+                                <!-- end standard drop down -->
+                                <!-- standard drop down -->
+                                <li class="dropdown">
+                                    <a href="#" data-toggle="dropdown" class="dropdown-toggle"> Maps <b class="caret"></b></a>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a href="maps-gmap.html"> Google Map </a></li>
+                                        <li><a href="maps-vectormap.html"> Vector Map </a></li>
+                                    </ul>
+                                    <!-- end dropdown-menu -->
+                                </li>
+                                <!-- end standard drop down -->
+                                <!-- standard drop down -->
+                                <li class="dropdown">
+                                    <a href="#" data-toggle="dropdown" class="dropdown-toggle"> Menu Levels <b class="caret"></b></a>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a href="#">Second Level</a></li>
+                                        <li><a href="#">Second Level</a></li>
+                                        <li class="dropdown-submenu">
+                                            <a href="#">Second Level</a>
+                                            <ul class="dropdown-menu">
+                                                <li class="dropdown-submenu">
+                                                    <a href="#">Third Level</a>
+                                                    <ul class="dropdown-menu">
+                                                        <li><a href="#">Fourth Level</a></li>
+                                                        <li><a href="#">Fourth Level</a></li>
+                                                    </ul>
+                                                </li>
+                                                <!-- end dropdown-submenu -->
+                                                <li><a href="#">Third Level</a></li>
+                                                <li><a href="#">Third level</a></li>
+                                            </ul>
+                                            <!-- end dropdown-menu -->
+                                        </li>
+                                        <li><a href="#">Creattica</a></li>
+                                    </ul>
+                                    <!-- end dropdown-menu -->
+                                </li>
+                                <!-- end standard drop down -->
                             </ul>
                             <!-- end nav navbar-nav -->
                         </div>
@@ -350,8 +429,6 @@
                     <!-- end navbar navbar-default megamenu -->
                 </div>
             </header>
-            
-            
             <!--===================================================-->
             <!--END NAVBAR-->
             <div class="boxed">
@@ -436,466 +513,241 @@
                             </div>
                         </div>
                     </div>
-                    <!--Page Title-->
-                    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
                     <div class="pageheader">
-                        <h3><i class="fa fa-home"></i> Dashboard </h3>
+                        <h3><i class="fa fa-home"></i> FAQ Page </h3>
                         <div class="breadcrumb-wrapper">
                             <span class="label">You are here:</span>
                             <ol class="breadcrumb">
                                 <li> <a href="#"> Home </a> </li>
-                                <li class="active"> Dashboard </li>
+                                <li class="active"> FAQ Page </li>
                             </ol>
                         </div>
                     </div>
-                    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-                    <!--End page title-->
                     <!--Page content-->
                     <!--===================================================-->
                     <div id="page-content">
-                        <!--Widget-4 -->
                         <div class="row">
-                            <div class="col-md-3 col-sm-6 col-xs-12">
+                            <div class="col-lg-9">
+                                <div class="well">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" placeholder="Search...">
+                                        <div class="input-group-btn">
+                                            <button class="btn btn-info btn-md" type="button">Search</button>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="panel">
                                     <div class="panel-body">
-                                        <div class="row">
-                                            <div class="col-md-9 col-sm-9 col-xs-10">
-                                                <h3 class="mar-no"> <span class="counter">50.5 GB</span></h3>
-                                                <p class="mar-ver-5"> Traffic this month </p>
-                                            </div>
-                                            <div class="col-md-3 col-sm-3 col-xs-2"> <i class="fa fa-shopping-cart fa-3x text-info"></i> </div>
-                                        </div>
-                                        <div class="progress progress-striped progress-sm">
-                                            <div style="width: 60%;" aria-valuemax="100" aria-valuemin="0" aria-valuenow="60" role="progressbar" class="progress-bar"> <span class="sr-only">60% Complete</span> </div>
-                                        </div>
-                                        <p> 4% higher than last month </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3 col-sm-6 col-xs-12">
-                                <div class="panel">
-                                    <div class="panel-body">
-                                        <div class="row">
-                                            <div class="col-md-9 col-sm-9 col-xs-10">
-                                                <h3 class="mar-no"> <span class="counter">26.8%</span></h3>
-                                                <p class="mar-ver-5">Server Load</p>
-                                            </div>
-                                            <div class="col-md-3 col-sm-3 col-xs-2"> <i class="fa fa-envelope fa-3x text-danger"></i> </div>
-                                        </div>
-                                        <div class="progress progress-striped progress-sm">
-                                            <div style="width: 60%;" aria-valuemax="100" aria-valuemin="0" aria-valuenow="60" role="progressbar" class="progress-bar progress-bar-danger"> <span class="sr-only">60% Complete</span> </div>
-                                        </div>
-                                        <p> 4% higher than last month </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3 col-sm-6 col-xs-12">
-                                <div class="panel widget">
-                                    <div class="panel-body">
-                                        <div class="row">
-                                            <div class="col-md-9 col-sm-9 col-xs-10">
-                                                <h3 class="mar-no"> <span class="counter">$14,500</span></h3>
-                                                <p class="mar-ver-5"> Total Sales </p>
-                                            </div>
-                                            <div class="col-md-3 col-sm-3 col-xs-2"> <i class="fa fa-users fa-3x text-success"></i> </div>
-                                        </div>
-                                        <div class="progress progress-striped progress-sm">
-                                            <div style="width: 60%;" aria-valuemax="100" aria-valuemin="0" aria-valuenow="60" role="progressbar" class="progress-bar progress-bar-success"> <span class="sr-only">60% Complete</span> </div>
-                                        </div>
-                                        <p> 4% higher than last month </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3 col-sm-6 col-xs-12">
-                                <div class="panel widget">
-                                    <div class="panel-body">
-                                        <div class="row">
-                                            <div class="col-md-9 col-sm-9 col-xs-10">
-                                                <h3 class="mar-no"> <span class="counter">65</span>%</h3>
-                                                <p class="mar-ver-5"> Search Traffic</p>
-                                            </div>
-                                            <div class="col-md-3 col-sm-3 col-xs-2"> <i class="fa fa-search fa-3x text-info"></i> </div>
-                                        </div>
-                                        <div class="progress progress-striped progress-sm">
-                                            <div style="width: 60%;" aria-valuemax="100" aria-valuemin="0" aria-valuenow="60" role="progressbar" class="progress-bar progress-bar-warning"> <span class="sr-only">60% Complete</span> </div>
-                                        </div>
-                                        <p> 4% higher than last month </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-9">
-                                <div class="panel">
-                                    <div class="panel-heading">
-                                        <h3 class="panel-title"> Network Performance </h3>
-                                    </div>
-                                    <div class="panel-body">
-                                       <div class="col-md-8">
-                                        <!--Flot Spline Chart placeholder -->
-                                        <div id="flot-spline" style="height:275px;"></div>
-                                        <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-                                       </div> 
-                                       <div class="col-md-4">
-                                            <ul class="list-unstyled">
-                                                <li class="mar-btm">
-                                                    <span class="label label-primary pull-right">75%</span>
-                                                    <p> <i class="fa fa-dashboard text-primary"></i> CPU Usage</p>
-                                                    <div class="progress progress-sm">
-                                                        <div class="progress-bar progress-bar-primary" style="width: 75%;">
-                                                            <span class="sr-only">75%</span>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li class="mar-btm">
-                                                    <span class="label label-danger pull-right">55%</span>
-                                                    <p><i class="fa fa-database text-danger"></i> Bandwidth</p>
-                                                    <div class="progress progress-sm">
-                                                        <div class="progress-bar progress-bar-danger" style="width: 55%;">
-                                                            <span class="sr-only">55%</span>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li class="mar-btm">
-                                                    <span class="label label-success pull-right">65%</span>
-                                                    <p><i class="fa fa-cubes text-success"></i> Memory Usage</p>
-                                                    <div class="progress progress-sm">
-                                                        <div class="progress-bar progress-bar-success" style="width: 65%;">
-                                                            <span class="sr-only">65%</span>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li class="mar-btm">
-                                                    <span class="label label-warning pull-right">45%</span>
-                                                    <p><i class="fa fa-hdd-o text-warning"></i> Disk Usage</p>
-                                                    <div class="progress progress-sm">
-                                                        <div class="progress-bar progress-bar-warning" style="width: 45%;">
-                                                            <span class="sr-only">45%</span>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li class="mar-btm">
-                                                    <span class="label label-mint pull-right">3/10</span>
-                                                    <p> <i class="fa fa-at"></i> Domain</p>
-                                                    <div class="progress progress-sm">
-                                                        <div class="progress-bar progress-bar-mint" style="width: 75%;">
-                                                            <span class="sr-only">75%</span>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                            </ul>                                       
-                                       </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="panel">
-                                    <div class="panel-heading">
-                                        <h3 class="panel-title"> Sales Chart </h3>
-                                    </div>
-                                    <div class="panel-body">
-                                        <!--Morris Area Chart placeholder-->
-                                        <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-                                        <div id="demo-morris-color-donut" style="height:275px"></div>
-                                        <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-8">
-                                <div class="panel">
-                                    <div class="panel-body">
-                                       <ul class="nav nav-section nav-justified">
-                                          <li>
-                                             <div class="section"> 
-                                               <h4 class="nm"> 67 GB </h4>
-                                                <p class="text-muted">Total Usage</p>
-                                             </div>
-                                          </li>
-                                          <li>
-                                             <div class="section"> 
-                                               <h4 class="nm"> 320 GB </h4>
-                                                <p class="text-muted">Total Space</p>
-                                             </div>
-                                          </li>
-                                          <li>
-                                             <div class="section"> 
-                                               <h4 class="nm"> 58% </h4>
-                                                <p class="text-muted">CPU</p>
-                                             </div>
-                                          </li>
-                                       </ul>
-                                        <!--Flot Area Chart placeholder-->
-                                        <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-                                        <div id="demo-realtime" style="height:265px"></div>
-                                        <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="panel">
-                                    <div class="panel-body">
-                                        <div id="carousel-example-vertical" class="carousel vertical slide" data-ride="carousel">
-                                            <div class="carousel-inner" role="listbox">
-                                                <div class="item active">
-                                                    <div class="ticker-headline">
-                                                        <div class="media">
-                                                            <span class="pull-left"><i class="fa fa-twitter fa-4x text-azure"></i></span>
-                                                            <div class="media-body">
-                                                                <div class="h4"><strong>Semantha Schwarz</strong> <small>1 hour ago</small></div>
-                                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id quam elementum odio tristique euismod. 
-                                                                    Suspendisse id nunc sed massa cursus efficitur. 
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="item">
-                                                    <div class="ticker-headline">
-                                                        <div class="media">
-                                                            <span class="pull-left"><i class="fa fa-facebook fa-4x text-primary"></i></span>
-                                                            <div class="media-body">
-                                                                <div class="h4"><strong>Semantha Schwarz</strong> <small>1 hour ago</small></div>
-                                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id quam elementum odio tristique euismod. 
-                                                                    Suspendisse id nunc sed massa cursus efficitur. Nullam id quam elementum odio tristique euismod. 
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="item">
-                                                    <div class="ticker-headline">
-                                                        <div class="media">
-                                                            <span class="pull-left"><i class="fa fa-google-plus fa-4x text-danger"></i></span>
-                                                            <div class="media-body">
-                                                                <div class="h4"><strong>Semantha Schwarz</strong> <small>1 hour ago</small></div>
-                                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id quam elementum odio tristique euismod. 
-                                                                    Suspendisse id nunc sed massa cursus efficitur. 
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!-- Controls -->
-                                            <a class="up carousel-control" href="#carousel-example-vertical" role="button" data-slide="prev">
-                                            <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
-                                            <span class="sr-only">Previous</span>
-                                            </a>
-                                            <a class="down carousel-control" href="#carousel-example-vertical" role="button" data-slide="next">
-                                            <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
-                                            <span class="sr-only">Next</span>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="panel papernote">
-                                    <div class="panel-body pad-no">
-                                        <div class="carousel slide" id="c-slide" data-ride="carousel">
-                                            <div class="carousel-inner">
-                                                <div class="item active">
-                                                    <h4>This is my note #1</h4>
-                                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id quam elementum odio tristique euismod. 
-                                                        Suspendisse id nunc sed massa cursus efficitur. 
-                                                    </p>
-                                                </div>
-                                                <div class="item">
-                                                    <h4>This is my note #2</h4>
-                                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id quam elementum odio tristique euismod. 
-                                                        Suspendisse id nunc sed massa cursus efficitur. 
-                                                    </p>
-                                                </div>
-                                                <div class="item">
-                                                    <h4>This is my note #3</h4>
-                                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id quam elementum odio tristique euismod. 
-                                                        Suspendisse id nunc sed massa cursus efficitur. 
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="panel">
-                                    <div class="panel-heading">
-                                        <h3 class="panel-title">Letter</h3>
-                                    </div>
-                                    <div class="panel-body">
-                                        <!--Default Tabs (Left Aligned)--> 
+                                        <!-- GENERAL -->
                                         <!--===================================================-->
-                                        <div class="tab-base">
-                                            <!--Nav Tabs-->
-                                            <ul class="nav nav-tabs">
-                                                <li class="active"> <a data-toggle="tab" href="#demo-lft-tab-1"> 받은 쪽지 </a> </li>
-                                                <li> <a data-toggle="tab" href="#demo-lft-tab-2">보낸 쪽지</a> </li>
-                                            </ul>
-                                            <!--Tabs Content-->
-                                            <div class="tab-content">
-                                                <div id="demo-lft-tab-1" class="tab-pane fade active in">
-                                                    <!--Hover Rows--> 
-                                                    <!--===================================================-->
-                                                    <table class="table table-hover table-vcenter">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>#</th>
-                                                                <th>Project</th>
-                                                                <th>Project Deadline</th>
-                                                                <th>Status</th>
-                                                                <th class="hidden-xs">Clients</th>
-                                                                <th class="hidden-xs">Progress</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td>1</td>
-                                                                <td>IT Help Desk</td>
-                                                                <td>11 May 2016</td>
-                                                                <td>
-                                                                    <div class="label label-table label-info">Block</div>
-                                                                </td>
-                                                                <td class="hidden-xs">Semantha Armstrong</td>
-                                                                <td class="hidden-xs">
-                                                                    <div class="progress progress-striped progress-sm">
-                                                                        <div class="progress-bar progress-bar-primary" style="width: 25%;"></div>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>2</td>
-                                                                <td>Product Dev</td>
-                                                                <td>15 May 2016</td>
-                                                                <td>
-                                                                    <div class="label label-table label-danger">On Hold</div>
-                                                                </td>
-                                                                <td class="hidden-xs">Jonathan Smith</td>
-                                                                <td class="hidden-xs">
-                                                                    <div class="progress progress-striped progress-sm">
-                                                                        <div class="progress-bar progress-bar-success" style="width: 35%;"></div>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>3</td>
-                                                                <td>Website Redesign</td>
-                                                                <td>19 May 2016</td>
-                                                                <td>
-                                                                    <div class="label label-table label-success">Approved</div>
-                                                                </td>
-                                                                <td class="hidden-xs">Jacob Armstrong</td>
-                                                                <td class="hidden-xs">
-                                                                    <div class="progress progress-striped progress-sm">
-                                                                        <div class="progress-bar progress-bar-info" style="width: 85%;"></div>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>4</td>
-                                                                <td>Local Ad</td>
-                                                                <td>25 May 2016</td>
-                                                                <td>
-                                                                    <div class="label label-table label-warning">Pending</div>
-                                                                </td>
-                                                                <td class="hidden-xs">Sandra Smith</td>
-                                                                <td class="hidden-xs">
-                                                                    <div class="progress progress-striped progress-sm">
-                                                                        <div class="progress-bar progress-bar-warning" style="width: 45%;"></div>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                           
-                                                        </tbody>
-                                                    </table>
-                                                    <!--===================================================--> 
-                                                    <!--End Hover Rows--> 
+                                        <h3 class="pad-all bord-btm text-thin">General</h3>
+                                        <div id="demo-acc-faq" class="panel-group accordion">
+                                            <div class="panel">
+                                                <!-- Question -->
+                                                <div class="text-semibold pad-hor">
+                                                    <a href="#demo-acc-faq1" data-toggle="collapse" data-parent="#demo-acc-faq">
+                                                       <h3> <i class="fa fa-bullhorn"></i> How do I reset the admin password?</h3>
+                                                    </a>
+                                                    <p> Added by Alex Smith <i class="fa fa-clock-o"></i> Today 2:40 pm - 24.06.2014 </p>
                                                 </div>
-                                                <div id="demo-lft-tab-2" class="tab-pane fade">
-                                                    <div class="pad-btm form-inline">
-                                                        <div class="row">
-                                                            <div class="col-sm-6 text-xs-center">
-                                                                <div class="form-group">
-                                                                    <label class="control-label">Status</label>
-                                                                    <select id="demo-foo-filter-status" class="form-control">
-                                                                        <option value="">Show all</option>
-                                                                        <option value="active">Active</option>
-                                                                        <option value="disabled">Disabled</option>
-                                                                        <option value="suspended">Suspended</option>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-sm-6 text-xs-center text-right">
-                                                                <div class="form-group">
-                                                                    <input id="demo-foo-search" type="text" placeholder="Search" class="form-control" autocomplete="off">
-                                                                </div>
-                                                            </div>
-                                                        </div>
+                                                <!-- Answer -->
+                                                <div id="demo-acc-faq1" class="collapse in">
+                                                    <div class="pad-all">
+                                                        Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
                                                     </div>
-                                                    <!-- Foo Table - Filtering -->
-                                                    <!--===================================================-->
-                                                    <table id="demo-foo-filtering" class="table table-bordered table-hover toggle-circle" data-page-size="7">
-                                                        <thead>
-                                                            <tr>
-                                                                <th data-toggle="true">First Name</th>
-                                                                <th class="hidden-xs">Last Name</th>
-                                                                <th data-hide="phone, tablet">Job Title</th>
-                                                                <th data-hide="phone, tablet" class="hidden-xs">DOB</th>
-                                                                <th data-hide="phone, tablet">Status</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td>Albert</td>
-                                                                <td class="hidden-xs">Desouza</td>
-                                                                <td>System Architect</td>
-                                                                <td class="hidden-xs">22 Jun 1972</td>
-                                                                <td><span class="label label-table label-success">Active</span></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>Teresa </td>
-                                                                <td class="hidden-xs">L. Doe</td>
-                                                                <td>Pre-Sales Support</td>
-                                                                <td class="hidden-xs">3 Oct 1981</td>
-                                                                <td><span class="label label-table label-dark">Disabled</span></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>Veronica </td>
-                                                                <td class="hidden-xs">Gusikowski</td>
-                                                                <td>Civil Engineer/td> 
-                                                                <td class="hidden-xs">19 Apr 1969</td>
-                                                                <td><span class="label label-table label-danger">Suspended</span></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>Bruce </td>
-                                                                <td class="hidden-xs">Rogahn</td>
-                                                                <td>CEO</td>
-                                                                <td class="hidden-xs">13 Dec 1977</td>
-                                                                <td><span class="label label-table label-success">Active</span></td>
-                                                            </tr>
-                                                            
-                                                        </tbody>
-                                                        <tfoot>
-                                                            <tr>
-                                                                <td colspan="5">
-                                                                    <div class="text-right">
-                                                                        <ul class="pagination"></ul>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                        </tfoot>
-                                                    </table>
-                                                    <!--===================================================-->
-                                                    <!-- End Foo Table - Filtering -->
                                                 </div>
-                                                
+                                            </div>
+                                            <div class="panel">
+                                                <!-- Question -->
+                                                <div class="text-semibold pad-hor">
+                                                    <a href="#demo-acc-faq2" data-toggle="collapse" data-parent="#demo-acc-faq"> 
+                                                      <h3><i class="fa fa-bullhorn"></i> How do I upgrade to the latest servicepack/hotfix/patch? </h3>
+                                                    </a>
+                                                    <p class="media-heading"> <small>Added by Alex Smith <i class="fa fa-clock-o"></i> Today 2:40 pm - 24.06.2014</small> </p>
+                                                </div>
+                                                <!-- Answer -->
+                                                <div id="demo-acc-faq2" class="collapse">
+                                                    <div class="pad-all">
+                                                        Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="panel">
+                                                <!-- Question -->
+                                                <div class="text-semibold pad-hor">
+                                                    <a href="#demo-acc-faq3" data-toggle="collapse" data-parent="#demo-acc-faq">
+                                                      <h3><i class="fa fa-bullhorn"></i> How do my customers access the customer portal?</h3>
+                                                    </a>
+                                                    <p class="media-heading"> <small>Added by Alex Smith <i class="fa fa-clock-o"></i> Today 2:40 pm - 24.06.2014</small> </p>
+                                                </div>
+                                                <!-- Answer -->
+                                                <div id="demo-acc-faq3" class="collapse">
+                                                    <div class="pad-all">
+                                                        Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                        <!--===================================================--> 
-                                        <!--End Default Tabs (Left Aligned)--> 
+                                        <!--===================================================-->
+                                        <!-- ACCOUNT -->
+                                        <!--===================================================-->
+                                        <h3 class="pad-all bord-btm text-thin">Account</h3>
+                                        <div id="demo-acc" class="panel-group accordion">
+                                            <div class="panel">
+                                                <!-- Question -->
+                                                <div class="text-semibold pad-hor">
+                                                    <a href="#demo-acc-faq4" data-toggle="collapse" data-parent="#demo-acc">
+                                                      <h3> <i class="fa fa-bullhorn"></i> How can i change my hosting plan ? </h3>
+                                                    </a>
+                                                    <p class="media-heading"> <small>Added by Alex Smith <i class="fa fa-clock-o"></i> Today 2:40 pm - 24.06.2014</small> </p>
+                                                </div>
+                                                <!-- Answer -->
+                                                <div id="demo-acc-faq4" class="collapse">
+                                                    <div class="pad-all">
+                                                        Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="panel">
+                                                <!-- Question -->
+                                                <div class="text-semibold pad-hor">
+                                                    <a href="#demo-acc-faq5" data-toggle="collapse" data-parent="#demo-acc"> 
+                                                      <h3> <i class="fa fa-bullhorn"></i> How do I hide the customer portal page? </h3>
+                                                    </a>
+                                                    <p class="media-heading"> <small>Added by Alex Smith <i class="fa fa-clock-o"></i> Today 2:40 pm - 24.06.2014</small> </p>
+                                                </div>
+                                                <!-- Answer -->
+                                                <div id="demo-acc-faq5" class="collapse">
+                                                    <div class="pad-all">
+                                                        Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--===================================================-->
+                                        <!-- TECHNICAL -->
+                                        <!--===================================================-->
+                                        <h3 class="pad-all bord-btm text-thin">Technical</h3>
+                                        <div id="demo-acc-technical" class="panel-group accordion">
+                                            <div class="panel">
+                                                <!-- Question -->
+                                                <div class="text-semibold pad-hor">
+                                                    <a href="#demo-acc-faq6" data-toggle="collapse" data-parent="#demo-acc-technical">
+                                                      <h3><i class="fa fa-bullhorn"></i> How can I bind Support Center to a single IP Address? </h3> 
+                                                    </a>
+                                                    <p class="media-heading"> <small>Added by Alex Smith <i class="fa fa-clock-o"></i> Today 2:40 pm - 24.06.2014</small> </p>
+                                                </div>
+                                                <!-- Answer -->
+                                                <div id="demo-acc-faq6" class="collapse">
+                                                    <div class="pad-all">
+                                                        Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="panel">
+                                                <!-- Question -->
+                                                <div class="text-semibold pad-hor">
+                                                    <a href="#demo-acc-faq7" data-toggle="collapse" data-parent="#demo-acc-technical">
+                                                      <h3> <i class="fa fa-bullhorn"></i> How do I change the Web Server Port? </h3>
+                                                    </a>
+                                                    <p class="media-heading"> <small>Added by Alex Smith <i class="fa fa-clock-o"></i> Today 2:40 pm - 24.06.2014</small> </p>
+                                                </div>
+                                                <!-- Answer -->
+                                                <div id="demo-acc-faq7" class="collapse">
+                                                    <div class="pad-all">
+                                                        Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="panel">
+                                                <!-- Question -->
+                                                <div class="text-semibold pad-hor">
+                                                    <a href="#demo-acc-faq8" data-toggle="collapse" data-parent="#demo-acc-faq">
+                                                      <h3><i class="fa fa-bullhorn"></i> How do I change the database?</h3>
+                                                    </a>
+                                                    <p class="media-heading"> <small>Added by Alex Smith <i class="fa fa-clock-o"></i> Today 2:40 pm - 24.06.2014</small> </p>
+                                                </div>
+                                                <!-- Answer -->
+                                                <div id="demo-acc-faq8" class="collapse">
+                                                    <div class="pad-all">
+                                                        Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--===================================================-->
                                     </div>
                                 </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <!-- Tips Widget -->
+                                <!--===================================================-->
+                                <div class="mar-btm">
+                                    <button type="button" class="btn btn-default btn-block pad-ver">Ask Question</button>
+                                    <button type="button" class="btn btn-default btn-block pad-ver">Contact Us</button>
+                                </div>
+                                <!--===================================================-->
+                                <!-- Tips Widget -->
+                                <!--===================================================-->
+                                <div class="panel">
+                                    <div class="panel-heading">
+                                        <div class="panel-title">
+                                            <i class="fa fa-life-ring"></i> Your Latest Question
+                                        </div>
+                                    </div>
+                                    <div class="panel-body">
+                                        <ul class="list-unstyled">
+                                            <li>Dept: <strong class="text-dark"> Technical Support</strong> </li>
+                                            <li>Posted: 1 Day ago</li>
+                                            <li>Status: <strong class="text-primary">Open</strong> </li>
+                                        </ul>
+                                        <ul class="list-unstyled pt-10">
+                                            <li>Dept: <strong class="text-dark"> Billing</strong> </li>
+                                            <li>Posted: 1 week ago</li>
+                                            <li>Status: <strong class="text-primary">Open</strong> </li>
+                                        </ul>
+                                        <ul class="list-unstyled pt-10">
+                                            <li>Dept: <strong class="text-dark"> Billing</strong> </li>
+                                            <li>Posted: 1 week ago</li>
+                                            <li>Status: <strong class="text-primary">Open</strong> </li>
+                                        </ul>
+                                    </div>
+                                    <div class="panel-footer text-muted pad-10">
+                                        <ul class="list-unstyled">
+                                            <li>Dept: <strong class="text-dark"> Sales </strong> </li>
+                                            <li>Posted: 1 week ago</li>
+                                            <li>Status: <strong class="text-alert">Closed</strong> </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <!--===================================================-->
+                                <!-- Contact us widget -->
+                                <!--===================================================-->
+                                <div class="panel">
+                                    <div class="panel-heading">
+                                        <div class="panel-title">
+                                            <i class="fa fa-question-circle fa-lg fa-fw text-primary"></i> Can't find the answer?
+                                        </div>
+                                    </div>
+                                    <div class="panel-body">
+                                        <p>Feel free to contact us for any issues you might have with our products.</p>
+                                        <div class="form-group">
+                                            <label>E-mail</label>
+                                            <input type="email" class="form-control" placeholder="youremail@domain.com">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Subject</label>
+                                            <input type="email" class="form-control" placeholder="Message subject">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Message</label>
+                                            <textarea class="form-control" placeholder="Your message" rows="3"></textarea>
+                                        </div>
+                                        <button class="btn btn-default"><span class="fa fa-paperclip"></span> Add attachment</button>
+                                        <button class="btn btn-success pull-right"><span class="fa fa-send"></span> Send</button>
+                                    </div>
+                                </div>
+                                <!--===================================================-->
                             </div>
                         </div>
                     </div>
@@ -949,52 +801,22 @@
         <!--JAVASCRIPT-->
         <!--=================================================-->
         <!--jQuery [ REQUIRED ]-->
-        <script src="/resources/js/jquery-2.1.1.min.js"></script>
+        <script src="js/jquery-2.1.1.min.js"></script>
         <!--BootstrapJS [ RECOMMENDED ]-->
-        <script src="/resources/js/bootstrap.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
         <!--Fast Click [ OPTIONAL ]-->
-        <script src="/resources/plugins/fast-click/fastclick.min.js"></script>
+        <script src="plugins/fast-click/fastclick.min.js"></script>
         <!--Jquery Nano Scroller js [ REQUIRED ]-->
-        <script src="/resources/plugins/nanoscrollerjs/jquery.nanoscroller.min.js"></script>
+        <script src="plugins/nanoscrollerjs/jquery.nanoscroller.min.js"></script>
         <!--Metismenu js [ REQUIRED ]-->
-        <script src="/resources/plugins/metismenu/metismenu.min.js"></script>
+        <script src="plugins/metismenu/metismenu.min.js"></script>
         <!--Jasmine Admin [ RECOMMENDED ]-->
-        <script src="/resources/js/scripts.js"></script>
+        <script src="js/scripts.js"></script>
         <!--Switchery [ OPTIONAL ]-->
-        <script src="/resources/plugins/switchery/switchery.min.js"></script>
-        <!--Jquery Steps [ OPTIONAL ]-->
-        <script src="/resources/plugins/parsley/parsley.min.js"></script>
-        <!--Jquery Steps [ OPTIONAL ]-->
-        <script src="/resources/plugins/jquery-steps/jquery-steps.min.js"></script>
+        <script src="plugins/switchery/switchery.min.js"></script>
         <!--Bootstrap Select [ OPTIONAL ]-->
-        <script src="/resources/plugins/bootstrap-select/bootstrap-select.min.js"></script>
-        <!--Bootstrap Wizard [ OPTIONAL ]-->
-        <script src="/resources/plugins/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
-        <!--Masked Input [ OPTIONAL ]-->
-        <script src="/resources/plugins/masked-input/bootstrap-inputmask.min.js"></script>
-        <!--Bootstrap Validator [ OPTIONAL ]-->
-        <script src="/resources/plugins/bootstrap-validator/bootstrapValidator.min.js"></script>
-        <!--Flot Chart [ OPTIONAL ]-->
-        <script src="/resources/plugins/flot-charts/jquery.flot.min.js"></script>
-        <script src="/resources/plugins/flot-charts/jquery.flot.resize.min.js"></script>
-        <script src="/resources/plugins/flot-charts/jquery.flot.spline.js"></script>
-        <script src="/resources/plugins/moment/moment.min.js"></script>
-        <script src="/resources/plugins/moment-range/moment-range.js"></script>
-        <script src="/resources/plugins/flot-charts/jquery.flot.tooltip.min.js"></script>
-        <!--Flot Order Bars Chart [ OPTIONAL ]-->
-        <script src="/resources/plugins/flot-charts/jquery.flot.categories.js"></script>
-        <!--Morris.js [ OPTIONAL ]-->
-        <script src="/resources/plugins/morris-js/morris.min.js"></script>
-        <script src="/resources/plugins/morris-js/raphael-js/raphael.min.js"></script>        
-        <!--Easy Pie Chart [ OPTIONAL ]-->
-        <script src="/resources/plugins/easy-pie-chart/jquery.easypiechart.min.js"></script>
+        <script src="plugins/bootstrap-select/bootstrap-select.min.js"></script>
         <!--Fullscreen jQuery [ OPTIONAL ]-->
-        <script src="/resources/plugins/screenfull/screenfull.js"></script>
-        <!--Form Wizard [ SAMPLE ]-->
-        <script src="/resources/js/demo/index.js"></script>
-        <!--Form Wizard [ SAMPLE ]-->
-        <script src="/resources/js/demo/wizard.js"></script>
-        <!--Form Wizard [ SAMPLE ]-->
-        <script src="/resources/js/demo/form-wizard.js"></script>
+        <script src="plugins/screenfull/screenfull.js"></script>
     </body>
 </html>

@@ -32,6 +32,9 @@
 <title>관리자 페이지</title>
 
 </head>
+
+<div class="boxed">
+<div id="content-container">
       <div class="pageheader">
           <h3><i class="fa fa-home"></i> Users </h3>
           <div class="breadcrumb-wrapper">
@@ -209,8 +212,11 @@
 		<input type="hidden" name='type' value='${pageMarker.cri.type}'/>
 		<input type="hidden" name='keyword' value='${pageMarker.cri.keyword}'/>
 	</form>
+	
+	</div>
+</div>
 	<%@ include file="../includes/admin_footer.jsp" %> 
-</body>
+
 <script type="text/javascript">
 	
 	$(document).ready(function () {

@@ -96,9 +96,9 @@ public class MypageController {
 		model.addAttribute("week",visitService.weekCnt());
 		model.addAttribute("visit",visitService.todayCnt());
 		model.addAttribute("user",id);
-		model.addAttribute("list",userService.allList());	//allUser로 넘김
+		//model.addAttribute("list",userService.allList());	//allUser로 넘김
 		model.addAttribute("group",gService.showAll());
-		model.addAttribute("qna",qnaService.list());
+		model.addAttribute("qna",qnaService.list());		//allQna로 넘김
 		model.addAttribute("letter",letterService.myLetter(id));
 		model.addAttribute("sendletter",letterService.sendLetter(id));
 		return "/mypage/admin";
@@ -129,6 +129,28 @@ public class MypageController {
 		return "/mypage/allUser";
 	}
 	
+	@GetMapping("/allQna")
+	public String allQna(Model model,HttpServletResponse response,HttpSession session) {
+		UserVO login= (UserVO) session.getAttribute("user");
+		String id=login.getUser_id();
+		if(id==null || !(id.equals("admin"))) {
+			response.setContentType("text/html; charset=UTF-8");
+            PrintWriter out;
+			try {
+				out = response.getWriter();
+				out.println("<script>alert('관리자가 아닌 접근입니다.'); history.go(-1);</script>");
+	            out.flush();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+            
+			return "redirect:/user/login";
+		}
+		
+		model.addAttribute("qna",qnaService.list());	
+		model.addAttribute("user",id);
+		return "/mypage/allQna";
+	}
 	@ResponseBody
 	@PostMapping(value="/susp" , consumes = "application/json", produces = {MediaType.TEXT_PLAIN_VALUE})
 	public ResponseEntity<String> suspInsert(@RequestBody UserVO vo){
