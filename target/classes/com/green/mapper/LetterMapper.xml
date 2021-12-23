@@ -20,4 +20,31 @@
 	<delete id="delete">
 		delete from letter_tbl where writer=#{writer} and lno=#{lno}
 	</delete>
+	
+	<select id="totalCount" resultType="int">
+		select count(*) from letter_tbl where 
+		lno>0
+	</select>
+	
+	<select id="listqnaWithPaging" resultType="com.green.vo.LetterVO">
+		<![CDATA[
+			select lno, writer, recipient,content,reg_date
+			from (
+			    select /*+ index_desc(letter_tbl pk_lno) */
+				    rownum rn, lno, writer, recipient,content,reg_date
+				    	from 
+				    	(select * from  letter_tbl where recipient=#{recipient}
+					    	order by reg_date desc nulls LAST
+					   	)
+				    where 
+		]]>
+		
+	    <![CDATA[
+			    rownum <=#{cri.pageNum} * #{cri.amount}
+		    )
+		    where rn> (#{cri.pageNum}-1) * #{cri.amount}  
+		]]>
+	</select> 
+	
+	
 </mapper>

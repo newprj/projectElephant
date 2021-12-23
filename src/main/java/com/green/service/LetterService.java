@@ -13,7 +13,10 @@ import com.green.vo.QnaReplyVO;
 
 public interface LetterService {
 	public int insert(LetterVO vo);
-	public List<LetterVO> myLetter(String recipient);
 	public List<LetterVO> sendLetter(String writer);
 	public void delete(@Param("writer") String writer,@Param("lno") Long lno);
+	
+	public List<LetterVO> myLetter(String recipient);
+	public int totalCount(Criteria cri);
+	public List<LetterVO> listqnaWithPaging(Criteria cri,@Param("recipient") String recipient);
 }
