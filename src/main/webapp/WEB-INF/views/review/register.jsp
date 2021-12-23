@@ -4,21 +4,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
 <link href="/resources/assets/css/bootstrap.css" rel="stylesheet">
 <link href="/resources/assets/css/bootstrap-theme.css" rel="stylesheet">
 
-<link href="/resources/assets/css/simple-line-icons.css" rel="stylesheet">
-<link href="/resources/stylesheets/responsive-nav.css" rel="stylesheet">
-<link href="/resources/stylesheets/responsive-nav.css" rel="stylesheet">
-<link href="/resources/stylesheets/quotes.css" rel="stylesheet">
-<link href="/resources/stylesheets/services.css" rel="stylesheet">
-<link href="/resources/stylesheets/animate.css" rel="stylesheet">
-<link href="/resources/stylesheets/effects.css" rel="stylesheet">
-<link href="/resources/stylesheets/jquery.easy-pie-chart.css" rel="stylesheet">
-<link href="/resources/stylesheets/sidemenu.css" rel="stylesheet">
-<link href="/resources/stylesheets/slidingmenu.css" rel="stylesheet">
-<link href="/resources/stylesheets/metro-panel.css" rel="stylesheet">
-<link href="/resources/stylesheets/style.css" rel="stylesheet">
-<script src="/resources/javascripts/modernizr.custom.menu.js"></script>
-<script src="/resources/javascripts/modernizr.custom.quotes.js"></script>
-<script src="/resources/javascripts/modernizr.custom.services.js"></script>
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -37,6 +23,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
 	      <div class="liner"><span></span></div>
 	    </article>
 	</div>
+	<hr>
   <form>
   	<div class="container">
 			<section id="container">				
@@ -56,12 +43,6 @@ uri="http://java.sun.com/jsp/jstl/core"%>
 				</div>
 				<div class="form-group">
 					<input type="file" name="uploadFile" multiple /><br>
-				</div>
-				<div class="form-group">
-					<label for="attachFile" class="col-sm-2 control-label">첨부파일</label>
-					<c:forEach items="${attachFile}" var="attachFile">
-						[ <a href="/reviewUpload/download?uuid=${attachFile.uuid}">${attachFile.fileName}</a> ]
-					</c:forEach> <br>
 				</div>
 				<div>
 					<button type="button" id="create" class="btn btn-primary">등록하기</button>

@@ -94,16 +94,32 @@ public class CPageController {
 		log.info("탈퇴 컨트롤러 진입............."+member);
 
 		LetterVO letter = new LetterVO();
-		letter.setContent("그룹 가입에 실패하였습니다.");
+		letter.setContent("그룹에서 탈퇴되었습니다.");
 		letter.setRecipient(member);
 		letter.setWriter("관리자");
 		letter.setReg_date(new Date());
-		
+		GUserVO gUserVO = groupuserSevice.listByUSer(member).stream()
+				.filter(i -> i.getGroup_name().equals(group_name)).findAny().orElse(null);
+		gUserVO.setAuthorized("N");
+		groupuserSevice.update(gUserVO);
+		letterService.insert(letter);
+		return new ResponseEntity<>("success",HttpStatus.OK);
+    }
+	
+	@RequestMapping("/delete/{member}/{group_name}")
+    @ResponseBody
+    private ResponseEntity<String> delete(@PathVariable String member, @PathVariable String group_name){
+		log.info("삭제 컨트롤러 진입............."+member);
+
+		LetterVO letter = new LetterVO();
+		letter.setContent("그룹 가입에 거절되었습니다.");
+		letter.setRecipient(member);
+		letter.setWriter("관리자");
+		letter.setReg_date(new Date());
 		GUserVO gUserVO = groupuserSevice.listByUSer(member).stream()
 				.filter(i -> i.getGroup_name().equals(group_name)).findAny().orElse(null);
 		
-		gUserVO.setAuthorized("N");
-		groupuserSevice.update(gUserVO);
+		groupuserSevice.delete(gUserVO);
 		letterService.insert(letter);
 		return new ResponseEntity<>("success",HttpStatus.OK);
     }

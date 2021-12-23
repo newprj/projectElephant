@@ -1,11 +1,7 @@
 const MAX_SIZE = 5242880;
 const REGEX = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
 let attachList = [];
-<<<<<<< HEAD
 console.log("파일업로드 업그레이드  js 파일과 연결ㅇㅇㅇ")
-=======
-console.log("파일업로")
->>>>>>> branch 'main' of https://github.com/newprj/projectElephant.git
 
 
 const checkExtension = (fileName, fileSize) => {
@@ -22,6 +18,7 @@ const checkExtension = (fileName, fileSize) => {
 
 // 파일 첨부를 위한 첨부파일 객체 만들기
 const addAttachlist = (file) => {
+	
 	console.log("======================")
 	console.log(file.image)
 	attach = {
@@ -46,8 +43,9 @@ const getImgFileString = (file) => {
 		file.uuid +
 		" data-file='" +
 		fileCallpath +
-		"' data-type='image' class='btn btn-default deleteFile'> X </button><br>";
-	str += "<img src='/display?fileName=" + fileCallpath + "'></div></li>";
+		"' data-type='image' class='deleteFile'> 삭제 </button><br>";
+	str += "<img src='/display?fileName=";
+	str += fileCallpath + "'></div></li>";
 	return str;
 }
 
@@ -64,7 +62,7 @@ const getFileString = (file) =>{
 		file.uuid +
 		" data-file='" +
 		fileCallpath +
-		"' data-type='file' class='btn btn-default deleteFile' > 삭제 </button></div></li>";
+		"' data-type='file' class='deleteFile'> 삭제 </button></div></li>";
 	return str;
 }
 
@@ -107,7 +105,6 @@ const getFileList = (bno) =>{
 	}) //getJSON
 }
 
-<<<<<<< HEAD
 /*const getFileListAtRead = (bno) => {
 	console.log(" 리드 함수 ")
 	$.getJSON("/group/getFileList", {bno} , (files) =>{
@@ -132,5 +129,3 @@ const getFileList = (bno) =>{
 		$('.uploadResult ul').html(str)
 	}) //getJSON
 }*/
-=======
->>>>>>> branch 'main' of https://github.com/newprj/projectElephant.git

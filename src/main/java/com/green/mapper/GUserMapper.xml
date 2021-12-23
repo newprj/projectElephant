@@ -36,7 +36,7 @@
 	</update>
 	
 	<delete id="delete">
-		delete from tbl_groupuser where user_id = #{user_id}
+		delete from tbl_groupuser where user_id = #{user_id} and group_name = #{group_name}
 	</delete> 
 	
 	<select id="memberLimit" resultType ="int">

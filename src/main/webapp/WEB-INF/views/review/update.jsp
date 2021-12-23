@@ -4,24 +4,8 @@ uri="http://java.sun.com/jsp/jstl/core"%>
 <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet" />
 <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 <script src="/resources/js/fileUpload.js" type="text/javascript"></script>
-<link href="/resources/assets/css/bootstrap.css" rel="stylesheet">
-<link href="/resources/assets/css/bootstrap-theme.css" rel="stylesheet">
-
-<link href="/resources/assets/css/simple-line-icons.css" rel="stylesheet">
-<link href="/resources/stylesheets/responsive-nav.css" rel="stylesheet">
-<link href="/resources/stylesheets/responsive-nav.css" rel="stylesheet">
-<link href="/resources/stylesheets/quotes.css" rel="stylesheet">
-<link href="/resources/stylesheets/services.css" rel="stylesheet">
-<link href="/resources/stylesheets/animate.css" rel="stylesheet">
-<link href="/resources/stylesheets/effects.css" rel="stylesheet">
-<link href="/resources/stylesheets/jquery.easy-pie-chart.css" rel="stylesheet">
-<link href="/resources/stylesheets/sidemenu.css" rel="stylesheet">
-<link href="/resources/stylesheets/slidingmenu.css" rel="stylesheet">
-<link href="/resources/stylesheets/metro-panel.css" rel="stylesheet">
-<link href="/resources/stylesheets/style.css" rel="stylesheet">
-<script src="/resources/javascripts/modernizr.custom.menu.js"></script>
-<script src="/resources/javascripts/modernizr.custom.quotes.js"></script>
-<script src="/resources/javascripts/modernizr.custom.services.js"></script>
+<link href="/resources/css/style.css" rel="stylesheet" />
+<link href="/resources/css/bootstrap.min.css" rel="stylesheet" />
 <!DOCTYPE html>
 <html>
   <head>

@@ -4,25 +4,10 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script src="https://kit.fontawesome.com/6584921572.js" crossorigin="anonymous"></script>
-
-<link href="/resources/assets/css/bootstrap.css" rel="stylesheet">
-<link href="/resources/assets/css/bootstrap-theme.css" rel="stylesheet">
-
-<link href="/resources/assets/css/simple-line-icons.css" rel="stylesheet">
-<link href="/resources/stylesheets/responsive-nav.css" rel="stylesheet">
-<link href="/resources/stylesheets/responsive-nav.css" rel="stylesheet">
-<link href="/resources/stylesheets/quotes.css" rel="stylesheet">
-<link href="/resources/stylesheets/services.css" rel="stylesheet">
-<link href="/resources/stylesheets/animate.css" rel="stylesheet">
-<link href="/resources/stylesheets/effects.css" rel="stylesheet">
-<link href="/resources/stylesheets/jquery.easy-pie-chart.css" rel="stylesheet">
-<link href="/resources/stylesheets/sidemenu.css" rel="stylesheet">
-<link href="/resources/stylesheets/slidingmenu.css" rel="stylesheet">
-<link href="/resources/stylesheets/metro-panel.css" rel="stylesheet">
-<link href="/resources/stylesheets/style.css" rel="stylesheet">
-<script src="/resources/javascripts/modernizr.custom.menu.js"></script>
-<script src="/resources/javascripts/modernizr.custom.quotes.js"></script>
-<script src="/resources/javascripts/modernizr.custom.services.js"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<link href="/resources/css/style.css" rel="stylesheet" />
+<link href="/resources/css/bootstrap.min.css" rel="stylesheet" />
 
 
 <!DOCTYPE html>
@@ -41,29 +26,59 @@
 <input type="hidden" id="userCheck" value='${login}'>
 
 <style>
-/*---- Custom CSS ----*/
-.search-box {
-    margin: 100px auto;
-}
-.search-box .btn-light {
-    border: 1px solid #ced4da;
-}
-li {list-style: none; float: left; padding: 6px;}
+	.search-box {
+	    margin: 100px auto;
+	}
+	.search-box .btn-light {
+	    border: 1px solid #ced4da;
+	}
+	
+	.pagination{
+		color : #F79A9A;
+	}
+	#selectOption{
+		padding:0;
+	}
+	#searchForm{
+		padding:0;
+	}
+	
+
+	li {list-style: none; float: left; padding: 6px;}
 </style>
 <body>
 <div class="container">
 			<section id="container">
 				<form role="form" method="get">
-					<table class="table table-hover">
-						<thead>
+				<div class="search row" style="position :top-right;" >
+						<div class="col-xs-2 col-sm-2" id="selectOption" >
+							<select class="form-control" name="type">
+								 <option value="" <c:out value="${pageMaker.cri.type==null?'selected':''}"/>>선택</option>
+								<option value="T" <c:out value="${pageMaker.cri.type eq 'T' ?'selected':''}"/> >제목</option>
+								<option value="W" <c:out value="${pageMaker.cri.type eq 'W' ?'selected':''}"/>>작성자</option>			
+								<option value="TW" <c:out value="${pageMaker.cri.type eq 'TW'?'selected':''}"/>>제목 또는 작성자</option>	
+							</select>
+						</div>
+						<div class="col-xs-3 col-sm-3" id="searchForm">
+							<div class="input-group" >
+								<input type="text" class="form-control" placeholder="검색어 입력" name="keyword"> 
+								<span class="input-group-btn">
+									<button type="button" id="search" class="btn btn-outline-info" ><i class="fas fa-search"></i>검색</button>
+									<input type="hidden" name="pageNum" value='${pageMarker.cri.pageNum}'>
+							        <input type="hidden" name="amount" value='${pageMarker.cri.amount}'>	 	
+								</span>
+							</div>
+						</div>
+					</div>
+					<table class="table table-striped">
+						 <thead class="thead-dark">
 							<tr><th>번호</th><th>제목</th><th>작성자</th><th>등록일</th><th>조회수</th></tr>
 						</thead>
-						
 						<c:forEach items="${list}" var = "list">
 							<tr>
 								<td><c:out value="${list.rno}" /></td>
 								<td>
-									<a href="detailPage?no=${list.rno}">${list.title}</a>[${list.reply_count}] 
+									<a href="detailPage?no=${list.rno}">${list.title}</a>  <i class="fab fa-replyd"></i>(${list.reply_count})  
 									<c:if test="${list.attachedFile ne 0}">
 										[ <i class="fas fa-save"></i> ]
 									</c:if>
@@ -74,29 +89,9 @@ li {list-style: none; float: left; padding: 6px;}
 							</tr>
 						</c:forEach>
 					</table>
-					<button type="button" id="register" class="btn btn-primary" >후기등록</button>
-					<button type="button" class="btn btn-warning" onclick="location.href= '/review/list'">새로고침</button>
-					<div class="search row">
-						<div class="col-xs-2 col-sm-2">
-							<select class="form-control" name="type">
-								 <option value="" <c:out value="${pageMaker.cri.type==null?'selected':''}"/>>선택</option>
-								<option value="T" <c:out value="${pageMaker.cri.type eq 'T' ?'selected':''}"/> >제목</option>
-								<option value="W" <c:out value="${pageMaker.cri.type eq 'W' ?'selected':''}"/>>작성자</option>			
-								<option value="TW" <c:out value="${pageMaker.cri.type eq 'TW'?'selected':''}"/>>제목 또는 작성자</option>	
-							</select>
-						</div>
-						 
-						<div class="col-xs-10 col-sm-10">
-							<div class="input-group">
-								 <input type="text" class="form-control" placeholder="검색어 입력" name="keyword"> 
-								<span class="input-group-btn">
-									<button id="search" class="btn btn-primary" >검색</button>
-									<input type="hidden" name="pageNum" value='${pageMarker.cri.pageNum}'>
-							        <input type="hidden" name="amount" value='${pageMarker.cri.amount}'>	 	
-								</span>
-							</div>
-						</div>
-					</div>
+					<button type="button" id="register" class="btn btn-outline-info" ><i class="far fa-plus-square"></i>후기등록</button>
+					<button type="button" class="btn btn-outline-info" onclick="location.href= '/review/list'"><i class="fas fa-redo"></i>새로고침</button>
+					
 					<div class="col-md-offset-3">
 						<ul class="pagination">
 							<c:if test="${pageMarker.prev}">

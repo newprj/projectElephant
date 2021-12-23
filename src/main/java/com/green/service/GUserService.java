@@ -10,7 +10,7 @@ public interface GUserService {
 	public int groupSignUp(GUserVO vo); //insert
 	public List<GUserVO> listByUSer(String user);
 	////
-	public int delete (String member);
+	public int delete (GUserVO vo);
 	public void update (GUserVO vo);
 
 	public GUserVO read(String member);

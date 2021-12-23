@@ -12,7 +12,7 @@ public interface GUserMapper {
 	public List<GUserVO> listByGroup(String group_name); //getList
 	public List<GUserVO> listByUSer(String user);
 	////
-	public int delete (String member);
+	public int delete (GUserVO vo);
 	public void update (GUserVO vo);
 	public void remove (GUserVO vo);
 	public GUserVO read(String member);

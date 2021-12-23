@@ -57,9 +57,9 @@ public class GUserServiceImpl implements GUserService {
 	///////////////////////////
 	
 	@Override
-	public int delete(String member) {
+	public int delete(GUserVO vo) {
 		// TODO Auto-generated method stub
-		return mapper.delete(member);
+		return mapper.delete(vo);
 	}
 
 	@Override

@@ -6,27 +6,33 @@
 <link href="/resources/assets/css/bootstrap.css" rel="stylesheet">
 <link href="/resources/assets/css/bootstrap-theme.css" rel="stylesheet">
 
-<link href="/resources/assets/css/simple-line-icons.css" rel="stylesheet">
-<link href="/resources/stylesheets/responsive-nav.css" rel="stylesheet">
-<link href="/resources/stylesheets/responsive-nav.css" rel="stylesheet">
-<link href="/resources/stylesheets/quotes.css" rel="stylesheet">
-<link href="/resources/stylesheets/services.css" rel="stylesheet">
-<link href="/resources/stylesheets/animate.css" rel="stylesheet">
-<link href="/resources/stylesheets/effects.css" rel="stylesheet">
-<link href="/resources/stylesheets/jquery.easy-pie-chart.css" rel="stylesheet">
-<link href="/resources/stylesheets/sidemenu.css" rel="stylesheet">
-<link href="/resources/stylesheets/slidingmenu.css" rel="stylesheet">
-<link href="/resources/stylesheets/metro-panel.css" rel="stylesheet">
-<link href="/resources/stylesheets/style.css" rel="stylesheet">
-<script src="/resources/javascripts/modernizr.custom.menu.js"></script>
-<script src="/resources/javascripts/modernizr.custom.quotes.js"></script>
-<script src="/resources/javascripts/modernizr.custom.services.js"></script>
+<link href="/resources/css/style.css" rel="stylesheet" />
+<link href="/resources/css/bootstrap.min.css" rel="stylesheet" />
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>	
 </head>
+<style>
+      table {
+        width: 100%;
+      }
+      table, th, td {
+        border: 1px solid #bcbcbc;
+        text-align: center;
+      }
+      th {
+      	background-color : #DEDEDE;
+      	
+      }
+      tr {
+      	height : 50px;
+      }
+      #content{
+      	height : 500px;
+      }
+</style>
 <body>
 	<div class="row">
 	    <article class="col-md-12 text-left">
@@ -34,58 +40,64 @@
 	      <div class="liner"><span></span></div>
 	    </article>
 	</div>
+	<hr>
 	<div class="container">
-			<section id="container">				
-				<div class="form-group">
-					<label for="title" class="col-sm-2 control-label">제목</label>
-					<input type="text" id="title" name="title" class="form-control" value="${detail.title}" readonly="readonly" />
-				</div>
-				<div class="form-group">
-					<label for="title" class="col-sm-2 control-label">내용</label><br>
-					${detail.content}" 
-				</div>
-				<div class="form-group">
-					<label for="writer" class="col-sm-2 control-label">작성자</label>
-					<input type="text" id="writer" name="writer" class="form-control" value="${detail.writer}"  readonly="readonly"/>
-				</div>
-				<div class="form-group">
-					<label for="group_name" class="col-sm-2 control-label">그룹명</label>
-					<input type="text" id="group_name" name="group_name" class="form-control" value="${detail.group_name}"  readonly="readonly"/>
-				</div>
-				<div class="form-group">
-					<label for="regdate" class="col-sm-2 control-label">작성날짜</label>
-					<fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${detail.regdate}"/>	
-				</div>
-				<div class="form-group">
-					<label for="attachFile" class="col-sm-2 control-label">첨부파일</label>
-					<c:forEach items="${attachFile}" var="attachFile">
-						[ <a href="/reviewUpload/download?uuid=${attachFile.uuid}">${attachFile.fileName}</a> ]
-					</c:forEach> <br>
-				</div>
+		<table class="board_view">
+	        <caption>상세보기</caption>
+	        <colgroup>
+	            <col width="15%">
+	            <col width="35%">
+	            <col width="15%">
+	            <col width="*">
+	        </colgroup>
+	        <tbody>
+	            <tr>
+	                <th>제목</th>
+	                <td>${detail.title}</td>
+	                <th>조회수</th>
+	                <td>${detail.view_count}</td>
+	            </tr>
+	            <tr>
+	                <th>작성자</th>
+	                <td>${detail.writer}</td>
+	                <th>작성시간</th>
+	                <td><fmt:formatDate pattern="yyyy-MM-dd" value="${list.regdate}"/></td>
+	            </tr>
+	            <tr id="content">
+	                <th>내용</th>
+	                <td colspan="3">
+	                    ${detail.content }
+	                </td>
+	            </tr>
+	        </tbody>
+	    </table>			
+				
+				
+						
 				<div>
 					<button type="button" class="update_btn btn btn-warning" id="modifyBtn">수정</button>
 					<button type="button" class="list_btn btn btn-primary"id="homeBtn">목록</button>	
 				</div>
+				
 				<input type="hidden" id="userCheck" value='${login}'>
-		
 				<br>
+				<hr>
+				
 				<div class="container">
-					<label>댓 글 </label>
 					<div class="replyList"></div>
 				</div>
+				
 				<div class="form-group">
-					<label for="content">댓글</label>
+					<label for="content">댓글작성</label>
 						<form name="replyInsertForm">
 							<input type="hidden" name="rno" value="${detail.rno}"/>
-							<input type="text" name="content" placeholder="내용을 입력하세요" class="form-control"/>
+							<textarea type="text" name="content" placeholder="내용을 입력하세요" class="form-control"></textarea>
 							<span class="input-group-btn">
 								<button type="button" name="replyInsertBtn" class="btn btn-primary">등록</button>
 							</span>
 						</form>
 				</div>
-				</section>
-		</div>
-	
+		
 </body>
 <script type="text/javascript">
 	
@@ -134,11 +146,11 @@
 					var minutes = ('0' + date.getMinutes()).slice(-2);
 					var seconds = ('0' + date.getSeconds()).slice(-2); 
 					var timeString = hours + ':' + minutes  + ':' + seconds;
-					str += '<div>'+'no.'+val.cno+' / 작성자 : '+val.writer+" / " +'작성일: '+dateString+" "+timeString+ " /";
-					str += '<a onclick="updateForm('+val.cno+',\''+val.content+'\');"> 수정 / </a>';
-					str += '<a onclick="remove('+val.cno+');"> 삭제 </a> </div>';
+					str += '<label>댓 글</label><br><div>'+'작성자: '+val.writer+"<br>"+'작성일: '+dateString+" "+timeString+"<br>";
 					str += '<div class="replyContent'+val.cno+'"> <p> 내용 : '+val.content +'</p>';
-					str += '</div></div>';
+					str += '</div></div><br>';
+					str += '<a onclick="updateForm('+val.cno+',\''+val.content+'\');"> 수정 / </a>';
+					str += '<a onclick="remove('+val.cno+');"> 삭제 </a> </div><hr>';
 				})
 				$(".replyList").html(str)
 			}
