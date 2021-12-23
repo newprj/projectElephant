@@ -31,14 +31,7 @@ DROP TABLE TBL_CALENDAR CASCADE CONSTRAINTS;
 drop sequence SEQ_CNO;
 
 commit; 
-select * from tbl_group where authorized='Y' order by gno desc;
-select * from TBL_GROUP order by gno desc;
-select * from TBL_USER;
-select * from TBL_GROUPUSER;
-select * from BOARD_FILE;
-select * from TBL_BOARD;
-select * from BOARD_REPLY;
-select * from TBL_CALENDAR;
+
 
 -- spring database에서 모든 table을 삭제 했습니다
 --CREATE DATABASE spring CHARACTER SET utf8 COLLATE utf8_general_ci;
@@ -155,6 +148,15 @@ commit;
 ---select table_name, index_name from all_ind_columns where table_name ='tbl_group';
 
 commit;
+
+select * from tbl_group where authorized='Y' order by gno desc;
+select * from TBL_GROUP order by gno desc;
+select * from TBL_USER;
+select * from TBL_GROUPUSER;
+select * from BOARD_FILE;
+select * from TBL_BOARD;
+select * from BOARD_REPLY;
+select * from TBL_CALENDAR;
 
 --select profile from tbl_group;
 --select * from tbl_groupuser where user_id='test5';
