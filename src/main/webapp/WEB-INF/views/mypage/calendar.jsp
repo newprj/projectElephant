@@ -16,7 +16,7 @@
 	         <div class="breadcrumb-wrapper">
 	             <span class="label">You are here:</span>
 	             <ol class="breadcrumb">
-	                 <li> <a href="#"> Home </a> </li>
+	                 <li> <a href="/mypage/damin"> Home </a> </li>
 	                 <li class="active"> Calendar </li>
 	             </ol>
 	         </div>

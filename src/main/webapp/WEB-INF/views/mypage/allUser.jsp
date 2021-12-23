@@ -97,7 +97,7 @@
 										<span class="label label-danger label-circle pull-right">정지</span>
 									</c:if>
 									<c:if test="${i.suspension eq 'N'}">
-										 <i class="fa fa-eye fa-lg"></i> status
+										 <i class="fa fa-check-circle-o fa-lg"></i> status
 										<span  class="label label-success label-circle pull-right">활동중</span>
 									</c:if>
                                  
