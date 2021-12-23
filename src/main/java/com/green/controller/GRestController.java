@@ -1,6 +1,5 @@
 package com.green.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -42,6 +40,7 @@ import com.green.vo.UserVO;
 
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+
 
 
 
@@ -83,24 +82,12 @@ public class GRestController {
 			e.printStackTrace();
 		}
 		try {
-			List<GroupVO> groups = groupService.showAll();
-			// 그룹에 지원자 수, 가입 수 넣기
-			groups.forEach(i -> {
-				i.setApplicantCnt(groupUserService.listByGroupAll(i.getGroup_name()).size());
-				i.setJoinedCnt(groupUserService.listByGroup(i.getGroup_name()).size());
-			});
-			// 모집이 끝난 그룹과 구분
-			List<GroupVO> recruiteCompletedGroup = groups.stream().filter( i -> 
-				i.getMember_number() <= groupUserService.listByGroup(i.getGroup_name()).size())
-				.collect(Collectors.toList());
 			List<GroupVO> show20 = groupService.showLatest20();
-			
 			show20.forEach(i -> {
 				i.setApplicantCnt(groupUserService.listByGroupAll(i.getGroup_name()).size());
 				i.setJoinedCnt(groupUserService.listByGroup(i.getGroup_name()).size());
 			});
 			mv.addObject("group", show20);
-			mv.addObject("completed", recruiteCompletedGroup);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -114,6 +101,7 @@ public class GRestController {
 			"/main/list/{pageNum}/{amount}/{sort}", "/main/list/{pageNum}/{amount}/{type}/{keyword}/{sort}" })
 	public ModelAndView listOfgroups(HttpServletRequest request, @ModelAttribute("cri") Criteria cri) {
 		ModelAndView mv = new ModelAndView("/group/groupBoard");
+		cri.setAmount(9);
 		try {
 			HttpSession session = request.getSession();
 			UserVO user = (UserVO) session.getAttribute("user");
@@ -134,6 +122,7 @@ public class GRestController {
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
+
 		int total = groupService.getTotalCount(cri);
 		mv.addObject("pageMaker" , new PageDTO(cri, total));
 		return mv;
@@ -153,8 +142,8 @@ public class GRestController {
 	
 	// 모든 그룹 가지고 오기
 	@GetMapping(value ="/main/getGroupAll")
-	public ResponseEntity<List<GroupVO>> getAllGroups(){
-		
+	public ResponseEntity<Map<String, List<GroupVO>>> getAllGroups(){
+		Map<String, List<GroupVO>> mapOfgroups = new HashMap<String, List<GroupVO>>();
 		log.info("모든 그룹 가지고 오기 ");
 		try{
 			List<GroupVO> groups = groupService.showAll();
@@ -167,13 +156,17 @@ public class GRestController {
 			List<GroupVO> recruitingGroup = groups.stream().filter( i -> 
 				i.getMember_number() > groupUserService.listByGroup(i.getGroup_name()).size())
 					.collect(Collectors.toList());
-			return new ResponseEntity<List<GroupVO>>(recruitingGroup, HttpStatus.OK);
+			recruitingGroup.forEach(i -> groups.remove(i));
+			mapOfgroups.put("recruiting",recruitingGroup );
+			mapOfgroups.put("completed", groups);
+			return new ResponseEntity<Map<String,List<GroupVO>>>(mapOfgroups, HttpStatus.OK);
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;
-		
 	}
+	
+	
 	
 	// 그룹별 가입 유저 가지고 오기 
 	@GetMapping(value ="/getMemberlistByGroup/{group_name}")
@@ -240,6 +233,7 @@ public class GRestController {
 		ModelAndView mv = new ModelAndView("/group/study");
 		try {
 			UserVO user = (UserVO) session.getAttribute("user");
+			mv.addObject("group", groupService.showOne(group_name));
 			mv.addObject("user", user.getUser_id());
 			mv.addObject("board", boardService.showList(group_name));
 			
@@ -288,7 +282,13 @@ public class GRestController {
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
-
+		try {
+			List<BoardVO> notice = boardService.showList(cri.getGroup_name())
+					.stream().filter(i -> i.getNotice()=='Y').collect(Collectors.toList());
+			mv.addObject("notice", notice);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 		
 		return mv;
 	}

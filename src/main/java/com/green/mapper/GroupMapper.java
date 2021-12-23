@@ -28,4 +28,6 @@ public interface GroupMapper {
 
 	//스터디 승인
 	public void GroupAuth(@Param("gno") Long gno,@Param("authorized") String authorized);
+	//더미테스트 용
+	public List<GroupVO> allList();
 }

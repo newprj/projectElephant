@@ -17,6 +17,8 @@ import com.green.mapper.GUserMapper;
 import com.green.mapper.GroupMapper;
 import com.green.mapper.ReplyMapper;
 import com.green.mapper.UserMapper;
+import com.green.service.GUserService;
+import com.green.service.GroupService;
 import com.green.vo.BoardReplyVO;
 import com.green.vo.BoardVO;
 import com.green.vo.Criteria;
@@ -27,6 +29,8 @@ import com.green.vo.GroupVO;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
+
+
 
 
 
@@ -199,9 +203,33 @@ public class MapperTests {
 		bMapper.getListWithPaging(cri).forEach(i->System.out.println(i));
 	}
 	
+	@Setter(onMethod_=@Autowired)
+	GroupService groupService;
+	
+	@Setter(onMethod_=@Autowired)
+	GUserService groupUserService;
+	
 	//@Test
 	public void testShow() {
-		gMapper.showLatest20();
+
+		List<GroupVO> show20 = groupService.showLatest20();
+		show20.forEach(i -> {
+			i.setApplicantCnt(groupUserService.listByGroupAll(i.getGroup_name()).size());
+			i.setJoinedCnt(groupUserService.listByGroup(i.getGroup_name()).size());
+		});
+		show20.forEach(i -> log.info(i + "============================================================"));
+	}
+	
+	
+	@Test
+	public void get() {
+		List<GroupVO> show20 = groupService.showLatest20();
+//		show20.forEach(i -> i.setApplicantCnt(groupUserService.listByGroupAll(i.getGroup_name()).size()));
+//		show20.forEach(i -> log.info(i+"============================================================"));
+		show20.forEach(i-> i.setJoinedCnt(groupUserService.listByGroup(i.getGroup_name()).size()));
+		show20.forEach(i -> log.info(i+"============================================================"));
+		int a = groupUserService.listByGroup("피아노30").size();
+		System.out.println(a);
 	}
 
 	//@Test
@@ -212,7 +240,7 @@ public class MapperTests {
 		gMapper.getListWithPaging(cri).forEach(i -> System.out.println(i+"======================================================="));
 	}
 	
-	@Test
+	//@Test
 	public void test() {
 		bMapper.showList("독서2").forEach(i-> log.info(" 노티스 왜 못가져오ㅑ? " +i.getNotice()));
 	}
