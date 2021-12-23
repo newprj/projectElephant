@@ -61,7 +61,7 @@
 				    where ]]>
 		   <include refid="criteria"></include>
 		    <![CDATA[
-			    rownum <=#{pageNum} * #{amount} and group_name = #{group_name}
+			    rownum <=#{pageNum} * #{amount} and group_name = #{group_name} and notice ='N'
 		    )
 		    where rn> (#{pageNum}-1) * #{amount} 
 		]]>
@@ -80,4 +80,3 @@
 	
 	
 </mapper>
-

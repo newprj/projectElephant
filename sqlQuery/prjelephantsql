@@ -31,7 +31,11 @@ DROP TABLE TBL_CALENDAR CASCADE CONSTRAINTS;
 drop sequence SEQ_CNO;
 
 commit; 
+<<<<<<< HEAD
 
+=======
+select * from tbl_group where authorized='Y' order by gno desc;
+>>>>>>> branch 'main' of https://github.com/newprj/projectElephant.git
 select * from TBL_GROUP order by gno desc;
 select * from TBL_USER;
 select * from TBL_GROUPUSER;
@@ -41,7 +45,7 @@ select * from BOARD_REPLY;
 select * from TBL_CALENDAR;
 
 -- spring database에서 모든 table을 삭제 했습니다
-CREATE DATABASE spring CHARACTER SET utf8 COLLATE utf8_general_ci;
+--CREATE DATABASE spring CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 --- create , drop table and sequence
 
@@ -63,9 +67,15 @@ create table tbl_group(
     regdate timestamp,
     authorized char(1) default 'N' check(authorized in('Y','N')),
     viewCnt number default 0,
+<<<<<<< HEAD
     constraint fk_group foreign key(leader) references tbl_user(user_id)
 );
 alter table tbl_group add(profile varchar2(1000));
+=======
+    profile varchar2(1000),
+    constraint fk_group foreign key(leader) references tbl_user(user_id)
+);
+>>>>>>> branch 'main' of https://github.com/newprj/projectElephant.git
 create sequence seq_gno;
 
 create table tbl_groupuser(
@@ -73,11 +83,19 @@ create table tbl_groupuser(
     authorized varchar2(1) default 'N',
     user_id varchar2(30),
     group_name varchar2(30),
+<<<<<<< HEAD
     constraint fk_g_user foreign key(user_id) references tbl_user(user_id),
     constraint fk_g_group foreign key(group_name) references tbl_group(group_name)
     );
 alter table tbl_groupuser add unique(user_id, group_name);
 alter table tbl_groupuser add( leader varchar2(2) default 'N');
+=======
+    leader varchar2(2) default 'N',
+    constraint fk_g_user foreign key(user_id) references tbl_user(user_id),
+    constraint fk_g_group foreign key(group_name) references tbl_group(group_name)
+    );
+alter table tbl_groupuser add unique(user_id, group_name);
+>>>>>>> branch 'main' of https://github.com/newprj/projectElephant.git
 create sequence seq_cno;
 desc tbl_groupuser;
 
@@ -141,6 +159,7 @@ create sequence seq_cid;
 --- select, update 등 테스트를 위한 쿼리문은 공유 X
 
 ----- 어드민기능
+<<<<<<< HEAD
 select * from tbl_group;
 update tbl_group set authorized = 'Y' where gno <40; 
 select * from tbl_groupuser where group_name='맛집8' order by cno;
@@ -161,3 +180,25 @@ select * from tbl_groupuser where user_id='test5';
 update tbl_groupuser set leader ='Y' where user_id='test39';
 
 select * from tbl_groupuser where user_id='test5';
+=======
+--select * from tbl_group;
+--update tbl_group set authorized = 'Y' where gno =<40; 
+--select * from tbl_groupuser where group_name='맛집8' order by cno;
+--update tbl_groupuser set authorized='Y', leader='Y' where cno<=60;
+--select * from tbl_groupuser;
+--select * from tbl_groupuser;
+commit;
+-------------------------------------------------------------------------
+---select * from user_constraints where table_name='TBL_GROUP'; 
+---select * from user_constraints where table_name in ('TBL_BOARD', 'TBL_GROUP');
+---alter table tbl_group rename constraint SYS_C007897 to pk_group;
+---select table_name, index_name from all_ind_columns where table_name ='tbl_group';
+
+commit;
+
+--select profile from tbl_group;
+--select * from tbl_groupuser where user_id='test5';
+--update tbl_groupuser set leader ='Y' where user_id='test39';
+--delete from tbl_groupuser where authorized is null;
+--select * from tbl_groupuser where user_id='test5';
+>>>>>>> branch 'main' of https://github.com/newprj/projectElephant.git

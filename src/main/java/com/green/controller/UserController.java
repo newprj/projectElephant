@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.green.service.UserService;
+import com.green.service.VisitService;
 import com.green.vo.UserVO;
 
 import lombok.Setter;
@@ -28,6 +29,9 @@ public class UserController {
 
 	@Setter(onMethod_ = @Autowired)
 	UserService userservice;
+	
+	@Setter(onMethod_ = @Autowired)
+	VisitService visitService;
 
 	@GetMapping("/register")
 	public String register() {
@@ -75,6 +79,7 @@ public class UserController {
 
 	@GetMapping("/login")
 	public String login() {
+		visitService.insertVisitor();
 		return "/user/login";
 	}
 	
@@ -83,7 +88,6 @@ public class UserController {
 	public void loginPost(UserVO vo, HttpServletRequest req, RedirectAttributes rttr) {
 		HttpSession session = req.getSession();
 		UserVO login = userservice.login(vo);
-		/* String result=""; */
 		if(login == null) {
 			rttr.addFlashAttribute("msg", false);
 		}

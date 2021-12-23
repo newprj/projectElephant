@@ -9,7 +9,7 @@
 			select seq_cno.nextval from dual
 		</selectKey>
 		insert into tbl_groupuser (cno, user_id, group_name, leader, authorized)
-			values(#{cno}, #{user_id}, #{group_name}, #{leader}, #{authorized, jdbcType=VARCHAR})
+			values(#{cno}, #{user_id}, #{group_name}, #{leader}, #{authorized})
 	</insert>
 	
 	<select id="listByGroup" resultType="com.green.vo.GUserVO">

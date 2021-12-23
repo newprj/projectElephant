@@ -82,7 +82,6 @@ uri="http://java.sun.com/jsp/jstl/core"%>
   <script>
     var regex = new RegExp('(.*?)\.(exe|sh|alz)$') //정규 표현식
     var maxSize = 10485760 // 10MB 제한
-
     //파일 사이즈 10MB 초과 또는 파일형식이 정규표현식이 아닌것을 업로드 시 alert창 띄우는 메서드
     function checkExtension1(fileName, fileSize) {
       if (fileSize >= maxSize) {
@@ -95,11 +94,9 @@ uri="http://java.sun.com/jsp/jstl/core"%>
       }
       return true
     }
-
     var myEditor = document.querySelector('#editor')
     let form = $('form')
     // 폼데이터 얻기
-
     $(document).ready(function (e) {
       $("input[type='file']").change(function (e) {
         attachList = []
@@ -128,7 +125,6 @@ uri="http://java.sun.com/jsp/jstl/core"%>
           },
         }) //ajax
       }) //file change
-
       $('#update').click(function (e) {
         e.preventDefault()
         review = {
@@ -150,7 +146,6 @@ uri="http://java.sun.com/jsp/jstl/core"%>
           },
         }) //ajax
       }) //click
-
       $('.delete').on('click', function (e) {
         console.log('여기가 왜 안눌려?')
         var uuid = $(this).attr('name')
@@ -181,7 +176,6 @@ uri="http://java.sun.com/jsp/jstl/core"%>
             contentType: false,
             data: formData,
             dataType: 'json',
-
             success: (res) => {
               console.log('2)')
               console.log(res)
@@ -196,7 +190,6 @@ uri="http://java.sun.com/jsp/jstl/core"%>
         }) // click
       } //imageHandletr
     
-
     const toolbarOptions = [
       [{ header: [1, 2, 3, 4, 5, 6, false] }],
       [{ list: 'ordered' }, { list: 'bullet' }],
@@ -206,14 +199,12 @@ uri="http://java.sun.com/jsp/jstl/core"%>
       ['image'],
       ['clean'],
     ]
-
     let quill = new Quill('#editor', {
       theme: 'snow',
       modules: {
         toolbar: toolbarOptions,
       },
     })
-
     $.getJSON('/review/getReview/${read.rno}', (res) => {
       let content = res.content
       quill.container.firstChild.innerHTML = content

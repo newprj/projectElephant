@@ -19,9 +19,6 @@ prefix="c" %>
 <link href="/resources/stylesheets/style.css" rel="stylesheet">
 <title>Insert title here</title>
 <style>
-
-
-
 html,
 body {
 	padding: 20px 0;
@@ -31,21 +28,17 @@ body {
 	font-size: 16px;
 	font-family: 'Noto Sans KR', sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
-
 .group-image {
 	display: block;
 	height: 11rem; /* layout hack */
 	background: #fff center center no-repeat;
 	background-size: cover;
 }
-
 .container{
 	width: 90%;
   max-width: 1240px;
   margin: 0 auto;
-
 }
-
 .group-list {
 	display: block;
 	margin: 1rem auto;
@@ -54,7 +47,6 @@ body {
 	text-align: center;
 	list-style: none;
 }
-
 .group {
 	display: inline-block;
 	width: 90%;
@@ -66,27 +58,22 @@ body {
 	box-shadow: 0 0 3rem -1rem rgba(0, 0, 0, 0.5);
 	transition: transform 0.1s ease-in-out, box-shadow 0.1s;
 }
-
 .group:hover {
 	transform: translateY(-0.5rem) scale(1.0125);
 	box-shadow: 0 0.5em 3rem -1rem rgba(0, 0, 0, 0.5);
 }
-
 .group-description {
 	display: block;
 	padding: 1em 0.5em;
 	color: #515151;
 	text-decoration: none;
 }
-
 .group-description > h2 {
 	margin: 0 0 0.5em;
 }
-
 .group-description > p {
 	margin: 0;
 }
-
 .pagination{
 	display: flex; 
 	flex-flow: row nowrap; 
@@ -94,7 +81,6 @@ body {
 	align-items: center;
 	color: #222;
 }
-
 .pagenate{
   display: inline-block;
   padding: 10px 18px;
@@ -104,19 +90,16 @@ body {
   padding: 0;
   text-align: center;
 } 
-
 a.current{
   background-color: #2ecc71;
   border-radius: 50%;
   color: #fff;
 }
-
 ul#portfolioFilter span {
   font-size: 14px;
   color: #333;
   font-family: 'Montserrat', sans-serif;
 }
-
 </style>
 </head>
 <body>
@@ -159,8 +142,11 @@ ul#portfolioFilter span {
 			<h2 class="group_name">  ${group.group_name} </h2>
 			<p> ${group.leader}</p>
 			<p> ${group.subject }</p>
+			<hr>
+			<div>
 			<span> <i class="fas fa-eye"></i> ${group.viewCnt} </span>
 			<span> 🙋‍♀  ${group.applicantCnt} <i class="far fa-hand-peace"> ${group.joinedCnt}</i>/ ${group.member_number}</span>
+			</div>
 	</div>
 	</li>
 </c:forEach>
@@ -182,15 +168,12 @@ ul#portfolioFilter span {
 </body>
 
 <script>
-
 let pageNum = "${cri.pageNum}"
 let amount = "${cri.amount}" 
-
 $(".group_name").click(function (e) {
 	const group_name = e.target.innerText;
 	location.href = `/group/gather/\${group_name}`;
 });
-
 let searchForm = $('form.searchForm')
 $('button.searchForm').click((e) => {
 	e.preventDefault()
@@ -207,11 +190,7 @@ $('button.searchForm').click((e) => {
 		if(sort) url+=`/\${sort}`
 		location.href = url 
 	}
-
 })// search button click
-
-
-
 $('#filter_wrapper li span').on('click', function(){
    const sort = $(this).data("sort")
    let url =`/group/main/list/`
@@ -220,9 +199,6 @@ $('#filter_wrapper li span').on('click', function(){
 	}
 	location.href = url
 })
-
-
-
 $('a.pagenate').click(function(e){
 	e.preventDefault()
 	let type = "${cri.type}"
@@ -234,13 +210,6 @@ $('a.pagenate').click(function(e){
 			:  `/group/main/list/\${pageNum}/\${amount}`
 	url += sort ? `/\${sort}` : ''
 	location.href = url 
-
 })// a click
-
-
-
-
-
-
 </script>
 </html>

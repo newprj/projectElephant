@@ -75,7 +75,6 @@ uri="http://java.sun.com/jsp/jstl/core"%>
   
     var regex = new RegExp('(.*?)\.(exe|sh|alz)$') //정규 표현식
     var maxSize = 10485760 // 10MB 제한
-
     //파일 사이즈 10MB 초과 또는 파일형식이 정규표현식이 아닌것을 업로드 시 alert창 띄우는 메서드
     function checkExtension1(fileName, fileSize) {
       if (fileSize >= maxSize) {
@@ -117,12 +116,9 @@ $(document).ready(function (e) {
      	})//ajax
      })//file change
      
-
-
      
     var myEditor = document.querySelector('#editor')
     let form = $('form')
-
     const imageHandler = (e) => {
       console.log(e)
       let input = $('<input type="file" accept="image/*">')
@@ -148,9 +144,7 @@ $(document).ready(function (e) {
         }) // ajax
       }) // click
     } //imageHandletr
-
     
-
     $('#create').click(function (e) {
       e.preventDefault()
       review = {
@@ -171,8 +165,6 @@ $(document).ready(function (e) {
         },
       }) //ajax
     }) //click
-
-
     
     const toolbarOptions = [
       [{ header: [1, 2, 3, 4, 5, 6, false] }],
@@ -183,14 +175,12 @@ $(document).ready(function (e) {
       ['image'],
       ['clean'],
     ]
-
     let quill = new Quill('#editor', {
       theme: 'snow',
       modules: {
         toolbar: toolbarOptions,
       },
     })
-
     let toolbar = quill.getModule('toolbar')
     toolbar.addHandler('image', imageHandler)
 })

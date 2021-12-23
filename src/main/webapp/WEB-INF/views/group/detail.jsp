@@ -7,16 +7,15 @@ prefix="c" %>
     <meta charset="UTF-8" />
     <title>Insert title here</title>
     <script src="//code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://kit.fontawesome.com/eab4c34ae3.js" crossorigin="anonymous"></script>
   </head>
   <body>
-  <h1> 스터디 모집 페이지 </h1>
+  
   <div>
-  <h3> 스터디 모집글이 들어갈 거에요</h5>
-
  <p><a href="/group/"> 메인 </a></p>
  <p>
   </div>
-	</br>
+	
   	<c:if test="${user.user_id== one.leader}">
   	
   	<a href="/group/gather/${one.group_name}/modify"> <button> 모집글 수정하기 </button></a>
@@ -35,15 +34,7 @@ prefix="c" %>
     <c:if test="${user.user_id eq one.leader}">
     <button class="delete"> 그룹 삭제</button>
     </c:if>
-    <div>
-      <form>
-        <div>
-         <p>
-          <input type="hidden" name="user_id" value="${user.user_id}"/>
-          </p>
-        </div>
-      </form>
-    </div>
+
    
     	<div class="signup">
     	 <c:if test="${user != null && user.user_id != one.leader}">
@@ -60,7 +51,6 @@ prefix="c" %>
   <script>
   
   	
-
     const signupGroup = (data) => {
       
     	$.ajax({
@@ -74,7 +64,6 @@ prefix="c" %>
         },
       })
     }
-
     $(document).ready(function (e) {
     	console.log( "${one.leader}")
     	console.log( "${user}")
@@ -88,9 +77,10 @@ prefix="c" %>
 					$('div.signup').append(memberMsg)
         	
 					signupform = {
-          	user_id: $('input[name="user_id"]').val(),
+          	user_id: "${user.user_id}",
          		group_name: '${one.group_name}',
-         		leader : "N"
+         		leader : "N",
+         		authorized :"N"
         	}
          
         signupGroup(signupform)

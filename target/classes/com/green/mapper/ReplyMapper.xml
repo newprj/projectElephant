@@ -31,5 +31,10 @@
 	<select id="myReply" resultType="com.green.vo.ReplyVO">
 		select *from board_reply where replyer=#{replyer}
 	</select>
-</mapper>
 
+
+	<delete id="deleteReplyByBno">
+		delete board_reply where bno=#{bno}
+	</delete>
+	
+</mapper>

@@ -127,12 +127,9 @@ li {list-style: none; float: left; padding: 6px;}
 	
 </body>
 <script type="text/javascript">
-
 var user = $('#userCheck').val()
 console.log(user)
-
 $(document).ready(function () {
-
 	$(".paginate_btn a").click(function(e){
 		e.preventDefault();
 		var thisis=$(this).attr("href")
@@ -140,7 +137,6 @@ $(document).ready(function () {
 		$("#actionForm").submit()
 	})
 	
-
 	$("#searchForm button").click(function(e){
 		if(!$("#searchForm").find("option:selected").val()){
 			alert("검색 종류를 선택하세요")
@@ -167,7 +163,6 @@ $(document).ready(function () {
 	})
 	
 }) 
-
       
 </script>
 </html>
