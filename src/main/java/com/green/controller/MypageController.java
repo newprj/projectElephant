@@ -188,6 +188,16 @@ public class MypageController {
 		return "/mypage/compose";
 	}
 	
+	@GetMapping("/calendar")
+	public String calendar(Model model,Criteria cri,HttpServletResponse response,HttpSession session) {
+		UserVO login= (UserVO) session.getAttribute("user");
+		String id=login.getUser_id();
+		
+		check(id,response);
+		
+		return "/mypage/calendar";
+	}
+	
 	@ResponseBody
 	@PostMapping(value="/susp" , consumes = "application/json", produces = {MediaType.TEXT_PLAIN_VALUE})
 	public ResponseEntity<String> suspInsert(@RequestBody UserVO vo){

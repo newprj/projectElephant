@@ -28,6 +28,8 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
         <link href="/resources/plugins/bootstrap-select/bootstrap-select.min.css" rel="stylesheet">
         <!--Demo [ DEMONSTRATION ]-->
         <link href="/resources/css/demo/jasmine.css" rel="stylesheet">
+        <!--Full Calendar [ OPTIONAL ]-->
+        <link href="/resources/plugins/fullcalendar/fullcalendar.css" rel="stylesheet">
         <!--SCRIPT-->
         <!--=================================================-->
         <!--Page Load Progress Bar [ OPTIONAL ]-->
@@ -281,7 +283,7 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 	                            <a href="/mypage/allMessage"> Message </a>
 	                        </li>
 	                        <li>
-	                            <a href="calendar.html"> Calendar </a>
+	                            <a href="/mypage/calendar"> Calendar </a>
 	                        </li>
 	                        
 	                        <!-- end standard drop down -->

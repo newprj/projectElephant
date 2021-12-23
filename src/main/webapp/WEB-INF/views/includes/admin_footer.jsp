@@ -76,5 +76,10 @@
         <!--Form Wizard [ SAMPLE ]-->
         <script src="/resources/js/demo/form-wizard.js"></script>
         
-        
+        <!--Full Calendar [ OPTIONAL ]--> 
+        <script src="/resources/plugins/fullcalendar/lib/moment.min.js"></script> 
+        <script src="/resources/plugins/fullcalendar/lib/jquery-ui.custom.min.js"></script> 
+        <script src="/resources/plugins/fullcalendar/fullcalendar.min.js"></script> 
+        <!--Full Calendar [ SAMPLE ]--> 
+        <script src="/resources/js/demo/fullcalendar.js"></script> 
   </body>
