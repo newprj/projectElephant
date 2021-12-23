@@ -112,8 +112,25 @@
 		select * from tbl_group
 	</select>
 	
-	
-	
+	<select id="NotAuthList" resultType="com.green.vo.GroupVO">
+		<![CDATA[
+			select gno, group_name, leader, subject, description, member_number, authorized, viewcnt, regdate, profile
+			from (
+			    select /*+ index_desc(tbl_group pk_gno) */
+				    rownum rn,gno, group_name, leader, subject, description, member_number, authorized, viewcnt, regdate, profile
+				    	from 
+				    	(select * from  tbl_group 
+					    	order by regdate desc nulls LAST
+					   	)
+				    where 
+		]]>
+		<include refid="criteria"></include>
+	    <![CDATA[
+			    rownum <=#{pageNum} * #{amount} and authorized ='N'
+		    )
+		    where rn> (#{pageNum}-1) * #{amount}  
+		]]>
+	</select>
 </mapper>
 
    

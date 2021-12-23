@@ -16,6 +16,7 @@ public interface GroupService {
 	public int updateGroup(GroupVO vo);
 	
 	public void GroupAuth(Long gno,String authorized);
+	public List<GroupVO> NotAuthList(Criteria cri);
 	
 	public List<GroupVO> getListWithPaging(Criteria cri);
 	

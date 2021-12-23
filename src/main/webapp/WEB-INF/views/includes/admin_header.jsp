@@ -272,7 +272,7 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 	                            <a href="/mypage/allUser"> Users </a>
 	                        </li>
 	                        <li>
-	                            <a href="#"> Group</a>
+	                            <a href="/mypage/allGroup"> Group</a>
 	                            
 	                        </li>
 	                        <li>

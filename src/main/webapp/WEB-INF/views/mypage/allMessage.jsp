@@ -63,7 +63,7 @@
                         <div class="tab-base">
                             <!--Nav Tabs-->
                             <ul class="nav nav-tabs">
-                                <li class="active"> <a data-toggle="tab" href="#demo-lft-tab-1">Primary <span class="badge badge-purple">2</span></a> </li>
+                                <li class="active"> <a data-toggle="tab" href="#demo-lft-tab-1">Primary <span class="badge badge-purple">${total}</span></a> </li>
                                 <li>
                                     <a data-toggle="tab" href="#demo-lft-tab-4"> <i class="fa fa-plus"></i> </a>
                                 </li>

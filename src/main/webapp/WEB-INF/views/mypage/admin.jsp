@@ -126,38 +126,7 @@
 	
 	
 	
-	<div class='study'>
-		<h3 ><a href='/group/'>스터디 승인 리스트</a></h3>
-		<h5>스터디장이 승인 요청한 것만 띄우기</h5>
-		<table>
-			<thead>
-				<tr>
-				  <th>no.</th>
-				  <th>스터디명</th>
-	              <th>주제</th>
-	              <th>스터디장</th>
-	              <th>인원수</th>
-	              <th>내용확인</th>
-	              <th>승인여부</th>
-				</tr>
-			</thead>
-			<c:forEach items="${group}" var="i" varStatus="status"  begin="0" end='9'>
-				<tr>
-					<td>${status.count}</td>
-					<td>${i.group_name}</td>
-					<td>${i.subject}</td>
-					<td>${i.leader}</td>
-					<td>${i.member_number}명</td>
-					<td><a href='/group/gather/${i.group_name}'>확인</a></td>
-					<td><c:choose>
-							<c:when test="${i.authorized eq 'Y'}">승인</c:when>
-							<c:otherwise>비승인</c:otherwise>
-						</c:choose>	
-					</td>
-				</tr>
-			</c:forEach>
-		</table>
-	</div>
+	
 	
 	
 	<div class="row">

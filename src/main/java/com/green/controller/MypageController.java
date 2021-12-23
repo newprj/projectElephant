@@ -104,8 +104,6 @@ public class MypageController {
 		model.addAttribute("visit",visitService.todayCnt());
 		model.addAttribute("user",id);
 		
-		model.addAttribute("group",gService.showAll());
-		
 		model.addAttribute("letter",letterService.myLetter(id));	
 		model.addAttribute("sendletter",letterService.sendLetter(id));
 		return "/mypage/admin";
@@ -188,6 +186,19 @@ public class MypageController {
 		return "/mypage/compose";
 	}
 	
+	@GetMapping("/allGroup")
+	public String allGroup(Model model,Criteria cri,HttpServletResponse response,HttpSession session) {
+		UserVO login= (UserVO) session.getAttribute("user");
+		String id=login.getUser_id();
+		
+		check(id,response);
+		
+		int total=gService.getTotalCount(cri);//total 승인 ,비승인 구하기
+		model.addAttribute("group",gService.getListWithPaging(cri));
+		model.addAttribute("Nauth",gService.NotAuthList(cri));
+		model.addAttribute("pageMarker",new PageDTO(cri, total));
+		return "/mypage/allGroup";
+	}
 	@GetMapping("/calendar")
 	public String calendar(Model model,Criteria cri,HttpServletResponse response,HttpSession session) {
 		UserVO login= (UserVO) session.getAttribute("user");
