@@ -19,61 +19,35 @@ prefix="c" %>
             <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;500&display=swap" rel="stylesheet">
             <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,600,600italic,700,700italic,800" rel="stylesheet" type="text/css" />
             <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="/resources/stylesheet" type="text/css" />
-
             <link href="/resources/assets/css/bootstrap.css" rel="stylesheet">
             <link href="/resources/assets/css/bootstrap-theme.css" rel="stylesheet">
-            <link href="/resources/css/bootstrap.min.css" rel="stylesheet" />
-
+            <link href="/resources/stylesheets/responsive-nav.css" rel="stylesheet">
             <link href="/resources/assets/css/extension.css" rel="stylesheet">
             <link href="/resources/stylesheets/style.css" rel="stylesheet">
             <script src="//code.jquery.com/jquery-3.6.0.js"></script>
             <script src="https://kit.fontawesome.com/eab4c34ae3.js" crossorigin="anonymous"></script>
-
-            <link href="/resources/stylesheets/responsive-nav.css" rel="stylesheet">
             <script src="/resources/javascripts/slidingmenu.js"></script>
             <link href="/resources/stylesheets/slidingmenu.css" rel="stylesheet">
 
 
             <style>
+                html,
                 body {
                     background-color: #f6f9fc;
+                    padding: 20px 0;
+                    width: 100%;
+                    height: 100%;
+                    margin: 0;
+                    font-size: 16px;
                     font-family: "Noto Sans KR", sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    padding: 50px 0;
                 }
-                
-                div.wrapper {
-                    width: 70%;
-                    height: 90%;
-                    background-color: white;
-                    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
-                    overflow-x: hidden;
-                    overflow-y: hidden;
-                }
-                
-                div.head {
-                    color: #000;
-                    border-left: 5px solid #5ec2dd;
-                    padding: 10px 3em 8px 15px;
-                    margin-bottom: 10px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: space-between;
-                }
-                
-                div.head>div {
-                    flex: 1;
-                }
-                
-             
                 
                 a {
                     text-decoration: none;
                 }
                 
                 .group-list {
+                    width: 90%;
                     max-width: 1240px;
                     margin: 0 auto;
                     display: block;
@@ -82,8 +56,10 @@ prefix="c" %>
                     font-size: 0;
                     text-align: center;
                     list-style: none;
+                    background-color: white;
+                    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
                     overflow-x: hidden;
-                    overflow-y: hidden;
+                    overflow-y: auto;
                     padding-bottom: 3rem;
                 }
                 
@@ -95,7 +71,7 @@ prefix="c" %>
                     font-size: 1rem;
                     text-decoration: none;
                     overflow: hidden;
-                    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+                    box-shadow: 0 0 3rem -1rem rgba(0, 0, 0, 0.5);
                     transition: transform 0.1s ease-in-out, box-shadow 0.1s;
                 }
                 
@@ -160,96 +136,7 @@ prefix="c" %>
         </head>
 
         <body>
-            <div class="wrapper">
-                <div class="head">
-                    <div class="media-left">
-                        <img src="/resources/img/elephantIcon.png" style="height: 50px; width: 50px; border-radius: 50%" />
-                        <h1 class="logo">코끼리</h1>
-                    </div>
-                    <div class="center">
 
-                    </div>
-                    <div class="right">
-                        <c:if test="${user==null}">
-                            <div class="item btn btn-default"><a href="/user/register"> 가입</a></div>
-                            <div class="item btn btn-default"><a href="/user/login">로그인</a></div>
-                        </c:if>
-                        <c:if test="${user!=null}">
-                            <div class="mygroup">
-                                <c:choose>
-                                    <c:when test="${empty myGroup}">>
-                                        <span> 가입한 그룹이 없습니다 </span>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <select name="group_name">
-											                      <c:forEach items="${myGroup}" var="mine">
-												                      <option value="${mine.group_name}">
-												                        ${mine.group_name}
-											                      	</option>
-											                      </c:forEach>
-									                    	</select>
-                                        <button class="btn btn-default">go</button>
-                                    </c:otherwise>
-                                </c:choose>
-                                <a href="/group/make">
-                                    <button class="btn btn-default">create</button>
-                                </a>
-                            </div>
-                            <button class=" btn btn-default" type="button" onclick="location.href='/mypage/user' ">
-							                마이 사이트
-						              	</button>
-                            <button class="btn btn-default" type="button" onclick="location.href='/user/logout' ">
-                              로그아웃
-                            </button>
-                            <button class="btn btn-default" type="button" onclick="location.href='/user/modify' ">
-                              회원정보 수정
-                            </button>
-                            <button class="btn btn-default" type="button" onclick="location.href='/user/delete' ">
-                              회원탈퇴
-                            </button>
-                        </c:if>
-                    </div>
-                    <!-- right -->
-                </div>
-                <!-- head -->
-                <div class="porto-bg-eleven common-pad">
-                    <article class="text-left ">
-                        <div id="filter" class="clearfix">
-                            <div id="filter_wrapper">
-                                <ul id="portfolioFilter">
-                                    <li class="active"> <span data-sort="recent" class="current"> 최신순 </span></a>
-                                    </li>
-                                    <li class="separator">/</li>
-                                    <li><span data-sort="pop"> 지원자 많은 순 </span></li>
-                                    <li class="separator">/</li>
-                                    <li><span data-sort="complete"> 모집이 완료된 그룹 </span></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </article>
-                </div>
-                <!-- 정렬 바 -->
-                <ul class="group-list">
-                    <c:forEach items="${group}" var="group">
-                        <li class="group">
-                            <a href="/group/gather/${group.group_name}">
-                                <div style="background-image: url(${group.profile})" class="group-image">
-                                    <div class="group-description">
-                                        <h2 class="group_name">${group.group_name}</h2>
-                                        <p>${group.subject }</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                    </c:forEach>
-                </ul>
-                <div class="link">
-                    <a href="/group/main/list">
-                        <span>....모집중인 그룹 모두 보기 </span>
-                    </a>
-                </div>
-            </div>
-            <!-- wrapper  -->
             <nav class="menu " id="sm">
                 <div class="sm-wrap">
                     <h1 class="sm-logo">Porto</h1>
@@ -264,6 +151,97 @@ prefix="c" %>
                 <!-- Navigation Trigger Button -->
                 <div id="sm-trigger" class=""></div>
             </nav>
+
+            <div>
+                <div class="navcontainer">
+                    <div class="wrapper">
+                        <div class="left"></div>
+                        <div class="center">
+                            <h1 class="logo">코끼리</h1>
+                        </div>
+                        <div class="right">
+                            <c:if test="${user==null}">
+                                <div class="item"><a href="/user/register"> 가입</a></div>
+                                <div class="item"><a href="/user/login">로그인</a></div>
+                            </c:if>
+                            <c:if test="${user!=null}">
+                                <div class="mygroup">
+                                    <c:choose>
+                                        <c:when test="${empty myGroup}">>
+                                            <span> 가입한 그룹이 없습니다 </span>
+                                        </c:when>
+
+                                        <c:otherwise>
+                                            <select name="group_name">
+											<c:forEach items="${myGroup}" var="mine">
+												<option value="${mine.group_name}">
+													${mine.group_name}
+												</option>
+											</c:forEach>
+										</select>
+                                            <button>go</button>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </div>
+                                <button type="button" onclick="location.href='/mypage/user' ">
+								마이 사이트
+							</button>
+                                <button class="btn btn-primary" type="button" onclick="location.href='/user/logout' ">
+								로그아웃
+							</button>
+                                <button class="btn btn-info" type="button" onclick="location.href='/user/modify' ">
+								회원정보 수정
+							</button>
+                                <button class="btn btn-danger" type="button" onclick="location.href='/user/delete' ">
+								회원탈퇴
+							</button>
+                            </c:if>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <c:if test="${user!=null}">
+                <a href="/group/make">
+                    <button>create</button>
+                </a>
+            </c:if>
+
+            <div class="porto-bg-eleven common-pad">
+                <article class="text-left ">
+                    <div id="filter" class="clearfix">
+                        <div id="filter_wrapper">
+                            <ul id="portfolioFilter">
+                                <li class="active"> <span data-sort="recent" class="current"> 최신순 </span></a>
+                                </li>
+                                <li class="separator">/</li>
+                                <li><span data-sort="pop"> 지원자 많은 순 </span></li>
+                                <li class="separator">/</li>
+                                <li><span data-sort="complete"> 모집이 완료된 그룹 </span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+            <ul class="group-list">
+                <c:forEach items="${group}" var="group">
+                    <li class="group">
+                        <a href="/group/gather/${group.group_name}">
+                            <div style="background-image: url(${group.profile})" class="group-image">
+                                <div class="group-description">
+                                    <h2 class="group_name">${group.group_name}</h2>
+                                    <p>${group.subject }</p>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                </c:forEach>
+            </ul>
+            <div class="link">
+                <a href="/group/main/list">
+                    <span>....모집중인 그룹 모두 보기 </span>
+                </a>
+            </div>
 
         </body>
 

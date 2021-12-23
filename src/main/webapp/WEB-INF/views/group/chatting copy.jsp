@@ -6,31 +6,15 @@
     <head>
         <meta charset="UTF-8">
         <title>Insert title here</title>
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;500&display=swap" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,600,600italic,700,700italic,800" rel="stylesheet" type="text/css" />
-        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="/resources/stylesheet" type="text/css" />
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.js"></script>
         <script src="https://kit.fontawesome.com/eab4c34ae3.js" crossorigin="anonymous"></script>
-        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
     </head>
     <style>
         body {
             background-color: #f4f7f6;
             margin-top: 20px;
-            font-family: "Noto Sans KR", sans-serif;
-        }
-        
-        .container {
-            width: 100%;
-            height: 100%;
-            padding: 0;
-        }
-        
-        .list-unstyled {
-            padding-inline-start: 0;
         }
         
         .card {
@@ -55,7 +39,7 @@
         
         .chat-app .chat {
             margin-left: 280px;
-            border-left: 1px solid #eaeaea;
+            border-left: 1px solid #eaeaea
         }
         
         .people-list {
@@ -66,7 +50,7 @@
         }
         
         .people-list .chat-list li {
-            padding: 10px 0px;
+            padding: 10px 15px;
             list-style: none;
             border-radius: 3px
         }
@@ -74,6 +58,10 @@
         .people-list .chat-list li:hover {
             background: #efefef;
             cursor: pointer
+        }
+        
+        .people-list .chat-list li.active {
+            background: #efefef
         }
         
         .people-list .chat-list li .name {
@@ -102,8 +90,7 @@
         
         .chat .chat-header {
             padding: 15px 20px;
-            border-bottom: 2px solid #f4f7f6;
-            background-color: rgb(239, 239, 250)
+            border-bottom: 2px solid #f4f7f6
         }
         
         .chat .chat-header img {
@@ -289,13 +276,64 @@
         <div>
 
 
+
+
+            <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+
             <div class="container">
                 <div class="row clearfix">
                     <div class="col-lg-12">
                         <div class="card chat-app">
                             <div id="plist" class="people-list">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fa fa-search"></i></span>
+                                    </div>
+                                    <input type="text" class="form-control" placeholder="Search...">
+                                </div>
                                 <ul class="list-unstyled chat-list mt-2 mb-0">
-
+                                    <li class="clearfix">
+                                        <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="avatar">
+                                        <div class="about">
+                                            <div class="name">Vincent Porter</div>
+                                            <div class="status"> <i class="fa fa-circle offline"></i> left 7 mins ago </div>
+                                        </div>
+                                    </li>
+                                    <li class="clearfix active">
+                                        <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="avatar">
+                                        <div class="about">
+                                            <div class="name">Aiden Chavez</div>
+                                            <div class="status"> <i class="fa fa-circle online"></i> online </div>
+                                        </div>
+                                    </li>
+                                    <li class="clearfix">
+                                        <img src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="avatar">
+                                        <div class="about">
+                                            <div class="name">Mike Thomas</div>
+                                            <div class="status"> <i class="fa fa-circle online"></i> online </div>
+                                        </div>
+                                    </li>
+                                    <li class="clearfix">
+                                        <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="avatar">
+                                        <div class="about">
+                                            <div class="name">Christian Kelly</div>
+                                            <div class="status"> <i class="fa fa-circle offline"></i> left 10 hours ago </div>
+                                        </div>
+                                    </li>
+                                    <li class="clearfix">
+                                        <img src="https://bootdey.com/img/Content/avatar/avatar8.png" alt="avatar">
+                                        <div class="about">
+                                            <div class="name">Monica Ward</div>
+                                            <div class="status"> <i class="fa fa-circle online"></i> online </div>
+                                        </div>
+                                    </li>
+                                    <li class="clearfix">
+                                        <img src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="avatar">
+                                        <div class="about">
+                                            <div class="name">Dean Henry</div>
+                                            <div class="status"> <i class="fa fa-circle offline"></i> offline since Oct 28 </div>
+                                        </div>
+                                    </li>
                                 </ul>
                             </div>
                             <div class="chat">
@@ -303,14 +341,18 @@
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <a href="javascript:void(0);" data-toggle="modal" data-target="#view_info">
-                                                <img src="/resources/img/elephantIcon.png" alt="avatar">
+                                                <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="avatar">
                                             </a>
                                             <div class="chat-about">
-                                                <h3 class="m-b-0">${group_name}</h3>
-                                        
+                                                <h6 class="m-b-0">Aiden Chavez</h6>
+                                                <small>Last seen: 2 hours ago</small>
                                             </div>
                                         </div>
                                         <div class="col-lg-6 hidden-sm text-right">
+                                            <a href="javascript:void(0);" class="btn btn-outline-secondary"><i class="fa fa-camera"></i></a>
+                                            <a href="javascript:void(0);" class="btn btn-outline-primary"><i class="fa fa-image"></i></a>
+                                            <a href="javascript:void(0);" class="btn btn-outline-info"><i class="fa fa-cogs"></i></a>
+                                            <a href="javascript:void(0);" class="btn btn-outline-warning"><i class="fa fa-question"></i></a>
                                         </div>
                                     </div>
                                 </div>
@@ -350,7 +392,7 @@
                     </div>
                 </div>
             </div>
-            <!-- <div class="users"></div>
+            <div class="users"></div>
             <div style="overflow-y: auto; width: 350px; height: 200px" class="chatContainer">
                 <div class="message"></div>
             </div>
@@ -365,144 +407,137 @@
             </div>
             ${user.user_id}
         </div>
-    </body> -->
+    </body>
 
 
-            <script>
-                let socket = new SockJS("http://localhost:8080/chat/${group_name}");
-                console.log(socket);
-                const loginUser = "${user.user_id}"
-                const group = "${group_name}"
-                let msg = $("input.message");
+    <script>
+        let socket = new SockJS("http://localhost:8080/chat/${group_name}");
+        console.log(socket);
+        const loginUser = "${user.user_id}"
+        const group = "${group_name}"
+        let msg = $("input.message");
 
 
-                $.getJSON(
-                        "/group/getMemberlistByGroup/" + group, (list) => {
-                            console.log(list)
-                            console.log(loginUser)
-                            list.memberList.map(user => {
-                                    let img = user.user_id === loginUser ? '/resources/img/fox.png' : "/resources/img/lion.png"
-                                    const memberElement = $(
-                                        `<li class="clearfix">
-										<img src=\${img} alt="avatar">
-										<div class="about">
-										<div class="name">\${user.user_id}</div>
-										<div class="status"> <i class="fa fa-circle" aria-hidden="true"></i> </div>
-								</div></li>`)
-                                    $('ul.list-unstyled').append(memberElement)
-                                }) //map
-                        }) //getJSON
-
-
-                const sendMessage = () => {
-                    const sendTime = new Date().toLocaleTimeString();
-                    const data = {
-                        user: loginUser,
-                        group,
-                        msg: msg.val(),
-                        sendTime,
-                        type: 'send'
-                    };
-                    let jsonMSG = JSON.stringify(data);
-                    socket.send(jsonMSG);
-                }; // sendMsg
-
-                const onMessage = (message) => {
-
-                    const arr = message.data.split("-");
-                    console.log(arr[0])
-                    const users = arr[0].replace(/[[\]\s]/g, '').split(",");
-
-                    const sessionId = arr[1];
-                    const messages = arr[2];
-                    const time = arr[3];
-                    const type = arr[4]
-                    console.log(users)
-
-
-                    if (type == "open") users.filter(user => user !== '').map(user => $(`#\${user} >i`).css({
-                        "color": "red "
-                    }))
-                    else if (type == "close") $(`#\${sessionId} >i`).css({
-                        "color": "black"
-                    })
-
-                    let msgElement = $(
-                        `<div><div><b>\${sessionId}</b> \${messages} <br/> \${time}</div></div>`
-                    );
-
-                    $("div.message").append(msgElement);
-                    $("div.chatContainer").scrollTop($("div.chatContainer")[0].scrollHeight);
-                }; //onMessage
-
-                const socketClose = (e) => {
-                    console.log("disconnect");
-                    const sendTime = new Date().toLocaleTimeString();
-                    const longMsg = $("div.message")[0].innerHTML;
-                    const data = {
-                        user: loginUser,
-                        group,
-                        msg: " 님이 퇴장했습니다 ",
-                        sendTime,
-                        type: "close",
-                    };
-                    let jsonMSG = JSON.stringify(data);
-                    socket.send(jsonMSG);
-                    console.log(data);
-                    socket.close();
-                };
-
-                const onClose = (e, a) => {
-
-                }; // onClose
-
-                const onOpen = (e) => {
-
-                    console.log(e);
-                    const sendTime = new Date().toLocaleTimeString();
-                    const data = {
-                        user: loginUser,
-                        group,
-                        msg: " 님이 입장했습니다 ",
-                        sendTime,
-                        type: "open",
-                    };
-                    let jsonMSG = JSON.stringify(data);
-                    socket.send(jsonMSG);
-                }; //open
-
-                $("button.send").click(function(e) {
-                    sendMessage();
-                    msg.val("");
-                });
-
-                $("input").keyup((e) => {
-                    if (e.keyCode === 13) {
-                        $("button.send").trigger("click");
-                    }
-                });
-
-                $("button.close").click((e) => {
-                    socketClose();
-                    window.close()
-                });
-
-
-                $('button.getChat').click((e) => {
-                    console.log("채팅팅팅")
-                    window.open("/chat_pop", "mypopup", "width=450, height=350, top=150, left=200")
-
+        $.getJSON(
+            "/group/getMemberlistByGroup/" + group, (list) => {
+                console.log(list)
+                console.log(loginUser)
+                list.memberList.map(user => {
+                    console.log("user .... ", user)
+                    $('div.users').append($(`<span id='\${user.user_id}'> <i class="far fa-dot-circle"></i>  \${user.user_id} </span><br/>`))
                 })
-
-                $(window).on('beforeunload', function() {
-                    socketClose()
-                });
+            })
 
 
-                socket.onmessage = onMessage;
-                socket.onclose = onClose;
-                socket.onopen = onOpen;
-            </script>
+        const sendMessage = () => {
+            const sendTime = new Date().toLocaleTimeString();
+            const data = {
+                user: loginUser,
+                group,
+                msg: msg.val(),
+                sendTime,
+                type: 'send'
+            };
+            let jsonMSG = JSON.stringify(data);
+            socket.send(jsonMSG);
+        }; // sendMsg
+
+        const onMessage = (message) => {
+
+            const arr = message.data.split("-");
+            console.log(arr[0])
+            const users = arr[0].replace(/[[\]\s]/g, '').split(",");
+
+            const sessionId = arr[1];
+            const messages = arr[2];
+            const time = arr[3];
+            const type = arr[4]
+            console.log(users)
+
+
+            if (type == "open") users.filter(user => user !== '').map(user => $(`#\${user} >i`).css({
+                "color": "red "
+            }))
+            else if (type == "close") $(`#\${sessionId} >i`).css({
+                "color": "black"
+            })
+
+            let msgElement = $(
+                `<div><div><b>\${sessionId}</b> \${messages} <br/> \${time}</div></div>`
+            );
+
+            $("div.message").append(msgElement);
+            $("div.chatContainer").scrollTop($("div.chatContainer")[0].scrollHeight);
+        }; //onMessage
+
+        const socketClose = (e) => {
+            console.log("disconnect");
+            const sendTime = new Date().toLocaleTimeString();
+            const longMsg = $("div.message")[0].innerHTML;
+            const data = {
+                user: loginUser,
+                group,
+                msg: " 님이 퇴장했습니다 ",
+                sendTime,
+                type: "close",
+            };
+            let jsonMSG = JSON.stringify(data);
+            socket.send(jsonMSG);
+            console.log(data);
+            socket.close();
+        };
+
+        const onClose = (e, a) => {
+
+        }; // onClose
+
+        const onOpen = (e) => {
+
+            console.log(e);
+            const sendTime = new Date().toLocaleTimeString();
+            const data = {
+                user: loginUser,
+                group,
+                msg: " 님이 입장했습니다 ",
+                sendTime,
+                type: "open",
+            };
+            let jsonMSG = JSON.stringify(data);
+            socket.send(jsonMSG);
+        }; //open
+
+        $("button.send").click(function(e) {
+            sendMessage();
+            msg.val("");
+        });
+
+        $("input").keyup((e) => {
+            if (e.keyCode === 13) {
+                $("button.send").trigger("click");
+            }
+        });
+
+        $("button.close").click((e) => {
+            socketClose();
+            window.close()
+        });
+
+
+        $('button.getChat').click((e) => {
+            console.log("채팅팅팅")
+            window.open("/chat_pop", "mypopup", "width=450, height=350, top=150, left=200")
+
+        })
+
+        $(window).on('beforeunload', function() {
+            socketClose()
+        });
+
+
+        socket.onmessage = onMessage;
+        socket.onclose = onClose;
+        socket.onopen = onOpen;
+    </script>
     </body>
 
     </html>

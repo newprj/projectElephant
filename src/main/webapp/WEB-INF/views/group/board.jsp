@@ -66,7 +66,7 @@ uri="http://java.sun.com/jsp/jstl/functions"%>
 			}
 			div.head{
 				color: #000;
-    		border-left: 5px solid #5ec2dd;
+    			border-left: 5px solid #5ec2dd;
 				padding: 10px 3em 8px 15px;
 				margin-bottom: 10px;
 			}

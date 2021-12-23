@@ -60,7 +60,7 @@ const getFileString = (file) =>{
 		file.uuid +
 		" data-file='" +
 		fileCallpath +
-		"' data-type='file' class='btn btn-default deleteFile' > 삭제 </button></div></li>";
+		"' data-type='file' class='btn btn-default deleteFile' > X </button></div></li>";
 	return str;
 }
 

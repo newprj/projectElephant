@@ -73,8 +73,9 @@ public class BoardServiceImpl implements BoardService{
 
 	@Override
 	public BoardVO read(Long bno) {
-		// TODO Auto-generated method stub
-		return mapper.read(bno);
+		BoardVO board = mapper.read(bno);
+		board.setAttachList(fileMapper.filesByBno(board.getBno()));
+		return board;
 	}
 
 	@Override
@@ -99,11 +100,8 @@ public class BoardServiceImpl implements BoardService{
 	public int delete(Long bno) {
 		// TODO Auto-generated method stub
 		fileMapper.deleteAllByBno(bno);
-<<<<<<< HEAD
-		
-=======
 		replyMapper.deleteReplyByBno(bno);
->>>>>>> 42c0288bda6bf3deba49031f6483fccc5410a286
+
 		return mapper.delete(bno);
 	}
 

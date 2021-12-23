@@ -99,6 +99,7 @@ prefix="c" %>
 
 		<div class="wrapper">
 			<div class="head">
+			
 				<div class="media-left">
 					<img
 						src="/resources/img/elephantIcon.png"
@@ -179,51 +180,59 @@ prefix="c" %>
 				var myEditor = document.querySelector("#editor");
 
 				getFileList("${cri.bno}");
+				
+				
+				$('.fileBtn').click( (e) => {
+					let fileUpload = $('<input type="file" name="file" multiple />')
+					fileUpload.click()
+					$(fileUpload).change(function (e) {
+						let formData = new FormData();
+						let uploadFiles = fileUpload[0].files;
+						let files = Object.values(uploadFiles);
+						files
+							.filter((file) => checkExtension(file.name, file.size))
+							.map((file) => formData.append("uploadFile", file));
+						$.ajax({
+							type: "post",
+							url: "/upload",
+							processData: false,
+							contentType: false,
+							data: formData,
+							dataType: "json",
+							success: (res) => {
+								$(".file").html(uploadClone.html());
+								showUploadFile(res);
+								console.log(res);
+							},
+							error: (xhr, status, er) => console.log(xhr),
+						});
+					// 업로드한 파일 삭제할경우
 
-				$('input[type="file"]').change(function (e) {
-					let formData = new FormData();
-					let uploadFiles = $('input[name="file"]')[0].files;
-					let files = Object.values(uploadFiles);
-					files
-						.filter((file) => checkExtension(file.name, file.size))
-						.map((file) => formData.append("uploadFile", file));
-					$.ajax({
-						type: "post",
-						url: "/upload",
-						processData: false,
-						contentType: false,
-						data: formData,
-						dataType: "json",
-						success: (res) => {
-							$(".file").html(uploadClone.html());
-							showUploadFile(res);
-							console.log(res);
-						},
-						error: (xhr, status, er) => console.log(xhr),
-					}); //upload ajax
-				}); //file change
-
-				$(".uploadResult").on("click", "button", function (e) {
-					e.preventDefault();
-
-					let fileName = $(this).data("file");
-					let fileType = $(this).data("type");
-					let targetLi = $(this).closest("li");
-					let uuid = $(this).data("uuid");
-					let data = { fileName, fileType };
-					attachList = attachList.filter((i) => i.uuid !== uuid);
-					console.log(data);
-					$.ajax({
-						url: "/delete",
-						type: "post",
-						data: data,
-						dataType: "text",
-						success: (res) => {
-							console.log(res);
-							targetLi.remove();
-						},
-					});
-				}); //uploadResult의 버튼  click
+					$(".uploadResult").on("click", "button", function (e) {
+						e.preventDefault();
+						console.log("뭐가 눌림")
+						let fileName = $(this).data("file");
+						let fileType = $(this).data("type");
+						let targetLi = $(this).closest("li");
+						let uuid = $(this).data("uuid");
+						let data = {
+							fileName,
+							fileType,
+						};
+						attachList = attachList.filter((i) => i.uuid !== uuid);
+						$.ajax({
+							url: "/delete",
+							type: "post",
+							data: data,
+							dataType: "text",
+							success: (res) => {
+								console.log(res);
+								targetLi.remove();
+							},
+						});
+					}); //uploadResult click
+				});
+				}) //file
 
 				const getForm = () => ({
 					bno: "${cri.bno}",
@@ -252,6 +261,30 @@ prefix="c" %>
 						}, //error
 					}); //ajax
 				}); // modify c
+				
+				$(".uploadResult").on("click", "button", function (e) {
+					e.preventDefault();
+					console.log("뭐가 눌림")
+					let fileName = $(this).data("file");
+					let fileType = $(this).data("type");
+					let targetLi = $(this).closest("li");
+					let uuid = $(this).data("uuid");
+					let data = {
+						fileName,
+						fileType,
+					};
+					attachList = attachList.filter((i) => i.uuid !== uuid);
+					$.ajax({
+						url: "/delete",
+						type: "post",
+						data: data,
+						dataType: "text",
+						success: (res) => {
+							console.log(res);
+							targetLi.remove();
+						},
+					});
+				}); //uploadResult click
 
 				$(".delete").click(function (e) {
 					e.preventDefault();

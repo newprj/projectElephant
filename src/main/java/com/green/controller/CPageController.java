@@ -1,10 +1,6 @@
 package com.green.controller;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collector;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,11 +14,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-
 import com.green.service.GUserService;
 import com.green.service.GroupService;
 import com.green.service.LetterService;
-
 import com.green.vo.GUserVO;
 import com.green.vo.LetterVO;
 
