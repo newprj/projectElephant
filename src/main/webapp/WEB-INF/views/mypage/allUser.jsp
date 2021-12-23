@@ -90,7 +90,7 @@
                                </li>
                                <li>
                                    
-                                  <a href="javascript:void(0)" class="susp">
+                                  <a class="susp">
 	                                 
 									<c:if test="${i.suspension eq 'Y'}">
 										 <i class="fa fa-ban fa-lg"></i> status

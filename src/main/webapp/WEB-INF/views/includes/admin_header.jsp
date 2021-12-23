@@ -242,10 +242,10 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 	                                    <a href="/user/modify"> <i class="fa fa-user fa-fw"></i> Profile </a>
 	                                </li>
 	                                <li>
-	                                    <a href="/mypage/message">  <i class="fa fa-envelope fa-fw"></i> Messages </a>
+	                                    <a href="/mypage/allMessage">  <i class="fa fa-envelope fa-fw"></i> Messages </a>
 	                                </li>
 	                                <li>
-	                                    <a href="/mypage/user">  <i class="fa fa-gear fa-fw"></i> Settings </a>
+	                                    <a href="/mypage/admin">  <i class="fa fa-gear fa-fw"></i> Settings </a>
 	                                </li>
 	                                <li>
 	                                    <a href="/user/logout"> <i class="fa fa-sign-out fa-fw"></i> Logout </a>
