@@ -34,9 +34,11 @@ import com.green.service.QnaService;
 import com.green.service.ReplyService;
 import com.green.service.UserService;
 import com.green.service.VisitService;
+import com.green.vo.Criteria;
 import com.green.vo.GUserVO;
 import com.green.vo.GroupVO;
 import com.green.vo.LetterVO;
+import com.green.vo.PageDTO;
 import com.green.vo.UserVO;
 
 import lombok.Setter;
@@ -70,17 +72,10 @@ public class MypageController {
 	@Setter(onMethod_=@Autowired)
 	VisitService visitService;
 	
-	@GetMapping("/admin")
-	public String adminHome(Model model, HttpServletResponse response,HttpSession session) {
-		UserVO login= (UserVO) session.getAttribute("user");
-		log.info("오늘 방문자"+session.getAttribute("todayCnt"));
-		log.info(""+ session.getAttribute("totalCnt"));
-		log.info("id="+login.getUser_id());
-		
-		log.info("admin page");
-		String id=login.getUser_id();
+	//admin확인 함수 만들기
+	public String check(String id, HttpServletResponse response) {
+		String res="";
 		if(id==null || !(id.equals("admin"))) {
-			log.info("관리자가 아닌 접근");
 			response.setContentType("text/html; charset=UTF-8");
             PrintWriter out;
 			try {
@@ -91,27 +86,116 @@ public class MypageController {
 				e.printStackTrace();
 			}
             
-			return "redirect:/user/login";
+			res= "redirect:/user/login";
 		}
+		return res;
+	}
+	
+	@GetMapping("/admin")
+	public String adminHome(Model model, HttpServletResponse response,HttpSession session) {
+		UserVO login= (UserVO) session.getAttribute("user");
+		String id=login.getUser_id();
 		
 		
+		check(id,response);
 		System.out.println(visitService.weekCnt());
 		
-		model.addAttribute("week",visitService.weekCnt());
+		//model.addAttribute("week",visitService.weekCnt());
 		model.addAttribute("visit",visitService.todayCnt());
 		model.addAttribute("user",id);
-		model.addAttribute("list",userService.allList());	//allUser로 넘김
+		
 		model.addAttribute("group",gService.showAll());
-		model.addAttribute("qna",qnaService.list());
-		model.addAttribute("letter",letterService.myLetter(id));
+		
+		model.addAttribute("letter",letterService.myLetter(id));	
 		model.addAttribute("sendletter",letterService.sendLetter(id));
 		return "/mypage/admin";
 	}
 	
 	@GetMapping("/allUser")
-	public String allUser(Model model) {
-		model.addAttribute("list",userService.allList());
+	public String allUser(Model model,Criteria cri,HttpServletResponse response,HttpSession session) {
+		UserVO login= (UserVO) session.getAttribute("user");
+		String id=login.getUser_id();
+		
+		check(id,response);
+		cri.setAmount(12);
+		int total=userService.totalCount(cri);
+		model.addAttribute("user",id);
+		model.addAttribute("list",userService.listWithPaging(cri));
+		model.addAttribute("pageMarker",new PageDTO(cri, total));
 		return "/mypage/allUser";
+	}
+	
+	@GetMapping("/allQna")
+	public String allQna(Model model,Criteria cri,HttpServletResponse response,HttpSession session) {
+		UserVO login= (UserVO) session.getAttribute("user");
+		String id=login.getUser_id();
+		
+		check(id,response);
+		int total=qnaService.totalCount(cri);
+		
+		model.addAttribute("qna",qnaService.listqnaWithPaging(cri));
+		model.addAttribute("pageMarker",new PageDTO(cri, total));
+		model.addAttribute("user",id);
+		return "/mypage/allQna";
+	}
+	
+	@GetMapping("/allMessage")
+	public String allMessage(Model model,Criteria cri,HttpServletResponse response,HttpSession session) {
+		UserVO login= (UserVO) session.getAttribute("user");
+		String id=login.getUser_id();
+		
+		check(id,response);
+		
+		int total=letterService.totalCount(id);
+		model.addAttribute("pageMarker",new PageDTO(cri, total));
+		model.addAttribute("letter",letterService.listqnaWithPaging(cri, id));
+		model.addAttribute("user",id);
+		model.addAttribute("total",total);
+		return "/mypage/allMessage";
+	}
+	
+	@GetMapping("/sendMessage")
+	public String sendMessage(Model model,Criteria cri,HttpServletResponse response,HttpSession session) {
+		UserVO login= (UserVO) session.getAttribute("user");
+		String id=login.getUser_id();
+		
+		check(id,response);
+		
+		int total=letterService.sendCount(id);
+		model.addAttribute("pageMarker",new PageDTO(cri, total));
+		model.addAttribute("letter",letterService.sendLetter(id));
+		model.addAttribute("user",id);
+		model.addAttribute("total",total);
+		return "/mypage/sendMessage";
+	}
+	
+	@GetMapping("/compose")
+	public String composeLetter(Model model,Criteria cri,HttpServletResponse response,HttpSession session) {
+		UserVO login= (UserVO) session.getAttribute("user");
+		String id=login.getUser_id();
+		
+		check(id,response);
+		
+		model.addAttribute("user",id);
+		return "/mypage/compose";
+	}
+	
+	@PostMapping("/compose")
+	public String sendLetter(LetterVO letter) {
+		System.out.println("보내는 메일"+letter);
+		
+		letterService.insert(letter);
+		return "/mypage/compose";
+	}
+	
+	@GetMapping("/calendar")
+	public String calendar(Model model,Criteria cri,HttpServletResponse response,HttpSession session) {
+		UserVO login= (UserVO) session.getAttribute("user");
+		String id=login.getUser_id();
+		
+		check(id,response);
+		
+		return "/mypage/calendar";
 	}
 	
 	@ResponseBody

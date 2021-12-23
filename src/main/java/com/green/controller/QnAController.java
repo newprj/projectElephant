@@ -35,11 +35,8 @@ public class QnAController {
 	@Setter(onMethod_=@Autowired)
 	QnaService service;
 
-	//일단 로그인해야 접속하게 함, 나중에 form 으로 로그인 정보 전송해서 id만 받아서 쓸수있도록 -> qna/list는 비회원도 진입가능하도록
-	//글쓰기는 로그인 정보 필요 다른 것들은 비회원도 접속 가능하도록 구현하기
 	@GetMapping("/list")
 	public void list(Model model,Criteria cri,HttpServletRequest req ) {
-		log.info("QnA 게시판 리스트");
 		
 		HttpSession session=req.getSession();
 		UserVO login= (UserVO) session.getAttribute("user");

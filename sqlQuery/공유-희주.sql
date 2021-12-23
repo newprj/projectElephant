@@ -159,7 +159,7 @@ create sequence seq_uno;
 
 -- 정지 칼럼 :기본으로 N(활동가능) /Y는 정지
 alter table tbl_user add suspension varchar2(50) default 'N' check(suspension in('Y','N'));
-alter table tbl_user add susDate timestamp;
+alter table tbl_user add suspDate timestamp;
 alter table tbl_user add suspContent varchar2(100);
 
 select*from tbl_user;
@@ -197,3 +197,7 @@ create table tbl_visitor(
     in_date Date
 );
 create SEQUENCE v_seq;
+
+-------- 유저테이블 가입시 날짜
+alter table tbl_user add reg_date timestamp;
+

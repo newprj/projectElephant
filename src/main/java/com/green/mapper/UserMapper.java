@@ -1,6 +1,7 @@
 package com.green.mapper;
 import java.util.List;
 
+import com.green.vo.Criteria;
 import com.green.vo.UserVO;
 
 public interface UserMapper {
@@ -13,6 +14,8 @@ public interface UserMapper {
 
 	//admin 페이지에서 보려고 만든 것입니다.
 	public List<UserVO> userSelect();
+	public List<UserVO> listWithPaging(Criteria cri);
+	public int totalCount(Criteria cri);
 	public int susp(UserVO vo);
 
 	//chatting

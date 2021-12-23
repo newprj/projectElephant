@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.green.mapper.UserMapper;
+import com.green.vo.Criteria;
 import com.green.vo.UserVO;
 
 import lombok.Setter;
@@ -63,6 +64,19 @@ public class UserServiceImpl implements UserService {
 	public UserVO selectMaster(String user_id) {
 		log.info("2) 서비스에서 마스터 사용자 검색");
 		return usermapper.selectMaster(user_id);
+	}
+
+	@Override
+	public List<UserVO> listWithPaging(Criteria cri) {
+		// TODO Auto-generated method stub
+		return usermapper.listWithPaging(cri);
+	}
+
+	@Override
+	public int totalCount(Criteria cri) {
+		// TODO Auto-generated method stub
+		return usermapper.totalCount(cri);
+		
 	}
 
 	

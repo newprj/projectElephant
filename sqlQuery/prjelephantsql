@@ -45,6 +45,7 @@ create table tbl_user(
     name varchar2(300),
     email varchar2(300));
 create sequence seq_uno;
+alter table tbl_user add(reg_Date timestamp);
 
 create table tbl_group(
     gno number constraint pk_group primary key,
