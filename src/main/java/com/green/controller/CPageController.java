@@ -70,6 +70,7 @@ public class CPageController {
 		
 		GUserVO gUserVO = groupuserSevice.listByUSer(member).stream()
 				.filter(i -> i.getGroup_name().equals(group_name)).findAny().orElse(null);
+		
 		LetterVO letter = new LetterVO();
 		letter.setContent("그룹에 가입되었습니다.");
 		letter.setRecipient(member);

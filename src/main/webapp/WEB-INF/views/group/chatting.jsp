@@ -41,6 +41,7 @@ pageEncoding="UTF-8"%>
 
 		.container {
 			padding: 0;
+
 		}
 
 		.list-unstyled {
@@ -48,6 +49,8 @@ pageEncoding="UTF-8"%>
 		}
 
 		.card {
+      min-height: 600px;
+      max-height: 600px;
 			background: #fff;
 			transition: 0.5s;
 			border: 0;
@@ -67,6 +70,8 @@ pageEncoding="UTF-8"%>
 		}
 
 		.chat-app .chat {
+      min-height: 600px;
+      max-height: 600px;
 			margin-left: 280px;
 			border-left: 1px solid #eaeaea;
 		}
@@ -131,11 +136,16 @@ pageEncoding="UTF-8"%>
 		}
 
 		.chat .chat-history {
+      min-height: 370px;
+      max-height: 370px;
+     overflow-x: hidden;
+     overflow-y: auto;
 			padding: 20px;
 			border-bottom: 2px solid #fff;
 		}
 
 		.chat .chat-history ul {
+      
 			padding: 0;
 		}
 
@@ -275,7 +285,7 @@ pageEncoding="UTF-8"%>
 			}
 		}
 
-		}
+		
 	</style>
 
 	<body>
@@ -308,37 +318,9 @@ pageEncoding="UTF-8"%>
 										<div class="col-lg-6 hidden-sm text-right"></div>
 									</div>
 								</div>
-								<div class="chat-history">
+								<div class="chat-history" >
 									<ul class="m-b-0">
-										<li class="clearfix">
-											<div class="message-data text-right">
-												<span class="message-data-time">10:10 AM, Today</span>
-												<img
-													src="https://bootdey.com/img/Content/avatar/avatar7.png"
-													alt="avatar"
-												/>
-											</div>
-											<div class="message other-message float-right">
-												Hi Aiden, how are you? How is the project coming along?
-											</div>
-										</li>
-										<li class="clearfix">
-											<div class="message-data">
-												<span class="message-data-time">10:12 AM, Today</span>
-											</div>
-											<div class="message my-message">
-												Are we meeting today?
-											</div>
-										</li>
-										<li class="clearfix">
-											<div class="message-data">
-												<span class="message-data-time">10:15 AM, Today</span>
-											</div>
-											<div class="message my-message">
-												Project has been already finished and I have results to
-												show you.
-											</div>
-										</li>
+
 									</ul>
 								</div>
 								<div class="chat-message clearfix">
@@ -398,7 +380,7 @@ ${user.user_id}
                 <div class="name">\${user.user_id}</div>
                 <div class="status"> <i class="fa fa-circle" id=\${user.user_id} aria-hidden="true"></i> </div>
                 </div></li>`
-                            );
+						);
 						$("ul.list-unstyled").append(memberElement);
 					}); //map
 				}); //getJSON

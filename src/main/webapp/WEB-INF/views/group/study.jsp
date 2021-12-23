@@ -156,7 +156,7 @@ prefix="c" %>
             let popup
             $('button.getChat').click((e) => {
 
-                popup = window.open(`/chat_pop/\${group}`, "chatPop", "width=1110, height=610, top=150, left=200")
+                popup = window.open(`/chat_pop/\${group}`, "chatPop", "width=1110, height=625, top=150, left=200,scrollbars=no")
                 console.log(popup)
 
 
