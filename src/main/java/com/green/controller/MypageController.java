@@ -73,12 +73,8 @@ public class MypageController {
 	VisitService visitService;
 	
 	//admin확인 함수 만들기
-	
-	
-	@GetMapping("/admin")
-	public String adminHome(Model model, HttpServletResponse response,HttpSession session) {
-		UserVO login= (UserVO) session.getAttribute("user");
-		String id=login.getUser_id();
+	public String check(String id, HttpServletResponse response) {
+		String res="";
 		if(id==null || !(id.equals("admin"))) {
 			response.setContentType("text/html; charset=UTF-8");
             PrintWriter out;
@@ -90,19 +86,27 @@ public class MypageController {
 				e.printStackTrace();
 			}
             
-			return "redirect:/user/login";
+			res= "redirect:/user/login";
 		}
+		return res;
+	}
+	
+	@GetMapping("/admin")
+	public String adminHome(Model model, HttpServletResponse response,HttpSession session) {
+		UserVO login= (UserVO) session.getAttribute("user");
+		String id=login.getUser_id();
 		
 		
+		check(id,response);
 		System.out.println(visitService.weekCnt());
 		
-		model.addAttribute("week",visitService.weekCnt());
+		//model.addAttribute("week",visitService.weekCnt());
 		model.addAttribute("visit",visitService.todayCnt());
 		model.addAttribute("user",id);
-		//model.addAttribute("list",userService.allList());	//allUser로 넘김
+		
 		model.addAttribute("group",gService.showAll());
-		//model.addAttribute("qna",qnaService.list());		//allQna로 넘김
-		model.addAttribute("letter",letterService.myLetter(id));	//allmessage로 넘김
+		
+		model.addAttribute("letter",letterService.myLetter(id));	
 		model.addAttribute("sendletter",letterService.sendLetter(id));
 		return "/mypage/admin";
 	}
@@ -111,19 +115,8 @@ public class MypageController {
 	public String allUser(Model model,Criteria cri,HttpServletResponse response,HttpSession session) {
 		UserVO login= (UserVO) session.getAttribute("user");
 		String id=login.getUser_id();
-		if(id==null || !(id.equals("admin"))) {
-			response.setContentType("text/html; charset=UTF-8");
-            PrintWriter out;
-			try {
-				out = response.getWriter();
-				out.println("<script>alert('관리자가 아닌 접근입니다.'); history.go(-1);</script>");
-	            out.flush();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-            
-			return "redirect:/user/login";
-		}
+		
+		check(id,response);
 		cri.setAmount(12);
 		int total=userService.totalCount(cri);
 		model.addAttribute("user",id);
@@ -136,20 +129,8 @@ public class MypageController {
 	public String allQna(Model model,Criteria cri,HttpServletResponse response,HttpSession session) {
 		UserVO login= (UserVO) session.getAttribute("user");
 		String id=login.getUser_id();
-		if(id==null || !(id.equals("admin"))) {
-			response.setContentType("text/html; charset=UTF-8");
-            PrintWriter out;
-			try {
-				out = response.getWriter();
-				out.println("<script>alert('관리자가 아닌 접근입니다.'); history.go(-1);</script>");
-	            out.flush();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-            
-			return "redirect:/user/login";
-		}
 		
+		check(id,response);
 		int total=qnaService.totalCount(cri);
 		
 		model.addAttribute("qna",qnaService.listqnaWithPaging(cri));
@@ -162,46 +143,51 @@ public class MypageController {
 	public String allMessage(Model model,Criteria cri,HttpServletResponse response,HttpSession session) {
 		UserVO login= (UserVO) session.getAttribute("user");
 		String id=login.getUser_id();
-		if(id==null || !(id.equals("admin"))) {
-			response.setContentType("text/html; charset=UTF-8");
-            PrintWriter out;
-			try {
-				out = response.getWriter();
-				out.println("<script>alert('관리자가 아닌 접근입니다.'); history.go(-1);</script>");
-	            out.flush();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-            
-			return "redirect:/user/login";
-		}
 		
+		check(id,response);
 		
-		int total=letterService.totalCount(cri);
+		int total=letterService.totalCount(id);
 		model.addAttribute("pageMarker",new PageDTO(cri, total));
 		model.addAttribute("letter",letterService.listqnaWithPaging(cri, id));
+		model.addAttribute("user",id);
+		model.addAttribute("total",total);
 		return "/mypage/allMessage";
 	}
 	
-	@GetMapping("compose")
+	@GetMapping("/sendMessage")
+	public String sendMessage(Model model,Criteria cri,HttpServletResponse response,HttpSession session) {
+		UserVO login= (UserVO) session.getAttribute("user");
+		String id=login.getUser_id();
+		
+		check(id,response);
+		
+		int total=letterService.sendCount(id);
+		model.addAttribute("pageMarker",new PageDTO(cri, total));
+		model.addAttribute("letter",letterService.sendLetter(id));
+		model.addAttribute("user",id);
+		model.addAttribute("total",total);
+		return "/mypage/sendMessage";
+	}
+	
+	@GetMapping("/compose")
 	public String composeLetter(Model model,Criteria cri,HttpServletResponse response,HttpSession session) {
 		UserVO login= (UserVO) session.getAttribute("user");
 		String id=login.getUser_id();
-		if(id==null || !(id.equals("admin"))) {
-			response.setContentType("text/html; charset=UTF-8");
-            PrintWriter out;
-			try {
-				out = response.getWriter();
-				out.println("<script>alert('관리자가 아닌 접근입니다.'); history.go(-1);</script>");
-	            out.flush();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-            
-			return "redirect:/user/login";
-		}
+		
+		check(id,response);
+		
+		model.addAttribute("user",id);
 		return "/mypage/compose";
 	}
+	
+	@PostMapping("/compose")
+	public String sendLetter(LetterVO letter) {
+		System.out.println("보내는 메일"+letter);
+		
+		letterService.insert(letter);
+		return "/mypage/compose";
+	}
+	
 	@ResponseBody
 	@PostMapping(value="/susp" , consumes = "application/json", produces = {MediaType.TEXT_PLAIN_VALUE})
 	public ResponseEntity<String> suspInsert(@RequestBody UserVO vo){

@@ -19,73 +19,57 @@
       </header>
   
   <div id="page-content">
+  
         <div class="row">
-            <div class="col-xs-12 col-md-3 col-lg-3  hidden-xs">
-                <div class="pad-all">
-                    <a href="#/mail/compose" class="btn btn-danger btn-block btn-md"> <span class="fa fa-edit"></span> COMPOSE</a>
-                </div>
-                <div class="mail-categories">
-                    <ul class="list-group">
-                        <li class="list-group-item">
-                            <a href="/mypage/allMessage"> <i class="fa fa-inbox"></i> 받은 메일 <span class="label label-info pull-right">6</span> </a>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="javascript:;"> <i class="fa fa-envelope-o"></i> 보낸 메일 </a>
-                        </li>
-                        <li class="list-group-item">
-                            <a href="javascript:;"> <i class="fa fa-star"></i> Starred <span class="label label-danger pull-right">3</span> </a>
-                        </li>
-                    </ul>
-                </div>
+            <div class="col-xs-12 col-md-3 col-lg-3">
+                 <div class="mail-categories">
+                       <ul class="list-group">
+                           <li class="list-group-item">
+                               <a href="/mypage/allMessage"> <i class="fa fa-inbox"></i> 받은 메일 <span class="label label-info pull-right">6</span> </a>
+                           </li>
+                           <li class="list-group-item">
+                               <a href="javascript:;"> <i class="fa fa-envelope-o"></i> 보낸메일 </a>
+                           </li>
+                           <li class="list-group-item">
+                               <a href="javascript:;"> <i class="fa fa-star"></i> Starred <span class="label label-danger pull-right">3</span> </a>
+                           </li>
+                       </ul>
+                   </div>
             </div>
             <div class="col-xs-12 col-md-9 col-lg-9">
-                       <div class="panel">
-                           <div class="panel-body">
-                               <!-- Multiple Select Choosen -->
-                               <!--===================================================-->
-                               <form class="form-horizontal form-bordered">
-                                   <div class="form-group nb">
-                                       <label class="control-label col-md-1">To: </label>
-                                       <div class="col-md-11">
-                                           <ul id="jquery-tagIt-primary" class="primary">
-                                              <li>Abc@gmail.com</li>
-                                              <li>XYZ@gmail.com</li>
-                                           </ul>
-                                       </div>
-                                   </div>
-                                   <div class="form-group nb">
-                                       <label class="control-label col-md-1">CC: </label>
-                                       <div class="col-md-11">
-                                           <ul id="jquery-tagIt-inverse" class="inverse">
-                                           </ul>
-                                       </div>
-                                   </div>
-                                   <div class="form-group nb">
-                                       <label class="control-label col-md-1">Subject: </label>
-                                       <div class="col-md-11">
-                                           <input type="text" class="form-control ">
-                                       </div>
-                                   </div>
-                                   <!--Summernote-->
-                                   <!--===================================================-->
-                                   <div id="demo-summernote"></div>
-                                   <!--===================================================-->
-                                   <!-- End Summernote -->
-                                   <div class="pad-top text-right"> 
-                                       <button class="btn btn-danger"><i class="fa fa-send"></i> Send </button>
-                                       <button class="btn btn-default"><i class="fa fa-save"></i> Draft </button>
-                                       <button class="btn btn-default"><i class="fa fa-trash-o"></i> Discard </button>
-                                   </div>
-                               </form>
-                           </div>
-                       </div>
-                   </div>
-               </div>
-           </div>
+            	<div class="panel">
+                	<div class="panel-body">
+	                    <form class="form-horizontal form-bordered" method="post">
+	                        <div class="form-group nb">
+	                            <label class="control-label col-md-1">To: </label>
+	                            <div class="col-md-11">
+	                            	<input type="text"  class="form-control" name="recipient">
+	                                
+	                            </div>
+	                        </div>
+	                       
+	                        <div class="form-group nb">
+	                            <label class="control-label col-md-1">Subject: </label>
+	                            <div class="col-md-11">
+	                                <textarea class="form-control" name="content"></textarea>
+	                            </div>
+	                        </div>
+	                        <input type="hidden"  class="form-control" name="writer">
+	                        <input type="hidden"  class="form-control" name="reg_date">
+	                        
+	                        <div id="demo-summernote"></div>
+	                        <div class="pad-top text-right"> 
+	                            <button class="btn btn-danger" id="sendBtn"><i class="fa fa-send"></i> Send </button>
+	                            <button class="btn btn-default"><i class="fa fa-trash-o"></i> Discard </button>
+	                        </div>
+	                    </form>
+	                </div>
+	            </div>
+            </div>
+        </div>
+   </div>
         </div>
     </div>
-  </div>
-</div>               
 <%@ include file="../includes/admin_footer.jsp" %>
 
 
@@ -102,6 +86,18 @@
 			$("#actionForm").find("input[name='pageNum']").val(thisis)
 			$("#actionForm").submit()
 		})
+		
+		/* 쪽지 보내기 */
+		var today=new Date()
+		var writer=$(".form-bordered").find("input[name='writer']")
+		var reg_date=$(".form-bordered").find("input[name='reg_date']")
+		$("#sendBtn").on("click",function(e){
+			e.preventDefault();
+			writer.val('${user}')
+			reg_date.val(today)
+			$("form").submit()
+		})
+		
 	})
 
 </script>

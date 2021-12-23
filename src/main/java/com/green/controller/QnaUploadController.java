@@ -117,13 +117,6 @@ public class QnaUploadController {
 				attachDTO.setUploadPath(uploadFolderPath);
 				if(checkImageType(saveFile)) {
 					attachDTO.setFileType(true);
-					/*
-					 * FileOutputStream thumbnail=new FileOutputStream(new
-					 * File(uploadPath,"s_"+uploadFileName)); CommonsMultipartFile
-					 * commons=(CommonsMultipartFile)multipartFile;
-					 * Thumbnailator.createThumbnail(commons.getInputStream(),thumbnail,100,100);
-					 * thumbnail.close();
-					 */
 				}
 				list.add(attachDTO);
 			}catch (Exception e) {

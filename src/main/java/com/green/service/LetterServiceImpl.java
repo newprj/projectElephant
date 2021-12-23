@@ -50,16 +50,24 @@ public class LetterServiceImpl implements LetterService{
 		mapper.delete(writer,lno);
 	}
 
-	@Override
-	public int totalCount(Criteria cri) {
-		// TODO Auto-generated method stub
-		return mapper.totalCount(cri);
-	}
+
 
 	@Override
 	public List<LetterVO> listqnaWithPaging(Criteria cri, String recipient) {
 		// TODO Auto-generated method stub
 		return mapper.listqnaWithPaging(cri, recipient);
+	}
+
+	@Override
+	public int sendCount(String writer) {
+		// TODO Auto-generated method stub
+		return mapper.sendCount(writer);
+	}
+
+	@Override
+	public int totalCount(String recipient) {
+		// TODO Auto-generated method stub
+		return mapper.totalCount(recipient);
 	}
 
 

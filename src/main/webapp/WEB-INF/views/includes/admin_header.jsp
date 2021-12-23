@@ -41,7 +41,7 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 	            	<div class="navbar-header">
 	                	<a href="/mypage/admin" class="navbar-brand">
 	                	<!--코끼리 아이콘 넣기-->
-		                    <i class="fa fa-cube brand-icon"></i>
+	                		<img src="/resources/img/elephantIcon.png" class="fa fa-cube brand-icon"/>
 		                    <div class="brand-title">
 		                        <span class="brand-text">관리자 페이지</span>
 		                    </div>

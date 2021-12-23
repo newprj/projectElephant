@@ -72,18 +72,17 @@
                             <div class="tab-content">
                                 <div id="demo-lft-tab-1" class="tab-pane fade active in">
                                     <table class="table table-responsive">
-                                    	<c:forEach items="${letter}" var="i" varStatus="status" >
+                                    	<c:forEach items="${letter}" var="i" varStatus="status"  >
 	                                        <tr class="mail-unread">
 	                                            <td>
 	                                                <label class="form-checkbox form-icon">
-	                                                	<input type="checkbox" name="check_trash" value="${i.lno}">
+	                                                <input type="checkbox" name="check_trash" value="${i.lno}">
 	                                                </label>
 	                                            </td>
 	                                            <td class="hidden-xs">
 	                                                <div class="inbox-star"><span class="fa fa-star-o"></span></div>
 	                                            </td>
-	                                            <td class="hidden-xs"><span class="label label-success"> Primary </span></td>
-	                                            <td>${i.writer} </td>
+	                                            <td>${i.recipient} </td>
 	                                            <td>${i.content} </td>
 	                                            <td><fmt:formatDate value="${i.reg_date}" pattern="yyyy-MM-dd a hh:mm" /></td>
 	                                        </tr>
