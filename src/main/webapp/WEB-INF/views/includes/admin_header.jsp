@@ -10,7 +10,7 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 		<jsp:useBean id="today" class="java.util.Date" />
 		<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-        <title> admin page</title>
+        <title> ${user.name} Page</title>
         <!--STYLESHEET-->
         <!--=================================================-->
         <!--Roboto Slab Font [ OPTIONAL ] -->
@@ -42,10 +42,9 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 	        	<div id="navbar-container" class="boxed">
 	            	<div class="navbar-header">
 	                	<a href="/mypage/admin" class="navbar-brand">
-	                	<!--코끼리 아이콘 넣기-->
 	                		<img src="/resources/img/elephantIcon.png" class="fa fa-cube brand-icon"/>
 		                    <div class="brand-title">
-		                        <span class="brand-text">관리자 페이지</span>
+		                        <span class="brand-text">${user.name} 페이지</span>
 		                    </div>
 		                </a>
 	            	</div>
@@ -233,7 +232,7 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 	                    <li id="dropdown-user" class="dropdown">
 	                        <a href="#" data-toggle="dropdown" class="dropdown-toggle text-right">
 	                            <span class="pull-right"> <img class="img-circle img-user media-object" src="/resources/img/user.png" alt="Profile Picture"> </span>
-	                            <div class="username hidden-xs">Admin</div>
+	                            <div class="username hidden-xs">${user.name} 님</div>
 	                        </a>
 	                        <div class="dropdown-menu dropdown-menu-right with-arrow">
 	                            <!-- User dropdown menu -->
@@ -244,9 +243,18 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 	                                <li>
 	                                    <a href="/mypage/allMessage">  <i class="fa fa-envelope fa-fw"></i> Messages </a>
 	                                </li>
-	                                <li>
-	                                    <a href="/mypage/admin">  <i class="fa fa-gear fa-fw"></i> Settings </a>
-	                                </li>
+	                                <c:choose>
+		                                <c:when test="${user.user_id == 'admin'}">
+			                                <li>
+			                                    <a href="/mypage/admin">  <i class="fa fa-gear fa-fw"></i> Settings </a>
+			                                </li>
+			                            </c:when>
+			                            <c:otherwise>
+			                             	<li>
+			                                    <a href="/mypage/user">  <i class="fa fa-gear fa-fw"></i> Settings </a>
+			                                </li>
+			                            </c:otherwise>
+	                                </c:choose>
 	                                <li>
 	                                    <a href="/user/logout"> <i class="fa fa-sign-out fa-fw"></i> Logout </a>
 	                                </li>
@@ -268,17 +276,35 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 	                        <li>
 	                            <a href="/group/" > Home </a>
 	                        </li>
-	                        <li>
-	                            <a href="/mypage/allUser"> Users </a>
-	                        </li>
-	                        <li>
-	                            <a href="/mypage/allGroup"> Group</a>
-	                            
-	                        </li>
-	                        <li>
-	                            <a href="/mypage/allQna" > Q&A </a>
-	                            
-	                        </li>
+	                        <c:if test="${user.user_id == 'admin'}">
+		                        <li>
+		                            <a href="/mypage/allUser"> Users </a>
+		                        </li>	
+	                        </c:if>
+	                        <c:choose>
+                                <c:when test="${user.user_id == 'admin'}">
+	                                <li>
+	                                     <a href="/mypage/allGroup"> Group</a>
+	                                </li>
+	                            </c:when>
+	                            <c:otherwise>
+	                             	<li>
+	                                     <a href="/mypage/userGroup"> Group</a>
+	                                </li>
+	                            </c:otherwise>
+                           	</c:choose>
+                           	<c:choose>
+                                <c:when test="${user.user_id == 'admin'}">
+	                                <li>
+	                                     <a href="/mypage/allQna" > Q&A </a>
+	                                </li>
+	                            </c:when>
+	                            <c:otherwise>
+	                             	<li>
+	                                     <a href="/mypage/userQna" > Q&A </a>
+	                                </li>
+	                            </c:otherwise>
+                           	</c:choose>
 	                        <li>
 	                            <a href="/mypage/allMessage"> Message </a>
 	                        </li>

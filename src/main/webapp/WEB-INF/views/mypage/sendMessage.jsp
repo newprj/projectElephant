@@ -12,7 +12,14 @@
       <div class="breadcrumb-wrapper">
           <span class="label">You are here:</span>
           <ol class="breadcrumb">
-              <li> <a href="/mypage/admin"> Home </a> </li>
+          	<c:choose>
+		          <c:when test="${user.user_id == 'admin'}">
+		              <li> <a href="/mypage/admin"> Home </a> </li>
+		          </c:when>
+		          <c:otherwise>
+		           	<li> <a href="/mypage/user"> Home </a> </li>
+		          </c:otherwise>
+             </c:choose>
               <li class="active"> Message </li>
           </ol>
       </div>
@@ -72,7 +79,7 @@
                             <div class="tab-content">
                                 <div id="demo-lft-tab-1" class="tab-pane fade active in">
                                     <table class="table table-responsive">
-                                    	<c:forEach items="${letter}" var="i" varStatus="status"  >
+                                    	<c:forEach items="${letter}" var="i" varStatus="status">
 	                                        <tr class="mail-unread">
 	                                            <td>
 	                                                <label class="form-checkbox form-icon">

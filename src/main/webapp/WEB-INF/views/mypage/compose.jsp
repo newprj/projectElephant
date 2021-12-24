@@ -12,7 +12,14 @@
           <div class="breadcrumb-wrapper">
               <span class="label">You are here:</span>
               <ol class="breadcrumb">
-                  <li> <a href="/mypage/admin"> Home </a> </li>
+                  <c:choose>
+			          <c:when test="${user.user_id == 'admin'}">
+			              <li> <a href="/mypage/admin"> Home </a> </li>
+			          </c:when>
+			          <c:otherwise>
+			           	<li> <a href="/mypage/user"> Home </a> </li>
+			          </c:otherwise>
+            	</c:choose>
                   <li class="active"> Mail Compose </li>
               </ol>
           </div>

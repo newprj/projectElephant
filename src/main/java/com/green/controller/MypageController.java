@@ -91,6 +91,7 @@ public class MypageController {
 		return res;
 	}
 	
+	//admin
 	@GetMapping("/admin")
 	public String adminHome(Model model, HttpServletResponse response,HttpSession session) {
 		UserVO login= (UserVO) session.getAttribute("user");
@@ -102,7 +103,7 @@ public class MypageController {
 		
 		//model.addAttribute("week",visitService.weekCnt());
 		model.addAttribute("visit",visitService.todayCnt());
-		model.addAttribute("user",id);
+		model.addAttribute("user",login);
 		
 		model.addAttribute("letter",letterService.myLetter(id));	
 		model.addAttribute("sendletter",letterService.sendLetter(id));
@@ -137,17 +138,97 @@ public class MypageController {
 		return "/mypage/allQna";
 	}
 	
-	@GetMapping("/allMessage")
-	public String allMessage(Model model,Criteria cri,HttpServletResponse response,HttpSession session) {
+	
+	
+	@GetMapping("/allGroup")
+	public String allGroup(Model model,Criteria cri,HttpServletResponse response,HttpSession session) {
 		UserVO login= (UserVO) session.getAttribute("user");
 		String id=login.getUser_id();
 		
 		check(id,response);
 		
+		int total=gService.getTotalCount(cri);//total 승인 ,비승인 구하기
+		model.addAttribute("group",gService.getListWithPaging(cri));
+		model.addAttribute("Nauth",gService.NotAuthList(cri));
+		model.addAttribute("pageMarker",new PageDTO(cri, total));
+		return "/mypage/allGroup";
+	}
+
+	@ResponseBody
+	@PostMapping(value="/susp" , consumes = "application/json", produces = {MediaType.TEXT_PLAIN_VALUE})
+	public ResponseEntity<String> suspInsert(@RequestBody UserVO vo){
+		int susp=userService.userSusp(vo);
+		log.info("들어온 정보"+vo);
+		return susp==1 ? new ResponseEntity<>("success",HttpStatus.OK):
+			new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+	
+	//user
+	@GetMapping("/user")
+	public void mypage(HttpSession session,Model model ) {
+		UserVO login= (UserVO) session.getAttribute("user");
+		String id=login.getUser_id();
+
+		model.addAttribute("myGroup",gUserService.listByUSer(id)); //userGroup
+		model.addAttribute("user",login);
+		model.addAttribute("myBoard",bService.myBoard(id));	//userGroup
+		model.addAttribute("boardReply", replyService.myReply(id));	//userGroup
+		
+		model.addAttribute("qnaReply",qnaService.myReply(id));	//userQna
+		model.addAttribute("myqna",qnaService.myQna(id));	//userQna
+		
+		model.addAttribute("letter",letterService.myLetter(id));
+		model.addAttribute("sendletter",letterService.sendLetter(id));
+		
+	}
+	
+	@GetMapping("/userGroup")
+	public String userGroup(Model model,Criteria cri,HttpServletResponse response,HttpSession session) {
+		UserVO login= (UserVO) session.getAttribute("user");
+		String id=login.getUser_id();
+		
+		model.addAttribute("myGroup",gUserService.listByUSer(id)); //userGroup
+		model.addAttribute("user",login);
+		model.addAttribute("myBoard",bService.myBoard(id));	//userGroup
+		model.addAttribute("boardReply", replyService.myReply(id));	//userGroup
+		
+		return "/mypage/userGroup";
+	}
+	
+	@GetMapping("/userQna")
+	public String userQna(Model model,Criteria cri,HttpServletResponse response,HttpSession session) {
+		UserVO login= (UserVO) session.getAttribute("user");
+		String id=login.getUser_id();
+		
+		model.addAttribute("qnaReply",qnaService.myReply(id));	//userQna
+		model.addAttribute("myqna",qnaService.myQna(id));	//userQna
+		model.addAttribute("user",login);
+		
+		return "/mypage/userQna";
+	}
+	
+	//admin, user 공용
+	@GetMapping("/calendar")
+	public String calendar(Model model,Criteria cri,HttpServletResponse response,HttpSession session) {
+		UserVO login= (UserVO) session.getAttribute("user");
+		String id=login.getUser_id();
+		
+		//check(id,response);
+		
+		return "/mypage/calendar";
+	}
+	
+	@GetMapping("/allMessage")
+	public String allMessage(Model model,Criteria cri,HttpServletResponse response,HttpSession session) {
+		UserVO login= (UserVO) session.getAttribute("user");
+		String id=login.getUser_id();
+		
+		//check(id,response);
+		
 		int total=letterService.totalCount(id);
 		model.addAttribute("pageMarker",new PageDTO(cri, total));
 		model.addAttribute("letter",letterService.listqnaWithPaging(cri, id));
-		model.addAttribute("user",id);
+		model.addAttribute("user",login);
 		model.addAttribute("total",total);
 		return "/mypage/allMessage";
 	}
@@ -157,12 +238,12 @@ public class MypageController {
 		UserVO login= (UserVO) session.getAttribute("user");
 		String id=login.getUser_id();
 		
-		check(id,response);
+		//check(id,response);
 		
 		int total=letterService.sendCount(id);
 		model.addAttribute("pageMarker",new PageDTO(cri, total));
 		model.addAttribute("letter",letterService.sendLetter(id));
-		model.addAttribute("user",id);
+		model.addAttribute("user",login);
 		model.addAttribute("total",total);
 		return "/mypage/sendMessage";
 	}
@@ -184,54 +265,6 @@ public class MypageController {
 		
 		letterService.insert(letter);
 		return "/mypage/compose";
-	}
-	
-	@GetMapping("/allGroup")
-	public String allGroup(Model model,Criteria cri,HttpServletResponse response,HttpSession session) {
-		UserVO login= (UserVO) session.getAttribute("user");
-		String id=login.getUser_id();
-		
-		check(id,response);
-		
-		int total=gService.getTotalCount(cri);//total 승인 ,비승인 구하기
-		model.addAttribute("group",gService.getListWithPaging(cri));
-		model.addAttribute("Nauth",gService.NotAuthList(cri));
-		model.addAttribute("pageMarker",new PageDTO(cri, total));
-		return "/mypage/allGroup";
-	}
-	@GetMapping("/calendar")
-	public String calendar(Model model,Criteria cri,HttpServletResponse response,HttpSession session) {
-		UserVO login= (UserVO) session.getAttribute("user");
-		String id=login.getUser_id();
-		
-		check(id,response);
-		
-		return "/mypage/calendar";
-	}
-	
-	@ResponseBody
-	@PostMapping(value="/susp" , consumes = "application/json", produces = {MediaType.TEXT_PLAIN_VALUE})
-	public ResponseEntity<String> suspInsert(@RequestBody UserVO vo){
-		int susp=userService.userSusp(vo);
-		log.info("들어온 정보"+vo);
-		return susp==1 ? new ResponseEntity<>("success",HttpStatus.OK):
-			new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-	}
-	
-	@GetMapping("/user")
-	public void mypage(HttpSession session,Model model ) {
-		UserVO login= (UserVO) session.getAttribute("user");
-		String id=login.getUser_id();
-		log.info("id="+id);
-
-		model.addAttribute("myGroup",gUserService.listByUSer(id));
-		model.addAttribute("user",login);
-		model.addAttribute("myBoard",bService.myBoard(id));
-		model.addAttribute("boardReply", replyService.myReply(id));
-		model.addAttribute("qnaReply",qnaService.myReply(id));
-		model.addAttribute("myqna",qnaService.myQna(id));
-		model.addAttribute("letter",letterService.myLetter(id));
-		model.addAttribute("sendletter",letterService.sendLetter(id));
 	}
 	
 	@ResponseBody
