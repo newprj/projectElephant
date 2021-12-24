@@ -81,7 +81,15 @@
         </div>
         <button class="btn btn-info" id="submit">수정</button>
         <button class="btn btn-warning" type="button" onclick="location.href='login' ">수정 취소</button>
-      </form>
-
+     
+				<button
+				class="btn btn-default"
+				type="button"
+				onclick="location.href='/user/delete' "
+			>
+				회원탈퇴
+			</button>
+			</form>
+			
   </body>
 </html>

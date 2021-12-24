@@ -13,6 +13,7 @@ prefix="c" %>
 			content="porto by ThemesGround - An easy to use Personal Portfolio - Retina Ready and Responsive HTML5 theme"
 		/>
 		<meta name="author" content="ThemesGround" />
+
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link
@@ -29,14 +30,28 @@ prefix="c" %>
 			rel="/resources/stylesheet"
 			type="text/css"
 		/>
+		<!--  폰트  -->
+		<script src="//code.jquery.com/jquery-3.6.0.js"></script>
+		<script
+			type="text/javascript"
+			src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.4.1/cjs/popper.min.js"
+		></script>
 
+		<script
+			type="text/javascript"
+			src="/resources/assets/js/bootstrap.min.js"
+		></script>
+
+		<!--  파퍼 -->
 		<link href="/resources/assets/css/bootstrap.css" rel="stylesheet" />
 		<link href="/resources/assets/css/bootstrap-theme.css" rel="stylesheet" />
-		<link href="/resources/css/bootstrap.min.css" rel="stylesheet" />
-
+		<link
+			rel="stylesheet"
+			href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+		/>
 		<link href="/resources/assets/css/extension.css" rel="stylesheet" />
 		<link href="/resources/stylesheets/style.css" rel="stylesheet" />
-		<script src="//code.jquery.com/jquery-3.6.0.js"></script>
+
 		<script
 			src="https://kit.fontawesome.com/eab4c34ae3.js"
 			crossorigin="anonymous"
@@ -76,10 +91,6 @@ prefix="c" %>
 				display: flex;
 				align-items: center;
 				justify-content: space-between;
-			}
-
-			div.head > div {
-				flex: 1;
 			}
 
 			a {
@@ -181,73 +192,84 @@ prefix="c" %>
 						src="/resources/img/elephantIcon.png"
 						style="height: 50px; width: 50px; border-radius: 50%"
 					/>
-					<h1 class="logo">코끼리</h1>
+					<h1 class="logo" style="display: inline-block;">  </h1>
 				</div>
-				<div class="center"></div>
+
 				<div class="right">
-					<c:if test="${user==null}">
-						<div class="item btn btn-default">
-							<a href="/user/register"> 가입</a>
+					<div class="btn-group">
+						<div>
+							<c:if test="${user==null}">
+								<div class="item btn btn-default">
+									<a href="/user/register"> 가입</a>
+								</div>
+								<div class="item btn btn-default">
+									<a href="/user/login">로그인</a>
+								</div>
+							</c:if>
 						</div>
-						<div class="item btn btn-default">
-							<a href="/user/login">로그인</a>
-						</div>
-					</c:if>
+					</div>
+
 					<c:if test="${user!=null}">
-						<div class="mygroup">
+						<div class="btn-group">
 							<c:choose>
 								<c:when test="${empty myGroup}"
 									>>
 									<span> 가입한 그룹이 없습니다 </span>
 								</c:when>
 								<c:otherwise>
-									<select name="group_name">
-										<c:forEach items="${myGroup}" var="mine">
-											<option value="${mine.group_name}">
-												${mine.group_name}
-											</option>
-										</c:forEach>
-									</select>
-									<button class="btn btn-default go">go</button>
+									<div class="dropdown">
+										<button
+											class="btn btn-outline-info dropdown-toggle"
+											type="button"
+											id="dropdownMenuButton"
+											data-toggle="dropdown"
+											aria-haspopup="true"
+											aria-expanded="false"
+										>
+											내 그룹
+										</button>
+										<div
+											class="dropdown-menu"
+											aria-labelledby="dropdownMenuButton"
+										>
+											<c:forEach items="${myGroup}" var="mine">
+												<a
+													class="dropdown-item"
+													href="/group/${mine.group_name}"
+													>${mine.group_name}</a
+												>
+											</c:forEach>
+										</div>
+									</div>
 								</c:otherwise>
 							</c:choose>
+							<div class="dropdown">
+								<button
+									class="btn btn-outline-info dropdown-toggle"
+									type="button"
+									id="dropdownMenuButton"
+									data-toggle="dropdown"
+									aria-haspopup="true"
+									aria-expanded="false"
+								>
+									MY
+								</button>
+								<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+									<a class="dropdown-item" href="/mypage/user">마이페이지</a>
+									<a class="dropdown-item" href="/user/modify">회원정보 수정</a>
+									<a class="dropdown-item" href="/user/logout">로그아웃</a>
+								</div>
+							</div>
 							<a href="/group/make">
-								<button class="btn btn-default">create</button>
+								<button class="btn btn-outline-info">create</button>
 							</a>
 						</div>
-						<button
-							class="btn btn-default"
-							type="button"
-							onclick="location.href='/mypage/user' "
-						>
-							마이 사이트
-						</button>
-						<button
-							class="btn btn-default"
-							type="button"
-							onclick="location.href='/user/logout' "
-						>
-							로그아웃
-						</button>
-						<button
-							class="btn btn-default"
-							type="button"
-							onclick="location.href='/user/modify' "
-						>
-							회원정보 수정
-						</button>
-						<button
-							class="btn btn-default"
-							type="button"
-							onclick="location.href='/user/delete' "
-						>
-							회원탈퇴
-						</button>
 					</c:if>
 				</div>
 				<!-- right -->
 			</div>
 			<!-- head -->
+
 			<div class="porto-bg-eleven common-pad">
 				<article class="text-left">
 					<div id="filter" class="clearfix">
@@ -354,16 +376,6 @@ prefix="c" %>
 					});
 				}); //getJSON
 			};
-
-			$("button.go").click(function (e) {
-				e.preventDefault();
-				let group_name = $('select[name="group_name"]').val();
-				location.href = `/group/\${group_name}`;
-			});
-
-			$("button.latest").click((e) => {
-				location.reload();
-			});
 
 			$("#filter_wrapper li span").on("click", function () {
 				$("span.current").removeClass("current");
