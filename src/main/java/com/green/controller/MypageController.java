@@ -118,7 +118,7 @@ public class MypageController {
 		check(id,response);
 		cri.setAmount(12);
 		int total=userService.totalCount(cri);
-		model.addAttribute("user",id);
+		model.addAttribute("user",login);
 		model.addAttribute("list",userService.listWithPaging(cri));
 		model.addAttribute("pageMarker",new PageDTO(cri, total));
 		return "/mypage/allUser";
@@ -134,7 +134,7 @@ public class MypageController {
 		
 		model.addAttribute("qna",qnaService.listqnaWithPaging(cri));
 		model.addAttribute("pageMarker",new PageDTO(cri, total));
-		model.addAttribute("user",id);
+		model.addAttribute("user",login);
 		return "/mypage/allQna";
 	}
 	
@@ -151,6 +151,7 @@ public class MypageController {
 		model.addAttribute("group",gService.getListWithPaging(cri));
 		model.addAttribute("Nauth",gService.NotAuthList(cri));
 		model.addAttribute("pageMarker",new PageDTO(cri, total));
+		model.addAttribute("user",login);
 		return "/mypage/allGroup";
 	}
 
@@ -196,10 +197,14 @@ public class MypageController {
 		String id=login.getUser_id();
 		
 		
-		int total=qnaService.totalCount(cri);
+		int total=qnaService.Qnatotal(cri, id);
+		int replyTotal=qnaService.replyTotal(cri, id);
+		
 		model.addAttribute("qnaReply",qnaService.myReply(id));	//userQna
 		model.addAttribute("myqna",qnaService.myQna(id));	//userQna
 		model.addAttribute("user",login);
+		
+		model.addAttribute("replyPage",new PageDTO(cri,replyTotal));
 		model.addAttribute("pageMarker",new PageDTO(cri, total));
 		
 		return "/mypage/userQna";

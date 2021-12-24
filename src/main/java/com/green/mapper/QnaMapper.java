@@ -17,7 +17,9 @@ public interface QnaMapper {
 	public QnaVO get(Long qno);
 	public int update(QnaVO vo);
 	public int deleteByQno(Long qno);
+	
 	public int totalCount(Criteria cri);
+	public int Qnatotal(@Param("cri") Criteria cri,@Param("writer") String writer);
 	
 	public int updateHit(@Param("qno") Long qno,@Param("hit") Long hit);
 	

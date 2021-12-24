@@ -22,6 +22,7 @@ public interface QnaService {
 	public List<QnaAttachDTO> getAttachList(Long qno);
 	public List<QnaVO> myQna(String writer);
 	public int updateHit(@Param("qno") Long qno,@Param("hit") Long hit);
+	public int Qnatotal(@Param("cri") Criteria cri,@Param("writer") String writer);
 	
 	//reply
 	public int register(QnaReplyVO vo);
@@ -30,6 +31,8 @@ public interface QnaService {
 	public int replyUpdate(QnaReplyVO vo);
 	public int replyCount(Long qno);
 	public List<QnaReplyVO> myReply(String r_writer);
+	public int replyTotal(@Param("cri") Criteria cri,@Param("r_writer") String r_writer);
+
 	
 	//attach
 	public int attachCount(Long qno);
