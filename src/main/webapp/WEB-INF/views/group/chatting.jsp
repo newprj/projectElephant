@@ -43,7 +43,9 @@ pageEncoding="UTF-8"%>
 			padding: 0;
 
 		}
-
+.text-right {
+    text-align: right!important;
+}
 		.list-unstyled {
 			padding-inline-start: 0;
 		}
@@ -138,8 +140,8 @@ pageEncoding="UTF-8"%>
 		.chat .chat-history {
       min-height: 370px;
       max-height: 370px;
-     overflow-x: hidden;
-     overflow-y: auto;
+    	overflow-x: hidden;
+    	overflow-y: auto;
 			padding: 20px;
 			border-bottom: 2px solid #fff;
 		}
@@ -262,29 +264,50 @@ pageEncoding="UTF-8"%>
 		}
 
 		@media only screen and (max-width: 767px) {
-			.chat-app .people-list {
-				height: 465px;
-				width: 100%;
-				overflow-x: auto;
-				background: #fff;
-				left: -400px;
-				display: none;
-			}
-			.chat-app .people-list.open {
-				left: 0;
-			}
-			.chat-app .chat {
-				margin: 0;
-			}
-			.chat-app .chat .chat-header {
-				border-radius: 0.55rem 0.55rem 0 0;
-			}
-			.chat-app .chat-history {
-				height: 300px;
-				overflow-x: auto;
-			}
-		}
+    .chat-app .people-list {
+        height: 465px;
+        width: 100%;
+        overflow-x: auto;
+        background: #fff;
+        left: -400px;
+        display: none
+    }
+    .chat-app .people-list.open {
+        left: 0
+    }
+    .chat-app .chat {
+        margin: 0
+    }
+    .chat-app .chat .chat-header {
+        border-radius: 0.55rem 0.55rem 0 0
+    }
+    .chat-app .chat-history {
+        height: 300px;
+        overflow-x: auto
+    }
+}
 
+@media only screen and (min-width: 768px) and (max-width: 992px) {
+    .chat-app .chat-list {
+        height: 650px;
+        overflow-x: auto
+    }
+    .chat-app .chat-history {
+        height: 600px;
+        overflow-x: auto
+    }
+}
+
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) and (-webkit-min-device-pixel-ratio: 1) {
+    .chat-app .chat-list {
+        height: 480px;
+        overflow-x: auto
+    }
+    .chat-app .chat-history {
+        height: calc(100vh - 350px);
+        overflow-x: auto
+    }
+}
 		
 	</style>
 
@@ -332,9 +355,11 @@ pageEncoding="UTF-8"%>
 										</div>
 										<input
 											type="text"
-											class="form-control"
+											class="form-control message"
 											placeholder="Enter text here..."
 										/>
+										<button class="close">퇴장</button>
+										<button class="send">전송</button>
 									</div>
 								</div>
 							</div>
@@ -400,42 +425,51 @@ ${user.user_id}
 
 				const onMessage = (message) => {
 					const arr = message.data.split("-");
-					console.log(arr[0]);
-					const users = arr[0].replace(/[[\]\s]/g, "").split(",");
-
-					const sessionId = arr[1];
-					const messages = arr[2];
-					const time = arr[3];
-					const type = arr[4];
-					console.log(users);
-
-					if (type == "open")
+					let msgElement 
+					let [users, sessionId, messages, time, type ] = arr 
+					users = arr[0].replace(/[[\]\s]/g, "").split(",");
+					if (type == "open"){
 						users
 							.filter((user) => user !== "")
 							.map((user) =>
-								$(`#\${user}`).css({
-									color: "red ",
-								})
-							);
+								$(`#\${user}`).css({ color: "red "}));
+					}
 					else if (type == "close")
 						$(`#\${sessionId}`).css({
 							color: "#999",
 						});
-
-					let msgElement = $(
-						`<div><div><b>\${sessionId}</b> \${messages} <br/> \${time}</div></div>`
-					);
-
-					$("div.message").append(msgElement);
-					$("div.chatContainer").scrollTop(
-						$("div.chatContainer")[0].scrollHeight
+					else{
+						if(sessionId === loginUser){
+							msgElement = $(
+								`<li class="clearfix">
+									<div class="message-data text-right">
+											<span class="message-data-time">\${time}</span>
+									</div>
+									<div class="message my-message float-right">\${messages}</div>
+							 </li>`
+							)
+							}else{
+								msgElement =$(`
+									 <li class="clearfix">
+											<div class="message-data">
+												<span class="message-data-time">\${time}</span>
+												<img src="/resources/img/lion.png" alt="avatar">
+											</div>
+											<div class="message other-message">\${messages}</div>
+									</li>`
+								)
+						}
+					}
+					$(".chat .chat-history ul").append(msgElement);	
+					$(".chat .chat-history").scrollTop(
+						$(".chat .chat-history")[0].scrollHeight
 					);
 				}; //onMessage
 
 				const socketClose = (e) => {
 					console.log("disconnect");
 					const sendTime = new Date().toLocaleTimeString();
-					const longMsg = $("div.message")[0].innerHTML;
+					
 					const data = {
 						user: loginUser,
 						group,
@@ -481,15 +515,7 @@ ${user.user_id}
 					window.close();
 				});
 
-				$("button.getChat").click((e) => {
-					console.log("채팅팅팅");
-					window.open(
-						"/chat_pop",
-						"mypopup",
-						"width=450, height=350, top=150, left=200"
-					);
-				});
-
+			
 				$(window).on("beforeunload", function () {
 					socketClose();
 				});
