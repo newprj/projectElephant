@@ -39,9 +39,9 @@
 		]]>
 		<include refid="criteria"></include>
 	    <![CDATA[
-			    rownum <=#{pageNum} * #{amount}
+			    rownum <=#{cri.pageNum} * #{cri.amount}
 		    )
-		    where rn> (#{pageNum}-1) * #{amount}  
+		    where rn> (#{cri.pageNum}-1) * #{cri.amount}  
 		]]>
 	</select> 
 

@@ -62,7 +62,6 @@
 							<input type="hidden" name='pageNum' value='${pageMarker.cri.pageNum}'/>
 							<input type="hidden" name='amount' value='${pageMarker.cri.amount}'/>
 						</form>
-                        <h6 class="pull-right"> Showing ${pageMarker.cri.pageNum} - ${pageMarker.endPage} of ${total} </h6>
                     </div>
                     
                      <div class="panel-body">

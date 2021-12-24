@@ -240,7 +240,6 @@ public class MypageController {
 		UserVO login= (UserVO) session.getAttribute("user");
 		String id=login.getUser_id();
 		
-		System.out.println("lno:"+lno);
 		
 		int total=letterService.totalCount(id);
 		model.addAttribute("pageMarker",new PageDTO(cri, total));
