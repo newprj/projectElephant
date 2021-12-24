@@ -10,6 +10,8 @@ import com.green.vo.LetterVO;
 public interface LetterMapper {
 	public int insert(LetterVO vo);
 	
+	public LetterVO oneLetter(Long lno);
+	
 	public List<LetterVO> sendLetter(String writer);
 	public int sendCount(String writer);
 	

@@ -14,6 +14,7 @@ public class Criteria {
 	private int amount;
 	private String group_name;
 	private Long bno;
+	private String qna;
 	
 	//검색을 위한 변수
 	private String type;

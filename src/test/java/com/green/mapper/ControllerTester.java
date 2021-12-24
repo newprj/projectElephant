@@ -44,7 +44,7 @@ public class ControllerTester {
 	
 	Date date=new Date();
 	
-	@Test
+	//@Test
 	public void weekHit() {
 		visit.weekCnt();
 	}
@@ -60,17 +60,18 @@ public class ControllerTester {
 		//visit.totalCnt();
 		visit.todayCnt();
 	}
-	//@Test
+	@Test
 	public void gtest() {
-		for (int i = 0; i <5; i++) {
+		
 			GroupVO vo=new GroupVO();
-			vo.setDescription("설명"+i);
-			vo.setGroup_name("name"+i);
+			vo.setDescription("설명_a");
+			vo.setGroup_name("name_a");
 			vo.setLeader("a");
-			vo.setMember_number(i+1);
-			vo.setSubject("주제"+i);
+			vo.setMember_number(5);
+			vo.setSubject("주제_a");
+			vo.setProfile(null);
 			gService.makeGroup(vo);
-		}
+		
 	}
 	
 	//@Test

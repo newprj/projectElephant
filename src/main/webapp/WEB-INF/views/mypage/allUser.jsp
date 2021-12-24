@@ -40,7 +40,7 @@
           <div class="breadcrumb-wrapper">
               <span class="label">You are here:</span>
               <ol class="breadcrumb">
-                  <li> <a href="#"> Home </a> </li>
+                  <li> <a href="/mypage/admin"> Home </a> </li>
                   <li class="active"> Users </li>
               </ol>
           </div>
