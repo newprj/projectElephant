@@ -90,7 +90,7 @@
 	                                                <div class="inbox-star"><span class="fa fa-star-o"></span></div>
 	                                            </td>
 	                                            <td class="hidden-xs"><span class="label label-success"> Primary </span></td>
-	                                            <td><a href="#">${i.writer}</a></td>
+	                                            <td><a href="/mypage/messageView?lno=${i.lno}">${i.writer}</a></td>
 	                                            <td>${i.content} </td>
 	                                            <td><fmt:formatDate value="${i.reg_date}" pattern="yyyy-MM-dd a hh:mm" /></td>
 	                                        </tr>

@@ -90,7 +90,7 @@
 	                                                <div class="inbox-star"><span class="fa fa-star-o"></span></div>
 	                                            </td>
 	                                            <td>${i.recipient} </td>
-	                                            <td>${i.content} </td>
+	                                            <td><a href="/mypage/messageView?lno=${i.lno}">${i.content}</a></td>
 	                                            <td><fmt:formatDate value="${i.reg_date}" pattern="yyyy-MM-dd a hh:mm" /></td>
 	                                        </tr>
                                       </c:forEach>

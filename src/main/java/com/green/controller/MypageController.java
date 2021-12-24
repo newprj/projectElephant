@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.green.service.BoardService;
@@ -226,8 +227,6 @@ public class MypageController {
 		UserVO login= (UserVO) session.getAttribute("user");
 		String id=login.getUser_id();
 		
-		//check(id,response);
-		
 		int total=letterService.totalCount(id);
 		model.addAttribute("pageMarker",new PageDTO(cri, total));
 		model.addAttribute("letter",letterService.listqnaWithPaging(cri, id));
@@ -236,12 +235,25 @@ public class MypageController {
 		return "/mypage/allMessage";
 	}
 	
+	@GetMapping("/messageView")
+	public String viewMessage(Model model,Criteria cri,HttpServletResponse response,HttpSession session,@RequestParam("lno") Long lno) {
+		UserVO login= (UserVO) session.getAttribute("user");
+		String id=login.getUser_id();
+		
+		System.out.println("lno:"+lno);
+		
+		int total=letterService.totalCount(id);
+		model.addAttribute("pageMarker",new PageDTO(cri, total));
+		model.addAttribute("letter",letterService.oneLetter(lno));
+		model.addAttribute("user",login);
+		model.addAttribute("total",total);
+		return "/mypage/messageView";
+	}
+	
 	@GetMapping("/sendMessage")
 	public String sendMessage(Model model,Criteria cri,HttpServletResponse response,HttpSession session) {
 		UserVO login= (UserVO) session.getAttribute("user");
 		String id=login.getUser_id();
-		
-		//check(id,response);
 		
 		int total=letterService.sendCount(id);
 		model.addAttribute("pageMarker",new PageDTO(cri, total));
@@ -256,9 +268,8 @@ public class MypageController {
 		UserVO login= (UserVO) session.getAttribute("user");
 		String id=login.getUser_id();
 		
-		check(id,response);
 		
-		model.addAttribute("user",id);
+		model.addAttribute("user",login);
 		return "/mypage/compose";
 	}
 	

@@ -9,7 +9,7 @@ import com.green.vo.QnaVO;
 
 public interface QnaMapper {
 	public List<QnaVO> listqna();
-	public List<QnaVO> listqnaWithPaging(Criteria cri);
+	public List<QnaVO> listqnaWithPaging(@Param("cri") Criteria cri);
 	
 	public int insertQna(QnaVO vo);
 	public int insertQnaKey(QnaVO vo);
