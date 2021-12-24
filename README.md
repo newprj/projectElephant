@@ -24,7 +24,7 @@
 
 ✔ DataBase : Oracle   
 ✔ backEnd : Spring MVC    
-✔ frontEnd : javascrip, BootStrap  JSP 
+✔ frontEnd : javascrip, BootStrap  JSP     
 ✔ tool : eclips, Vscode, sqlDeveloper, github    
 
 
