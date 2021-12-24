@@ -37,45 +37,84 @@
                                 </form>
                                 <div class="panel">
                                     <div class="panel-body">
-                                        <h3 class="pad-all bord-btm text-thin">General</h3>
+                                        <h3 class="pad-all bord-btm text-thin">내가 등록한 Q&A</h3>
                                         <div id="demo-acc-faq" class="panel-group accordion">
-                                        <c:forEach items="${qna}" var="i" varStatus="status"  begin="0" end='9'>
+                                        <c:forEach items="${myqna}" var="i" varStatus="status"  begin="0" end='9'>
                                             <div class="panel">
                                                 <div class="text-semibold pad-hor" >
                                                     <a href="/qna/detail?qno=${i.qno}">
-                                                       <h3> <i class="fa fa-bullhorn"></i>${i.title} </h3>
+                                                       <h3> <i class="fa fa-bullhorn" ></i > ${i.title} </h3>
                                                  	</a>
-                                                    <p> ${i.writer} <i class="fa fa-clock-o"></i> <fmt:formatDate value="${i.up_date}" pattern="yyyy-MM-dd a hh:mm" /> <i class="fa fa-eye fa-lg"></i>${i.hit}</p>
+                                                    <p> <i class="fa fa-clock-o" ></i > <fmt:formatDate value="${i.up_date}" pattern="yyyy-MM-dd a hh:mm" /> <i class="fa fa-eye fa-lg" ></i > ${i.hit}</p>
                                                     	
                                                 </div>
                                             </div>
                                        </c:forEach>
                                       </div>
-                                    </div>
+                                      <div style="text-align:center;">
+										<ul class="pagination">
+											<c:if test="${pageMarker.prev}">
+												<li class="paginate_btn previous"><a href="${pageMarker.startPage -1}">이전</a>
+												</li>
+											</c:if>
+											
+											<c:forEach var="num" begin="${pageMarker.startPage}" end="${pageMarker.endPage}">
+												<li class="paginate_btn ${pageMarker.cri.pageNum==num ? "active": "" }">
+													<a href="${num}">${num}</a>
+												</li>
+											</c:forEach>
+											
+											<c:if test="${pageMarker.next}">
+												<li class="paginate_btn next"><a href="${pageMarker.endPage +1}">다음</a></li>
+											</c:if>
+										</ul>
+									</div>
+                                   </div>
+                                    
+                                    <div class="panel-body">
+                                        <h3 class="pad-all bord-btm text-thin">내가 등록한 댓글</h3>
+                                        <div id="demo-acc-faq" class="panel-group accordion">
+                                        <c:forEach items="${qnaReply}" var="i" varStatus="status"  begin="0" end='9'>
+                                            <div class="panel">
+                                                <div class="text-semibold pad-hor" >
+                                                    <a href="/qna/detail?qno=${i.qno}">
+                                                       <h3> <i class="fa fa-comments" ></i > ${i.r_content} </h3>
+                                                 	</a>
+                                                    <p> <i class="fa fa-clock-o"></i> <fmt:formatDate value="${i.r_reg_date}" pattern="yyyy-MM-dd a hh:mm" /> </p>
+                                                    	
+                                                </div>
+                                            </div>
+                                       </c:forEach>
+                                      </div>
+                                      
+                                      <div style="text-align:center;">
+										<ul class="pagination">
+											<c:if test="${pageMarker.prev}">
+												<li class="paginate_btn previous"><a href="${pageMarker.startPage -1}">이전</a>
+												</li>
+											</c:if>
+											
+											<c:forEach var="num" begin="${pageMarker.startPage}" end="${pageMarker.endPage}">
+												<li class="paginate_btn ${pageMarker.cri.pageNum==num ? "active": "" }">
+													<a href="${num}">${num}</a>
+												</li>
+											</c:forEach>
+											
+											<c:if test="${pageMarker.next}">
+												<li class="paginate_btn next"><a href="${pageMarker.endPage +1}">다음</a></li>
+											</c:if>
+										</ul>
+									</div>
+                                   </div>
+                                    
+                                    
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div style="text-align:center;">
-						<ul class="pagination">
-							<c:if test="${pageMarker.prev}">
-								<li class="paginate_btn previous"><a href="${pageMarker.startPage -1}">이전</a>
-								</li>
-							</c:if>
-							
-							<c:forEach var="num" begin="${pageMarker.startPage}" end="${pageMarker.endPage}">
-								<li class="paginate_btn ${pageMarker.cri.pageNum==num ? "active": "" }">
-									<a href="${num}">${num}</a>
-								</li>
-							</c:forEach>
-							
-							<c:if test="${pageMarker.next}">
-								<li class="paginate_btn next"><a href="${pageMarker.endPage +1}">다음</a></li>
-							</c:if>
-						</ul>
-					</div>
+                    
 					
-					<form id='actionForm' action="/mypage/allQna" method="get" >
+					<form id='actionForm' action="/mypage/userQna" method="get" >
 						<input type="hidden" name='pageNum' value='${pageMarker.cri.pageNum}'/>
 						<input type="hidden" name='amount' value='${pageMarker.cri.amount}'/>
 						<input type="hidden" name='type' value='${pageMarker.cri.type}'/>

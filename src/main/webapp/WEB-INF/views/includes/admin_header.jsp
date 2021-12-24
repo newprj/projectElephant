@@ -41,10 +41,10 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 	    	<header id="navbar">
 	        	<div id="navbar-container" class="boxed">
 	            	<div class="navbar-header">
-	                	<a href="/mypage/admin" class="navbar-brand">
+	            		<a href="/group/" class="navbar-brand">
 	                		<img src="/resources/img/elephantIcon.png" class="fa fa-cube brand-icon"/>
 		                    <div class="brand-title">
-		                        <span class="brand-text">${user.name} 페이지</span>
+		                        <span class="brand-text">코끼리</span>
 		                    </div>
 		                </a>
 	            	</div>
@@ -273,9 +273,20 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 	                </div>
 	                <div id="defaultmenu" class="navbar-collapse collapse">
 	                    <ul class="nav navbar-nav">
-	                        <li>
-	                            <a href="/group/" > Home </a>
-	                        </li>
+	                    
+		                    <c:choose>
+	                        <c:when test="${user.user_id == 'admin'}">
+			                	<li>
+		                            <a href="/mypage/admin" > Home </a>
+		                        </li>
+		                     </c:when>
+		                     <c:otherwise>
+		                      	<li>
+		                            <a href="/mypage/user" > Home </a>
+		                        </li>
+		                     </c:otherwise>
+	                  		</c:choose>
+	                        
 	                        <c:if test="${user.user_id == 'admin'}">
 		                        <li>
 		                            <a href="/mypage/allUser"> Users </a>

@@ -169,13 +169,6 @@ public class MypageController {
 		UserVO login= (UserVO) session.getAttribute("user");
 		String id=login.getUser_id();
 
-		model.addAttribute("myGroup",gUserService.listByUSer(id)); //userGroup
-		model.addAttribute("user",login);
-		model.addAttribute("myBoard",bService.myBoard(id));	//userGroup
-		model.addAttribute("boardReply", replyService.myReply(id));	//userGroup
-		
-		model.addAttribute("qnaReply",qnaService.myReply(id));	//userQna
-		model.addAttribute("myqna",qnaService.myQna(id));	//userQna
 		
 		model.addAttribute("letter",letterService.myLetter(id));
 		model.addAttribute("sendletter",letterService.sendLetter(id));
@@ -186,6 +179,7 @@ public class MypageController {
 	public String userGroup(Model model,Criteria cri,HttpServletResponse response,HttpSession session) {
 		UserVO login= (UserVO) session.getAttribute("user");
 		String id=login.getUser_id();
+		
 		
 		model.addAttribute("allGroup",gUserService.listByUSer(id)); //userGroup
 		model.addAttribute("myGroup",gService.myGroup(cri, id)); //userGroup
@@ -201,9 +195,12 @@ public class MypageController {
 		UserVO login= (UserVO) session.getAttribute("user");
 		String id=login.getUser_id();
 		
+		
+		int total=qnaService.totalCount(cri);
 		model.addAttribute("qnaReply",qnaService.myReply(id));	//userQna
 		model.addAttribute("myqna",qnaService.myQna(id));	//userQna
 		model.addAttribute("user",login);
+		model.addAttribute("pageMarker",new PageDTO(cri, total));
 		
 		return "/mypage/userQna";
 	}
