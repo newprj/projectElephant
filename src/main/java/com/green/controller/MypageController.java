@@ -187,7 +187,8 @@ public class MypageController {
 		UserVO login= (UserVO) session.getAttribute("user");
 		String id=login.getUser_id();
 		
-		model.addAttribute("myGroup",gUserService.listByUSer(id)); //userGroup
+		model.addAttribute("allGroup",gUserService.listByUSer(id)); //userGroup
+		model.addAttribute("myGroup",gService.myGroup(cri, id)); //userGroup
 		model.addAttribute("user",login);
 		model.addAttribute("myBoard",bService.myBoard(id));	//userGroup
 		model.addAttribute("boardReply", replyService.myReply(id));	//userGroup

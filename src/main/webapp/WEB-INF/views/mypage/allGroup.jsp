@@ -10,12 +10,12 @@
 	<div class="boxed">
 		<div id="content-container">
 			<div class="pageheader">
-		         <h3><i class="fa fa-home"></i> Datatable Table </h3>
+		         <h3><i class="fa fa-home"></i> Group </h3>
 		         <div class="breadcrumb-wrapper">
 		             <span class="label">You are here:</span>
 		             <ol class="breadcrumb">
 		                 <li> <a href="/mypage/admin"> Home </a> </li>
-		                 <li class="active"> datatable Table </li>
+		                 <li class="active"> Group </li>
 		             </ol>
 		         </div>
 		     </div>

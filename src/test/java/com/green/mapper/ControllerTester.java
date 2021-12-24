@@ -64,11 +64,11 @@ public class ControllerTester {
 	public void gtest() {
 		
 			GroupVO vo=new GroupVO();
-			vo.setDescription("설명");
-			vo.setGroup_name("name");
-			vo.setLeader("a2");
-			vo.setMember_number(3);
-			vo.setSubject("주제3");
+			vo.setDescription("설명_a");
+			vo.setGroup_name("name_a");
+			vo.setLeader("a");
+			vo.setMember_number(5);
+			vo.setSubject("주제_a");
 			vo.setProfile(null);
 			gService.makeGroup(vo);
 		

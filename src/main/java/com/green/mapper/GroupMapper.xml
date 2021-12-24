@@ -131,6 +131,25 @@
 		    where rn> (#{pageNum}-1) * #{amount}  
 		]]>
 	</select>
+	
+	<select id="myGroup" resultType="com.green.vo.GroupVO">
+			 <![CDATA[
+			select gno, group_name, leader, subject, description, member_number, authorized, viewcnt, regdate, profile
+				from (
+			    select  /*+ index_desc(tbl_group pk_group ) */
+				    rownum rn, gno, group_name, leader, subject, description, member_number, authorized, viewcnt, regdate, profile
+				    	from (select * from  tbl_group where  leader =#{leader}
+					    	order by regdate desc nulls LAST
+					   	)
+				    where 
+				    ]]>
+		    <![CDATA[
+			   rownum <=#{cri.pageNum} * #{cri.amount} 
+		    ) 
+		    where rn> (#{cri.pageNum}-1) *  #{cri.amount}
+		    ]]>
+	</select>
+	
+	
 </mapper>
-
    
