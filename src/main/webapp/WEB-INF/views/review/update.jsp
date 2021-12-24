@@ -4,8 +4,10 @@ uri="http://java.sun.com/jsp/jstl/core"%>
 <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet" />
 <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 <script src="/resources/js/fileUpload.js" type="text/javascript"></script>
-<link href="/resources/css/style.css" rel="stylesheet" />
-<link href="/resources/css/bootstrap.min.css" rel="stylesheet" />
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+<script src="https://kit.fontawesome.com/6584921572.js" crossorigin="anonymous"></script>
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -56,8 +58,8 @@ uri="http://java.sun.com/jsp/jstl/core"%>
 				     </c:forEach>
 				</div>
 				<div>
-					<button type="button" id="update" class="btn btn-primary">등록하기</button>
-     				<button type="button" class="btn btn-primary" onclick="location.href='/review/list'">목록</button>
+					<button type="button" id="update" class="btn btn-primary"><i class="far fa-edit"></i> 수정완료</button>
+     				<button type="button" class="btn btn-secondary" onclick="location.href='/review/list'"><i class="fas fa-list"></i> 목록으로</button>
 				</div>
 			</section>
 		</div>

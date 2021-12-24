@@ -133,7 +133,7 @@ li {
 				</div>
 				<div class="modal-group">
 					<label>쪽지내용</label><br/>
-					<textarea name="content" placeholder="내용을 입력하세요" style="width:400px;height:100px;overflow-y:hidden"></textarea>
+					<textarea name="content" placeholder="내용을 입력하세요" style="width:250px;height:100px;overflow-y:hidden"></textarea>
 				</div>
 			</div><br/>
 			<div class="modal-footer">

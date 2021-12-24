@@ -1,9 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> <%@ taglib prefix="c"
 uri="http://java.sun.com/jsp/jstl/core"%>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-<link href="/resources/assets/css/bootstrap.css" rel="stylesheet">
-<link href="/resources/assets/css/bootstrap-theme.css" rel="stylesheet">
-
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+<script src="https://kit.fontawesome.com/6584921572.js" crossorigin="anonymous"></script>
 
 <!DOCTYPE html>
 <html>
@@ -45,8 +44,8 @@ uri="http://java.sun.com/jsp/jstl/core"%>
 					<input type="file" name="uploadFile" multiple /><br>
 				</div>
 				<div>
-					<button type="button" id="create" class="btn btn-primary">등록하기</button>
-     			 <button type="button" class="btn btn-primary" onclick="location.href='/review/list'">목록</button>
+					<button type="button" id="create" class="btn btn-primary"><i class="far fa-edit"></i>등록하기</button>
+     			 <button type="button" class="btn btn-secondary" onclick="location.href='/review/list'"><i class="fas fa-list"></i> 목록으로</button>
 				</div>
 			</section>
 		</div>
