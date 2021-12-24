@@ -36,9 +36,9 @@
 ✔ admin (홈페이지 전체 관리)    
 ✔ QnA      
 ###  박치원 (pcwchita)  
-✔ group admin( 그룹 관리 )
+✔ group admin( 그룹 관리 )    
 ✔ riview    
 ###  정세형 (dkgkqwe)    
-✔ 회원가입, 로그인   
+✔ 회원가입, 로그인    
 ✔ userList등 user table  
----
+
