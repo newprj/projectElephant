@@ -52,7 +52,7 @@ prefix="c" %>
 
 			.container {
 				width: 90%;
-				max-width: 1240px;
+			
 				margin: 0 auto;
 			}
 

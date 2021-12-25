@@ -5,7 +5,7 @@ prefix="c" %>
 <html>
 	<head>
 		<meta charset="UTF-8" />
-		<script src="//code.jquery.com/jquery-3.6.0.js"></script>
+		
 		<script
 			src="https://kit.fontawesome.com/eab4c34ae3.js"
 			crossorigin="anonymous"
@@ -16,6 +16,24 @@ prefix="c" %>
 			href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;500&display=swap"
 			rel="stylesheet"
 		/>
+
+		<!-- 폰트 -->
+		<script src="//code.jquery.com/jquery-3.6.0.js"></script>
+
+		<script
+			type="text/javascript"
+			src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.4.1/cjs/popper.min.js"
+		></script>
+
+		<script
+			type="text/javascript"
+			src="/resources/assets/js/bootstrap.min.js"
+		></script>
+
+		<link
+		rel="stylesheet"
+		href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	/>
 
 		<link href="/resources/assets/css/bootstrap.css" rel="stylesheet" />
 		<link href="/resources/assets/css/bootstrap-theme.css" rel="stylesheet" />
@@ -32,15 +50,18 @@ prefix="c" %>
 				display: flex;
 				flex-direction: column;
 				align-items: center;
+			
 				padding: 50px 0;
 			}
 
 			div.wrapper {
-				min-width: 1300px;
-				padding: 30px;
+				max-width: 1240px;
+				height: 90%;
 				background-color: white;
 				box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11),
 					0 1px 3px rgba(0, 0, 0, 0.08);
+				overflow-x: hidden;
+				overflow-y: hidden;
 			}
 
 			.group-image {
@@ -50,12 +71,20 @@ prefix="c" %>
 				background-size: cover;
 			}
 
-			.container {
-				width: 90%;
-				max-width: 1240px;
-				margin: 0 auto;
+			div.head {
+				color: #000;
+				border-left: 5px solid #5ec2dd;
+				padding: 10px 3em 8px 15px;
+				margin-bottom: 10px;
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
 			}
 
+			.btn-group{
+				display: flex;
+				flex-direction: row;
+			}
 			.group-list {
 				display: block;
 				margin: 1rem auto;
@@ -127,28 +156,99 @@ prefix="c" %>
 				color: #333;
 				font-family: "Montserrat", sans-serif;
 			}
-			div.head {
-				color: #000;
-				border-left: 5px solid #5ec2dd;
-				padding: 10px 3em 8px 15px;
-				margin-bottom: 10px;
-			}
+			
 		</style>
 	</head>
 	<body>
 		<div class="wrapper">
 			<div class="head">
 				<div class="media-left">
+					<a href="/group/">
 					<img
 						src="/resources/img/elephantIcon.png"
 						style="height: 50px; width: 50px; border-radius: 50%"
 					/>
+				</a>
 				</div>
 				<div class="media-body">
 					<h4 class="alert-title">${name}</h4>
 				</div>
+				<div class="right">
+					<div class="btn-group">
+						<div>
+							<c:if test="${user==null}">
+								<div class="item btn btn-default">
+									<a href="/user/register"> 가입</a>
+								</div>
+								<div class="item btn btn-default">
+									<a href="/user/login">로그인</a>
+								</div>
+							</c:if>
+						</div>
+					</div>
+
+					<c:if test="${user!=null}">
+						<div class="btn-group">
+							<c:choose>
+								<c:when test="${empty myGroup}"
+									>>
+									<span> 가입한 그룹이 없습니다 </span>
+								</c:when>
+								<c:otherwise>
+									<div class="dropdown">
+										<button
+											class="btn btn-outline-info dropdown-toggle"
+											type="button"
+											id="dropdownMenuButton"
+											data-toggle="dropdown"
+											aria-haspopup="true"
+											aria-expanded="false"
+										>
+											내 그룹
+										</button>
+										<div
+											class="dropdown-menu"
+											aria-labelledby="dropdownMenuButton"
+										>
+											<c:forEach items="${myGroup}" var="mine">
+												<a
+													class="dropdown-item"
+													href="/group/${mine.group_name}"
+													>${mine.group_name}</a
+												>
+											</c:forEach>
+										</div>
+									</div>
+								</c:otherwise>
+							</c:choose>
+							<div class="dropdown">
+								<button
+									class="btn btn-outline-info dropdown-toggle"
+									type="button"
+									id="dropdownMenuButton"
+									data-toggle="dropdown"
+									aria-haspopup="true"
+									aria-expanded="false"
+								>
+									MY
+								</button>
+								<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+									<a class="dropdown-item" href="/mypage/user">마이페이지</a>
+									<a class="dropdown-item" href="/user/modify">회원정보 수정</a>
+									<a class="dropdown-item" href="/user/logout">로그아웃</a>
+								</div>
+							</div>
+							<a href="/group/make">
+								<button class="btn btn-outline-info">create</button>
+							</a>
+						</div>
+					</c:if>
+				</div>
+				<!-- right -->
 			</div>
-			<div class="container">
+			<!-- head  -->
+
+			
 				<div class="porto-bg-eleven common-pad">
 					<article class="text-left">
 						<div id="filter" class="clearfix">
@@ -187,8 +287,10 @@ prefix="c" %>
 				</div>
 
 				<div>
+
+
 					<form class="searchForm">
-						<select name="type">
+						<select name="type" class="form-select" aria-label="Default select example">
 							<option
 								value=""
 								<c:out
@@ -255,7 +357,6 @@ prefix="c" %>
 						</c:if>
 					</div>
 
-			</div><!-- container -->
 		</div><!-- wrapper -->
 		<script>
 			let pageNum = "${cri.pageNum}";

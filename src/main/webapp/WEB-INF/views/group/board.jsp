@@ -80,7 +80,8 @@ uri="http://java.sun.com/jsp/jstl/functions"%>
 				<div class="media-left">
 					<img
 						src="/resources/img/elephantIcon.png"
-						style="height: 50px; width: 50px; border-radius: 50%"
+						style="height: 50px; width: 50px; border-radius: 50%; cursor: pointer;"
+						onclick="location.href='/group/${name}'"
 					/>
 				</div>
 				<div class="media-body">
@@ -94,7 +95,7 @@ uri="http://java.sun.com/jsp/jstl/functions"%>
 					<div class="row">
 						<div class="col-sm-6 table-toolbar-left">
               <div class="btn-group">
-                <button class="btn btn-default"><a href="/group/${name}"><i class="fa fa-arrow-left"></i></a></button>
+                
                 <button class="btn btn-default"><a href="/group/"><i class="fa fa-home"></i> 메인</a> </button>
                 <button class="btn btn-default"><a href="/group/board/${name}/write"><i class="fa fa-plus"></i> 글작성</a></button>
               </div>

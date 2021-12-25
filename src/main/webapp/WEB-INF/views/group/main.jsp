@@ -199,10 +199,10 @@ prefix="c" %>
 					<div class="btn-group">
 						<div>
 							<c:if test="${user==null}">
-								<div class="item btn btn-default">
+								<div class="item btn btn-outline-info">
 									<a href="/user/register"> 가입</a>
 								</div>
-								<div class="item btn btn-default">
+								<div class="item btn btn-outline-info">
 									<a href="/user/login">로그인</a>
 								</div>
 							</c:if>
