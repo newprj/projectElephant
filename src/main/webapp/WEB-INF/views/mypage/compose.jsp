@@ -12,7 +12,14 @@
           <div class="breadcrumb-wrapper">
               <span class="label">You are here:</span>
               <ol class="breadcrumb">
-                  <li> <a href="/mypage/admin"> Home </a> </li>
+                  <c:choose>
+			          <c:when test="${user.user_id == 'admin'}">
+			              <li> <a href="/mypage/admin"> Home </a> </li>
+			          </c:when>
+			          <c:otherwise>
+			           	<li> <a href="/mypage/user"> Home </a> </li>
+			          </c:otherwise>
+            	</c:choose>
                   <li class="active"> Mail Compose </li>
               </ol>
           </div>
@@ -28,7 +35,7 @@
                                <a href="/mypage/allMessage"> <i class="fa fa-inbox"></i> 받은 메일 <span class="label label-info pull-right">6</span> </a>
                            </li>
                            <li class="list-group-item">
-                               <a href="javascript:;"> <i class="fa fa-envelope-o"></i> 보낸메일 </a>
+                               <a href="/mypage/sendMessage"> <i class="fa fa-envelope-o"></i> 보낸메일 </a>
                            </li>
                            <li class="list-group-item">
                                <a href="javascript:;"> <i class="fa fa-star"></i> Starred <span class="label label-danger pull-right">3</span> </a>
@@ -39,7 +46,7 @@
             <div class="col-xs-12 col-md-9 col-lg-9">
             	<div class="panel">
                 	<div class="panel-body">
-	                    <form class="form-horizontal form-bordered" method="post">
+	                    <form class="form-horizontal form-bordered" method="post" action="/mypage/compose">
 	                        <div class="form-group nb">
 	                            <label class="control-label col-md-1">To: </label>
 	                            <div class="col-md-11">
@@ -93,7 +100,7 @@
 		var reg_date=$(".form-bordered").find("input[name='reg_date']")
 		$("#sendBtn").on("click",function(e){
 			e.preventDefault();
-			writer.val('${user}')
+			writer.val('${user.user_id}')
 			reg_date.val(today)
 			$("form").submit()
 		})

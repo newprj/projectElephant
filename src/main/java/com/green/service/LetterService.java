@@ -23,4 +23,6 @@ public interface LetterService {
 	public List<LetterVO> myLetter(String recipient);
 	public int totalCount(String recipient);
 	public List<LetterVO> listqnaWithPaging(Criteria cri,@Param("recipient") String recipient);
+	
+	public LetterVO oneLetter(Long lno);
 }

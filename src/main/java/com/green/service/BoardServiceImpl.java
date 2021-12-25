@@ -101,7 +101,6 @@ public class BoardServiceImpl implements BoardService{
 		// TODO Auto-generated method stub
 		fileMapper.deleteAllByBno(bno);
 		replyMapper.deleteReplyByBno(bno);
-
 		return mapper.delete(bno);
 	}
 

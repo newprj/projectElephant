@@ -87,6 +87,18 @@ public class GroupServiceImpl implements GroupService{
 		return mapper.getTotalCount(cri);
 	}
 
+	@Override
+	public List<GroupVO> NotAuthList(Criteria cri) {
+		// TODO Auto-generated method stub
+		return mapper.NotAuthList(cri);
+	}
+
+	@Override
+	public List<GroupVO> myGroup(Criteria cri, String leader) {
+		// TODO Auto-generated method stub
+		return mapper.myGroup(cri, leader);
+	}
+
 
 	
 

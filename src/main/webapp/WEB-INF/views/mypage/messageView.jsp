@@ -58,54 +58,49 @@
                             <button class="btn btn-sm btn-default" type="button"  onclick="location.href='${pageMarker.startPage -1}' "><i class="fa fa-chevron-left"></i></button>
                             <button class="btn btn-sm btn-default" type="button" onclick="location.href='${pageMarker.endPage +1}' "><i class="fa fa-chevron-right"></i></button>
                         </div>
-                       	<form id='actionForm' action="/mypage/allUser" method="get" >
+                       	<form id='actionForm' action="/mypage/messageView" method="get" >
 							<input type="hidden" name='pageNum' value='${pageMarker.cri.pageNum}'/>
 							<input type="hidden" name='amount' value='${pageMarker.cri.amount}'/>
 						</form>
-                        <h6 class="pull-right"> Showing ${pageMarker.cri.pageNum} - ${pageMarker.endPage} of ${total} </h6>
                     </div>
-                    <div class="panel-body">
-                        <!--Default Tabs (Left Aligned)-->
-                        <!--===================================================-->
-                        <div class="tab-base">
-                            <!--Nav Tabs-->
-                            <ul class="nav nav-tabs">
-                                <li class="active"> <a data-toggle="tab" href="#demo-lft-tab-1">Primary <span class="badge badge-purple">${total}</span></a> </li>
-                                <li>
-                                    <a data-toggle="tab" href="#demo-lft-tab-4"> <i class="fa fa-plus"></i> </a>
-                                </li>
-                            </ul>
-                            <!--Tabs Content-->
-                            <div class="tab-content">
-                                <div id="demo-lft-tab-1" class="tab-pane fade active in">
-                                    <table class="table table-responsive">
-                                    	<c:forEach items="${letter}" var="i" varStatus="status" >
-	                                        <tr class="mail-unread">
-	                                            <td>
-	                                                <label class="form-checkbox form-icon">
-	                                                	<input type="checkbox" name="check_trash" value="${i.lno}">
-	                                                </label>
-	                                            </td>
-	                                            <td class="hidden-xs">
-	                                                <div class="inbox-star"><span class="fa fa-star-o"></span></div>
-	                                            </td>
-	                                            <td class="hidden-xs"><span class="label label-success"> Primary </span></td>
-	                                            <td><a href="/mypage/messageView?lno=${i.lno}">${i.writer}</a></td>
-	                                            <td>${i.content} </td>
-	                                            <td><fmt:formatDate value="${i.reg_date}" pattern="yyyy-MM-dd a hh:mm" /></td>
-	                                        </tr>
-                                      </c:forEach>
-                                    </table>
+                    
+                     <div class="panel-body">
+                        <div class="mail-list">
+                            <div class="mail-sender">
+                                <div class="media">
+                                    <a href="#" class="pull-left"> <img alt="" src="/resources/img/user.png" class="media-object"> </a> <span class="media-meta pull-right"><fmt:formatDate value="${letter.reg_date}" pattern="yyyy-MM-dd a hh:mm" /></span>
+                                   
+                                    <c:choose>
+		                                <c:when test="${user.user_id == letter.writer}">
+			                                <h5>
+		                                       ${letter.recipient}
+		                                    </h5>
+			                            </c:when>
+			                            <c:otherwise>
+			                             	<h5>
+		                                       ${letter.writer}
+		                                    </h5>
+			                            </c:otherwise>
+	                                </c:choose>
+                                    
+                                    
+                                    <small class="text-muted"></small> 
                                 </div>
-                                <div id="demo-lft-tab-4" class="tab-pane fade">
-                                    <h4 class="text-thin">Fourth Tab Content</h4>
-                                    <p>Add New Mail Tab Here.. Pretty cool!</p>
+                            </div>
+                            <div class="view-mail">
+                            	${letter.content}
+                            </div>
+                           
+                            <div class="mail-comment">
+                                <a href="#" class="pull-left"> <img alt="" src="/resources/img/user.png" class="media-object img-rounded"> </a>
+                                <div class="pull-left col-md-11 no-padding">
+                                    <textarea class="form-control" placeholder="Reply here..."></textarea>
                                 </div>
                             </div>
                         </div>
-                        <!--===================================================-->
-                        <!--End Default Tabs (Left Aligned)-->
                     </div>
+    
+                    
                 </div>
             </div>
         </div>
@@ -136,22 +131,14 @@
 		$("#trash").on("click",function(e){
 			
 			e.preventDefault();
-			var checkBoxes = document.getElementsByName("check_trash");
-			var ch=new Array()
-            for (var i = 0; i < checkBoxes.length; i++) {
-                if (checkBoxes[i].checked) {
-                	ch=checkBoxes[i].value 
-                	console.log(ch)
-                }
-            }
 			
-			<c:forEach items="ch" >
+			
+			
 				var data={
-					lno:ch,
+					lno:${letter.lno},
 					writer:'${user}'
-				}
+				
 				console.log(data)
-			</c:forEach>
 				$.ajax({
 					url:"/mypage/deleLetter",
 					type:"post",

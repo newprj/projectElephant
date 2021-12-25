@@ -81,10 +81,10 @@
 						<input type="hidden" name='type' value='${pageMarker.cri.type}'/>
 						<input type="hidden" name='keyword' value='${pageMarker.cri.keyword}'/>
 					</form>
+                
+                
                 </div>
             </div>
-
-
 <%@ include file="../includes/admin_footer.jsp" %> 
 
 <script type="text/javascript">
