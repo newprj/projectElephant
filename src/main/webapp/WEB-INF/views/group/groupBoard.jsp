@@ -20,10 +20,7 @@ prefix="c" %>
 		<!-- 폰트 -->
 		<script src="//code.jquery.com/jquery-3.6.0.js"></script>
 
-		<script
-			type="text/javascript"
-			src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.4.1/cjs/popper.min.js"
-		></script>
+
 
 		<script
 			type="text/javascript"
@@ -37,9 +34,13 @@ prefix="c" %>
 
 		<link href="/resources/assets/css/bootstrap.css" rel="stylesheet" />
 		<link href="/resources/assets/css/bootstrap-theme.css" rel="stylesheet" />
-		<link href="/resources/stylesheets/responsive-nav.css" rel="stylesheet" />
-		<link href="/resources/assets/css/extension.css" rel="stylesheet" />
+
 		<link href="/resources/stylesheets/style.css" rel="stylesheet" />
+		<link href="/resources/plugins/bootstrap-select/bootstrap-select.min.css" rel="stylesheet" />
+		<script src="/resources/plugins/bootstrap-select/bootstrap-select.min.js" ></script>
+
+
+
 		<title>Insert title here</title>
 		<style>
 			body {
@@ -55,7 +56,8 @@ prefix="c" %>
 			}
 
 			div.wrapper {
-				max-width: 1240px;
+				width: 1240px;
+				
 				height: 90%;
 				background-color: white;
 				box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11),
@@ -84,6 +86,10 @@ prefix="c" %>
 			.btn-group{
 				display: flex;
 				flex-direction: row;
+				box-shadow: none;
+			}
+			.btn-group:hover{
+				box-shadow: none;
 			}
 			.group-list {
 				display: block;
@@ -156,7 +162,10 @@ prefix="c" %>
 				color: #333;
 				font-family: "Montserrat", sans-serif;
 			}
-			
+			.toolbar-right{
+				float: right;
+			}
+
 		</style>
 	</head>
 	<body>
@@ -286,40 +295,6 @@ prefix="c" %>
 					</article>
 				</div>
 
-				<div>
-
-
-					<form class="searchForm">
-						<select name="type" class="form-select" aria-label="Default select example">
-							<option
-								value=""
-								<c:out
-								value="${pageMaker.cri.type == null ? 'selected' : ''}"
-							/>> ======================
-							</option>
-							<option
-								value="N"
-								<c:out
-								value="${pageMaker.cri.type eq 'N'? 'selected' : ''}"
-							/>> 그룹 이름
-							</option>
-							<option
-								value="S"
-								<c:out
-								value="${pageMaker.cri.type eq 'S'? 'selected' : ''}"
-							/>> 주제
-							</option>
-							<option
-								value="NS"
-								<c:out
-								value="${pageMaker.cri.type eq 'NS'? 'selected' : ''}"
-							/>> 그룹 이름 OR 주제
-							</option>
-						</select>
-						<input type="text" name="keyword" />
-						<button class="searchForm">검색</button>
-					</form>
-				</div>
 				<ul class="group-list">		
 					<c:forEach items ="${group}" var="group">
 						<li class="group">
