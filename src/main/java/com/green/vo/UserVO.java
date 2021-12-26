@@ -1,6 +1,8 @@
 package com.green.vo;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -33,4 +35,6 @@ public class UserVO {
 	
 	// 로그인 유지
 	private boolean useCookie;
+	
+
 }

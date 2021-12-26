@@ -149,6 +149,7 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 					<img
 						src="/resources/img/elephantIcon.png"
 						style="height: 50px; width: 50px; border-radius: 50%"
+            onclick="location.href='/group/${board.group_name}'"
 					/>
 				</div>
 				<div class="media-body">

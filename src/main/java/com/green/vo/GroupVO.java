@@ -1,6 +1,7 @@
 package com.green.vo;
 
 import java.util.Date;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -30,4 +31,5 @@ public class GroupVO {
     private int applicantCnt;
     private int joinedCnt;
 
+    private List<GUserVO> userList;
 }

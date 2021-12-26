@@ -46,6 +46,10 @@ create table tbl_user(
     email varchar2(300));
 create sequence seq_uno;
 alter table tbl_user add(reg_Date timestamp);
+alter table tbl_user add suspension varchar2(50) default 'N' check(suspension in('Y','N'));
+alter table tbl_user add suspDate timestamp;
+alter table tbl_user add suspContent varchar2(100);
+
 
 create table tbl_group(
     gno number constraint pk_group primary key,

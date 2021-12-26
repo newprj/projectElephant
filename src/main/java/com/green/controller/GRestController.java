@@ -75,7 +75,8 @@ public class GRestController {
 		try {
 			UserVO user = (UserVO) session.getAttribute("user");
 			List<GUserVO> groupList = groupUserService.listByUSer(user.getUser_id()).stream()
-					.filter(i -> i.getAuthorized().equals("Y")).collect(Collectors.toList());
+					.filter(i -> i.getAuthorized().equals("Y") && groupService.showOne(i.getGroup_name()).getAuthorized().equals("Y"))
+					.collect(Collectors.toList());
 			mv.addObject("myGroup", groupList);
 			mv.addObject("user", user);
 		}catch(Exception e) {
@@ -107,7 +108,8 @@ public class GRestController {
 			UserVO user = (UserVO) session.getAttribute("user");
 			mv.addObject("user", user);
 			List<GUserVO> groupList = groupUserService.listByUSer(user.getUser_id()).stream()
-					.filter(i -> i.getAuthorized().equals("Y")).collect(Collectors.toList());
+					.filter(i -> i.getAuthorized().equals("Y")  && groupService.showOne(i.getGroup_name()).getAuthorized().equals("Y"))
+					.collect(Collectors.toList());
 			mv.addObject("myGroup", groupList);
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -191,6 +193,14 @@ public class GRestController {
 	public ModelAndView groupDetail(@PathVariable("group_name") String group_name, HttpSession session ) {
 		UserVO user = (UserVO) session.getAttribute("user");
 		ModelAndView mv = new ModelAndView("/group/detail");
+		try {
+			List<GUserVO> groupList = groupUserService.listByUSer(user.getUser_id()).stream()
+					.filter(i -> i.getAuthorized().equals("Y") && groupService.showOne(i.getGroup_name()).getAuthorized().equals("Y"))
+					.collect(Collectors.toList());
+			mv.addObject("myGroup", groupList);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
 		mv.addObject("one", groupService.showOne(group_name));
 		mv.addObject("user", user);
 		return mv;
@@ -236,13 +246,24 @@ public class GRestController {
 		ModelAndView mv = new ModelAndView("/group/study");
 		try {
 			UserVO user = (UserVO) session.getAttribute("user");
-			mv.addObject("group", groupService.showOne(group_name));
+			List<GUserVO> groupList = groupUserService.listByUSer(user.getUser_id()).stream()
+					.filter(i -> i.getAuthorized().equals("Y") && groupService.showOne(i.getGroup_name()).getAuthorized().equals("Y"))
+					.collect(Collectors.toList());
+			
+			List<GUserVO> list = groupUserService.listByGroup(group_name);
+			GroupVO group  = groupService.showOne(group_name);
+			group.setUserList(list);
+			
+			mv.addObject("myGroup", groupList);
+			mv.addObject("group", group);
 			mv.addObject("user", user.getUser_id());
 			mv.addObject("board", boardService.showList(group_name));
 			
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
+		
+	
 		
 		return mv;		
 	}

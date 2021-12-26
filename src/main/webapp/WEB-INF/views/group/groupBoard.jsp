@@ -198,38 +198,41 @@ prefix="c" %>
 
 					<c:if test="${user!=null}">
 						<div class="btn-group">
-							<c:choose>
-								<c:when test="${empty myGroup}"
-									>>
-									<span> 가입한 그룹이 없습니다 </span>
-								</c:when>
-								<c:otherwise>
-									<div class="dropdown">
-										<button
-											class="btn btn-outline-info dropdown-toggle"
-											type="button"
-											id="dropdownMenuButton"
-											data-toggle="dropdown"
-											aria-haspopup="true"
-											aria-expanded="false"
+							<div class="dropdown">
+								<button
+									class="btn btn-outline-info dropdown-toggle"
+									type="button"
+									id="dropdownMenuButton"
+									data-toggle="dropdown"
+									aria-haspopup="true"
+									aria-expanded="false"
+								>
+									내 그룹
+								</button>
+								<div
+									class="dropdown-menu"
+									aria-labelledby="dropdownMenuButton"
+								>
+								<c:choose>
+									<c:when test="${empty myGroup}"
 										>
-											내 그룹
-										</button>
-										<div
-											class="dropdown-menu"
-											aria-labelledby="dropdownMenuButton"
+										<a
+											class="dropdown-item"
+											>가입한 그룹이 없습니다 </a
 										>
-											<c:forEach items="${myGroup}" var="mine">
-												<a
-													class="dropdown-item"
-													href="/group/${mine.group_name}"
-													>${mine.group_name}</a
-												>
+									</c:when>
+									<c:otherwise>
+									<c:forEach items="${myGroup}" var="mine">
+										<a
+											class="dropdown-item"
+											href="/group/${mine.group_name}"
+											>${mine.group_name}</a
+										>
 											</c:forEach>
+											</c:otherwise>
+											</c:choose>
 										</div>
 									</div>
-								</c:otherwise>
-							</c:choose>
 							<div class="dropdown">
 								<button
 									class="btn btn-outline-info dropdown-toggle"
