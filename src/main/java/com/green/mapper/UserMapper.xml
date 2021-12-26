@@ -80,7 +80,7 @@
 			where user_id=#{user_id}
 	</update>
 	
-	<select id="selectMaster">
+	<select id="selectMaster" resultType="com.green.vo.UserVO">
 		select *from tbl_user where user_id=#{user_id}
 	</select>
 	

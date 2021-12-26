@@ -28,6 +28,7 @@ import com.green.service.CalendarService;
 import com.green.service.GUserService;
 import com.green.service.GroupService;
 import com.green.service.ReplyService;
+import com.green.service.UserService;
 import com.green.vo.BoardReplyVO;
 import com.green.vo.BoardVO;
 import com.green.vo.CalendarVO;
@@ -63,6 +64,9 @@ public class GRestController {
 	
 	@Setter(onMethod_=@Autowired)
 	ReplyService replyService;
+	
+	@Setter(onMethod_=@Autowired)
+	UserService userService;
 
 	
 	
@@ -251,6 +255,10 @@ public class GRestController {
 					.collect(Collectors.toList());
 			
 			List<GUserVO> list = groupUserService.listByGroup(group_name);
+			list.forEach(i -> {
+				String profile = userService.selectMaster(i.getUser_id()).getProfile();
+				i.setProfile(profile);
+			});
 			GroupVO group  = groupService.showOne(group_name);
 			group.setUserList(list);
 			

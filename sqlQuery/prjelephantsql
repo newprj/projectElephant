@@ -49,8 +49,9 @@ alter table tbl_user add(reg_Date timestamp);
 alter table tbl_user add suspension varchar2(50) default 'N' check(suspension in('Y','N'));
 alter table tbl_user add suspDate timestamp;
 alter table tbl_user add suspContent varchar2(100);
+alter table tbl_user add profile varchar(1000);
 
-
+commit;
 create table tbl_group(
     gno number constraint pk_group primary key,
     group_name varchar2(300) unique,
@@ -162,9 +163,13 @@ select * from BOARD_FILE;
 select * from TBL_BOARD;
 select * from BOARD_REPLY;
 select * from TBL_CALENDAR;
+select * from letter_tbl;
 
 --select profile from tbl_group;
 --select * from tbl_groupuser where user_id='test5';
 --update tbl_groupuser set leader ='Y' where user_id='test39';
 --delete from tbl_groupuser where authorized is null;
 --select * from tbl_groupuser where user_id='test5';
+--update tbl_user set profile='/resources/img/lion.png' where profile is null;
+
+commit;

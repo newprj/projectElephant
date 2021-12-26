@@ -68,6 +68,7 @@ public class MapperTestForDummyData {
 			vo.setPassword("test");
 			vo.setName("이름"+i);
 			vo.setEmail("a@a.com");
+			
 			uMapper.register(vo);
 		});
 	}

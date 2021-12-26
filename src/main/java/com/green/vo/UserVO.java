@@ -35,6 +35,7 @@ public class UserVO {
 	
 	// 로그인 유지
 	private boolean useCookie;
+	private String profile;
 	
 
 }

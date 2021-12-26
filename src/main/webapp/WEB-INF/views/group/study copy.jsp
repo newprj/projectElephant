@@ -85,35 +85,6 @@ prefix="c" %>
 				background-color: white;
 				border-radius: 4px;
 			}
-			.content-body {
-				display: flex;
-				min-height: 700px;
-			}
-			.content-left {
-				flex: 1;
-			}
-			.content-center {
-				flex: 4;
-			}
-			.content-right {
-				flex: 2;
-			}
-			.notice-header {
-				margin-bottom: 0;
-
-				border-bottom: 1px solid rgba(0, 0, 0, 0.125);
-				border-bottom-width: 1px;
-				border-bottom-style: solid;
-				border-bottom-color: rgba(0, 0, 0, 0.125);
-			}
-			.card {
-				border: none;
-			}
-			.member li {
-				padding: 10px 3em 8px 15px;
-				margin-bottom: 10px;
-			}
-		
 		</style>
 	</head>
 
@@ -198,85 +169,35 @@ prefix="c" %>
 				<!-- right -->
 			</div>
 			<!--  head -->
-
-			<div class="content-body">
-				<div class="content-left member">
-					<ul style="list-style: none; padding-left: 10px;">
+			<div class="container">
+			<div class="center">
+				<div class="title">
+					<h3>${group_name}</h3>
+				</div>
+				<div class="member">
+					멤버
+					<ul>
 						<c:forEach items="${group.userList}" var="user">
-							<li data-user="${user.user_id}" style="cursor: pointer;">
-								<c:choose>
-									<c:when test="${user.profile eq null}">
-										<img class="avatar avatar-24 bg-light rounded-circle text-white p-1"
-											id="${user.user_id}"
-     								src="https://raw.githubusercontent.com/twbs/icons/main/icons/person-fill.svg">
-									</c:when>
-									<c:otherwise>
-										<img src="${user.profile}" style="width: 24px; height: 24px; border-radius: 50%;" id="${user.user_id}">
-									</c:otherwise>
-								</c:choose>
-								${user.user_id}
-							</li>
+							<li data-user="${user.user_id}">${user.user_id}</li>
 						</c:forEach>
 					</ul>
 				</div>
-				<div class="content-center">
-					<div >
-					
-					
-						<div style="display: flex; justify-content: space-between; width: 90%;">
-							<span> 	<img
-								src="${group.profile}"
-								style="
-									width: 50px;
-									height: 50px;
-									border-radius: 50%;
-									border: 2px solid #5ec2dd;
-								"
-							/>	&nbsp;&nbsp;${group.group_name} 공지사항</span>
-							<button class="btn btn-outline-info" onclick="location.href='/group/board/${group_name}'"> <i class="fa fa-file-text-o"></i> 게시판 </button>
-						</div>
-					</div>
-					<c:choose>
-						<c:when test="${board.size() > 0 }">
-							<c:forEach items="${board}" var="board">
-								<div id="accordion" style="width: 90%">
-									<div class="card">
-										<div class="notice-header" id="heading">
-											<h5 class="mb-0">
-												<button
-													class="btn btn-link collapsed"
-													data-toggle="collapse"
-													data-target="#${board.bno}"
-													aria-expanded="false"
-													aria-controls="collapse"
-												>
-													${board.title}
-												</button>
-											</h5>
-										</div>
-										<div
-											id="${board.bno}"
-											class="collapse"
-											aria-labelledby="heading"
-											data-parent="#accordion"
-										>
-											<div class="card-body" style="max-height: 380px; overflow-y: auto">${board.content}</div>
-										</div>
-									</div>
-								</div>
-								<!-- arcodion -->
-							</c:forEach>
-						</c:when>
-						<c:otherwise>
-							<div>
-								<h4>등록된 공지글이 없습니다
-								</h4>
-								</div>
-						</c:otherwise>
-					</c:choose>
-
+				<c:choose>
+					<c:when test="${board.size() > 0 }">
+						<c:forEach items="${board}" var="board">
+							<div>${board.title}</div>
+						</c:forEach>
+					</c:when>
+					<c:otherwise>
+						<div>등록된 공지글이 없습니다</div>
+					</c:otherwise>
+				</c:choose>
+				<div>
+					<a href="/group/board/${group_name}"> ${group_name} 게시판 </a>
 				</div>
-				<div class="content-right">
+			</div>
+			<div class="right">
+				<div class="event">
 					<h4>최근일정</h4>
 					<div>
 						<h5>오늘의 일정</h5>
@@ -284,12 +205,13 @@ prefix="c" %>
 						<h5>다가오는 일정</h5>
 						<ul class="latest" style="list-style: none"></ul>
 					</div>
-					<a href="/group/test/${group_name}"> <i class="fa fa-calendar-o"></i> 일정 더보기 </a>
+					<a href="/group/test/${group_name}"> ... 일정 더보기 </a>
 				</div>
 			</div>
-			<!-- content-body -->
 		</div>
-		<!-- wrapper -->
+	</div> 
+
+
 		<!-- 쪽지 모달 -->
 		<div id="letter_modal">
 			<div class="panel" id="modal-content">
@@ -342,120 +264,123 @@ prefix="c" %>
 				</div>
 			</div>
 		</div>
-
-		<script>
-			let loginUser = "${user}";
-			let group = "${group_name}";
-			$('#${group.leader}').css("outline" , "2px solid cornflowerblue")
-
-			$.getJSON(`/group/getMemberlistByGroup/\${group}`, (list) => {
-				let joinCheck = list.memberList.find(
-					(user) => user.user_id === loginUser
-				);
-				if (!joinCheck) {
-					alert("그룹 회원만 접근 가능한 페이지입니다");
-					location.href = "/group/";
-				}
-			});
-
-			const today = new Date().toISOString().split("T")[0];
-
-			console.log(today);
-
-			$.getJSON(`/group/getLatestEvent/\${group}`, (list) => {
-				const todayEvent = list.filter((i) => i.startDate === today);
-				console.log(todayEvent);
-				if (todayEvent.length == 0 || todayEvent == null) {
-					let noEvent = $("<li> 오늘의 일정이 없습니다 </li>");
-					$("ul.today").append(noEvent);
-				}
-
-				todayEvent.map((event) => {
-					const { title, description_ } = event;
-					let todayLi = $(
-						`<li> <strong> \${title} </strong> <span>\${description_} </span>  </li>`
-					);
-					$("ul.today").append(todayLi);
-				});
-
-				const latestEvent = list
-					.filter((i) => i.startDate !== today)
-					.sort((a, b) => {
-						let aDate = new Date(a.startDate);
-						let bDate = new Date(b.startDate);
-						return aDate - bDate;
-					})
-					.slice(0, 10);
-
-				if (latestEvent.length == 0 || latestEvent == null) {
-					let noEvent = $("<li> 다가오는 일정이 없습니다 </li>");
-					$("ul.latest").append(noEvent);
-				}
-
-				latestEvent.map((event) => {
-					const { title, description_ } = event;
-					let eventLi = $(
-						`<li> <strong> \${title} </strong> <span>\${description_} </span>  </li>`
-					);
-					$("ul.latest").append(eventLi);
-				});
-			}); // getJSON
-
-			// 채팅
-
-			let popup;
-			$("button.getChat").click((e) => {
-				popup = window.open(
-					`/chat_pop/\${group}`,
-					"chatPop",
-					"width=1110, height=625, top=150, left=200,scrollbars=no"
-				);
-				console.log(popup);
-			});
-
-			$("div.member li").click((e) => {
-				$('input[name="recipientId').val($(e.target).data("user"));
-				$("input[name='writeId']").val("${user}");
-				$("#letter_modal").show();
-			});
-
-			const getLetter = () => ({
-				writer: "${user}",
-				recipient: $('input[name="recipientId').val(),
-				content: $('textarea[name="letterContent"]').val(),
-				reg_date: new Date(),
-			});
-
-			$("#letterRegister").click((e) => {
-				e.preventDefault();
-				const letter = getLetter();
-				$.ajax({
-					url: "/mypage/letterRegister",
-					type: "post",
-					data: JSON.stringify(letter),
-					contentType: "application/json; charset=utf-8",
-					dataType: "text",
-					success: function (result) {
-						$("#letter_modal").hide();
-						console.log(" 쪽지 보내짐 ");
-						$("letter").each((e) => {
-							this.reset();
-						});
-					},
-					error: function () {
-						alert("실패");
-					},
-				});
-			});
-
-			$(".closeModal").click((e) => {
-				e.preventDefault();
-				$("#letter_modal").hide();
-				console.log(" 쪽지 보내짐 ");
-				$("letter").each((e) => {
-					this.reset();
-				});
-			});
-		</script>
 	</body>
+
+	<script>
+		let loginUser = "${user}";
+		let group = "${group_name}";
+
+		$.getJSON(`/group/getMemberlistByGroup/\${group}`, (list) => {
+			let joinCheck = list.memberList.find(
+				(user) => user.user_id === loginUser
+			);
+			if (!joinCheck) {
+				alert("그룹 회원만 접근 가능한 페이지입니다");
+				location.href = "/group/";
+			}
+		});
+
+		const today = new Date().toISOString().split("T")[0];
+
+		console.log(today);
+
+		$.getJSON(`/group/getLatestEvent/\${group}`, (list) => {
+			const todayEvent = list.filter((i) => i.startDate === today);
+			console.log(todayEvent);
+			if (todayEvent.length == 0 || todayEvent == null) {
+				let noEvent = $("<li> 오늘의 일정이 없습니다 </li>");
+				$("ul.today").append(noEvent);
+			}
+
+			todayEvent.map((event) => {
+				const { title, description_ } = event;
+				let todayLi = $(
+					`<li> <strong> \${title} </strong> <span>\${description_} </span>  </li>`
+				);
+				$("ul.today").append(todayLi);
+			});
+
+			const latestEvent = list
+				.filter((i) => i.startDate !== today)
+				.sort((a, b) => {
+					let aDate = new Date(a.startDate);
+					let bDate = new Date(b.startDate);
+					return aDate - bDate;
+				})
+				.slice(0, 10);
+
+			if (latestEvent.length == 0 || latestEvent == null) {
+				let noEvent = $("<li> 다가오는 일정이 없습니다 </li>");
+				$("ul.latest").append(noEvent);
+			}
+
+			latestEvent.map((event) => {
+				const { title, description_ } = event;
+				let eventLi = $(
+					`<li> <strong> \${title} </strong> <span>\${description_} </span>  </li>`
+				);
+				$("ul.latest").append(eventLi);
+			});
+		}); // getJSON
+
+		// 채팅
+
+		let popup;
+		$("button.getChat").click((e) => {
+			popup = window.open(
+				`/chat_pop/\${group}`,
+				"chatPop",
+				"width=1110, height=625, top=150, left=200,scrollbars=no"
+			);
+			console.log(popup);
+		});
+
+		$("div.member li").click((e) => {
+
+			$('input[name="recipientId').val($(e.target).data('user'))
+			$("input[name='writeId']").val("${user}")
+			$('#letter_modal').show()
+		});
+
+
+
+
+		const getLetter = () => ({
+			writer: "${user}",
+			recipient: $('input[name="recipientId').val(),
+			content: $('textarea[name="letterContent"]').val(),
+			reg_date: new Date(),
+		});
+
+		$("#letterRegister").click((e) => {
+			e.preventDefault();
+			const letter = getLetter();
+			$.ajax({
+				url: "/mypage/letterRegister",
+				type: "post",
+				data: JSON.stringify(letter),
+				contentType: "application/json; charset=utf-8",
+				dataType: "text",
+				success: function (result) {
+					$("#letter_modal").hide();
+					console.log(" 쪽지 보내짐 ");
+					$("letter").each((e) => {
+						this.reset();
+					});
+				},
+				error: function () {
+					alert("실패");
+				},
+			});
+		});
+
+		$('.closeModal').click((e) =>{
+			e.preventDefault()
+			$("#letter_modal").hide();
+			console.log(" 쪽지 보내짐 ");
+			$("letter").each((e) => {
+				this.reset();
+			})
+		})
+	</script>
 </html>

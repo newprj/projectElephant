@@ -20,6 +20,8 @@ public class GUserVO {
 	  private String leader;
 	  private int memberLimit;
 	  
+	  private String profile;
+	  
 	  // 그룹 생성할때 리더 가입처리 
 	  public GUserVO(GroupVO vo) {
 		  this.user_id = vo.getLeader();

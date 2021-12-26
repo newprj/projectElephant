@@ -131,8 +131,8 @@ prefix="c" %>
 					<div class="col-md-9">
 							<div class="col-md-6 pad-no form-block">
 									<div class="checkbox">
-											<label class="form-checkbox form-icon">
-											<input type="checkbox" name="notice" value="${board.notice}"> 공지사항 </label>
+											<label class="form-checkbox form-icon" >
+											<input type="checkbox" name="notice" id="notice" > 공지사항 </label>
 									</div>
 							</div>
 					</div>
@@ -158,7 +158,10 @@ prefix="c" %>
 		<script>
 			$(document).ready(function (e) {
 				let loginUser = "${user}";
-			
+				if("${board.notice}" =='Y') {
+					$('input:checkbox[id="notice"]').prop('checked', true); 
+					$('label.form-icon').addClass('active')
+				}
 			
 					$.getJSON("/group/getMemberlistByGroup/${cri.group_name}", (list) => {
 						console.log(list);
@@ -173,9 +176,10 @@ prefix="c" %>
 						}
 					});//get json
 				
-
-				if("${board.notice}" ==='Y') $('input[name="notice"]').prop('checked', true); 
-
+				console.log("${board.notice}" )
+				console.log("${board.notice}" =='Y')
+				
+			
 				const uploadClone = $(".file").clone();
 				var myEditor = document.querySelector("#editor");
 
@@ -233,7 +237,11 @@ prefix="c" %>
 					}); //uploadResult click
 				});
 				}) //file
-
+				
+				$('input[name="notice"]').click((e) =>{
+					$(e.target).prop('checked') ? $('label.form-icon').addClass('active')
+																	: $('label.form-icon').removeClass('active')
+				})
 				const getForm = () => ({
 					bno: "${cri.bno}",
 					content: myEditor.children[0].innerHTML,
