@@ -10,7 +10,6 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 		<jsp:useBean id="today" class="java.util.Date" />
 		<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-        <title></title>
         <!--STYLESHEET-->
         <!--=================================================-->
         <!--Roboto Slab Font [ OPTIONAL ] -->
@@ -35,6 +34,15 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
         <!--Page Load Progress Bar [ OPTIONAL ]-->
         <link href="/resources/plugins/pace/pace.min.css" rel="stylesheet">
         <script src="/resources/plugins/pace/pace.min.js"></script>
+			<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+			<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+			<link
+				href="https://cdn.quilljs.com/1.3.6/quill.snow.css"
+				rel="stylesheet"
+			/>
+			<script src="/resources/image-resize.min.js"></script>
+			<script src="/resources/image-drop.min.js"></script>
+			<script src="/resources/js/fileUpload.js" type="text/javascript"></script>
 	</head>
 	<body>
 		<div id="container" class="effect mainnav-full">

@@ -4,7 +4,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title> Inbox Mail View | SmartAdmin - Responsive admin template..</title>
+        <title> Mail Compose | SmartAdmin - Responsive admin template. </title>
         <link rel="shortcut icon" href="img/favicon.ico">
         <!--STYLESHEET-->
         <!--=================================================-->
@@ -19,11 +19,17 @@
         <link href="plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet">
         <!--Switchery [ OPTIONAL ]-->
         <link href="plugins/switchery/switchery.min.css" rel="stylesheet">
+        <!--Jquery Tag It [ OPTIONAL ]-->
+        <link href="plugins/tag-it/jquery.tagit.css" rel="stylesheet">
         <!--Bootstrap Select [ OPTIONAL ]-->
         <link href="plugins/bootstrap-select/bootstrap-select.min.css" rel="stylesheet">
+        <!--Chosen [ OPTIONAL ]-->
+        <link href="plugins/chosen/chosen.min.css" rel="stylesheet">
+        <!--Summernote [ OPTIONAL ]-->
+        <link href="plugins/summernote/summernote.min.css" rel="stylesheet">
         <!--Demo [ DEMONSTRATION ]-->
         <link href="css/demo/jasmine.css" rel="stylesheet">
-        <!--SCRIPT-->
+        <!--/STYLESHEET-->
         <!--=================================================-->
         <!--Page Load Progress Bar [ OPTIONAL ]-->
         <link href="plugins/pace/pace.min.css" rel="stylesheet">
@@ -514,12 +520,12 @@
                         </div>
                     </div>
                     <header class="pageheader">
-                        <h3><i class="fa fa-home"></i> Mail View </h3>
+                        <h3><i class="fa fa-home"></i> Mail Compose </h3>
                         <div class="breadcrumb-wrapper">
                             <span class="label">You are here:</span>
                             <ol class="breadcrumb">
                                 <li> <a href="#"> Home </a> </li>
-                                <li class="active"> Mail View </li>
+                                <li class="active"> Mail Compose </li>
                             </ol>
                         </div>
                     </header>
@@ -527,10 +533,7 @@
                     <!--===================================================-->
                     <div id="page-content">
                         <div class="row">
-                            <div class="col-xs-12 col-md-3 col-lg-3  hidden-xs">
-                                <div class="pad-all">
-                                    <a href="#/mail/compose" class="btn btn-danger btn-block btn-md"> <span class="fa fa-edit"></span> COMPOSE</a>
-                                </div>
+                            <div class="col-xs-12 col-md-3 col-lg-3">
                                 <div class="mail-categories">
                                     <ul class="list-group">
                                         <li class="list-group-item">
@@ -662,130 +665,45 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-9">
+                            <div class="col-xs-12 col-md-9 col-lg-9">
                                 <div class="panel">
-                                    <div class="btn-toolbar pad-all">
-                                        <div class="btn-group">
-                                            <button class="btn btn-sm btn-default" type="button">
-                                            <i class="fa fa-mail-reply"></i>
-                                            </button>
-                                        </div>
-                                        <div class="btn-group">
-                                            <button class="btn btn-sm btn-default" type="button">
-                                            <i class="fa fa-refresh"></i>
-                                            </button>
-                                        </div>
-                                        <div class="btn-group">
-                                            <button class="btn btn-sm btn-default" type="button">
-                                            <i class="fa fa-archive"></i>
-                                            </button>
-                                            <button class="btn btn-sm btn-default" type="button">
-                                            <i class="fa fa-ban"></i>
-                                            </button>
-                                            <button class="btn btn-sm btn-default" type="button">
-                                            <i class="fa fa-trash-o"></i>
-                                            </button>
-                                        </div>
-                                        <div class="btn-group">
-                                            <button class="btn btn-sm btn-default dropdown-toggle dropdown-toggle-icon" data-toggle="dropdown" type="button" aria-expanded="false">
-                                            <i class="fa fa-folder-open"></i> <i class="dropdown-caret fa fa-caret-down"></i>
-                                            </button>
-                                            <ul class="dropdown-menu">
-                                                <li><a href="#">Action</a> </li>
-                                                <li><a href="#">Another action</a> </li>
-                                                <li><a href="#">Something else here</a> </li>
-                                                <li class="divider"></li>
-                                                <li><a href="#">Separated link</a> </li>
-                                            </ul>
-                                        </div>
-                                        <div class="btn-group">
-                                            <button class="btn btn-sm btn-default dropdown-toggle dropdown-toggle-icon" data-toggle="dropdown" type="button" aria-expanded="false">
-                                            <i class="fa fa-tags"></i> <i class="dropdown-caret fa fa-caret-down"></i>
-                                            </button>
-                                            <ul class="dropdown-menu">
-                                                <li><a href="#">Action</a> </li>
-                                                <li><a href="#">Another action</a> </li>
-                                                <li><a href="#">Something else here</a> </li>
-                                                <li class="divider"></li>
-                                                <li><a href="#">Separated link</a> </li>
-                                            </ul>
-                                        </div>
-                                        <div class="btn-group">
-                                            <button class="btn btn-sm btn-default dropdown-toggle dropdown-toggle-icon" data-toggle="dropdown" type="button" aria-expanded="false">
-                                            More <i class="dropdown-caret fa fa-caret-down"></i>
-                                            </button>
-                                            <ul class="dropdown-menu">
-                                                <li><a href="#">Action</a> </li>
-                                                <li><a href="#">Another action</a> </li>
-                                                <li><a href="#">Something else here</a> </li>
-                                                <li class="divider"></li>
-                                                <li><a href="#">Separated link</a> </li>
-                                            </ul>
-                                        </div>
-                                        <div class="btn-group pull-right">
-                                            <button class="btn btn-sm btn-default" type="button">
-                                            <i class="fa fa-chevron-left"></i>
-                                            </button>
-                                            <button class="btn btn-sm btn-default" type="button">
-                                            <i class="fa fa-chevron-right"></i>
-                                            </button>
-                                        </div>
-                                        <h6 class="pull-right">
-                                            Showing 1 - 15 of 2368
-                                        </h6>
-                                    </div>
                                     <div class="panel-body">
-                                        <div class="mail-list">
-                                            <div class="mail-sender">
-                                                <div class="media">
-                                                    <a href="#" class="pull-left"> <img alt="" src="img/av4.png" class="media-object"> </a> <span class="media-meta pull-right">Yesterday at 1:30am</span>
-                                                    <h5>
-                                                        Nusja Nawancali
-                                                    </h5>
-                                                    <small class="text-muted">From: hisemail@hisemail.com</small> 
+                                        <!-- Multiple Select Choosen -->
+                                        <!--===================================================-->
+                                        <form class="form-horizontal form-bordered">
+                                            <div class="form-group nb">
+                                                <label class="control-label col-md-1">To: </label>
+                                                <div class="col-md-11">
+                                                    <ul id="jquery-tagIt-primary" class="primary">
+                                                       <li>Abc@gmail.com</li>
+                                                       <li>XYZ@gmail.com</li>
+                                                    </ul>
                                                 </div>
                                             </div>
-                                            <div class="view-mail">
-                                                <h4>Lorem ipsum dolor sit amet, consectetur adipisicing elit</h4>
-                                                <p>Donec ultrices faucibus rutrum. Phasellus sodales vulputate urna, vel accumsan augue egestas ac. Donec vitae leo at sem lobortis porttitor eu consequat risus. Mauris sed congue orci. Donec ultrices faucibus rutrum. Phasellus sodales vulputate urna, vel accumsan augue egestas ac.</p>
-                                                <p> Donec vitae leo at sem lobortis porttitor eu consequat risus. Mauris sed congue orci. Donec ultrices faucibus rutrum. Phasellus sodales vulputate urna, vel accumsan augue egestas ac. Donec vitae leo at sem lobortis porttitor eu consequat risus. Mauris sed congue orci. </p>
-                                                <blockquote>
-                                                    <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam venenatis sem ante, nec aliquet elit semper vitae. Sed finibus ligula eu ante tempus malesuada. Phasellus interdum condimentum commodo. Vivamus sed ullamcorper mi, ac blandit ante. </p>
-                                                    <small>Someone famous <cite title="Source Title">Source Title</cite></small> 
-                                                </blockquote>
-                                                <p>Sodales vulputate urna, vel accumsan augue egestas ac . Donec vitae leo at sem lobortis porttitor eu consequat risus. Mauris sed congue orci. Donec ultrices faucibus rutrum. Phasellus sodales vulputate urna, vel accumsan augue egestas ac. Donec vitae leo at sem lobortis porttitor eu consequat risus. Mauris sed congue orci. </p>
-                                            </div>
-                                            <div class="attachment-mail">
-                                                <ul>
-                                                    <li>
-                                                        <a class="atch-thumb" href="#"> <img src="img/thumbs/img1.jpg" alt=""> </a>
-                                                        <p> IMG_001.jpg </p>
-                                                    </li>
-                                                    <li>
-                                                        <a class="atch-thumb" href="#"> <img src="img/thumbs/img2.jpg" alt=""> </a>
-                                                        <p> IMG_002.jpg </p>
-                                                    </li>
-                                                    <li>
-                                                        <a class="atch-thumb" href="#"> <img src="img/thumbs/img1.jpg" alt=""> </a>
-                                                        <p> IMG_003.jpg </p>
-                                                    </li>
-                                                    <li>
-                                                        <a class="atch-thumb" href="#"> <img src="img/thumbs/img2.jpg" alt=""> </a>
-                                                        <p> IMG_004.jpg </p>
-                                                    </li>
-                                                    <li>
-                                                        <a class="atch-thumb" href="#"> <img src="img/thumbs/img1.jpg" alt=""> </a>
-                                                        <p> IMG_005.jpg </p>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <div class="mail-comment">
-                                                <a href="#" class="pull-left"> <img alt="" src="img/av2.png" class="media-object img-rounded"> </a>
-                                                <div class="pull-left col-md-11 no-padding">
-                                                    <textarea class="form-control" placeholder="Reply here..."></textarea>
+                                            <div class="form-group nb">
+                                                <label class="control-label col-md-1">CC: </label>
+                                                <div class="col-md-11">
+                                                    <ul id="jquery-tagIt-inverse" class="inverse">
+                                                    </ul>
                                                 </div>
                                             </div>
-                                        </div>
+                                            <div class="form-group nb">
+                                                <label class="control-label col-md-1">Subject: </label>
+                                                <div class="col-md-11">
+                                                    <input type="text" class="form-control ">
+                                                </div>
+                                            </div>
+                                            <!--Summernote-->
+                                            <!--===================================================-->
+                                            <div id="demo-summernote"></div>
+                                            <!--===================================================-->
+                                            <!-- End Summernote -->
+                                            <div class="pad-top text-right"> 
+                                                <button class="btn btn-danger"><i class="fa fa-send"></i> Send </button>
+                                                <button class="btn btn-default"><i class="fa fa-save"></i> Draft </button>
+                                                <button class="btn btn-default"><i class="fa fa-trash-o"></i> Discard </button>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -796,6 +714,221 @@
                 </section>
                 <!--===================================================-->
                 <!--END CONTENT CONTAINER-->
+                <!--ASIDE--> 
+                <!--===================================================-->
+                <aside id="aside-container">
+                    <div id="aside">
+                        <div class="nano closed">
+                            <div class="nano-content">
+                                <div class="fade in active">
+                                    <h4 class="pad-hor text-thin"> Online Members (7) </h4>
+                                    <ul class="list-group bg-trans">
+                                        <li class="list-group-item">
+                                            <a href="javascript:void(0)" class="conversation-toggle">
+                                                <div class="pull-left avatar mar-rgt"> <img src="img/av1.png" alt="" class="img-sm"> <i class="on bottom text-light"></i> </div>
+                                                <div class="inline-block">
+                                                    <div class="text-small">John Knight</div>
+                                                    <small class="text-mute">Available</small> 
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <a href="javascript:void(0)" class="conversation-toggle">
+                                                <div class="pull-left avatar mar-rgt"> <img src="img/av2.png" alt="" class="img-sm"> <i class="on bottom text-light"></i> </div>
+                                                <div class="inline-block pad-ver-5">
+                                                    <div class="text-small">Jose Knight</div>
+                                                    <small class="text-mute">Available</small> 
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <a href="javascript:void(0)" class="conversation-toggle">
+                                                <div class="pull-left avatar mar-rgt"> <img src="img/av3.png" alt="" class="img-sm"> <i class="on bottom text-light"></i> </div>
+                                                <div class="inline-block">
+                                                    <div class="text-small">Roy Banks</div>
+                                                    <small class="text-mute">Available</small> 
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <a href="javascript:void(0)" class="conversation-toggle">
+                                                <div class="pull-left avatar mar-rgt"> <img src="img/av7.png" alt="" class="img-sm"> <i class="on bottom text-light"></i> </div>
+                                                <div class="inline-block">
+                                                    <div class="text-small">Steven Jordan</div>
+                                                    <small class="text-mute">Available</small> 
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <a href="javascript:void(0)" class="conversation-toggle">
+                                                <div class="pull-left avatar mar-rgt"> <img src="img/av4.png" alt="" class="img-sm"> <i class="on bottom text-light"></i> </div>
+                                                <div class="inline-block">
+                                                    <div class="text-small">Scott Owens</div>
+                                                    <small class="text-mute">Available</small> 
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <a href="javascript:void(0)" class="conversation-toggle">
+                                                <div class="pull-left avatar mar-rgt"> <img src="img/av5.png" alt="" class="img-sm"> <i class="on bottom text-light"></i> </div>
+                                                <div class="inline-block">
+                                                    <div class="text-small">Melissa Hunt</div>
+                                                    <small class="text-mute">Available</small> 
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <a href="javascript:void(0)" class="conversation-toggle">
+                                                <div class="pull-left avatar mar-rgt"> <img src="img/av1.png" alt="" class="img-sm"> <i class="busy bottom text-light"></i> </div>
+                                                <div class="inline-block">
+                                                    <div class="text-small">John Knight</div>
+                                                    <small class="text-mute">Available</small> 
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <a href="javascript:void(0)" class="conversation-toggle">
+                                                <div class="pull-left avatar mar-rgt"> <img src="img/av2.png" alt="" class="img-sm"> <i class="busy bottom text-light"></i> </div>
+                                                <div class="inline-block">
+                                                    <div class="text-small">Jose Knight</div>
+                                                    <small class="text-mute">Available</small> 
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <a href="javascript:void(0)" class="conversation-toggle">
+                                                <div class="pull-left avatar mar-rgt"> <img src="img/av3.png" alt="" class="img-sm"> <i class="busy bottom text-light"></i> </div>
+                                                <div class="inline-block">
+                                                    <div class="text-small">Roy Banks</div>
+                                                    <small class="text-mute">Available</small> 
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <a href="javascript:void(0)" class="conversation-toggle">
+                                                <div class="pull-left avatar mar-rgt"> <img src="img/av7.png" alt="" class="img-sm"> <i class="busy bottom text-light"></i> </div>
+                                                <div class="inline-block">
+                                                    <div class="text-small">Steven Jordan</div>
+                                                    <small class="text-mute">Available</small> 
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <a href="javascript:void(0)" class="conversation-toggle">
+                                                <div class="pull-left avatar mar-rgt"> <img src="img/av1.png" alt="" class="img-sm"> <i class="off bottom text-light"></i> </div>
+                                                <div class="inline-block pad-ver-5">
+                                                    <div class="text-small">John Knight</div>
+                                                    <small class="text-mute">Available</small> 
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <a href="javascript:void(0)" class="conversation-toggle">
+                                                <div class="pull-left avatar mar-rgt"> <img src="img/av2.png" alt="" class="img-sm"> <i class="off bottom text-light"></i> </div>
+                                                <div class="inline-block pad-ver-5">
+                                                    <div class="text-small">Jose Knight</div>
+                                                    <small class="text-mute">Available</small> 
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <a href="javascript:void(0)" class="conversation-toggle">
+                                                <div class="pull-left avatar mar-rgt"> <img src="img/av3.png" alt="" class="img-sm"> <i class="off bottom text-light"></i> </div>
+                                                <div class="inline-block pad-ver-5">
+                                                    <div class="text-small">Roy Banks</div>
+                                                    <small class="text-mute">Available</small> 
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <a href="javascript:void(0)" class="conversation-toggle">
+                                                <div class="pull-left avatar mar-rgt"> <img src="img/av7.png" alt="" class="img-sm"> <i class="off bottom text-light"></i> </div>
+                                                <div class="inline-block">
+                                                    <div class="text-small">Steven Jordan</div>
+                                                    <small class="text-mute">Available</small> 
+                                                </div>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+                <!--===================================================--> 
+                <!--END ASIDE-->
+                <!--RIGHT CHAT MESSANGER--> 
+                <!--===================================================-->
+                <aside class="conversation closed">
+                    <div class="nano">
+                        <div class="nano-content">
+                            <div class="media">
+                                <div class="media-left"> <a href="javascript:void(0)" class="conversation-toggle"> <i class="fa fa-angle-left"></i></a> </div>
+                                <div class="media-body text-center">
+                                    <h4 class="media-heading">John smith</h4>
+                                    <p class="text-sm">Online</p>
+                                </div>
+                            </div>
+                            <div class="chat-window">
+                                <form class="form">
+                                    <div class="floating-label">
+                                        <textarea id="sidebarChatMessage" placeholder="Leave a message" rows="2" class="form-control autosize" name="sidebarChatMessage"></textarea>
+                                        <label for="sidebarChatMessage"></label>
+                                    </div>
+                                </form>
+                                <div class="msg_container_base">
+                                    <div class="msg_container base_sent">
+                                        <div class="col-md-9 col-xs-9">
+                                            <div class="messages msg_sent">
+                                                <p>that mongodb thing looks good, huh? </p>
+                                                <time datetime="2009-11-13T20:00">Timothy • 51 min</time>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-xs-3 avatar"> <img src="img/av1.png" alt=""> </div>
+                                    </div>
+                                    <div class="msg_container">
+                                        <div class="col-md-3 col-xs-3 avatar"> <img src="img/av2.png" alt=""> </div>
+                                        <div class="col-md-9 col-xs-9">
+                                            <div class="messages msg_receive">
+                                                <p>that mongodb thing looks good, huh? </p>
+                                                <time datetime="2009-11-13T20:00">Timothy • 51 min</time>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="msg_container">
+                                        <div class="col-md-3 col-xs-3 avatar"> <img src="img/av2.png" alt=""> </div>
+                                        <div class="col-xs-9 col-md-9">
+                                            <div class="messages msg_receive">
+                                                <p>that mongodb thing looks good, huh? </p>
+                                                <time datetime="2009-11-13T20:00">Timothy • 51 min</time>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="msg_container base_sent">
+                                        <div class="col-xs-9 col-md-9">
+                                            <div class="messages msg_sent">
+                                                <p>that mongodb thing looks good, huh? </p>
+                                                <time datetime="2009-11-13T20:00">Timothy • 51 min</time>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-xs-3 avatar"> <img src="img/av1.png" alt=""> </div>
+                                    </div>
+                                    <div class="msg_container">
+                                        <div class="col-md-3 col-xs-3 avatar"> <img src="img/av2.png" alt=""> </div>
+                                        <div class="col-xs-9 col-md-9">
+                                            <div class="messages msg_receive">
+                                                <p>that mongodb thing looks good, huh?</p>
+                                                <time datetime="2009-11-13T20:00">Timothy • 51 min</time>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+                <!--END RIGHT CHAT MESSANGER--> 
+                <!--===================================================-->
             </div>
             <!-- FOOTER -->
             <!--===================================================-->
@@ -842,6 +975,8 @@
         <!--=================================================-->
         <!--jQuery [ REQUIRED ]-->
         <script src="js/jquery-2.1.1.min.js"></script>
+        <!--jQuery UI [ REQUIRED ]-->
+        <script src="js/jquery-ui.min.js"></script>
         <!--BootstrapJS [ RECOMMENDED ]-->
         <script src="js/bootstrap.min.js"></script>
         <!--Fast Click [ OPTIONAL ]-->
@@ -856,7 +991,15 @@
         <script src="plugins/switchery/switchery.min.js"></script>
         <!--Bootstrap Select [ OPTIONAL ]-->
         <script src="plugins/bootstrap-select/bootstrap-select.min.js"></script>
+        <!--Chosen [ OPTIONAL ]-->
+        <script src="plugins/chosen/chosen.jquery.min.js"></script>
+        <!--Bootstrap Tags Input [ OPTIONAL ]-->
+        <script src="plugins/tag-it/tag-it.min.js"></script>
+        <!--Summernote [ OPTIONAL ]-->
+        <script src="plugins/summernote/summernote.min.js"></script>
         <!--Fullscreen jQuery [ OPTIONAL ]-->
         <script src="plugins/screenfull/screenfull.js"></script>
+        <!--Demo script [ DEMONSTRATION ]-->
+        <script src="js/demo/mail-compose.js"></script>
     </body>
 </html>
