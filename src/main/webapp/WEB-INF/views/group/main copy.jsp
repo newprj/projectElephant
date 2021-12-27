@@ -32,26 +32,17 @@ prefix="c" %>
 		/>
 		<!--  폰트  -->
 		<script src="//code.jquery.com/jquery-3.6.0.js"></script>
-		<script
-			type="text/javascript"
-			src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.4.1/cjs/popper.min.js"
-		></script>
 
-		<script
-			type="text/javascript"
-			src="/resources/assets/js/bootstrap.min.js"
-		></script>
-
-		<!--  파퍼 -->
 		<link href="/resources/assets/css/bootstrap.css" rel="stylesheet" />
 		<link href="/resources/assets/css/bootstrap-theme.css" rel="stylesheet" />
-		<link
-			rel="stylesheet"
-			href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-		/>
+
 		<link href="/resources/assets/css/extension.css" rel="stylesheet" />
 		<link href="/resources/stylesheets/style.css" rel="stylesheet" />
 
+		<link href="/resources/css/bootstrap.min.css" rel="stylesheet" />
+		<script src="/resources/js/bootstrap.js"></script>
+		<script src="/resources/js/bootstrap.min.js"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 		<script
 			src="https://kit.fontawesome.com/eab4c34ae3.js"
 			crossorigin="anonymous"
@@ -92,7 +83,11 @@ prefix="c" %>
 				align-items: center;
 				justify-content: space-between;
 			}
-
+			.navbar {
+				display: flex;
+				flex-direction: row;
+				list-style: none;
+			}
 			a {
 				text-decoration: none;
 			}
@@ -181,6 +176,10 @@ prefix="c" %>
 				justify-content: center;
 				color: #222;
 			}
+			.btn-group {
+				display: flex;
+				flex-direction: row;
+			}
 		</style>
 	</head>
 
@@ -192,80 +191,79 @@ prefix="c" %>
 						src="/resources/img/elephantIcon.png"
 						style="height: 50px; width: 50px; border-radius: 50%"
 					/>
-					<h1 class="logo" style="display: inline-block;">  </h1>
+					<h1 class="logo" style="display: inline-block"></h1>
 				</div>
 
 				<div class="right">
 					<div class="btn-group">
 						<div>
 							<c:if test="${user==null}">
-								<div class="item btn btn-outline-info">
+								<div class="item btn btn-default">
 									<a href="/user/register"> 가입</a>
 								</div>
-								<div class="item btn btn-outline-info">
+								<div class="item btn btn-default">
 									<a href="/user/login">로그인</a>
 								</div>
 							</c:if>
 						</div>
 					</div>
-
 					<c:if test="${user!=null}">
 						<div class="btn-group">
 							<div class="dropdown">
-							<button
-								class="btn btn-outline-info dropdown-toggle"
-								type="button"
-								id="dropdownMenuButton"
-								data-toggle="dropdown"
-								aria-haspopup="true"
-								aria-expanded="false"
-							>
-								내 그룹
-							</button>
-							<div
-								class="dropdown-menu"
-								aria-labelledby="dropdownMenuButton"
-							>
-							<c:choose>
-								<c:when test="${empty myGroup}"
-									>
-									<a
-										class="dropdown-item"
-										>가입한 그룹이 없습니다 </a
-									>
-								</c:when>
-								<c:otherwise>
-								<c:forEach items="${myGroup}" var="mine">
-									<a
-										class="dropdown-item"
-										href="/group/${mine.group_name}"
-										>${mine.group_name}</a
-									>
-										</c:forEach>
-										</c:otherwise>
-										</c:choose>
-									</div>
-								</div>
-
-							<div class="dropdown">
 								<button
-									class="btn btn-outline-info dropdown-toggle"
+									class="btn btn-default dropdown-toggle"
 									type="button"
 									id="dropdownMenuButton"
 									data-toggle="dropdown"
-									aria-haspopup="true"
-									aria-expanded="false"
 								>
-									MY
+									내 그룹
+									<span class="caret"></span>
 								</button>
-								<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-									<a class="dropdown-item" href="/mypage/user">마이페이지</a>
-									<a class="dropdown-item" href="/user/modify">회원정보 수정</a>
-									<a class="dropdown-item" href="/user/logout">로그아웃</a>
-								</div>
+								<ul role="menu" class="dropdown-menu dropdown-menu-right">
+									<c:choose>
+										<c:when test="${empty myGroup}">
+											<li><a class="dropdown-item">가입 그룹 없음</a></li>
+										</c:when>
+										<c:otherwise>
+											<c:forEach items="${myGroup}" var="mine">
+												<li>
+													<a
+														class="dropdown-item"
+														href="/group/${mine.group_name}"
+														>${mine.group_name}</a
+													>
+												</li>
+											</c:forEach>
+										</c:otherwise>
+									</c:choose>
+								</ul>
+							</div>
+
+							<div class="dropdown">
+								<button
+									class="btn btn-default dropdown-toggle"
+									type="button"
+									id="dropdownMenuButton"
+									data-toggle="dropdown"
+								>
+									MY<span class="caret"></span>
+								</button>
+								<ul role="menu" class="dropdown-menu dropdown-menu-right">
+									<li>
+										<a class="dropdown-item" href="/mypage/user">마이페이지</a>
+									</li>
+									<li>
+										<a class="dropdown-item" href="/user/modify"
+											>회원정보 수정</a
+										>
+									</li>
+									<li>
+										<a class="dropdown-item" href="/user/logout">로그아웃</a>
+									</li>
+								</ul>
 							</div>
 							<a href="/group/make">
-								<button class="btn btn-outline-info">create</button>
+								<button class="btn btn-default">create</button>
 							</a>
 						</div>
 					</c:if>
@@ -273,9 +271,47 @@ prefix="c" %>
 				<!-- right -->
 			</div>
 			<!-- head -->
-			<div>
-				
-			</div>
+
+			<nav class="navbar navbar-default megamenu">
+				<div class="navbar-header">
+					<button
+						type="button"
+						data-toggle="collapse"
+						data-target="#defaultmenu"
+						class="navbar-toggle"
+					>
+						<span class="icon-bar"></span><span class="icon-bar"></span
+						><span class="icon-bar"></span>
+					</button>
+				</div>
+				<div id="defaultmenu" class="navbar-collapse collapse">
+					<ul class="nav navbar-nav">
+						<li>
+							<a href="/mypage/user"> Home </a>
+						</li>
+
+						<li>
+							<a href="/mypage/userGroup"> Group</a>
+						</li>
+
+						<li>
+							<a href="/mypage/userQna"> Q&amp;A </a>
+						</li>
+
+						<li>
+							<a href="/mypage/allMessage"> Message </a>
+						</li>
+						<li>
+							<a href="/mypage/calendar"> Calendar </a>
+						</li>
+
+						<!-- end standard drop down -->
+					</ul>
+					<!-- end nav navbar-nav -->
+				</div>
+				<!-- end #navbar-collapse-1 -->
+			</nav>
+
 			<div class="porto-bg-eleven common-pad">
 				<article class="text-left">
 					<div id="filter" class="clearfix">
@@ -288,8 +324,6 @@ prefix="c" %>
 								<li><span data-sort="pop"> 지원자 많은 순 </span></li>
 								<li class="separator">/</li>
 								<li><span data-sort="complete"> 모집이 완료된 그룹 </span></li>
-								<li class="separator">/</li>
-								<li><span onclick="location.href='/group/main/list'">그룹 모두 보기 </span></li>
 							</ul>
 						</div>
 					</div>
@@ -313,7 +347,11 @@ prefix="c" %>
 					</li>
 				</c:forEach>
 			</ul>
-		
+			<div class="link">
+				<a href="/group/main/list">
+					<span>....모집중인 그룹 모두 보기 </span>
+				</a>
+			</div>
 		</div>
 		<!-- wrapper  -->
 		<nav class="menu" id="sm">

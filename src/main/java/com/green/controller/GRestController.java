@@ -106,7 +106,7 @@ public class GRestController {
 			"/main/list/{pageNum}/{amount}/{sort}", "/main/list/{pageNum}/{amount}/{type}/{keyword}/{sort}" })
 	public ModelAndView listOfgroups(HttpServletRequest request, @ModelAttribute("cri") Criteria cri) {
 		ModelAndView mv = new ModelAndView("/group/groupBoard");
-		cri.setAmount(9);
+		
 		try {
 			HttpSession session = request.getSession();
 			UserVO user = (UserVO) session.getAttribute("user");
@@ -119,15 +119,15 @@ public class GRestController {
 			e.printStackTrace();
 		}
 		try {
+			cri.setAmount(9);
+			
 			List<GroupVO> group = groupService.getListWithPaging(cri);
 			group.forEach(i -> {
 				i.setApplicantCnt(groupUserService.listByGroupAll(i.getGroup_name()).size());
 				i.setJoinedCnt(groupUserService.listByGroup(i.getGroup_name()).size());
 			});
-			List<GroupVO> groupList = group.stream().filter(i -> 
-				i.getMember_number() > groupUserService.listByGroup(i.getGroup_name()).size())
-				.collect(Collectors.toList());
-			mv.addObject("group", groupList);
+			
+			mv.addObject("group", group);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -136,6 +136,8 @@ public class GRestController {
 		mv.addObject("pageMaker" , new PageDTO(cri, total));
 		return mv;
 	}
+	
+	
 	
 	// 내가 가입한 그룹 가지고 오기
 	@GetMapping(value = "/getGroupByUSer/{user_id}")

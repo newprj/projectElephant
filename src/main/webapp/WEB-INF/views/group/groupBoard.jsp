@@ -309,7 +309,16 @@ prefix="c" %>
 								<hr>
 								
 								<span> <i class="fas fa-eye"></i> ${group.viewCnt} </span>
-								<span> 🙋‍♀  ${group.applicantCnt} <i class="far fa-hand-peace"> ${group.joinedCnt}</i>/ ${group.member_number}</span>
+								<span> 🙋‍♀  ${group.applicantCnt} 
+								<c:choose>
+									<c:when test="${group.joinedCnt+0 < group.member_number+0}">
+										<i class="far fa-hand-peace"> ${group.joinedCnt}</i>/ ${group.member_number}
+									</c:when>
+									<c:otherwise>
+										<i class="fa fa-close" style="color: red;"></i> 모집완료 
+									</c:otherwise>
+								</c:choose>
+								</span>
 								
 							</div>
 						</li>
