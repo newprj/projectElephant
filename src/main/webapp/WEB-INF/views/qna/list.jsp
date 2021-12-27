@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-			<%@ include file="../includes/admin_header.jsp" %>
+			<%@ include file="../includes/header.jsp" %>
 
 <title>Q & A 목록</title>
 </head>
@@ -18,51 +18,67 @@
              </ol>
          </div>
      </div>
-  
-	<form method="get" action="/qna/list" id="searchForm">
-		<select name="type">
+  <div class="col-lg-9">
+	<form method="get" action="/qna/list" id="searchForm" class="well">
+		<div class="row">
+		<select name="type" class="btn btn-default dropdown-toggle">
 			<option value="" <c:out value="${pageMaker.cri.type==null?'selected':''}"/>>선택</option>
 			<option value="T" <c:out value="${pageMaker.cri.type eq 'T' ?'selected':''}"/> >제목</option>
 			<option value="W" <c:out value="${pageMaker.cri.type eq 'W' ?'selected':''}"/>>작성자</option>			
 			<option value="TW" <c:out value="${pageMaker.cri.type eq 'TW'?'selected':''}"/>>제목 또는 작성자</option>			
 		</select>
-		<input type="text" placeholder="검색어 입력" name="keyword"> 
+		<input type="text" placeholder="검색어 입력" name="keyword" class="col-lg-8"> 
 		<input type="hidden" name="pageNum" value='${pageMarker.cri.pageNum}'>
         <input type="hidden" name="amount" value='${pageMarker.cri.amount}'>
               
-		<button id="search">검색</button>
+		<button id="search"  class="btn btn-info">검색</button>
+		</div>
+		
 	</form>
 	
-	<table>
-		<thead>
-			<tr>
-			  <th>번호</th>
-			  <th>구분</th>
-              <th>제목</th>
-              <th>작성자</th>
-              <th>작성일</th>
-              <th>조회수</th>
-              <th></th>
-              <th></th>
-			</tr>
-		</thead>
-		<c:forEach items="${list}" var="i" varStatus="status">
-			<tr>
-				<td>${status.count}</td>
-				<td>${i.p_group}</td>
-				<td><a class='detail' id='detail${i.qno}' href='${i.qno}' data-password='${i.pwd}'>${i.title}</a></td>
-				<td id='writer${i.qno}'>${i.writer}</td>
-				<td>
-					<fmt:formatDate value="${i.up_date}" pattern="yyyy-MM-dd a hh:mm" />
-				</td>
-				<td style="text-align:center;" id='hit${i.qno}'>${i.hit}</td>
-				<td><button data-qno='${i.qno}' class="writeMod" id="writeMod${i.qno}">수정</button></td>
-				<td><button onclick="location='/qna/remove?qno=${i.qno}'" id="writeRemove${i.qno}">삭제</button></td>
-			</tr>
-		</c:forEach>
-	</table>
 	
-	<button class="writeBtn" onclick="location='/qna/write'">글쓰기</button>
+	  <div class="panel">
+          
+          <div id="demo-custom-toolbar2" class="table-toolbar-left">
+              <button id="demo-dt-addrow-btn" class="btn btn-pink" onclick="location='/qna/write'">글쓰기</button>
+          </div>
+          <div class="panel-body">
+              <table id="demo-dt-addrow" class="table table-striped table-bordered">
+                  <thead>
+                      <tr>
+                          <th>No.</th>
+                          <th>Position</th>
+                          <th class="min-tablet">구분</th>
+                          <th class="min-tablet">제목</th>
+                          <th class="min-desktop">작성일</th>
+                          <th class="min-desktop">조회수</th>
+                          <th></th>
+              			<th></th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                     <c:forEach items="${list}" var="i" varStatus="status">
+						<tr>
+							<td>${status.count}</td>
+							<td>${i.p_group}</td>
+							<td><a class='detail' id='detail${i.qno}' href='${i.qno}' data-password='${i.pwd}'>${i.title}</a></td>
+							<td id='writer${i.qno}'>${i.writer}</td>
+							<td>
+								<fmt:formatDate value="${i.up_date}" pattern="yyyy-MM-dd a hh:mm" />
+							</td>
+							<td style="text-align:center;" id='hit${i.qno}'>${i.hit}</td>
+							<td><button data-qno='${i.qno}' class="writeMod" id="writeMod${i.qno}">수정</button></td>
+							<td><button onclick="location='/qna/remove?qno=${i.qno}'" id="writeRemove${i.qno}">삭제</button></td>
+						</tr>
+					</c:forEach>
+                      
+                  </tbody>
+              </table>
+          </div>
+      </div>
+	
+	</div>
+	
 	<div>
 		<ul class="pagination">
 			<c:if test="${pageMarker.prev}">
@@ -88,7 +104,9 @@
 		<input type="hidden" name='type' value='${pageMarker.cri.type}'/>
 		<input type="hidden" name='keyword' value='${pageMarker.cri.keyword}'/>
 	</form>
-</div>
+	
+	
+	
 </div>
 </div>
 <%@ include file="../includes/admin_footer.jsp" %> 

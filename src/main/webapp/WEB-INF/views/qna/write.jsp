@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-			<%@ include file="../includes/admin_header.jsp" %>
+			<%@ include file="../includes/header.jsp" %>
 
 <script
   src="https://code.jquery.com/jquery-3.6.0.js"></script>
@@ -38,7 +38,6 @@ li {
              </ol>
          </div>
      </div>
-	<h3>로그인되면 임시저장 도전</h3>
 	<form action="/qna/write" method="post" name="write">
 		<div>
 			<label for="p_select">구분</label>

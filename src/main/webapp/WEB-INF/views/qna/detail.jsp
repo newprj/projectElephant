@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-			<%@ include file="../includes/admin_header.jsp" %>
+			<%@ include file="../includes/header.jsp" %>
 
 <style>
 li {
@@ -42,67 +42,75 @@ li {
              <span class="label">You are here:</span>
              <ol class="breadcrumb">
                  <li> <a href="/qna/list"> Q&A </a> </li>
-                 <li class="active"> Q&A </li>
+                 <li class="active"> detail </li>
              </ol>
          </div>
      </div>
-	<form>
-		<h3>로그인 되면 내가 작성한 댓글만 수정,삭제 버튼 보이도록</h3>
-		<h4>Q & N 게시글</h4>
-		<div>
-			<label for="qno">게시물 번호</label>
-			<input type="text" name="qno"  value="${get.qno}" readonly="readonly"  /> 
-		</div>
-		<div>
-			<label for="p_group">구분</label>
-			<input type="text" name="p_group"  value="${get.p_group}" readonly="readonly"  /> 
-		</div>
-
-		<div>
-			<label for="title">제목</label>
-			<input type="text" name="title"  value="${get.title}" readonly="readonly" /> 
-		</div>
-		<div>
-			<label for="writer">글쓴이</label>
-			<input type="text" name="writer"  value="${get.writer}" readonly="readonly" /> 
-		</div>
-		<div>
-			<label for="q_content">내용</label>
-			${get.q_content}
-			<div class="uploadResult">
+     
+     <div class="panel">
+	       <div class="panel-heading">
+	           <div class="panel-control">
+	               <button class="btn btn-default" data-click="panel-reload"><i class="fa fa-refresh"></i></button>
+	           </div>
+	           <h3 class="panel-title">Title. ${get.title}</h3>
+	       </div>
+	       <div class="panel-body">
+	           <h4 class="text-thin">구분 : ${get.p_group}</h4>
+	           <div class="row">
+	               <div class="col-xs-6">
+	                   <div> <strong>No. </strong> <span id="demo-range-def-val"></span> ${get.qno}</div>
+	               </div>
+	               <div class="col-xs-6">
+	                   <div> <strong>글쓴이 : </strong> <span id="demo-range-step-val"></span>${get.writer} </div>
+	               </div>
+	               
+	           </div>
+	           <br>
+	           <hr>
+	           <br>
+	           <h4 class="text-thin">${get.q_content}</h4>
+	           <div class="mar-rgt box-inline">
+	              <div class="uploadResult">
 						<ul></ul>
-			</div>
-		</div>
-		
-		<div class="bigPictureWrapper">
-			<div class="bigPicture">
-			</div>
-		</div>
-		<button type="button" id="goList">목록</button>
-	</form>
-	<div>
-	<h4>댓글  <button type="button" id="addReply">댓글 달기</button></h4>
-	
-	<div id="replyDiv">
-		<c:forEach items="${reply}" var="i" >
+					</div>
+	           </div>
+	           
+	           <div id="demo-range-vpips" class="demo-pips range-vertical pips"></div>
+	           <br>
+	           <button type="button" id="goList" class="btn btn-default btn-rounded">목록</button>
+	           
+	           <hr>
+	           <h4 class="text-thin mar-btm">
+	           		
+	           		댓글  <button type="button" id="addReply"  class="btn btn-default btn-rounded">댓글 달기</button>
+	           	</h4>
+	           <!--Range Slider : Pips -->
+	           <!--===================================================-->
+	           <div id="demo-range-hpips" class="demo-pips pips"></div>
+	           <div id="replyDiv">
+					<c:forEach items="${reply}" var="i" >
+				
+					<table  style="border: 1px solid #dddddd;"  id="replyTable${i.rno}">
+						<tbody >
+							<tr style="background-color:gray">
+								<td align="left" id="r_writer${i.rno}" >${i.r_writer}</td>
+								<td align="right" id="r_reg_date"><fmt:formatDate value="${i.r_reg_date}" pattern="yyyy/MM/dd a hh:mm" /></td>
+								<td><button  id="reReply" class="btn btn-primary btn-rounded">댓글</button></td>
+								<td><button data-rno="${i.rno}" class='btn btn-warning btn-rounded' id="replymodify${i.rno}">수정</button> </td>
+								<td><button id="replyRemove${i.rno}" class="btn btn-danger btn-rounded">삭제</button> </td>
+							</tr>	
+							<tr>
+								<td colspan="5" id="r_content">${i.r_content}</td>
+							</tr>
+						</tbody>		
+					</table>
 			
-				<table  style="border: 1px solid #dddddd;"  id="replyTable${i.rno}">
-					<tbody >
-						<tr style="background-color:gray">
-							<td align="left" id="r_writer${i.rno}" >${i.r_writer}</td>
-							<td align="right" id="r_reg_date"><fmt:formatDate value="${i.r_reg_date}" pattern="yyyy/MM/dd a hh:mm" /></td>
-							<td><button  id="reReply">댓글</button></td>
-							<td><button data-rno="${i.rno}" class='replymodify' id="replymodify${i.rno}">수정</button> </td>
-							<td><button id="replyRemove${i.rno}">삭제</button> </td>
-						</tr>	
-						<tr>
-							<td colspan="5" id="r_content">${i.r_content}</td>
-						</tr>
-					</tbody>		
-				</table>
-			
-		</c:forEach>
-	</div>
+				</c:forEach>
+			</div>
+	           <!--===================================================-->
+	       </div>
+	   </div>
+
 	<form id='operForm' action="/qna/list" method="get">
 		<input type='hidden' name='pageNum' value='${cri.pageNum}'>
 		<input type='hidden' name='amount' value='${cri.amount}'>
