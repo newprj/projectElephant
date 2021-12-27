@@ -1,16 +1,14 @@
 package com.green.service;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.green.mapper.UserMapper;
+import com.green.vo.AttachImageVO;
+import com.green.vo.Cri;
 import com.green.vo.Criteria;
+import com.green.vo.SCri;
 import com.green.vo.UserVO;
 
 import lombok.Setter;
@@ -79,6 +77,46 @@ public class UserServiceImpl implements UserService {
 		
 	}
 
+	@Override
+	public List<UserVO> list() {
+		return usermapper.list();
+	}
+
+	@Override
+	public UserVO view(int uno) {
+		return usermapper.view(uno);
+	}
+
+	@Override
+	public List<UserVO> listPage(Cri cri) {
+		return usermapper.listPage(cri);
+	}
+
+	@Override
+	public int listCount() {
+		return usermapper.listCount();
+	}
+
+	@Override
+	public List<UserVO> listSearch(SCri scri) {
+		return usermapper.listSearch(scri);
+	}
+
+	@Override
+	public int countSearch(SCri scri) {
+		return usermapper.countSearch(scri);
+	}
+
+	@Override
+	public void imageEnroll(AttachImageVO vo) {
+		usermapper.imageEnroll(vo);
+		
+	}
+
+	@Override
+	public List<AttachImageVO> getAttachList(int id) {
+		return usermapper.getAttachList(id);
+	}
 	
 	
 	

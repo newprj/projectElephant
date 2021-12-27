@@ -57,7 +57,6 @@
 .imgDeleteBtn:hover {
   background-color: #382323;
 }
-
  	 </style>
 
   </head>
@@ -162,7 +161,6 @@
 				str += "<div id='result_card'>";
 				str += "<button type='button' class='imgDeleteBtn' data-file='" + fileCallPath + "'>변경 취소</button></br>";
 				str += "<img src='/display?fileName=" + fileCallPath +"' style='max-width: 30%; height: auto;'>";
-
 				str += "<input type='hidden' name='imageList[0].fileName' value='"+obj.fileName+"'> ";
 				str += "<input type='hidden' name='imageList[0].uuid' value='"+obj.uuid+"'> ";
 				str += "<input type='hidden' name='imageList[0].uploadPath' value='"+obj.uploadPath+"'> ";
@@ -197,18 +195,18 @@
 			}
 		})
   </script>
-		
+
   <body>
     <h4>회원정보수정</h4>
-		
-      <form action="/user/modify" method="post">
+
+      <form action="/user/modify2" method="post">
       	<div class="form_section">
    			<div class="form_section_title">
-   				<input type="hidden" name="profile" value="${user.profile}"/>
-   				<img src="${user.profile}" style="max-width: 30%; height: auto;">
+   				<input type="hidden" name="profile" value="${view.profile}"/>
+   				<img src="${view.profile}" style="max-width: 30%; height: auto;">
    			</div>
    			<div class="form_section_content">
-   			   	<label for="fileItem">사진 변경</label>
+   				<label for="fileItem">사진 변경</label>
 				<input type="file" id ="fileItem" name='uploadFile' >
 				<div id="uploadResult">
 					<!-- <div id="result_card">
@@ -218,18 +216,17 @@
 				</div>
    			</div>
    		</div> 
-	   
         <div class="form-group">
           <label for="user_id">아이디</label>
-          <input type="text" class="form-control" name="user_id" value="${user.user_id}" readonly/>
+          <input type="text" class="form-control" name="user_id" value="${view.user_id}" readonly/>
         </div>
         <div class="form-group">
           <label for="password">비밀번호</label>
-          <input type="password" class="form-control" name="password" id="password"/>
+          <input type="password" class="form-control" name="password" id="password" value="${view.password}"/>
         </div>
         <div class="form-group">
           <label for="password2">비밀번호 재입력</label>
-          <input type="password" class="form-control" name="password2" id="password2" />
+          <input type="password" class="form-control" name="password2" id="password2"/>
           <button class="btn btn-primary" type="button" id="pwCheck">비밀번호 확인</button>
           <p class="result2">
           	<span class="msg2">비밀번호를 확인해주세요</span>
@@ -237,15 +234,14 @@
         </div>
          <div class="form-group">
           <label for="name">이름</label>
-          <input type="text" class="form-control" value="${user.name}" name="name" id="name"/>
+          <input type="text" class="form-control" name="name" id="name" value="${view.name}"/>
         </div>
          <div class="form-group">
           <label for="email">이메일</label>
-          <input type="text" class="form-control" name="email" value="${user.email }"/>
-          
+          <input type="text" class="form-control" name="email" value="${view.email}"/>
         </div>
         <button class="btn btn-info" id="submit">수정</button>
-        <button class="btn btn-warning" type="button" onclick="location.href='/group/' ">수정 취소</button>
+        <button class="btn btn-warning" type="button" onclick="location.href='listSearch' ">수정 취소</button>
       </form>
 
   </body>

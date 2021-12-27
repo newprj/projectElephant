@@ -23,6 +23,7 @@ public class UserVO {
 	private String password;
 	private String name;
 	private String email;
+
 	
 	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date regDate;
@@ -37,5 +38,11 @@ public class UserVO {
 	private boolean useCookie;
 	private String profile;
 	
+
+	private int id;
+	private String uploadPath;
+	private String uuid;
+	private String fileName;
+	private List<AttachImageVO> imageList;
 
 }

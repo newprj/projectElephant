@@ -44,16 +44,6 @@
 		    </trim>
 	</sql>
 
-	<sql id="sortBy">
-		<choose>
-			<when test="sort=='viewCnt'">
-				order by g.viewCnt desc
-			</when>
-			<when test="sort=='popular'">
-				order by u.pop desc
-			</when>
-		</choose>
-	</sql>
 	
 	<select id="getListWithPaging" resultType="com.green.vo.GroupVO">
 			 <![CDATA[
@@ -73,7 +63,7 @@
             on g.group_name = u.group_name
 		    where rn> (#{pageNum}-1) *  #{amount}
 		    ]]>
-		    <include refid="sortBy"></include>
+		  
 	</select>
 	
 	<select id="getTotalCount" resultType="int">
