@@ -5,7 +5,7 @@ prefix="c" %>
 <html>
 	<head>
 		<meta charset="UTF-8" />
-		
+
 		<script
 			src="https://kit.fontawesome.com/eab4c34ae3.js"
 			crossorigin="anonymous"
@@ -20,25 +20,20 @@ prefix="c" %>
 		<!-- 폰트 -->
 		<script src="//code.jquery.com/jquery-3.6.0.js"></script>
 
-
-
 		<script
 			type="text/javascript"
 			src="/resources/assets/js/bootstrap.min.js"
 		></script>
 
 		<link
-		rel="stylesheet"
-		href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-	/>
+			rel="stylesheet"
+			href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+		/>
 
 		<link href="/resources/assets/css/bootstrap.css" rel="stylesheet" />
 		<link href="/resources/assets/css/bootstrap-theme.css" rel="stylesheet" />
 
 		<link href="/resources/stylesheets/style.css" rel="stylesheet" />
-		<link href="/resources/plugins/bootstrap-select/bootstrap-select.min.css" rel="stylesheet" />
-		<script src="/resources/plugins/bootstrap-select/bootstrap-select.min.js" ></script>
-
 
 
 		<title>Insert title here</title>
@@ -51,12 +46,12 @@ prefix="c" %>
 				display: flex;
 				flex-direction: column;
 				align-items: center;
-			
+
 				padding: 50px 0;
 			}
 			div.wrapper {
 				width: 1240px;
-				
+
 				height: 90%;
 				background-color: white;
 				box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11),
@@ -79,12 +74,12 @@ prefix="c" %>
 				align-items: center;
 				justify-content: space-between;
 			}
-			.btn-group{
+			.btn-group {
 				display: flex;
 				flex-direction: row;
 				box-shadow: none;
 			}
-			.btn-group:hover{
+			.btn-group:hover {
 				box-shadow: none;
 			}
 			.group-list {
@@ -149,7 +144,7 @@ prefix="c" %>
 				color: #333;
 				font-family: "Montserrat", sans-serif;
 			}
-			.toolbar-right{
+			.toolbar-right {
 				float: right;
 			}
 		</style>
@@ -159,11 +154,11 @@ prefix="c" %>
 			<div class="head">
 				<div class="media-left">
 					<a href="/group/">
-					<img
-						src="/resources/img/elephantIcon.png"
-						style="height: 50px; width: 50px; border-radius: 50%"
-					/>
-				</a>
+						<img
+							src="/resources/img/elephantIcon.png"
+							style="height: 50px; width: 50px; border-radius: 50%"
+						/>
+					</a>
 				</div>
 				<div class="media-body">
 					<h4 class="alert-title">${name}</h4>
@@ -195,30 +190,23 @@ prefix="c" %>
 								>
 									내 그룹
 								</button>
-								<div
-									class="dropdown-menu"
-									aria-labelledby="dropdownMenuButton"
-								>
-								<c:choose>
-									<c:when test="${empty myGroup}"
-										>
-										<a
-											class="dropdown-item"
-											>가입한 그룹이 없습니다 </a
-										>
-									</c:when>
-									<c:otherwise>
-									<c:forEach items="${myGroup}" var="mine">
-										<a
-											class="dropdown-item"
-											href="/group/${mine.group_name}"
-											>${mine.group_name}</a
-										>
+								<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+									<c:choose>
+										<c:when test="${empty myGroup}">
+											<a class="dropdown-item">가입한 그룹이 없습니다 </a>
+										</c:when>
+										<c:otherwise>
+											<c:forEach items="${myGroup}" var="mine">
+												<a
+													class="dropdown-item"
+													href="/group/${mine.group_name}"
+													>${mine.group_name}</a
+												>
 											</c:forEach>
-											</c:otherwise>
-											</c:choose>
-										</div>
-									</div>
+										</c:otherwise>
+									</c:choose>
+								</div>
+							</div>
 							<div class="dropdown">
 								<button
 									class="btn btn-outline-info dropdown-toggle"
@@ -246,77 +234,103 @@ prefix="c" %>
 			</div>
 			<!-- head  -->
 
-			
-			
+			<div class="row  align-items-end" >
+				<div class="col-sm-6" style="padding-left: 160px; ">
 
-				<ul class="group-list">		
-					<c:forEach items ="${group}" var="group">
-						<li class="group" onclick="location.href='/group/gather/${group.group_name}'" style="cursor: pointer;">
-							<div style="background-image: url(${group.profile});" class="group-image" ></div>
-							<div class="group-description">
-								<h2 class="group_name">  ${group.group_name} </h2>
-								<p> ${group.leader}</p>
-								<p> ${group.subject }</p>
-								<hr>
-								
-								<span> <i class="fas fa-eye"></i> ${group.viewCnt} </span>
-								<span> 🙋‍♀  ${group.applicantCnt} 
+					<input class="form-control col-sm-4" type="text" placeholder="Default input" name="keyword">
+				
+					<div class="dropdown">
+						<button
+							class="btn btn-outline-info dropdown-toggle"
+							type="button"
+							id="dropdownMenuButton"
+							data-toggle="dropdown"
+							aria-haspopup="true"
+							aria-expanded="false"
+						>
+							검색옵션
+						</button>
+						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+							<a class="dropdown-item" href="N"> 그룹이름 </a>
+							<a class="dropdown-item" href="S">주제</a>
+							<a class="dropdown-item" href="NS">그룹 이름 OR 주제</a>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<ul class="group-list">
+				<c:forEach items="${group}" var="group">
+					<li
+						class="group"
+						onclick="location.href='/group/gather/${group.group_name}'"
+						style="cursor: pointer"
+					>
+						<div
+							style="background-image: url(${group.profile})"
+							class="group-image"
+						></div>
+						<div class="group-description">
+							<h2 class="group_name">${group.group_name}</h2>
+							<p>${group.leader}</p>
+							<p>${group.subject }</p>
+							<hr />
+
+							<span> <i class="fas fa-eye"></i> ${group.viewCnt} </span>
+							<span>
+								🙋‍♀ ${group.applicantCnt}
 								<c:choose>
 									<c:when test="${group.joinedCnt+0 < group.member_number+0}">
-										<i class="far fa-hand-peace"> ${group.joinedCnt}</i>/ ${group.member_number}
+										<i class="far fa-hand-peace"> ${group.joinedCnt}</i>/
+										${group.member_number}
 									</c:when>
 									<c:otherwise>
-										<i class="fa fa-close" style="color: red;"></i> 모집완료 
+										<i class="fa fa-close" style="color: red"></i> 모집완료
 									</c:otherwise>
 								</c:choose>
-								</span>
-								
-							</div>
-						</li>
-					</c:forEach>
-					</ul>
-					<div class="pagination">
-						<c:if test="${pageMaker.prev}">
-							<a class="pagenate prev" href="${pageMaker.startPage-1}"> prev </a>
-						</c:if>
-						<c:forEach
-							var="num"
-							begin="${pageMaker.startPage}"
-							end="${pageMaker.endPage}"
-						>
-							<a
-								class="pagenate ${pageMaker.cri.pageNum == num ? 'current': '' }"
-								href="${num}"
-								>${num}</a
-							>
-						</c:forEach>
-						<c:if test="${pageMaker.next }">
-							<a class="pagenate next" href="${pageMaker.endPage+1}"> next </a>
-						</c:if>
-					</div>
-
-		</div><!-- wrapper -->
+							</span>
+						</div>
+					</li>
+				</c:forEach>
+			</ul>
+			<div class="pagination">
+				<c:if test="${pageMaker.prev}">
+					<a class="pagenate prev" href="${pageMaker.startPage-1}"> prev </a>
+				</c:if>
+				<c:forEach
+					var="num"
+					begin="${pageMaker.startPage}"
+					end="${pageMaker.endPage}"
+				>
+					<a
+						class="pagenate ${pageMaker.cri.pageNum == num ? 'current': '' }"
+						href="${num}"
+						>${num}</a
+					>
+				</c:forEach>
+				<c:if test="${pageMaker.next }">
+					<a class="pagenate next" href="${pageMaker.endPage+1}"> next </a>
+				</c:if>
+			</div>
+		</div>
+		<!-- wrapper -->
 		<script>
 			let pageNum = "${cri.pageNum}";
 			let amount = "${cri.amount}";
 
-			let searchForm = $("form.searchForm");
-			$("button.searchForm").click((e) => {
+			$(".dropdown-menu >li >a").click((e) => {
 				e.preventDefault();
-				let type = searchForm.find("option:selected").val();
+				let type = $(e.target).attr("href");
 				let keyword = $('input[name="keyword"]').val();
-				let url = `/group/main/list/\${pageNum}/\${amount}/\${type}/\${keyword}`;
-				let sort = $(".current").data("sort");
-				if (sort == "recent") sort = "";
-				if (!type) {
-					alert("옵션 종류를 선택하세요 ");
-				} else if (!keyword) {
+				console.log(type);
+				if (!keyword) {
 					alert("검색 키워드를 입력하세요 ");
 				} else {
-					if (sort) url += `/\${sort}`;
+					let url = `/group/main/list/\${pageNum}/\${amount}/\${type}/\${keyword}`;
 					location.href = url;
 				}
-			}); // search button click
+			});
+
 			$("#filter_wrapper li span").on("click", function () {
 				const sort = $(this).data("sort");
 				let url = `/group/main/list/`;
