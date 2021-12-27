@@ -151,7 +151,7 @@ uri="http://java.sun.com/jsp/jstl/functions"%>
                     <td></td>
                     <td>
                       <i class="fas fa-check"></i>
-                      <span class="list" data="${board.bno}">
+                      <span class="list" data="${board.bno}" style="cursor: pointer;">
                         ${board.title}
                       </span>
                       <c:if
@@ -170,7 +170,7 @@ uri="http://java.sun.com/jsp/jstl/functions"%>
 								<tr>
                   <td></td>
 									<td>
-										<span class="list" data="${board.bno}">
+										<span class="list" data="${board.bno}"  style="cursor: pointer;"> 
 											${board.title}
 										</span>
 										<c:if

@@ -571,9 +571,9 @@ prefix="c" %>
 					eventDrop: evnetDropAndResizeHandler,
 				}); //calender
 				calendar.render();
-			}); //event
-
-			//calendar.refetchEvents()
+		
+		
+			});
 		</script>
 	</body>
 </html>
