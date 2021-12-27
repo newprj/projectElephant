@@ -52,8 +52,6 @@
                           <th class="min-tablet">제목</th>
                           <th class="min-desktop">작성일</th>
                           <th class="min-desktop">조회수</th>
-                          <th></th>
-              			<th></th>
                       </tr>
                   </thead>
                   <tbody>
@@ -67,8 +65,6 @@
 								<fmt:formatDate value="${i.up_date}" pattern="yyyy-MM-dd a hh:mm" />
 							</td>
 							<td style="text-align:center;" id='hit${i.qno}'>${i.hit}</td>
-							<td><button data-qno='${i.qno}' class="writeMod" id="writeMod${i.qno}">수정</button></td>
-							<td><button onclick="location='/qna/remove?qno=${i.qno}'" id="writeRemove${i.qno}">삭제</button></td>
 						</tr>
 					</c:forEach>
                       
@@ -221,10 +217,11 @@
 				
 				if(cnt>=1){
 					$("#detail${i.qno}").append("<img src='/resources/img/attach.png' style=' width:15px; height:15px;'/>")
+			
+					
 				}
 			})
 			if(loginId==$("#writer${i.qno}").text()){
-				
 				$('#writeMod${i.qno}').show()
 				$('#writeRemove${i.qno}').show()
 			} else{

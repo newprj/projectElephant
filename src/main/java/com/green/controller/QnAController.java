@@ -51,8 +51,6 @@ public class QnAController {
 	
 	@GetMapping("/write")
 	public void write(Model model,HttpServletRequest req) {
-		System.out.println("QnA 새글 쓰기");
-		System.out.println("로그인 정보 가지고 와야함/write로 할것인가 register로 할것인가");
 		
 		HttpSession session=req.getSession();
 		UserVO login= (UserVO) session.getAttribute("user");
@@ -73,7 +71,6 @@ public class QnAController {
 	
 	@GetMapping({"/detail","/modify"})
 	public void detail(@RequestParam("qno") Long qno,Model model,@ModelAttribute("cri") Criteria cri,HttpServletRequest req) {
-		System.out.println("QnA 세부내용 들어옴"+qno);
 		
 		HttpSession session=req.getSession();
 		UserVO login= (UserVO) session.getAttribute("user");
@@ -85,7 +82,6 @@ public class QnAController {
 
 	@PostMapping("/modify")
 	public String modifyPost(QnaVO vo,@ModelAttribute("cri") Criteria cri, RedirectAttributes rttr) {
-		System.out.println("수정된 데이터"+vo);
 		if(service.update(vo)) rttr.addFlashAttribute("result","success");		
 		rttr.addAttribute("pageNum",cri.getPageNum());
 		rttr.addAttribute("amount",cri.getAmount());

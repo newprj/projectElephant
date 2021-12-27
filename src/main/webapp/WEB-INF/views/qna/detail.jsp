@@ -50,7 +50,7 @@ li {
      <div class="panel">
 	       <div class="panel-heading">
 	           <div class="panel-control">
-	               <button class="btn btn-default" data-click="panel-reload"><i class="fa fa-refresh"></i></button>
+	               <button class="btn btn-default" id="refresh" data-click="panel-reload"><i class="fa fa-refresh"></i></button>
 	           </div>
 	           <h3 class="panel-title">Title. ${get.title}</h3>
 	       </div>
@@ -78,6 +78,8 @@ li {
 	           <div id="demo-range-vpips" class="demo-pips range-vertical pips"></div>
 	           <br>
 	           <button type="button" id="goList" class="btn btn-default btn-rounded">목록</button>
+	           <button onclick="location='/qna/modify?qno=${get.qno}'" class="btn btn-default btn-rounded" id="writeMod">수정</button>
+				<button onclick="location='/qna/remove?qno=${get.qno}'" id="writeRemove" class="btn btn-danger btn-rounded">삭제</button>
 	           
 	           <hr>
 	           <h4 class="text-thin mar-btm">
@@ -151,6 +153,8 @@ li {
 <%@ include file="../includes/admin_footer.jsp" %> 
 <script type="text/javascript">
 
+
+	
 
 	$(document).ready(function () {
 		
@@ -376,6 +380,22 @@ li {
 			}
 			
 		</c:forEach> 
+		
+		$("#refresh").on("click",function(){
+			window.location.reload()
+		})
+		
+		var loginId='${loginId}'
+		
+		if(loginId=='${get.writer}'){
+			$('#writeMod').show()
+			$('#writeRemove').show()
+		} else{
+			$('#writeMod').hide()
+			$('#writeRemove').hide()
+		}
+		
+		
 		
 	})
 	

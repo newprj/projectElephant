@@ -2,89 +2,99 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 			<%@ include file="../includes/header.jsp" %>
-
-<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-<link
-	href="https://cdn.quilljs.com/1.3.6/quill.snow.css"
-	rel="stylesheet"
-/>
-<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
-<script src="//code.jquery.com/jquery-3.6.0.js"></script>
-<script src="/resources/image-resize.min.js"></script>
-<script src="/resources/image-drop.min.js"></script>
-<script src="/resources/js/fileUpload.js" type="text/javascript"></script>
-
-
+			
 <style>
 li {
 	list-style-type:none;
 }
 </style>
-<title>Q & A 등록</title>
-</head>
+
 <div class="boxed">
 <div id="content-container">
 
 	<div class="pageheader">
-         <h3><i class="fa fa-home"></i> Q&A 수정</h3>
+         <h3><i class="fa fa-home"></i> Q&A</h3>
          <div class="breadcrumb-wrapper">
              <span class="label">You are here:</span>
              <ol class="breadcrumb">
-                 <li> <a href="/qna/list"> Q&A 수정</a> </li>
-                 <li class="active"> Q&A </li>
+                 <li> <a href="/qna/list"> Q&A</a> </li>
+                 <li class="active"> Q&A 수정</li>
              </ol>
          </div>
      </div>
-	<form>
-	<form action="/qna/modify" method="post" id="modForm">
-		<div>
-			<label for="qno">게시물 번호</label>
-			<input type="text" name="qno"  value="${get.qno}" /> 
-		</div>
-		<div>
-			<label for="p_select">구분</label>
-			<select id="p_select" onchange="selectOption(this.value);" >
-				<option value="0">선택</option>
-				<option value="public">공개글</option>
-				<option value="private">비밀글</option>			
-			</select>
-		</div>
-		<div>
-			<label for="pwd">비밀번호</label>
-			<input type="password" name="pwd"/> 
-		</div>
-		<div>
-			<label for="title">제목</label>
-			<input type="text" name="title"  value="${get.title}"/> 
-		</div>
-		<div>
-			<label for="writer">글쓴이</label>
-			<input type="text" name="writer"  value="${get.writer}"/> 
-		</div>
-		<div>
-			<label for="q_content">내용</label>
-			<input name="q_content" type="hidden" />
-			<div>
-				<div id="editor" style="max-height: 400px; overflow: auto"></div>
-			</div>
-			<div class="panel-body">
-				<input type="file" name="uploadFile" multiple />
-				<div class="uploadResult">
-					<ul></ul>
-				</div>
-			</div>
-		</div>
-		
-		<button type="submit" id="writeMod">수정</button>
-		<button type="button" id="goList" >목록</button>
-	</form>
+	
+	<div class="col-xs-12 col-md-9 col-lg-9">
+         <div class="panel">
+             <div class="panel-body">
+                 <!-- Multiple Select Choosen -->
+                 <!--===================================================-->
+                 
+                 <div class="form-group nb">
+                         <label class="control-label col-md-2">No. </label>
+                         <div class="col-md-10">
+                         <input type="text" name="qno"  value="${get.qno}" readonly="readonly"/> 
+                         </div>
+                     </div>
+                 <form class="form-horizontal form-bordered"   action="/qna/modify" method="post" id="modForm">
+                     <div class="form-group nb">
+                         <label class="control-label col-md-2">구분: </label>
+                         <div class="col-md-10">
+                             <select id="p_select" onchange="selectOption(this.value);">
+								<option value="0">선택</option>
+								<option value="public">공개글</option>
+								<option value="private">비밀글</option>			
+							</select>
+                         </div>
+                     </div>
+                     <div class="form-group nb">
+                         <label class="control-label col-md-2">비밀번호: </label>
+                         <div class="col-md-10">
+                            <input type="text" class="form-control" value="${get.pwd}">
+                         </div>
+                     </div>
+                     <div class="form-group nb">
+                         <label class="control-label col-md-2">제목: </label>
+                         <div class="col-md-10">
+                            <input type="text" name="title"  value="${get.title}"/> 
+                         </div>
+                     </div>
+                     <div class="form-group nb">
+                         <label class="control-label col-md-2">글쓴이: </label>
+                         <div class="col-md-10">
+                            <input type="text" name="writer"  value="${get.writer}" readonly="readonly"/> 
+                         </div>
+                     </div>
+                     
+                    
+                     <!--Summernote-->
+                     <!--===================================================-->
+                     <div id="demo-summernote">
+                     	
+						<input name="q_content" type="hidden" />
+						<div>
+							<div id="editor" style="max-height: 400px; overflow: auto"></div>
+						</div>
+                     </div>
+                     <!--===================================================-->
+                     <!-- End Summernote -->
+                     <div class="pad-top text-right"> 
+                         <button class="btn btn-danger" id="writeMod" type="submit"><i class="fa fa-send"></i> Modify </button>
+                         <button class="btn btn-default" id="goList" type="button" onclick="location.href='/qna/list'"> Cancel </button>
+                     </div>
+                 </form>
+             </div>
+         </div>
+     </div>
+     
 	<form id='operForm' action="/qna/list" method="get">
 		<input type='hidden' name='pageNum' value='${cri.pageNum}'>
 		<input type='hidden' name='amount' value='${cri.amount}'>
 		<input type="hidden" name='type' value='${pageMarker.cri.type}'/>
 		<input type="hidden" name='keyword' value='${pageMarker.cri.keyword}'/>
 	</form>
-	
+
+</div>
+</div>
 <%@ include file="../includes/admin_footer.jsp" %> 
 
 <script>
@@ -207,7 +217,6 @@ $(document).ready(function () {
 			})
 		};
 		$(".uploadResult").on("click","button",function(e){
-			console.log('파일 삭제')
 			var targetFile=$(this).data("file")
 			var type=$(this).data("type")
 			var targetLi=$(this).closest("li")
