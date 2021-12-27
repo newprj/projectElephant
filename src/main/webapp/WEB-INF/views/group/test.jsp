@@ -73,15 +73,13 @@ prefix="c" %>
 			display: felx;
 			justify-content: cneter;
 			align-items: center;
-
 			top: 50%;
 			left: 50%;
 			transform: translate(-50%, -50%);
 			background-color: white;
+			border-radius: 10px;
 		}
-		.modal_content * {
-			padding: 2px;
-		}
+
 		button[type="reset"] {
 			display: none;
 		}
@@ -89,6 +87,14 @@ prefix="c" %>
 			display: flex;
 
 		}
+		.panel-body .form-horizontal .form-group {
+			margin-bottom: 15px;
+		}
+		.panel-body .row, .panel-body .form-horizontal .form-group {
+			margin-right: -15px;
+				margin-left: -15px;
+		}
+
 	</style>
 	<head>
 		<meta charset="UTF-8" />
@@ -173,177 +179,110 @@ prefix="c" %>
 				<!-- head -->
 				
 			
-				<div>
+				<div class="container" style="margin-bottom: 30px;">
 					<!-- 캘린더 div  -->
 					<div id="reload">
 						<div id="calendar"></div>
 					</div>
 				</div>
 		
-				<div class="modal">
-					<div class="modal_content">
-						<form action="/group/test/" method="post">
-							<div><span>X</span></div>
-							<div>
-								<label for=""> cid </label>
-								<input type="text" name="cid" />
-							</div>
-							<div>
-								<label for=""> 색</label>
-								<select name="color">
-									<option value="">선택</option>
-									<option value="#D25565" style="color: #d25565">빨간색</option>
-									<option value="#9775fa" style="color: #9775fa">보라색</option>
-									<option value="#ffa94d" style="color: #ffa94d">주황색</option>
-									<option value="#74c0fc" style="color: #74c0fc">파란색</option>
-									<option value="#f06595" style="color: #f06595">핑크색</option>
-									<option value="#63e6be" style="color: #63e6be">연두색</option>
-									<option value="#a9e34b" style="color: #a9e34b">초록색</option>
-									<option value="#4d638c" style="color: #4d638c">남색</option>
-									<option value="#495057" style="color: #495057">검정색</option>
-								</select>
-							</div>
-		
-							<div>
-								<label> title </label>
-								<input type="text" name="title" />
-							</div>
-							<div>
-								<label> 시작일자 </label>
-								<input type="date" name="startDate" />
-							</div>
-							<div>
-								<label> 종료일자 </label>
-								<input type="date" name="endDate" />
-							</div>
-							<div>
-								<label> 상세설명 </label>
-								<input type="text" name="description_" />
-							</div>
-							<div>
-								<label> 지역 </label>
-								<input type="text" name="location" />
-							</div>
-							<div>
-								<label> group </label>
-								<input
-									type="text"
-									name="group_"
-									value="${group.group_name}"
-									readonly
-								/>
-							</div>
-							<div>
-								<label> 멤버 </label>
-								<input type="text" name="user_" value="${user}" />
-							</div>
-							<div>
-								<c:forEach items="${member}" var="member">
-									<label
-										><input
-											type="checkbox"
-											name="member"
-											value="${member.user_id}"
-										/>
-										${member.user_id}</label
-									>
-								</c:forEach>
-							</div>
-							<div>
-								<button type="submit">전송</button>
-								<button type="reset">리셋</button>
-								<button class="modify">수정</button>
-								<button class="delete">삭제</button>
-							</div>
-						</form>
-					</div>
-				</div>
+
 				</div>
 				<!-- wrapper  -->
 	
-				<div class="event" >
-				<form>
-					<div class="form-group row">
-						<label for="cid" class="col-sm-4 col-form-label"> 이벤트 번호 </label>
-						<div class="col-sm-10">
-							<input type="text" name="cid" class="form-control" readonly>
-						</div>
-					</div>
-
-					<div class="form-group row">
-						<label for="title" class="col-sm-4 col-form-label">Title</label>
-						<div class="col-sm-10">
-							<input type="text" class="form-control" name="title">
-						</div>
-					</div>
-
-					<div class="form-group row">
-						<label for="startdate" class="col-sm-4 col-form-label">시작일자</label>
-						<div class="col-sm-10">
-							<input type="date" class="form-control" name="startDate">
-						</div>
-					</div>
-					
-					<div class="form-group row">
-						<label for="endDate" class="col-sm-4 col-form-label">종료일자</label>
-						<div class="col-sm-10">
-							<input type="date" class="form-control" name="endDate">
-						</div>
-					</div>
-					
-					<div class="form-group row">
-						<label for="description_" class="col-sm-4 col-form-label">상세 설명</label>
-						<div class="col-sm-10">
-							<input type="text" class="form-control" name="description_">
-						</div>
-					</div>
-					
-					<div class="form-group row">
-						<label for="location" class="col-sm-4 col-form-label"> 장소 </label>
-						<div class="col-sm-10">
-							<input type="text" class="form-control" name="location">
-						</div>
-					</div>
-
-					<div class="form-group row">
-						<label for="group_" class="col-sm-4 col-form-label"> 그룹 </label>
-						<div class="col-sm-10">
-							<input type="text" class="form-control" name="group_" value="${group.group_name}" readonly>
-						</div>
-					</div>
-					
-					<div class="form-group row">
-						<div class="col-sm-4"></div>
-						<div class="col-sm-10">
-							<div class="form-check">
-								<input class="form-check-input" type="checkbox" id="gridCheck1">
-								<label class="form-check-label" for="gridCheck1">
-									Example checkbox
-								</label>
-							</div>
-						</div>
-					</div>
-					<div class="form-group row">
-						<div class="col-sm-10">
-							<button type="submit" class="btn btn-primary">Sign in</button>
-						</div>
-					</div>
-				</form>
-			</div>
-
-
-			<div class="panel panel-bordered panel-warning">
+				<div class="modal">
+					<div class="modal_content">
+			<div class="panel panel-bordered panel-warning" style="margin-bottom: 0px;">
 				<div class="panel-heading ui-sortable-handle" style="background-color: #f0ad4e;">
 						<div class="panel-control">
-							
-								<button class="btn btn-warning" data-dismiss="panel"><i class="fa fa-times"></i></button>
+								<button class="btn btn-warning" 
+									onclick="$('.modal').hide()"
+									data-dismiss="panel" ><i class="fa fa-times"></i></button>
 						</div>
-						<h3 class="panel-title"> 이벤트 등록 </h3>
+				
 				</div>
 				<div class="panel-body">
-						<p>Lorem ipsum dolor sit amet.</p>
+					<form class="form-horizontal">
+						<div class="panel-body">
+							<input name="cid" type="hidden">
+							<input type="hidden" name="user_" value="${user}"/>
+								<div class="form-group">
+										<label class="col-sm-3 control-label" for="title">title</label>
+										<div class="col-sm-9">
+												<input type="text"  id="title" class="form-control" name="title">
+										</div>
+								</div>
+								<div class="form-group">
+										<label class="col-sm-3 control-label" for="group">그룹</label>
+										<div class="col-sm-9">
+												<input type="text"  id="group" class="form-control" name="group_" value="${group.group_name}" readonly>
+										</div>
+								</div>
+								<div class="form-group" style="margin-top: 3px;">
+									<label class="col-sm-3 control-label" for="color"> 일정 종류 </label>
+									<div class="col-sm-9">
+									<select name="color" class="col-sm-9">
+										<option value="">선택</option>
+										<option value="#D25565" style="color: #d25565"> 회의 </option>
+										<option value="#9775fa" style="color: #9775fa"> 모임  </option>
+										<option value="#ffa94d" style="color: #ffa94d"> 정기일정 </option>
+										<option value="#74c0fc" style="color: #74c0fc"> 이벤트 </option>
+										<option value="#f06595" style="color: #f06595"> 연습 </option>
+										<option value="#63e6be" style="color: #63e6be"> 컨퍼런스 </option>
+										<option value="#a9e34b" style="color: #a9e34b"> 외부모임 </option>
+										<option value="#4d638c" style="color: #4d638c"> 외부일정 </option>
+									</select>
+									</div>
+								</div>
+								<div class="form-group">
+										<label class="col-sm-3 control-label" for="demo-hor-startDate">시작 일자 </label>
+										<div class="col-sm-9">
+												<input type="date" name="startDate" id="demo-hor-startDate" class="form-control">
+										</div>
+								</div>
+								<div class="form-group">
+										<label class="col-sm-3 control-label" for="demo-hor-endDate">종료 일자 </label>
+										<div class="col-sm-9">
+												<input type="date" name="endDate" id="demo-hor-endDate" class="form-control">
+										</div>
+								</div>
+								<div class="form-group">
+										<label class="col-sm-3 control-label" for="demo-hor-description_">상세설명 </label>
+										<div class="col-sm-9">
+												<input type="text" name="description_" id="demo-hor-description_" class="form-control">
+										</div>
+								</div>
+								<div class="form-group">
+										<label class="col-sm-3 control-label" for="demo-hor-location">장소 </label>
+										<div class="col-sm-9">
+												<input type="text" name="location" id="demo-hor-location" class="form-control">
+										</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label" for="demo-hor-location"> 멤버 </label>
+										<div class="col-sm-offset-3 col-sm-9">
+											<c:forEach items="${member}" var="member">
+												<label class="form-checkbox form-normal form-primary">
+												<input type="checkbox" name="member" value="${member.user_id}"> ${member.user_id}
+												</label>
+												</c:forEach>
+										</div>
+								</div>
+						</div>
+						<div class="text-right" >
+
+							<button  class="btn btn-info" type="submit">전송</button>
+							<button  class="btn btn-info" type="reset">리셋</button>
+							<button class="modify btn btn-info">수정</button>
+							<button class="delete btn btn-info">삭제</button>
+					</div>
+				</form>
 				</div>
 		</div>
+		</div>
+		</div>
+
+
 		<script>
 			document.addEventListener("DOMContentLoaded", function () {
 				const modal = $(".modal");
@@ -362,6 +301,15 @@ prefix="c" %>
 						location.href = "/group/";
 					}
 				});
+			
+					$('input[name="member"]').each((i, c) =>{
+						$(c).click((e) =>{
+							$(e.target).prop('checked') ? $(e.target).closest('label').addClass('active')
+																	: $(e.target).closest('label').removeClass('active')
+						})
+					})
+
+
 
 				$("span.goGroup").click((e) => {
 					location.href = `/group/${group.group_name}`;
@@ -426,16 +374,24 @@ prefix="c" %>
 					$('input[name="location"]').val(eventData.location);
 					$('input[name="group_"]').val(eventData.group_);
 					$('input[name="user_"]').val(eventData.user_);
-					if (eventData.member_)
+					if (eventData.member_){
 						eventData.member_
 							.split(",")
-							.map((member) =>
+							.map((member) =>{
 								$('input[name="member"][value=' + member + "]").prop(
 									"checked",
 									true
 								)
-							);
-				};
+								$('input[name="member"][value=' + member + "]").closest('label')
+								.addClass('active')
+							})
+						}
+					}
+							
+
+					
+				
+			
 
 				//이벤트 클릭 핸들러
 				const eventClickHandler = (e) => {
@@ -585,7 +541,7 @@ prefix="c" %>
 						alert(" 모두 입력 해주세요 ");
 					} else {
 						let eventForm = getFormData();
-
+						console.log(eventForm)
 						let cid = eventSubmit(eventForm);
 						let newEvent = calToEvent([{ ...eventForm, cid }]);
 						calendar.addEventSource(newEvent);

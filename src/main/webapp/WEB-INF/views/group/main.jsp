@@ -92,7 +92,11 @@ prefix="c" %>
 				align-items: center;
 				justify-content: space-between;
 			}
-
+			.navbar {
+				display: flex;
+				flex-direction: row;
+				list-style: none;
+			}
 			a {
 				text-decoration: none;
 			}
@@ -192,7 +196,7 @@ prefix="c" %>
 						src="/resources/img/elephantIcon.png"
 						style="height: 50px; width: 50px; border-radius: 50%"
 					/>
-					<h1 class="logo" style="display: inline-block;">  </h1>
+					<h1 class="logo" style="display: inline-block"></h1>
 				</div>
 
 				<div class="right">
@@ -212,40 +216,33 @@ prefix="c" %>
 					<c:if test="${user!=null}">
 						<div class="btn-group">
 							<div class="dropdown">
-							<button
-								class="btn btn-outline-info dropdown-toggle"
-								type="button"
-								id="dropdownMenuButton"
-								data-toggle="dropdown"
-								aria-haspopup="true"
-								aria-expanded="false"
-							>
-								내 그룹
-							</button>
-							<div
-								class="dropdown-menu"
-								aria-labelledby="dropdownMenuButton"
-							>
-							<c:choose>
-								<c:when test="${empty myGroup}"
-									>
-									<a
-										class="dropdown-item"
-										>가입한 그룹이 없습니다 </a
-									>
-								</c:when>
-								<c:otherwise>
-								<c:forEach items="${myGroup}" var="mine">
-									<a
-										class="dropdown-item"
-										href="/group/${mine.group_name}"
-										>${mine.group_name}</a
-									>
-										</c:forEach>
+								<button
+									class="btn btn-outline-info dropdown-toggle"
+									type="button"
+									id="dropdownMenuButton"
+									data-toggle="dropdown"
+									aria-haspopup="true"
+									aria-expanded="false"
+								>
+									내 그룹
+								</button>
+								<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+									<c:choose>
+										<c:when test="${empty myGroup}">
+											<a class="dropdown-item">가입한 그룹이 없습니다 </a>
+										</c:when>
+										<c:otherwise>
+											<c:forEach items="${myGroup}" var="mine">
+												<a
+													class="dropdown-item"
+													href="/group/${mine.group_name}"
+													>${mine.group_name}</a
+												>
+											</c:forEach>
 										</c:otherwise>
-										</c:choose>
-									</div>
+									</c:choose>
 								</div>
+							</div>
 
 							<div class="dropdown">
 								<button
