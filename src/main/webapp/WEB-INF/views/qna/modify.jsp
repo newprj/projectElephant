@@ -1,7 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    <%@ taglib uri="http://java.sun.com/jsp/jstl/core"
-prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %> 
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+			<%@ include file="../includes/admin_header.jsp" %>
+
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <link
 	href="https://cdn.quilljs.com/1.3.6/quill.snow.css"
@@ -13,10 +14,7 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <script src="/resources/image-drop.min.js"></script>
 <script src="/resources/js/fileUpload.js" type="text/javascript"></script>
 
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
+
 <style>
 li {
 	list-style-type:none;
@@ -24,8 +22,20 @@ li {
 </style>
 <title>Q & A 등록</title>
 </head>
-<body>
-	<h1>QnA 수정</h1>
+<div class="boxed">
+<div id="content-container">
+
+	<div class="pageheader">
+         <h3><i class="fa fa-home"></i> Q&A 수정</h3>
+         <div class="breadcrumb-wrapper">
+             <span class="label">You are here:</span>
+             <ol class="breadcrumb">
+                 <li> <a href="/qna/list"> Q&A 수정</a> </li>
+                 <li class="active"> Q&A </li>
+             </ol>
+         </div>
+     </div>
+	<form>
 	<form action="/qna/modify" method="post" id="modForm">
 		<div>
 			<label for="qno">게시물 번호</label>
@@ -75,8 +85,7 @@ li {
 		<input type="hidden" name='keyword' value='${pageMarker.cri.keyword}'/>
 	</form>
 	
-	
-</body>
+<%@ include file="../includes/admin_footer.jsp" %> 
 
 <script>
 	var choice=''

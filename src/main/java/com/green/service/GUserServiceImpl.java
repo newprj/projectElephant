@@ -9,9 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.green.mapper.GUserMapper;
+import com.green.vo.Criteria;
 import com.green.vo.GUserVO;
-
-
+import com.green.vo.GroupVO;
 
 import lombok.Setter;
 
@@ -77,6 +77,18 @@ public class GUserServiceImpl implements GUserService {
 	public int memberLimit(String group_name) {
 		// TODO Auto-generated method stub
 		return mapper.memberLimit(group_name);
+	}
+
+	@Override
+	public List<GroupVO> joinGroup(Criteria cri,String user_id) {
+		// TODO Auto-generated method stub
+		return mapper.joinGroup(cri,user_id);
+	}
+
+	@Override
+	public int allGrouptotal(Criteria cri, String leader) {
+		// TODO Auto-generated method stub
+		return mapper.allGrouptotal(cri, leader);
 	}
 
 

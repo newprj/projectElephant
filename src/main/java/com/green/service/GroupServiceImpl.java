@@ -99,6 +99,12 @@ public class GroupServiceImpl implements GroupService{
 		return mapper.myGroup(cri, leader);
 	}
 
+	@Override
+	public int myGrouptotal(Criteria cri, String writer) {
+		// TODO Auto-generated method stub
+		return mapper.myGrouptotal(cri, writer);
+	}
+
 
 	
 

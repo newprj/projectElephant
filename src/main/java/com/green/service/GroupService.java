@@ -23,6 +23,8 @@ public interface GroupService {
 	public List<GroupVO> getListWithPaging(Criteria cri);
 	
 	public List<GroupVO> myGroup(@Param("cri") Criteria cri,@Param("leader") String leader);
+	public int myGrouptotal(@Param("cri") Criteria cri,@Param("leader") String leader);
+
 	
 	public int getTotalCount(Criteria cri);
 }

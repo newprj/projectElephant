@@ -29,7 +29,7 @@
 	
 	<sql id="criteria">
 		 <trim prefix="(" suffix=") and " prefixOverrides="OR">
-			    	<foreach item="type" collection="typeArr">
+			    	<foreach item="type" collection="cri.typeArr">
 			    		<trim prefix="OR">
 			    			<choose>
 			    				<when test="type== 'N'.toString()">
@@ -66,12 +66,12 @@
 				    where ]]>
 				    <include refid="criteria"></include>
 				    <![CDATA[
-			   rownum <=#{pageNum} * #{amount} and authorized ='Y'
+			   rownum <=#{cri.pageNum} * #{cri.amount} and authorized ='Y'
 		    ) g
 		    right join 
 		    		(select group_name, count(*) pop from tbl_groupuser group by group_name) u
             on g.group_name = u.group_name
-		    where rn> (#{pageNum}-1) *  #{amount}
+		    where rn> (#{cri.pageNum}-1) *  #{cri.amount}
 		    ]]>
 		    <include refid="sortBy"></include>
 	</select>
@@ -126,9 +126,9 @@
 		]]>
 		<include refid="criteria"></include>
 	    <![CDATA[
-			    rownum <=#{pageNum} * #{amount} and authorized ='N'
+			    rownum <=#{cri.pageNum} * #{cri.amount} and authorized ='N'
 		    )
-		    where rn> (#{pageNum}-1) * #{amount}  
+		    where rn> (#{cri.pageNum}-1) * #{cri.amount}  
 		]]>
 	</select>
 	
@@ -150,6 +150,14 @@
 		    ]]>
 	</select>
 	
+	
+	<select id="myGrouptotal" resultType="int">
+		select count(*) from tbl_group where leader=#{leader} and
+		<include refid="criteria"></include>
+		gno>0
+	</select>
+	
+
 	
 </mapper>
    

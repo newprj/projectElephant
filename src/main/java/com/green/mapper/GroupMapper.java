@@ -13,15 +13,15 @@ public interface GroupMapper {
 	
 	public List<GroupVO> showAll();
 	public List<GroupVO> showLatest20();
-	public List<GroupVO> getListWithPaging(Criteria cri);
+	public List<GroupVO> getListWithPaging(@Param("cri") Criteria cri);
 	
-	public int getTotalCount(Criteria cri);
+	public int getTotalCount(@Param("cri") Criteria cri);
 	
 	public GroupVO showOne(String group_name);
 	public int deleteGroup (String group_name);
 	public int groupNameCheck(String group_name);
 	
-	public int updateGroup(GroupVO vo);
+	public int updateGroup(@Param("cri") GroupVO vo);
 
 	public int updateViewCnt(String group_name);
 
@@ -32,6 +32,8 @@ public interface GroupMapper {
 	
 	//user page에 사용
 	public List<GroupVO> myGroup(@Param("cri") Criteria cri, @Param("leader") String leader);
+	public int myGrouptotal(@Param("cri") Criteria cri,@Param("leader") String leader);
+	
 	//더미테스트 용
 	public List<GroupVO> allList();
 }
