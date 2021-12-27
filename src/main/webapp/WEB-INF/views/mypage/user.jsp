@@ -55,7 +55,7 @@
                                <h3 class="mar-no"> <span class="counter">내가 가입한 그룹</span></h3>
                                <p class="mar-ver-5"> Traffic this month </p>
                            </div>
-                           <div class="col-md-3 col-sm-3 col-xs-2"> <i class="fa fa-shopping-cart fa-3x text-info"></i> </div>
+                           <div class="col-md-3 col-sm-3 col-xs-2"> <i class="fa fa-heart fa-3x text-danger"></i> </div>
                        </div>
                        <div class="progress progress-striped progress-sm">
                            <div style="width: 60%;" aria-valuemax="100" aria-valuemin="0" aria-valuenow="60" role="progressbar" class="progress-bar"> <span class="sr-only">60% Complete</span> </div>
@@ -70,6 +70,23 @@
                        <div class="row">
                            <div class="col-md-9 col-sm-9 col-xs-10">
                                <h3 class="mar-no"> <span class="counter">내 게시물</span></h3>
+                               <p class="mar-ver-5">Server Load</p>
+                           </div>
+                           <div class="col-md-3 col-sm-3 col-xs-2"> <i class="fa fa-file fa-3x text-info"></i> </div>
+                       </div>
+                       <div class="progress progress-striped progress-sm">
+                           <div style="width: 60%;" aria-valuemax="100" aria-valuemin="0" aria-valuenow="60" role="progressbar" class="progress-bar progress-bar-danger"> <span class="sr-only">60% Complete</span> </div>
+                       </div>
+                       <p> 4% higher than last month </p>
+                   </div>
+               </div>
+           </div>
+            <div class="col-md-3 col-sm-6 col-xs-12">
+               <div class="panel">
+                   <div class="panel-body">
+                       <div class="row">
+                           <div class="col-md-9 col-sm-9 col-xs-10">
+                               <h3 class="mar-no"> <span class="counter">message</span></h3>
                                <p class="mar-ver-5">Server Load</p>
                            </div>
                            <div class="col-md-3 col-sm-3 col-xs-2"> <i class="fa fa-envelope fa-3x text-danger"></i> </div>
@@ -89,7 +106,7 @@
                                <h3 class="mar-no"> <span class="counter">내 댓글</span></h3>
                                <p class="mar-ver-5"> Total Sales </p>
                            </div>
-                           <div class="col-md-3 col-sm-3 col-xs-2"> <i class="fa fa-users fa-3x text-success"></i> </div>
+                           <div class="col-md-3 col-sm-3 col-xs-2"> <i class="fa fa-comments fa-3x text-success"></i> </div>
                        </div>
                        <div class="progress progress-striped progress-sm">
                            <div style="width: 60%;" aria-valuemax="100" aria-valuemin="0" aria-valuenow="60" role="progressbar" class="progress-bar progress-bar-success"> <span class="sr-only">60% Complete</span> </div>

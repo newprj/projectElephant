@@ -26,7 +26,6 @@
 	</sql>
 	
 	<insert id="register">
-		
 		<selectKey keyProperty="uno" order="BEFORE" resultType="long">
 			select seq_uno.nextval from dual
 		</selectKey>
