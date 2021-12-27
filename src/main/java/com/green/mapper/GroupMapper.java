@@ -32,6 +32,8 @@ public interface GroupMapper {
 	
 	//user page에 사용
 	public List<GroupVO> myGroup(@Param("cri") Criteria cri, @Param("leader") String leader);
+	public int myGrouptotal(@Param("cri") Criteria cri,@Param("leader") String leader);
+	
 	//더미테스트 용
 	public List<GroupVO> allList();
 }

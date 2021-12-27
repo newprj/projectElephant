@@ -141,5 +141,26 @@
 	</select>
 	
 	
+	<select id="myGrouptotal" resultType="int">
+		select count(*) from tbl_group where leader=#{leader} and
+		<trim prefix="(" suffix=") and " prefixOverrides="OR">
+			    	<foreach item="type" collection="cri.typeArr">
+			    		<trim prefix="OR">
+			    			<choose>
+			    				<when test="type== 'N'.toString()">
+			    					group_name like '%'||#{keyword}||'%'
+			    				</when>
+			    				<when test="type== 'S'.toString()">
+			    					subject like '%'||#{keyword}||'%'
+			    				</when>
+			    			</choose>
+			    		</trim>
+			    	</foreach>
+		    </trim>
+		gno>0
+	</select>
+	
+
+	
 </mapper>
    

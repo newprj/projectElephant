@@ -183,11 +183,22 @@ public class MypageController {
 		String id=login.getUser_id();
 		
 		
-		model.addAttribute("allGroup",gUserService.listByUSer(id)); //userGroup
-		model.addAttribute("myGroup",gService.myGroup(cri, id)); //userGroup
+		int total=gService.getTotalCount(cri);	
+		int replyTotal=replyService.totalReply(cri,id);	//내 댓글
+		int myGroupTotal=gUserService.allGrouptotal(cri, id);//내가 가입 그룹 
+		int allGroupTotal=gService.myGrouptotal(cri, id);//내가 생성한 그룹
+		
+		
+		model.addAttribute("allGroup",gUserService.joinGroup(cri,id)); //내가 가입한 그룹
+		model.addAttribute("myGroup",gService.myGroup(cri, id)); //내가 생성한 그룹
 		model.addAttribute("user",login);
 		model.addAttribute("myBoard",bService.myBoard(id));	//userGroup
-		model.addAttribute("boardReply", replyService.myReply(id));	//userGroup
+		model.addAttribute("boardReply", replyService.myReply(cri,id));	//userGroup
+		
+		model.addAttribute("pageMarker",new PageDTO(cri, total));
+		model.addAttribute("ReplypageMarker",new PageDTO(cri, replyTotal));
+		model.addAttribute("allGroupPageMarker",new PageDTO(cri,allGroupTotal));
+		model.addAttribute("myGroupPageMarker",new PageDTO(cri,myGroupTotal));
 		
 		return "/mypage/userGroup";
 	}

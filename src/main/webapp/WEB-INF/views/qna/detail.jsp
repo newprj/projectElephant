@@ -1,13 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    <%@ taglib uri="http://java.sun.com/jsp/jstl/core"
-prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %> 
-<script
-  src="https://code.jquery.com/jquery-3.6.0.js"></script>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+			<%@ include file="../includes/admin_header.jsp" %>
+
 <style>
 li {
 	list-style-type:none;
@@ -36,10 +31,21 @@ li {
 
 
 </style>
-<title>Q & A 목록</title>
+
 </head>
-<body>
-	<h1>Q&A 상세 페이지 입니다.</h1>
+<div class="boxed">
+<div id="content-container">
+
+	<div class="pageheader">
+         <h3><i class="fa fa-home"></i> Q&A </h3>
+         <div class="breadcrumb-wrapper">
+             <span class="label">You are here:</span>
+             <ol class="breadcrumb">
+                 <li> <a href="/qna/list"> Q&A </a> </li>
+                 <li class="active"> Q&A </li>
+             </ol>
+         </div>
+     </div>
 	<form>
 		<h3>로그인 되면 내가 작성한 댓글만 수정,삭제 버튼 보이도록</h3>
 		<h4>Q & N 게시글</h4>
@@ -134,8 +140,7 @@ li {
 				
 		</div>
 	</div>
-	
-</body>
+<%@ include file="../includes/admin_footer.jsp" %> 
 <script type="text/javascript">
 
 

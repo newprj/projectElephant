@@ -10,7 +10,7 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 		<jsp:useBean id="today" class="java.util.Date" />
 		<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-        <title> ${user.name} Page</title>
+        <title></title>
         <!--STYLESHEET-->
         <!--=================================================-->
         <!--Roboto Slab Font [ OPTIONAL ] -->

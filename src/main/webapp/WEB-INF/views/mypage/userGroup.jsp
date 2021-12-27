@@ -50,21 +50,21 @@
 			                  </tbody>
 			              </table>
 			          </div>
-			          <div style="text-align:center;">
+			          <div style="text-align:center;" >
 						<ul class="pagination">
-							<c:if test="${pageMarker.prev}">
-								<li class="paginate_btn previous"><a href="${pageMarker.startPage -1}">이전</a>
+							<c:if test="${allGroupPageMarker.prev}">
+								<li class="paginate_btn previous"><a href="${allGroupPageMarker.startPage -1}">이전</a>
 								</li>
 							</c:if>
 							
-							<c:forEach var="num" begin="${pageMarker.startPage}" end="${pageMarker.endPage}">
-								<li class="paginate_btn ${pageMarker.cri.pageNum==num ? "active": "" }">
+							<c:forEach var="num" begin="${allGroupPageMarker.startPage}" end="${allGroupPageMarker.endPage}">
+								<li class="paginate_btn ${allGroupPageMarker.cri.pageNum==num ? "active": "" }">
 									<a href="${num}">${num}</a>
 								</li>
 							</c:forEach>
 							
 							<c:if test="${pageMarker.next}">
-								<li class="paginate_btn next"><a href="${pageMarker.endPage +1}">다음</a></li>
+								<li class="paginate_btn next"><a href="${allGroupPageMarker.endPage +1}">다음</a></li>
 							</c:if>
 						</ul>
 					</div>
@@ -101,19 +101,19 @@
 			          </div>
 			          <div style="text-align:center;">
 						<ul class="pagination">
-							<c:if test="${pageMarker.prev}">
-								<li class="paginate_btn previous"><a href="${pageMarker.startPage -1}">이전</a>
+							<c:if test="${myGroupPageMarker.prev}">
+								<li class="paginate_btn previous"><a href="${myGroupPageMarker.startPage -1}">이전</a>
 								</li>
 							</c:if>
 							
-							<c:forEach var="num" begin="${pageMarker.startPage}" end="${pageMarker.endPage}">
-								<li class="paginate_btn ${pageMarker.cri.pageNum==num ? "active": "" }">
+							<c:forEach var="num" begin="${myGroupPageMarker.startPage}" end="${myGroupPageMarker.endPage}">
+								<li class="paginate_btn ${myGroupPageMarker.cri.pageNum==num ? "active": "" }">
 									<a href="${num}">${num}</a>
 								</li>
 							</c:forEach>
 							
 							<c:if test="${pageMarker.next}">
-								<li class="paginate_btn next"><a href="${pageMarker.endPage +1}">다음</a></li>
+								<li class="paginate_btn next"><a href="${myGroupPageMarker.endPage +1}">다음</a></li>
 							</c:if>
 						</ul>
 					</div>
@@ -128,7 +128,6 @@
 		                      <tr>
 		                          <th>Group Name</th>
 		                          <th>title</th>
-		                          <th class="min-tablet">subject</th>
 		                          <th class="min-tablet">notice </th>
 		                          <th class="min-desktop">creation date</th>
 		                      </tr>
@@ -138,7 +137,6 @@
 				                      <tr>
 				                          <td > <a href='/getBoard/${i.bno}'>${i.group_name}</a></td>
 				                          <td>${i.title}</td>
-				                          <td>${i.subject}</td>
 				                          <td>${i.notice}</td>
 				                          <td><fmt:formatDate value="${i.regdate}" pattern="yyyy-MM-dd a hh:mm" /> </td>
 				                         
@@ -184,36 +182,35 @@
 			                  <tbody>
 				                  <c:forEach items="${boardReply}" var="i" varStatus="status" >
 				                      <tr>
-				                          <td>${i.title}</td>
-				                          <td><fmt:formatDate value="${i.regdate}" pattern="yyyy-MM-dd a hh:mm" /> </td>
-				                         
+				                          <td>${i.reply}</td>
+				                          <td><fmt:formatDate value="${i.replydate}" pattern="yyyy-MM-dd a hh:mm" /> </td>
 				                      </tr>
 				                  </c:forEach>
 			                  </tbody>
 			              </table>
 			          </div>
-			          <div style="text-align:center;">
+			          <div style="text-align:center;" >
 						<ul class="pagination">
-							<c:if test="${pageMarker.prev}">
-								<li class="paginate_btn previous"><a href="${pageMarker.startPage -1}">이전</a>
+							<c:if test="${ReplypageMarker.prev}">
+								<li class="paginate_btn previous"><a href="${ReplypageMarker.startPage -1}">이전</a>
 								</li>
 							</c:if>
 							
-							<c:forEach var="num" begin="${pageMarker.startPage}" end="${pageMarker.endPage}">
-								<li class="paginate_btn ${pageMarker.cri.pageNum==num ? "active": "" }">
+							<c:forEach var="num" begin="${ReplypageMarker.startPage}" end="${ReplypageMarker.endPage}">
+								<li class="paginate_btn ${ReplypageMarker.cri.pageNum==num ? "active": "" }">
 									<a href="${num}">${num}</a>
 								</li>
 							</c:forEach>
 							
-							<c:if test="${pageMarker.next}">
-								<li class="paginate_btn next"><a href="${pageMarker.endPage +1}">다음</a></li>
+							<c:if test="${ReplypageMarker.next}">
+								<li class="paginate_btn next"><a href="${ReplypageMarker.endPage +1}">다음</a></li>
 							</c:if>
 						</ul>
 					</div>
 			      </div>
 			</div>
 			</div>
-				<form id='actionForm' action="/mypage/allGroup" method="get" >
+				<form id='actionForm' action="/mypage/userGroup" method="get" >
 					<input type="hidden" name='pageNum' value='${pageMarker.cri.pageNum}'/>
 					<input type="hidden" name='amount' value='${pageMarker.cri.amount}'/>
 					<input type="hidden" name='type' value='${pageMarker.cri.type}'/>
@@ -242,6 +239,26 @@
 			$("#actionForm").submit()
 		})
 		
+		$(".paginate_btn a").click(function(e){
+			e.preventDefault();
+			
+			var thisis=$(this).attr("href")
+			console.log(thisis)
+			
+			$("#actionForm").find("input[name='pageNum']").val(thisis)
+			$("#actionForm").submit()
+		})
+		
+		
+		$(".paginate_btn a").click(function(e){
+			e.preventDefault();
+			
+			var thisis=$(this).attr("href")
+			console.log(thisis)
+			
+			$("#actionForm").find("input[name='pageNum']").val(thisis)
+			$("#actionForm").submit()
+		})
 	})
 
 </script>

@@ -91,7 +91,7 @@
 </div>
 </div>
 </div>
-</body>
+<%@ include file="../includes/admin_footer.jsp" %> 
 <script type="text/javascript">
 	$(document).ready(function () {
 		
