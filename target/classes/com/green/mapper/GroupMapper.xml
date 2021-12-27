@@ -29,7 +29,7 @@
 	
 	<sql id="criteria">
 		 <trim prefix="(" suffix=") and " prefixOverrides="OR">
-			    	<foreach item="type" collection="cri.typeArr">
+			    	<foreach item="type" collection="typeArr">
 			    		<trim prefix="OR">
 			    			<choose>
 			    				<when test="type== 'N'.toString()">
@@ -66,12 +66,12 @@
 				    where ]]>
 				    <include refid="criteria"></include>
 				    <![CDATA[
-			   rownum <=#{cri.pageNum} * #{cri.amount} and authorized ='Y'
+			   rownum <=#{pageNum} * #{amount} and authorized ='Y'
 		    ) g
 		    right join 
 		    		(select group_name, count(*) pop from tbl_groupuser group by group_name) u
             on g.group_name = u.group_name
-		    where rn> (#{cri.pageNum}-1) *  #{cri.amount}
+		    where rn> (#{pageNum}-1) *  #{amount}
 		    ]]>
 		    <include refid="sortBy"></include>
 	</select>
@@ -126,9 +126,9 @@
 		]]>
 		<include refid="criteria"></include>
 	    <![CDATA[
-			    rownum <=#{cri.pageNum} * #{cri.amount} and authorized ='N'
+			    rownum <=#{pageNum} * #{amount} and authorized ='N'
 		    )
-		    where rn> (#{cri.pageNum}-1) * #{cri.amount}  
+		    where rn> (#{pageNum}-1) * #{amount}  
 		]]>
 	</select>
 	
@@ -153,7 +153,20 @@
 	
 	<select id="myGrouptotal" resultType="int">
 		select count(*) from tbl_group where leader=#{leader} and
-		<include refid="criteria"></include>
+		<trim prefix="(" suffix=") and " prefixOverrides="OR">
+			    	<foreach item="type" collection="cri.typeArr">
+			    		<trim prefix="OR">
+			    			<choose>
+			    				<when test="type== 'N'.toString()">
+			    					group_name like '%'||#{keyword}||'%'
+			    				</when>
+			    				<when test="type== 'S'.toString()">
+			    					subject like '%'||#{keyword}||'%'
+			    				</when>
+			    			</choose>
+			    		</trim>
+			    	</foreach>
+		    </trim>
 		gno>0
 	</select>
 	

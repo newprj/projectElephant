@@ -13,15 +13,15 @@ public interface GroupMapper {
 	
 	public List<GroupVO> showAll();
 	public List<GroupVO> showLatest20();
-	public List<GroupVO> getListWithPaging(@Param("cri") Criteria cri);
+	public List<GroupVO> getListWithPaging(Criteria cri);
 	
-	public int getTotalCount(@Param("cri") Criteria cri);
+	public int getTotalCount(Criteria cri);
 	
 	public GroupVO showOne(String group_name);
 	public int deleteGroup (String group_name);
 	public int groupNameCheck(String group_name);
 	
-	public int updateGroup(@Param("cri") GroupVO vo);
+	public int updateGroup(GroupVO vo);
 
 	public int updateViewCnt(String group_name);
 
