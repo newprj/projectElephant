@@ -58,7 +58,7 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 				left: 50%;
 				transform: translate(-50%, -50%);
 				background-color: white;
-        border-radius: 4px;
+				border-radius: 4px;
 			}
 
 			button[type="reset"] {
@@ -149,109 +149,106 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 					<img
 						src="/resources/img/elephantIcon.png"
 						style="height: 50px; width: 50px; border-radius: 50%"
-            onclick="location.href='/group/${board.group_name}'"
+						onclick="location.href='/group/${board.group_name}'"
 					/>
 				</div>
 				<div class="media-body">
 					<h1 class="alert-title">${board.group_name}</h1>
 				</div>
 			</div>
-      <div style="padding: 0 10px;">
-			<div class="panel-body">
-       
-				<div class="title">
-					<h1 style="padding-left: 10px;">${board.title}</h1>
-				</div>
-			</div>
-			<div class="panel-body">
-				<div class="content-body">
-					<div class="mail-sender" style="border: none;">
-						<div class="media">
-              <h4 style=" text-align: right; ">${board.writer}</h4>
-							<c:choose>
-								<c:when test="${board.updateDate eq null}">
-									<span class="media-meta pull-right">
-										작성일
-										<fmt:formatDate
-											value="${board.regdate}"
-											pattern="yyyy MM dd"
-										/>
-									</span>
-								</c:when>
-								<c:otherwise>
-									<span class="media-meta pull-right">
-										수정일
-										<fmt:formatDate
-											value="${board.updateDate}"
-											pattern="yyyy MM dd"
-										/>
-									</span>
-								</c:otherwise>
-							</c:choose>
-						
-						</div>
+			<div style="padding: 0 10px">
+				<div class="panel-body">
+					<div class="title">
+						<h1 style="padding-left: 10px">${board.title}</h1>
 					</div>
-					<div class="view-mail content">${board.content}</div>
 				</div>
-
-				<div class="file-container">
-					<c:if
-						test="${board.attachList != null && board.attachList.size() >0}"
-					>
-						<div class="form-group">
-							<label class="col-md-2 control-label" for="demo-textarea-input">
-								<i class="fa fa-file"></i>
-								<span class="fileBtn">파일 </span></label
-							>
-							<div class="col-md-9">
-								<div class="uploadResult">
-									<ul>
-										<c:forEach items="${board.attachList}" var="file">
-											<li>${file.fileName }</li>
-										</c:forEach>
-									</ul>
-								</div>
+				<div class="panel-body">
+					<div class="content-body">
+						<div class="mail-sender" style="border: none">
+							<div class="media">
+								<h4 style="text-align: right">${board.writer}</h4>
+								<c:choose>
+									<c:when test="${board.updateDate eq null}">
+										<span class="media-meta pull-right">
+											작성일
+											<fmt:formatDate
+												value="${board.regdate}"
+												pattern="yyyy MM dd"
+											/>
+										</span>
+									</c:when>
+									<c:otherwise>
+										<span class="media-meta pull-right">
+											수정일
+											<fmt:formatDate
+												value="${board.updateDate}"
+												pattern="yyyy MM dd"
+											/>
+										</span>
+									</c:otherwise>
+								</c:choose>
 							</div>
 						</div>
-					</c:if>
-				</div>
+						<div class="view-mail content">${board.content}</div>
+					</div>
 
-				<div class="reply-content">
-					<div id="demo-lft-tab-1" class="tab-pane fade active in">
-						<c:forEach items="${replies}" var="reply">
+					<div class="file-container">
+						<c:if
+							test="${board.attachList != null && board.attachList.size() >0}"
+						>
 							<div class="form-group">
-								<label class="col-md-2 control-label" data-rno="${reply.rno}"
-									>${reply.replyer}</label
+								<label class="col-md-2 control-label" for="demo-textarea-input">
+									<i class="fa fa-file"></i>
+									<span class="fileBtn">파일 </span></label
 								>
 								<div class="col-md-9">
-									<p class="form-control-static reply" data-rno="${reply.rno}">
-										<span> ${reply.reply} </span>
-										<span>
-											<c:choose>
-												<c:when test="${reply.updateDate eq null }">
-													작성일
-													<fmt:formatDate
-														value="${reply.replydate}"
-														pattern="yyyy MM dd"
-													/>
-												</c:when>
-												<c:otherwise>
-													수정일
-													<fmt:formatDate
-														value="${reply.updateDate}"
-														pattern="yyyy MM dd"
-													/>
-												</c:otherwise>
-											</c:choose>
-										</span>
-									</p>
+									<div class="uploadResult">
+										<ul style="padding-left: 10px;"></ul>
+									</div>
 								</div>
 							</div>
-						</c:forEach>
+						</c:if>
+					</div>
+
+					<div class="reply-content">
+						<div id="demo-lft-tab-1" class="tab-pane fade active in">
+							<c:forEach items="${replies}" var="reply">
+								<div class="form-group">
+									<label class="col-md-2 control-label" data-rno="${reply.rno}"
+										>${reply.replyer}</label
+									>
+									<div class="col-md-9">
+										<p
+											class="form-control-static reply"
+											data-rno="${reply.rno}"
+										>
+											<span> ${reply.reply} </span>
+											<span>
+												<c:choose>
+													<c:when test="${reply.updateDate eq null }">
+														작성일
+														<fmt:formatDate
+															value="${reply.replydate}"
+															pattern="yyyy MM dd"
+														/>
+													</c:when>
+													<c:otherwise>
+														수정일
+														<fmt:formatDate
+															value="${reply.updateDate}"
+															pattern="yyyy MM dd"
+														/>
+													</c:otherwise>
+												</c:choose>
+											</span>
+										</p>
+									</div>
+								</div>
+							</c:forEach>
+						</div>
 					</div>
 				</div>
 			</div>
-    </div>
 			<div class="panel-footer text-right">
 				<div class="button">
 					<c:if test="${user eq board.writer}">
@@ -265,10 +262,14 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 		</div>
 		<div class="modal">
 			<div class="modal_content">
-				<div class="panel panel-bordered panel-mint" style="margin: 0;">
+				<div class="panel panel-bordered panel-mint" style="margin: 0">
 					<div class="panel-heading ui-sortable-handle">
 						<div class="panel-control">
-							<button class="btn btn-mint" data-dismiss="panel" onclick="$('.modal').hide();">
+							<button
+								class="btn btn-mint"
+								data-dismiss="panel"
+								onclick="$('.modal').hide();"
+							>
 								<i class="fa fa-times"></i>
 							</button>
 						</div>
@@ -290,12 +291,12 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 											class="form-control"
 											id="demo-is-inputnormal"
 											name="replyer"
-                      readonly
+											readonly
 										/>
 									</div>
 								</div>
 								<input type="hidden" name="rno" />
-								<div class="form-group" style="margin-top: 3px;">
+								<div class="form-group" style="margin-top: 3px">
 									<label class="col-sm-3 control-label"> 내용 </label>
 									<div class="col-sm-9 col-sm-offset-3" style="margin: 0">
 										<textarea
@@ -309,20 +310,21 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 								</div>
 							</div>
 						</form>
-            <div class="btn-group">
-              <button class="btn btn-default submit" data-click="panel-expand">
-                전송
-              </button>
-              <button class="btn btn-default modify" data-click="panel-reload">
-                수정
-              </button>
-              <button class="btn btn-default delete" data-click="panel-collapse">
-                삭제
-              </button>
-              <button type="reset">
-                리셋
-              </button>
-          </div>
+						<div class="btn-group">
+							<button class="btn btn-default submit" data-click="panel-expand">
+								댓글등록
+							</button>
+							<button class="btn btn-default modify" data-click="panel-reload">
+								수정
+							</button>
+							<button
+								class="btn btn-default delete"
+								data-click="panel-collapse"
+							>
+								삭제
+							</button>
+							<button type="reset">리셋</button>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -343,28 +345,21 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 					}
 				});
 
-				//			 let attachList = [];
+				//	파일 표시 (다운로드 )
+				let bno = "${cri.bno}";
+				$.getJSON(	"/group/getFileList",	{bno},
+					(files) => {
+						let str = "";
+						files.map((file) => {
+							let fileCallpath = encodeURIComponent(
+								`\${file.uploadPath}/\${file.uuid}_\${file.fileName}`
+							);
+							str += `<li><div><a href='/download?fileName=\${fileCallpath}'><span>\${file.fileName}</span></a></div></li>`;
+						}); //map
+						$(".uploadResult ul").html(str);
+					}
+				); //getJSON
 
-				// 파일 표시 (다운로드 )
-				/*  let bno = "${cri.bno}"
-                            $.getJSON("/group/getFileList", {
-                                    bno
-                                }, (files) => {
-                                    let str = ""
-                                    files.map(file => {
-                                            //						attachList.push(file) // 수정할때 넣음
-                                            if (file.fileType) {
-                                                let fileCallpath = encodeURIComponent(`\${file.uploadPath}/\${file.uuid}_\${file.fileName}`)
-                                                str += `<li><div><a href='/download?fileName=\${fileCallpath}'><span>\${file.fileName}</span></a>`;
-                                                str += `<img src='/display?fileName=\${fileCallpath}'></div></li>`
-                                            } else {
-                                                let fileCallpath = encodeURIComponent(`\${file.uploadPath}/\${file.uuid}_\${file.fileName}`)
-                                                str += `<li><div><a href='/download?fileName=\${fileCallpath}'><span>\${file.fileName}</span></a></div></li>`;
-                                            }
-                                        }) //map
-                                    $('.uploadResult ul').html(str)
-                                }) //getJSON
- */
 				$("div.modal > div > span").click(function (e) {
 					$(".modal").hide();
 				});
@@ -391,7 +386,8 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 				$(".reply").click(function (e) {
 					$('button[type="reset"]').trigger("click");
 					$('input[name="replyer"]').val(loginUser);
-          $('button.modify').hide()
+					$("button.modify").hide();
+					$('button.delete').hide()
 					$(".modal").show();
 				});
 
@@ -437,7 +433,8 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 					console.log(e);
 					console.log($(this));
 					$("button.submit").hide();
-          $('button.modify').show()
+					$("button.modify").show();
+					$('button.delete').show()
 					let rno = $(this).data("rno");
 
 					$.getJSON("/group/reply/" + rno, (res) => {
@@ -466,7 +463,7 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 					$(".modal").show();
 					let data = getReplyData();
 					console.log(data);
-				
+
 					$.ajax({
 						type: "put",
 						url: "/group/reply/" + data.rno,

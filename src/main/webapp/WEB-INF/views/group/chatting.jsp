@@ -31,6 +31,8 @@ pageEncoding="UTF-8"%>
 			href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
 			rel="stylesheet"
 		/>
+		<link href="/resources/assets/css/bootstrap.css" rel="stylesheet" />
+		<link href="/resources/css/bootstrap.min.css" rel="stylesheet" />
 	</head>
 	<style>
 		body {
@@ -41,18 +43,17 @@ pageEncoding="UTF-8"%>
 
 		.container {
 			padding: 0;
-
 		}
-.text-right {
-    text-align: right!important;
-}
+		.text-right {
+			text-align: right !important;
+		}
 		.list-unstyled {
 			padding-inline-start: 0;
 		}
 
 		.card {
-      min-height: 600px;
-      max-height: 600px;
+			min-height: 600px;
+			max-height: 600px;
 			background: #fff;
 			transition: 0.5s;
 			border: 0;
@@ -72,8 +73,8 @@ pageEncoding="UTF-8"%>
 		}
 
 		.chat-app .chat {
-      min-height: 600px;
-      max-height: 600px;
+			min-height: 600px;
+			max-height: 600px;
 			margin-left: 280px;
 			border-left: 1px solid #eaeaea;
 		}
@@ -138,16 +139,15 @@ pageEncoding="UTF-8"%>
 		}
 
 		.chat .chat-history {
-      min-height: 370px;
-      max-height: 370px;
-    	overflow-x: hidden;
-    	overflow-y: auto;
+			min-height: 440px;
+			max-height: 440px;
+			overflow-x: hidden;
+			overflow-y: auto;
 			padding: 20px;
 			border-bottom: 2px solid #fff;
 		}
 
 		.chat .chat-history ul {
-      
 			padding: 0;
 		}
 
@@ -182,6 +182,7 @@ pageEncoding="UTF-8"%>
 			border-radius: 7px;
 			display: inline-block;
 			position: relative;
+
 		}
 
 		.chat .chat-history .message:after {
@@ -223,7 +224,7 @@ pageEncoding="UTF-8"%>
 
 		.chat .chat-history .other-message:after {
 			border-bottom-color: #e8f1f3;
-			left: 93%;
+			left: 70%;
 		}
 
 		.chat .chat-message {
@@ -264,51 +265,57 @@ pageEncoding="UTF-8"%>
 		}
 
 		@media only screen and (max-width: 767px) {
-    .chat-app .people-list {
-        height: 465px;
-        width: 100%;
-        overflow-x: auto;
-        background: #fff;
-        left: -400px;
-        display: none
-    }
-    .chat-app .people-list.open {
-        left: 0
-    }
-    .chat-app .chat {
-        margin: 0
-    }
-    .chat-app .chat .chat-header {
-        border-radius: 0.55rem 0.55rem 0 0
-    }
-    .chat-app .chat-history {
-        height: 300px;
-        overflow-x: auto
-    }
-}
+			.chat-app .people-list {
+				height: 465px;
+				width: 100%;
+				overflow-x: auto;
+				background: #fff;
+				left: -400px;
+				display: none;
+			}
+			.chat-app .people-list.open {
+				left: 0;
+			}
+			.chat-app .chat {
+				margin: 0;
+			}
+			.chat-app .chat .chat-header {
+				border-radius: 0.55rem 0.55rem 0 0;
+			}
+			.chat-app .chat-history {
+				height: 300px;
+				overflow-x: auto;
+			}
+		}
 
-@media only screen and (min-width: 768px) and (max-width: 992px) {
-    .chat-app .chat-list {
-        height: 650px;
-        overflow-x: auto
-    }
-    .chat-app .chat-history {
-        height: 600px;
-        overflow-x: auto
-    }
-}
+		@media only screen and (min-width: 768px) and (max-width: 992px) {
+			.chat-app .chat-list {
+				height: 650px;
+				overflow-x: auto;
+			}
+			.chat-app .chat-history {
+				height: 600px;
+				overflow-x: auto;
+			}
+		}
 
-@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) and (-webkit-min-device-pixel-ratio: 1) {
-    .chat-app .chat-list {
-        height: 480px;
-        overflow-x: auto
-    }
-    .chat-app .chat-history {
-        height: calc(100vh - 350px);
-        overflow-x: auto
-    }
-}
-		
+		@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) and (-webkit-min-device-pixel-ratio: 1) {
+			.chat-app .chat-list {
+				height: 480px;
+				overflow-x: auto;
+			}
+			.chat-app .chat-history {
+				height: calc(100vh - 350px);
+				overflow-x: auto;
+			}
+		}
+		.input-group {
+			display: flex;
+			font-display: row;
+		}
+		li.notice{
+			text-align: -webkit-center !important;
+		}
 	</style>
 
 	<body>
@@ -341,25 +348,15 @@ pageEncoding="UTF-8"%>
 										<div class="col-lg-6 hidden-sm text-right"></div>
 									</div>
 								</div>
-								<div class="chat-history" >
-									<ul class="m-b-0">
-
-									</ul>
+								<div class="chat-history">
+									<ul class="m-b-0"></ul>
 								</div>
 								<div class="chat-message clearfix">
 									<div class="input-group mb-0">
-										<div class="input-group-prepend">
-											<span class="input-group-text"
-												><i class="fa fa-send"></i
-											></span>
-										</div>
-										<input
-											type="text"
-											class="form-control message"
-											placeholder="Enter text here..."
-										/>
-										<button class="close">퇴장</button>
-										<button class="send">전송</button>
+										<input type="text" class="form-control message col-sm-6" />
+										<button class="send btn btn-default">
+											<i class="fa fa-send"></i>
+										</button>
 									</div>
 								</div>
 							</div>
@@ -367,21 +364,6 @@ pageEncoding="UTF-8"%>
 					</div>
 				</div>
 			</div>
-			<!-- <div class="users"></div>
-<div style="overflow-y: auto; width: 350px; height: 200px" class="chatContainer">
-<div class="message"></div>
-</div>
-
-<div>
-<input class="message" type="text" />
-<div>
-<button class="getChat">입장</button>
-<button class="send">전송</button>
-<button class="close">퇴장</button>
-</div>
-</div>
-${user.user_id}
-</div> -->
 
 			<script>
 				let socket = new SockJS("http://localhost:8080/chat/${group_name}");
@@ -389,15 +371,16 @@ ${user.user_id}
 				const loginUser = "${user.user_id}";
 				const group = "${group_name}";
 				let msg = $("input.message");
-
+				let userprofile = {}
 				$.getJSON("/group/getMemberlistByGroup/" + group, (list) => {
 					console.log(list);
 					console.log(loginUser);
 					list.memberList.map((user) => {
 						let img =
-							user.user_id === loginUser
-								? "/resources/img/fox.png"
+							user.profile !== null
+								? user.profile
 								: "/resources/img/lion.png";
+						userprofile[user.user_id] = img;
 						const memberElement = $(
 							`<li class="clearfix">
                 <img src=\${img} alt="avatar">
@@ -408,6 +391,7 @@ ${user.user_id}
 						);
 						$("ul.list-unstyled").append(memberElement);
 					}); //map
+					console.log(userprofile)
 				}); //getJSON
 
 				const sendMessage = () => {
@@ -425,21 +409,25 @@ ${user.user_id}
 
 				const onMessage = (message) => {
 					const arr = message.data.split("-");
-					let msgElement 
-					let [users, sessionId, messages, time, type ] = arr 
+					let msgElement;
+					let [users, sessionId, messages, time, type] = arr;
 					users = arr[0].replace(/[[\]\s]/g, "").split(",");
-					if (type == "open"){
+					if (type == "open") {
 						users
 							.filter((user) => user !== "")
-							.map((user) =>
-								$(`#\${user}`).css({ color: "red "}));
-					}
-					else if (type == "close")
+							.map((user) => $(`#\${user}`).css({ color: "red " }));
+							msgElement = $(
+								`<li class="clearfix notice"> \${sessionId} 님이 입장했습니다 </li>`
+							)
+					} else if (type == "close"){
 						$(`#\${sessionId}`).css({
 							color: "#999",
 						});
-					else{
-						if(sessionId === loginUser){
+						msgElement = $(
+								`<li class="clearfix notice"> \${sessionId} 님이 퇴장했습니다 </li>`
+							)
+					}	else {
+						if (sessionId === loginUser) {
 							msgElement = $(
 								`<li class="clearfix">
 									<div class="message-data text-right">
@@ -447,20 +435,20 @@ ${user.user_id}
 									</div>
 									<div class="message my-message float-right">\${messages}</div>
 							 </li>`
-							)
-							}else{
-								msgElement =$(`
+							);
+						} else {
+							let img = userprofile[sessionId]
+							msgElement = $(`
 									 <li class="clearfix">
 											<div class="message-data">
 												<span class="message-data-time">\${time}</span>
-												<img src="/resources/img/lion.png" alt="avatar">
+												<img src="\${img}" alt="avatar">
 											</div>
 											<div class="message other-message">\${messages}</div>
-									</li>`
-								)
+									</li>`);
 						}
 					}
-					$(".chat .chat-history ul").append(msgElement);	
+					$(".chat .chat-history ul").append(msgElement);
 					$(".chat .chat-history").scrollTop(
 						$(".chat .chat-history")[0].scrollHeight
 					);
@@ -469,7 +457,7 @@ ${user.user_id}
 				const socketClose = (e) => {
 					console.log("disconnect");
 					const sendTime = new Date().toLocaleTimeString();
-					
+
 					const data = {
 						user: loginUser,
 						group,
@@ -510,12 +498,6 @@ ${user.user_id}
 					}
 				});
 
-				$("button.close").click((e) => {
-					socketClose();
-					window.close();
-				});
-
-			
 				$(window).on("beforeunload", function () {
 					socketClose();
 				});

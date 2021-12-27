@@ -54,7 +54,6 @@ prefix="c" %>
 			
 				padding: 50px 0;
 			}
-
 			div.wrapper {
 				width: 1240px;
 				
@@ -65,14 +64,12 @@ prefix="c" %>
 				overflow-x: hidden;
 				overflow-y: hidden;
 			}
-
 			.group-image {
 				display: block;
 				height: 11rem; /* layout hack */
 				background: #fff center center no-repeat;
 				background-size: cover;
 			}
-
 			div.head {
 				color: #000;
 				border-left: 5px solid #5ec2dd;
@@ -82,7 +79,6 @@ prefix="c" %>
 				align-items: center;
 				justify-content: space-between;
 			}
-
 			.btn-group{
 				display: flex;
 				flex-direction: row;
@@ -99,7 +95,6 @@ prefix="c" %>
 				text-align: center;
 				list-style: none;
 			}
-
 			.group {
 				display: inline-block;
 				width: 90%;
@@ -112,27 +107,22 @@ prefix="c" %>
 					0 1px 3px rgba(0, 0, 0, 0.08);
 				transition: transform 0.1s ease-in-out, box-shadow 0.1s;
 			}
-
 			.group:hover {
 				transform: translateY(-0.5rem) scale(1.0125);
 				box-shadow: 0 0.5em 3rem -1rem rgba(0, 0, 0, 0.5);
 			}
-
 			.group-description {
 				display: block;
 				padding: 1em 0.5em;
 				color: #515151;
 				text-decoration: none;
 			}
-
 			.group-description > h2 {
 				margin: 0 0 0.5em;
 			}
-
 			.group-description > p {
 				margin: 0;
 			}
-
 			.pagination {
 				display: flex;
 				flex-flow: row nowrap;
@@ -140,7 +130,6 @@ prefix="c" %>
 				align-items: center;
 				color: #222;
 			}
-
 			.pagenate {
 				display: inline-block;
 				padding: 10px 18px;
@@ -150,13 +139,11 @@ prefix="c" %>
 				padding: 0;
 				text-align: center;
 			}
-
 			a.current {
 				background-color: #2ecc71;
 				border-radius: 50%;
 				color: #fff;
 			}
-
 			ul#portfolioFilter span {
 				font-size: 14px;
 				color: #333;
@@ -165,7 +152,6 @@ prefix="c" %>
 			.toolbar-right{
 				float: right;
 			}
-
 		</style>
 	</head>
 	<body>
@@ -261,46 +247,11 @@ prefix="c" %>
 			<!-- head  -->
 
 			
-				<div class="porto-bg-eleven common-pad">
-					<article class="text-left">
-						<div id="filter" class="clearfix">
-							<div id="filter_wrapper">
-								<ul id="portfolioFilter">
-									<li class="active">
-										<span
-											class="${pageMaker.cri.sort == null ? 'current' : ''}"
-											data-sort="recent"
-										>
-											최신순
-										</span>
-									</li>
-									<li class="separator">/</li>
-									<li>
-										<span
-											class="${pageMaker.cri.sort eq 'popular' ? 'current' : ''}"
-											data-sort="popular"
-										>
-											지원자 많은 순
-										</span>
-									</li>
-									<li class="separator">/</li>
-									<li>
-										<span
-											class="${pageMaker.cri.sort eq 'viewCnt' ? 'current' : ''}"
-											data-sort="viewCnt"
-										>
-											조회순
-										</span>
-									</li>
-								</ul>
-							</div>
-						</div>
-					</article>
-				</div>
+			
 
 				<ul class="group-list">		
 					<c:forEach items ="${group}" var="group">
-						<li class="group">
+						<li class="group" onclick="location.href='/group/gather/${group.group_name}'" style="cursor: pointer;">
 							<div style="background-image: url(${group.profile});" class="group-image" ></div>
 							<div class="group-description">
 								<h2 class="group_name">  ${group.group_name} </h2>
@@ -349,11 +300,6 @@ prefix="c" %>
 			let pageNum = "${cri.pageNum}";
 			let amount = "${cri.amount}";
 
-			$(".group_name").click(function (e) {
-				const group_name = e.target.innerText;
-				location.href = `/group/gather/\${group_name}`;
-			});
-
 			let searchForm = $("form.searchForm");
 			$("button.searchForm").click((e) => {
 				e.preventDefault();
@@ -371,7 +317,6 @@ prefix="c" %>
 					location.href = url;
 				}
 			}); // search button click
-
 			$("#filter_wrapper li span").on("click", function () {
 				const sort = $(this).data("sort");
 				let url = `/group/main/list/`;
@@ -380,13 +325,11 @@ prefix="c" %>
 				}
 				location.href = url;
 			});
-
 			$("a.pagenate").click(function (e) {
 				e.preventDefault();
 				let type = "${cri.type}";
 				let keyword = "${cri.keyword}";
 				let sort = "${cri.sort}";
-
 				let pageNum = $(this).attr("href");
 				let url =
 					type && keyword

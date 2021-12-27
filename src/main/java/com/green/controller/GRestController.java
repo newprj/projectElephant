@@ -184,8 +184,12 @@ public class GRestController {
 	public ResponseEntity<Map<String, List<GUserVO>>> getMemberlistByGroup(
 			@PathVariable("group_name") String group_name){
 		Map<String, List<GUserVO>> userMap= new HashMap<>();
-		
-		userMap.put("memberList" , groupUserService.listByGroup(group_name));
+		List<GUserVO> list = groupUserService.listByGroup(group_name);
+		list.forEach(i -> {
+			String profile = userService.selectMaster(i.getUser_id()).getProfile();
+			i.setProfile(profile);
+		});
+		userMap.put("memberList" , list);
 		userMap.put("allList", groupUserService.listByGroupAll(group_name));
 		
 
