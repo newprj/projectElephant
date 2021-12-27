@@ -40,7 +40,7 @@ select * from TBL_BOARD;
 select * from BOARD_REPLY;
 select * from TBL_CALENDAR;
 
--- spring database¿¡¼­ ¸ðµç tableÀ» »èÁ¦ Çß½À´Ï´Ù
+-- spring databaseï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ tableï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß½ï¿½ï¿½Ï´ï¿½
 --CREATE DATABASE spring CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 --- create , drop table and sequence
@@ -137,13 +137,13 @@ create sequence seq_cid;
 
 ------------------------------------------------------------------
 
---- Äõ¸® ¹®¼­ ¼öÁ¤ /°øÀ¯ ½Ã ¼öÁ¤ÇÑ ºÎºÐ ÁÖ¼®À¸·Î ´Þ¾ÆÁÖ¼¼¿ä 
---- select, update µî Å×½ºÆ®¸¦ À§ÇÑ Äõ¸®¹®Àº °øÀ¯ X
+--- ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ /ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Îºï¿½ ï¿½Ö¼ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¾ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½ 
+--- select, update ï¿½ï¿½ ï¿½×½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ X
 
------ ¾îµå¹Î±â´É
+----- ï¿½ï¿½ï¿½Î±ï¿½ï¿½
 --select * from tbl_group;
 --update tbl_group set authorized = 'Y' where gno =<40; 
---select * from tbl_groupuser where group_name='¸ÀÁý8' order by cno;
+--select * from tbl_groupuser where group_name='ï¿½ï¿½ï¿½ï¿½8' order by cno;
 --update tbl_groupuser set authorized='Y', leader='Y' where cno<=60;
 --select * from tbl_groupuser;
 --select * from tbl_groupuser;

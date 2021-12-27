@@ -60,7 +60,7 @@ public class ControllerTester {
 		//visit.totalCnt();
 		visit.todayCnt();
 	}
-	@Test
+	//@Test
 	public void gtest() {
 		
 			GroupVO vo=new GroupVO();

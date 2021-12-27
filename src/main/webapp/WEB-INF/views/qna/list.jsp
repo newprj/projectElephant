@@ -1,44 +1,24 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    <%@ taglib uri="http://java.sun.com/jsp/jstl/core"
-prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %> 
-<script
-  src="https://code.jquery.com/jquery-3.6.0.js"></script>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<style>
-ul {
-	list-style:none;
-}
-li {
-	float:left;
-}
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+			<%@ include file="../includes/admin_header.jsp" %>
 
-.paginate_btn a {
-    display:block;
-    width:30px;
-    line-height:30px;
-    text-align:center;
-    background-color: #1f75d9;
-    color:#fff;
-}
-.paginate_btn.previous a ,.paginate_btn.next a {
-	display:block;
-    width:70px;
-    line-height:30px;
-    text-align:center;
-    background-color: #1f75d9;
-    color:#fff;
-}
- 
-
-</style>
 <title>Q & A 목록</title>
 </head>
-<body>
-	<h1>Q&A 페이지 입니다.</h1>
+<div class="boxed">
+<div id="content-container">
+
+	<div class="pageheader">
+         <h3><i class="fa fa-home"></i> Q&A </h3>
+         <div class="breadcrumb-wrapper">
+             <span class="label">You are here:</span>
+             <ol class="breadcrumb">
+                 <li> <a href="/group/"> Home </a> </li>
+                 <li class="active"> Q&A </li>
+             </ol>
+         </div>
+     </div>
+  
 	<form method="get" action="/qna/list" id="searchForm">
 		<select name="type">
 			<option value="" <c:out value="${pageMaker.cri.type==null?'selected':''}"/>>선택</option>
@@ -108,6 +88,9 @@ li {
 		<input type="hidden" name='type' value='${pageMarker.cri.type}'/>
 		<input type="hidden" name='keyword' value='${pageMarker.cri.keyword}'/>
 	</form>
+</div>
+</div>
+</div>
 </body>
 <script type="text/javascript">
 	$(document).ready(function () {

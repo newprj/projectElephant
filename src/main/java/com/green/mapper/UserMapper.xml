@@ -26,13 +26,11 @@
 	</sql>
 	
 	<insert id="register">
-		insert into tbl_user(uno, user_id, password, name,  email,reg_date) 
-			values(seq_uno.nextval, #{user_id},#{password},#{name},#{email},sysdate)
 		<selectKey keyProperty="uno" order="BEFORE" resultType="long">
 			select seq_uno.nextval from dual
 		</selectKey>
-		insert into tbl_user(uno, user_id, password, name,  email) 
-			values(#{uno}, #{user_id},#{password},#{name},#{email})
+		insert into tbl_user(uno, user_id, password, name,  email,reg_date) 
+			values(#{uno} , #{user_id},#{password},#{name},#{email},sysdate)
 	</insert>
 	
 	<update id="modify">

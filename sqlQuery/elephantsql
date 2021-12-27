@@ -2,7 +2,7 @@ SELECT  'DROP TABLE ' || object_name || ' CASCADE CONSTRAINTS;'
   FROM    user_objects
 WHERE   object_type = 'TABLE';
 
--- spring database¿¡¼­ ¸ğµç tableÀ» »èÁ¦ Çß½À´Ï´Ù
+-- spring databaseï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ tableï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß½ï¿½ï¿½Ï´ï¿½
 drop table tbl_user;
 
 
@@ -12,6 +12,8 @@ create table tbl_user(
     password varchar2(30),
     name varchar2(30),
     email varchar2(30));
+    
+alter table tbl_user add reg_date Date; ---12/27 í¬ì£¼ ì¶”ê°€
 
 create sequence seq_uno;
 drop sequence seq_uno;
@@ -78,7 +80,7 @@ select * from tbl_board;
     
 CREATE DATABASE spring CHARACTER SET utf8 COLLATE utf8_general_ci;
     
-insert into tbl_group(group_name) values('ÇÑ±Û');
+insert into tbl_group(group_name) values('ï¿½Ñ±ï¿½');
 select * from tbl_group;
 
 select * from user_sequences;
