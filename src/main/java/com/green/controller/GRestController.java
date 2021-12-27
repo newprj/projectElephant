@@ -457,10 +457,15 @@ public class GRestController {
 		
 		try {
 			UserVO user = (UserVO) session.getAttribute("user");
+			List<GUserVO> groupList = groupUserService.listByUSer(user.getUser_id()).stream()
+					.filter(i -> i.getAuthorized().equals("Y") && groupService.showOne(i.getGroup_name()).getAuthorized().equals("Y"))
+					.collect(Collectors.toList());
+			
 			GroupVO vo = groupService.showOne(group_name);
 			mv.addObject("user", user.getUser_id());
 			mv.addObject("group", vo);
-			mv.addObject("member", groupUserService.listByGroupAll(group_name));
+			mv.addObject("member", groupUserService.listByGroup(group_name));
+			mv.addObject("myGroup", groupList);
 			
 		}catch(Exception e) {
 			e.printStackTrace();

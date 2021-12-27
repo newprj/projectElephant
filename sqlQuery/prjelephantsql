@@ -160,7 +160,7 @@ select * from TBL_GROUP order by gno desc;
 select * from TBL_USER;
 select * from TBL_GROUPUSER;
 select * from BOARD_FILE;
-select * from TBL_BOARD;
+select * from TBL_BOARD where notice ='Y';
 select * from BOARD_REPLY;
 select * from TBL_CALENDAR;
 select * from letter_tbl;
@@ -170,6 +170,6 @@ select * from letter_tbl;
 --update tbl_groupuser set leader ='Y' where user_id='test39';
 --delete from tbl_groupuser where authorized is null;
 --select * from tbl_groupuser where user_id='test5';
---update tbl_user set profile='/resources/img/lion.png' where profile is null;
+update tbl_user set profile= null;
 
 commit;
