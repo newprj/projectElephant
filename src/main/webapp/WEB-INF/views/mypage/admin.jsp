@@ -122,12 +122,6 @@
         </div>	
      </div>
 	
-	<h3>방문자 평균 그래프로 보이게</h3>
-	
-	
-	
-	
-	
 	
 	<div class="row">
     	<div class="col-lg-12">

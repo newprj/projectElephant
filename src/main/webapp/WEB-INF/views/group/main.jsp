@@ -295,7 +295,7 @@ prefix="c" %>
 						</li>
 
 						<li>
-							<a href="/mypage/userQna"> Q&amp;A </a>
+							<a href="/qna/list"> Q&amp;A </a>
 						</li>
 
 						<li>
