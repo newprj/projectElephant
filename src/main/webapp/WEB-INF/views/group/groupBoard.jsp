@@ -46,12 +46,10 @@ prefix="c" %>
 				display: flex;
 				flex-direction: column;
 				align-items: center;
-
 				padding: 50px 0;
 			}
 			div.wrapper {
 				width: 1240px;
-
 				height: 90%;
 				background-color: white;
 				box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11),
@@ -317,7 +315,6 @@ prefix="c" %>
 		<script>
 			let pageNum = "${cri.pageNum}";
 			let amount = "${cri.amount}";
-
 			$(".dropdown-menu >li >a").click((e) => {
 				e.preventDefault();
 				let type = $(e.target).attr("href");
@@ -330,7 +327,6 @@ prefix="c" %>
 					location.href = url;
 				}
 			});
-
 			$("#filter_wrapper li span").on("click", function () {
 				const sort = $(this).data("sort");
 				let url = `/group/main/list/`;

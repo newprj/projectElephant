@@ -109,7 +109,7 @@ public class MapperTestForDummyData {
 	}
 	
 	//지원하기
-//	@Test
+	//@Test
 	public void groupSignUP() {
 		
 		List<GroupVO> list = gMapper.showAll();

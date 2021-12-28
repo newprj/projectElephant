@@ -1,6 +1,8 @@
 package com.green.service;
 
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import java.util.stream.Collectors;
 
@@ -14,6 +16,7 @@ import com.green.vo.GUserVO;
 import com.green.vo.GroupVO;
 
 import lombok.Setter;
+import lombok.extern.log4j.Log4j;
 
 
 @Service
@@ -54,9 +57,9 @@ public class GUserServiceImpl implements GUserService {
 	///////////////////////////
 	
 	@Override
-	public int delete(String member) {
+	public int delete(GUserVO vo) {
 		// TODO Auto-generated method stub
-		return mapper.delete(member);
+		return mapper.delete(vo);
 	}
 
 	@Override

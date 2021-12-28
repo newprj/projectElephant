@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	<mapper namespace="com.green.mapper.CPageMapper">
+	
+	<insert id="insert" >
+		insert into cpage values(seq_cpno.nextval, #{group_name},#{member},#{captain},default)
+	</insert>
+	
+	<select id="getList" resultType="com.green.vo.CPageVO">
+		select * from cpage where group_name=#{group_name} 
+	</select> 
+	
+	<select id="read" resultType="com.green.vo.CPageVO">
+		select * from cpage where group_name=#{group_name}
+	</select> 
+	
+	<update id="update">
+		update cpage set membership=#{membership} where member=#{member}
+	</update>
+	
+	<update id="remove">
+		update cpage set membership=#{membership} where member=#{member}
+	</update>
+	
+	<delete id="delete">
+		delete from cpage where member = #{member}
+	</delete> 
+	
+	<select id="memberLimit" resultType ="int">
+		select count(membership) from cpage where membership = 'Y' and group_name = #{group_name}
+	</select>  
+	
+	
+</mapper>
