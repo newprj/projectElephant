@@ -331,8 +331,8 @@ prefix="c" %>
 								</span>
 							</div>
 							<div class="media-body">
-								<p class="text-2x mar-no text-thin text-right"></p>
-								<p class="h4 mar-no text-right">&nbsp&nbsp 최근일정</p>
+								<p class="text-2x mar-no text-thin text-right"> </p>
+								<p class="h4 mar-no text-right" style="display : flex;     justify-content: space-between;"> <span> &nbsp&nbsp 최근일정</span> <span> <a href="/group/test/${group_name}"></span> <i class="fa fa-calendar-o"></i> 일정 </a></span></p>
 							</div>
 						</div>
 					</div>
