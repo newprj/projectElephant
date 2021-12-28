@@ -14,18 +14,17 @@ public class Criteria {
 	private int amount;
 	private String group_name;
 	private Long bno;
+	private String qna;
 	
 	//검색을 위한 변수
 	private String type;
 	private String keyword;
 	
+	//정렬
+	private String sort;
+	
 	public Criteria() {
 		this(1, 10);
-	}
-	
-	public Criteria(String group_name) {
-		this();
-		this.group_name = group_name;
 	}
 	
 	
@@ -34,18 +33,7 @@ public class Criteria {
 		this.amount = amount;
 	}
 	
-	public Criteria(int pageNum, int amount, String group_name) {
-		this.pageNum = pageNum;
-		this.amount = amount;
-		this.group_name = group_name;
-	}
-	
-	public Criteria(int pageNum, int amount, String group_name, Long bno) {
-		this.pageNum = pageNum;
-		this.amount = amount;
-		this.group_name = group_name;
-		this.bno = bno;
-	}
+
 	
 	public String[] getTypeArr() { //mybatis에서  typeArr을 사용 
 		return type==null? new String[] {} : type.split("");//문자열을 공백으로 분리 

@@ -18,6 +18,5 @@ public class BoardReplyVO {
 	private String reply;
 	private String replyer;
 	private Date replydate;
-	private Date updateDate;
-	
+	private Date updateDate;	
 }

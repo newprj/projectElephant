@@ -1,6 +1,7 @@
 package com.green.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -12,8 +13,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.green.service.QnaService;
@@ -32,16 +35,14 @@ public class QnAController {
 	@Setter(onMethod_=@Autowired)
 	QnaService service;
 
-	//일단 로그인해야 접속하게 함, 나중에 form 으로 로그인 정보 전송해서 id만 받아서 쓸수있도록 -> qna/list는 비회원도 진입가능하도록
-	//글쓰기는 로그인 정보 필요 다른 것들은 비회원도 접속 가능하도록 구현하기
 	@GetMapping("/list")
 	public void list(Model model,Criteria cri,HttpServletRequest req ) {
-		log.info("QnA 게시판 리스트");
 		
 		HttpSession session=req.getSession();
 		UserVO login= (UserVO) session.getAttribute("user");
 		
 		int total=service.totalCount(cri);
+		
 		model.addAttribute("loginId", login.getUser_id());
 		model.addAttribute("list",service.listqnaWithPaging(cri));
 		model.addAttribute("pageMarker",new PageDTO(cri, total));
@@ -50,8 +51,6 @@ public class QnAController {
 	
 	@GetMapping("/write")
 	public void write(Model model,HttpServletRequest req) {
-		System.out.println("QnA 새글 쓰기");
-		System.out.println("로그인 정보 가지고 와야함/write로 할것인가 register로 할것인가");
 		
 		HttpSession session=req.getSession();
 		UserVO login= (UserVO) session.getAttribute("user");
@@ -72,7 +71,6 @@ public class QnAController {
 	
 	@GetMapping({"/detail","/modify"})
 	public void detail(@RequestParam("qno") Long qno,Model model,@ModelAttribute("cri") Criteria cri,HttpServletRequest req) {
-		System.out.println("QnA 세부내용 들어옴"+qno);
 		
 		HttpSession session=req.getSession();
 		UserVO login= (UserVO) session.getAttribute("user");
@@ -84,7 +82,6 @@ public class QnAController {
 
 	@PostMapping("/modify")
 	public String modifyPost(QnaVO vo,@ModelAttribute("cri") Criteria cri, RedirectAttributes rttr) {
-		System.out.println("수정된 데이터"+vo);
 		if(service.update(vo)) rttr.addFlashAttribute("result","success");		
 		rttr.addAttribute("pageNum",cri.getPageNum());
 		rttr.addAttribute("amount",cri.getAmount());
@@ -97,5 +94,12 @@ public class QnAController {
 	public String removeQno(Long qno) {
 		service.deleteByQno(qno);
 		return "redirect:/qna/list";
+	}
+	
+	@ResponseBody
+	@PostMapping(value="/hitUp", consumes="application/json")
+	public void updateHit(@RequestBody Map<String,Long> data) {
+		service.updateHit(data.get("qno"), data.get("hit"));
+		
 	}
 }

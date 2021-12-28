@@ -5,30 +5,23 @@
 	<mapper namespace="com.green.mapper.VisitMapper">
 	
 	<insert id="insertVisitor" >
-		insert into tbl_visitor(
-                VISIT_ID,
-                VISIT_IP,
-                VISIT_TIME,
-                <if test="visit_refer != null and visit_refer !=''">
-                VISIT_REFER,
-                </if>
-                VISIT_AGENT
-            )
-            VALUES
-            (
-                VISITOR_SEQ.NEXTVAL,
-                #{visit_ip},
-                SYSDATETIME,
-                <if test="visit_refer != null and visit_refer !=''">
-                #{visit_refer},
-                </if>
-                #{visit_agent}
-            )
+		insert into tbl_visitor values(v_seq.nextval,sysdate)
 	</insert>
 	
-	<select id="totalCount" resultType="int">
-		select count(*) from tbl_visitor
+	<select id="todayCnt" resultType="int">
+		select count(*) from tbl_visitor where to_char(in_date,'yy/MM/dd') = to_char(sysdate,'yy/MM/dd')
 	</select>
 
 
+	<select id="weekCnt" resultType="hashmap">
+		select 
+		(select count(*) from tbl_visitor where to_char(in_date,'YYYY/MM/DD')=to_char(sysdate-6,'YYYY/MM/DD')) as "월",
+        (select count(*) from tbl_visitor where to_char(in_date,'YYYY/MM/DD')=to_char(sysdate-5,'YYYY/MM/DD')) as "화",
+        (select count(*) from tbl_visitor where to_char(in_date,'YYYY/MM/DD')=to_char(sysdate-4,'YYYY/MM/DD')) as "수",
+        (select count(*) from tbl_visitor where to_char(in_date,'YYYY/MM/DD')=to_char(sysdate-3,'YYYY/MM/DD')) as "목",
+        (select count(*) from tbl_visitor where to_char(in_date,'YYYY/MM/DD')=to_char(sysdate-2,'YYYY/MM/DD')) as "금",
+        (select count(*) from tbl_visitor where to_char(in_date,'YYYY/MM/DD')=to_char(sysdate-1,'YYYY/MM/DD')) as "토",
+        (select count(*) from tbl_visitor where to_char(in_date,'YYYY/MM/DD')=to_char(sysdate,'YYYY/MM/DD')) as "일" 
+        from dual
+	</select>
 </mapper>

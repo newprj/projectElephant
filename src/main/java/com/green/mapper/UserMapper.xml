@@ -4,9 +4,33 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.green.mapper.UserMapper">
 
+
+	<sql id="criteria">
+		<trim prefix="(" suffix=") and " prefixOverrides="OR">
+			    	<foreach item="type" collection="typeArr">
+			    		<trim prefix="OR">
+			    			<choose>
+			    				<when test="type== 'I'.toString()">
+			    					user_id like '%'||#{keyword}||'%'
+			    				</when>
+			    				<when test="type== 'N'.toString()">
+			    					name like '%'||#{keyword}||'%'
+			    				</when>
+			    				<when test="type== 'D'.toString()">
+			    					reg_date like '%'||#{keyword}||'%'
+			    				</when>
+			    			</choose>
+			    		</trim>
+			    	</foreach>
+		    </trim>
+	</sql>
+	
 	<insert id="register">
-		insert into tbl_user(uno, user_id, password, name,  email) 
-			values(seq_uno.nextval,#{user_id},#{password},#{name},#{email})
+		<selectKey keyProperty="uno" order="BEFORE" resultType="long">
+			select seq_uno.nextval from dual
+		</selectKey>
+		insert into tbl_user(uno, user_id, password, name,  email,reg_date) 
+			values(#{uno} , #{user_id},#{password},#{name},#{email},sysdate)
 	</insert>
 	
 	<update id="modify">
@@ -30,10 +54,90 @@
 		select * from tbl_user order by uno desc
 	</select>
 
+	<select id="listWithPaging" resultType="com.green.vo.UserVO">
+		<![CDATA[
+			select uno, user_id, password, name,  email,reg_date,suspension,suspDate,suspContent
+			from (
+			    select /*+ index_desc(tbl_user pk_uno) */
+				    rownum rn,uno, user_id, password, name,  email,reg_date,suspension,suspDate,suspContent
+				    	from 
+				    	(select * from  tbl_user 
+					    	order by reg_date desc nulls LAST
+					   	)
+				    where 
+		]]>
+		<include refid="criteria"></include>
+	    <![CDATA[
+			    rownum <=#{pageNum} * #{amount}
+		    )
+		    where rn> (#{pageNum}-1) * #{amount}  
+		]]>
+	</select>
 	
 	<update id="susp">
 		update tbl_user set suspension=#{suspension}, suspContent=#{suspContent},suspDate=#{suspDate}
 			where user_id=#{user_id}
 	</update>
+	
+	<select id="selectMaster" resultType="com.green.vo.UserVO">
+		select *from tbl_user where user_id=#{user_id}
+	</select>
+	
+	<select id="totalCount" resultType="int">
+		select count(*) from tbl_user where 
+		<include refid="criteria"></include>
+		uno>0
+	</select>
+
+<select id="list" resultType="com.green.vo.UserVO">
+		select uno, user_id, name, email, regDate from tbl_user order by uno
+	</select>
+
+	<select id="view" parameterType="int" resultType="com.green.vo.UserVO">
+		select uno, user_id, name, email, regDate, profile from tbl_user where uno = #{uno}
+	</select>
+	
+		<select id="listPage" resultType="com.green.vo.UserVO" parameterType="com.green.vo.Cri">
+		select uno, user_id, name, email, regDate 
+		from(
+			select uno, user_id, name, email, regDate, row_number() over(order by uno asc) as rNum from tbl_user) tu
+				where rNum between #{rowStart} and #{rowEnd} order by uno asc
+	</select>
+
+		<select id="listCount" resultType="int">
+		<![CDATA[
+			select count(uno) from tbl_user where uno>0
+		]]>
+	</select>
+
+		<select id="listSearch" resultType="com.green.vo.UserVO" parameterType="com.green.vo.SCri">
+		select uno, user_id, name, email, regDate 
+		from(select uno, user_id, name, email, regDate, row_number() over(order by uno asc) as rNum from tbl_user
+		<include refid="search"></include>) tu where rNum between #{rowStart} and #{rowEnd} order by uno asc
+	</select>
+	<sql id="search">
+		<if test="searchType != null">
+			<if test="searchType == 'u'.toString()">where user_id like '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'n'.toString()">where name like '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'e'.toString()">where email like '%' || #{keyword} || '%'</if>
+		</if>
+	</sql>
+
+		<select id="countSearch" resultType="int">
+		select count(uno) from tbl_user<include refid="search"></include>
+	<![CDATA[
+		and uno > 0
+	]]>
+	</select>
+
+
+		<insert id="imageEnroll">
+		insert into tbl_file(id, fileName, uploadPath, uuid) values(seq_id.nextval, #{fileName}, #{uploadPath}, #{uuid})
+	</insert>
+	
+	<select id="getAttachList" resultType="com.green.vo.AttachImageVO">
+		select * from tbl_file where id= #{id}
+	</select>
+	
 </mapper>
 

@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.green.service.QnaService;
 import com.green.vo.QnaAttachDTO;
@@ -80,7 +81,7 @@ public class QnaUploadController {
 	}
 	
 	
-	@PostMapping(value="/uploadAjaxAction", produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@PostMapping(value="/uploadAjaxAction", produces="application/json;charset=UTF-8" )
 	public ResponseEntity<List<QnaAttachDTO>> uploadAjaxPost(MultipartFile[] uploadFile) {
 		log.info("첨부파일 ajax등록");
 		
@@ -114,13 +115,8 @@ public class QnaUploadController {
 				
 				attachDTO.setUuid(uuid.toString());
 				attachDTO.setUploadPath(uploadFolderPath);
-				
 				if(checkImageType(saveFile)) {
 					attachDTO.setFileType(true);
-					
-					FileOutputStream thumbnail=new FileOutputStream(new File(uploadPath,"s_"+uploadFileName));
-					Thumbnailator.createThumbnail(multipartFile.getInputStream(),thumbnail,100,100);
-					thumbnail.close();
 				}
 				list.add(attachDTO);
 			}catch (Exception e) {

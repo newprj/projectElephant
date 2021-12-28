@@ -77,12 +77,8 @@ public class FileController {
 				dto.setUuid(uuid.toString());
 				dto.setUploadPath(uploadFolderPath);
 				
-				if(checkImageType(saveFile)) {
-					dto.setImage(true);
-					FileOutputStream thumbnail = new FileOutputStream( new File(uploadPath, "_s"+uploadFileName));
-					Thumbnailator.createThumbnail(file.getInputStream(), thumbnail, 100, 100 );
-					thumbnail.close();
-				}
+				if(checkImageType(saveFile)) dto.setImage(true);
+
 				list.add(dto);
 			
 			}catch(Exception e) {

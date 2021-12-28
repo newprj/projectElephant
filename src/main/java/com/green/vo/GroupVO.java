@@ -1,5 +1,8 @@
 package com.green.vo;
 
+import java.util.Date;
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,5 +22,14 @@ public class GroupVO {
     private String subject;
     private String description;
     private int member_number;
+    private Long viewCnt;
+    private Date regdate;
 
+    private String authorized;
+    private String profile;
+    
+    private int applicantCnt;
+    private int joinedCnt;
+
+    private List<GUserVO> userList;
 }

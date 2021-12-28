@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	<mapper namespace="com.green.mapper.LetterMapper">
+
+	<insert id="insert">
+		insert into letter_tbl
+			values(lno_seq.nextval,#{writer},#{recipient},#{content},#{reg_date})
+	</insert>
+
+	<select id="myLetter" resultType="com.green.vo.LetterVO">
+		select *from letter_tbl where recipient=#{recipient}
+	</select>
+	
+	<select id="sendLetter" resultType="com.green.vo.LetterVO">
+		select *from letter_tbl where writer=#{writer}
+	</select>
+	
+	<delete id="delete">
+		delete from letter_tbl where writer=#{writer} and lno=#{lno}
+	</delete>
+	
+	<select id="totalCount" resultType="int">
+		select count(*) from letter_tbl where recipient=#{recipient} and lno>0
+	</select>
+	
+	<select id="sendCount" resultType="int">
+		select count(*) from letter_tbl where writer=#{writer} and lno>0
+	</select>
+	
+	<select id="listqnaWithPaging" resultType="com.green.vo.LetterVO">
+		<![CDATA[
+			select lno, writer, recipient,content,reg_date
+			from (
+			    select /*+ index_desc(letter_tbl pk_lno) */
+				    rownum rn, lno, writer, recipient,content,reg_date
+				    	from 
+				    	(select * from  letter_tbl where recipient=#{recipient}
+					    	order by reg_date desc nulls LAST
+					   	)
+				    where 
+		]]>
+		
+	    <![CDATA[
+			    rownum <=#{cri.pageNum} * #{cri.amount}
+		    )
+		    where rn> (#{cri.pageNum}-1) * #{cri.amount}  
+		]]>
+	</select> 
+	
+	
+	<select id="oneLetter" resultType="com.green.vo.LetterVO">
+		select * from letter_tbl where lno=#{lno}
+	</select>
+</mapper>

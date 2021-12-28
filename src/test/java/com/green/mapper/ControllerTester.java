@@ -14,6 +14,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import com.green.service.GroupService;
 import com.green.service.QnaService;
 import com.green.service.UserService;
+import com.green.service.VisitService;
 import com.green.vo.QnaVO;
 import com.green.vo.UserVO;
 import com.green.vo.Criteria;
@@ -24,6 +25,7 @@ import com.green.vo.QnaReplyVO;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 
+@WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
 @Log4j
@@ -37,20 +39,39 @@ public class ControllerTester {
 	@Setter(onMethod_=@Autowired)
 	private GroupService gService;
 	
+	@Setter(onMethod_=@Autowired)
+	private VisitService visit;
 	
 	Date date=new Date();
 	
 	//@Test
+	public void weekHit() {
+		visit.weekCnt();
+	}
+	
+	//@Test
+	public void hit() {
+		service.updateHit(162L, 0L);
+	}
+	
+	//@Test
+	public void vtest() {
+		//visit.insertVisitor();
+		//visit.totalCnt();
+		visit.todayCnt();
+	}
+	//@Test
 	public void gtest() {
-		for (int i = 0; i <10; i++) {
+		
 			GroupVO vo=new GroupVO();
-			vo.setDescription("설명"+i);
-			vo.setGroup_name("name"+i);
-			vo.setLeader("리더"+i);
-			vo.setMember_number(i+1);
-			vo.setSubject("주제"+i);
+			vo.setDescription("설명_a");
+			vo.setGroup_name("name_a");
+			vo.setLeader("a");
+			vo.setMember_number(5);
+			vo.setSubject("주제_a");
+			vo.setProfile(null);
 			gService.makeGroup(vo);
-		}
+		
 	}
 	
 	//@Test

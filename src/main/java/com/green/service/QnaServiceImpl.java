@@ -136,6 +136,37 @@ public class QnaServiceImpl implements QnaService{
 		return attachMapper.cnt(qno);
 	}
 
+	@Override
+	public List<QnaReplyVO> myReply(String r_writer) {
+		// TODO Auto-generated method stub
+		return replyMapper.myReply(r_writer);
+	}
+
+	@Override
+	public List<QnaVO> myQna(String writer) {
+		// TODO Auto-generated method stub
+		return mapper.myQna(writer);
+	}
+
+
+	@Override
+	public int updateHit(Long qno, Long hit) {
+		// TODO Auto-generated method stub
+		return mapper.updateHit(qno, hit);
+	}
+
+	@Override
+	public int Qnatotal(Criteria cri, String writer) {
+		// TODO Auto-generated method stub
+		return mapper.Qnatotal(cri, writer);
+	}
+
+	@Override
+	public int replyTotal(Criteria cri, String r_writer) {
+		// TODO Auto-generated method stub
+		return replyMapper.replyTotal(cri, r_writer);
+	}
+
 	
 
 

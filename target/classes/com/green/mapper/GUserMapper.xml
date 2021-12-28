@@ -4,19 +4,89 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.green.mapper.GUserMapper">
 	
+	<sql id="criteria">
+		 <trim prefix="(" suffix=") and " prefixOverrides="OR">
+			    	<foreach item="type" collection="cri.typeArr">
+			    		<trim prefix="OR">
+			    			<choose>
+			    				<when test="type== 'N'.toString()">
+			    					group_name like '%'||#{keyword}||'%'
+			    				</when>
+			    				<when test="type== 'S'.toString()">
+			    					subject like '%'||#{keyword}||'%'
+			    				</when>
+			    			</choose>
+			    		</trim>
+			    	</foreach>
+		    </trim>
+	</sql>
+	
 	<insert id="groupSignUp">
 		<selectKey keyProperty="cno" order="BEFORE" resultType="long">
 			select seq_cno.nextval from dual
 		</selectKey>
-		insert into tbl_groupuser (cno, user_id, group_name)
-			values(#{cno}, #{user_id}, #{group_name})
+		insert into tbl_groupuser (cno, user_id, group_name, leader, authorized)
+			values(#{cno}, #{user_id}, #{group_name}, #{leader}, #{authorized})
 	</insert>
 	
 	<select id="listByGroup" resultType="com.green.vo.GUserVO">
 		select * from tbl_groupuser where group_name= #{group_name}
 	</select>
 	
+	
 	<select id="listByUSer" resultType="com.green.vo.GUserVO">
 		select * from tbl_groupuser where user_id=#{user_id}
+	
+	
 	</select>
+	
+	<select id="joinGroup" resultType="com.green.vo.GroupVO">
+		<![CDATA[
+			select gno, group_name, leader, subject, description, member_number, authorized, viewcnt, regdate, profile
+			from (
+			    select /*+ index_desc(tbl_group pk_gno) */
+				    rownum rn,gno, group_name, leader, subject, description, member_number, authorized, viewcnt, regdate, profile
+				    	from 
+				    	(select * from  tbl_group where group_name= (select group_name from tbl_groupuser where user_id= #{user_id}) 
+					    	order by regdate desc nulls LAST
+					   	)
+				    where 
+		]]>
+		<include refid="criteria"></include>
+	    <![CDATA[
+			    rownum <=#{cri.pageNum} * #{cri.amount}
+		    )
+		    where rn> (#{cri.pageNum}-1) * #{cri.amount}  
+		]]>
+	
+	</select>
+	
+	
+	
+	<select id="read" resultType="com.green.vo.GUserVO">
+		select * from tbl_groupuser where group_name=#{group_name}
+	</select> 
+	
+	<update id="update">
+		update tbl_groupuser set authorized=#{authorized} where user_id=#{user_id} and group_name=#{group_name}
+	</update>
+	
+	<update id="remove">
+		update tbl_groupuser set authorized=#{authorized} where user_id=#{user_id}
+	</update>
+	
+	<delete id="delete">
+		delete from tbl_groupuser where user_id = #{user_id}
+	</delete> 
+	
+	<select id="memberLimit" resultType ="int">
+		select count(authorized) from tbl_groupuser where authorized = 'Y' and group_name = #{group_name}
+	</select>  
+		
+	<select id="allGrouptotal" resultType="int">
+		select count(*) from tbl_group where group_name= (select group_name from tbl_groupuser where  user_id=#{user_id}) and
+		<include refid="criteria"></include>
+		gno>0
+	</select>
+	
 </mapper>

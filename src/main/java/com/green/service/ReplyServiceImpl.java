@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.green.mapper.ReplyMapper;
 import com.green.vo.BoardReplyVO;
+import com.green.vo.Criteria;
 
 import lombok.Setter;
 
@@ -45,6 +46,19 @@ public class ReplyServiceImpl implements ReplyService{
 		// TODO Auto-generated method stub
 		return mapper.deleteReply(rno);
 
+	}
+
+
+	@Override
+	public List<BoardReplyVO> myReply(Criteria cri, String replyer) {
+		// TODO Auto-generated method stub
+		return mapper.myReply(cri, replyer);
+	}
+
+	@Override
+	public int totalReply(Criteria cri, String replyer) {
+		// TODO Auto-generated method stub
+		return mapper.totalReply(cri, replyer);
 	}
 
 }

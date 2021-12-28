@@ -24,7 +24,10 @@ public class BoardVO {
     private String writer;
     private Date regdate;
     private Date updateDate;
-
+    private char notice;
+    private Long viewCnt;
+    
     private List<FileVO> attachList;
     private int replyCnt;
+    
 }

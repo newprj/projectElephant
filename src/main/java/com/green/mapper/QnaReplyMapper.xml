@@ -4,6 +4,23 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.green.mapper.QnaReplyMapper">
 
+	<sql id="criteria">
+		<trim prefix="(" suffix=") and " prefixOverrides="OR">
+			    	<foreach item="type" collection="cri.typeArr">
+			    		<trim prefix="OR">
+			    			<choose>
+			    				<when test="type== 'T'.toString()">
+			    					title like '%'||#{keyword}||'%'
+			    				</when>
+			    				<when test="type== 'W'.toString()">
+			    					writer like '%'||#{keyword}||'%'
+			    				</when>
+			    			</choose>
+			    		</trim>
+			    	</foreach>
+		    </trim>
+	</sql>
+
 	<insert id="register">
 		insert into qna_reply_tbl(rno, qno, r_writer,r_content,r_reg_date,r_up_date) 
 			values(reply_seq.nextval ,#{qno},#{r_writer},#{r_content},#{r_reg_date},#{r_up_date, jdbcType=TIMESTAMP })
@@ -24,5 +41,15 @@
 	
 	<select id="count" resultType="int">
 		select count(*) from qna_reply_tbl where qno=#{qno}
+	</select>
+	
+	<select id="myReply" resultType="com.green.vo.QnaReplyVO">
+		select * from qna_reply_tbl where r_writer=#{r_writer}
+	</select>
+	
+	<select id="replyTotal" resultType="int">
+		select count(*) from qna_reply_tbl where r_writer=#{r_writer} and
+		<include refid="criteria"></include>
+		rno>0
 	</select>
 </mapper>
