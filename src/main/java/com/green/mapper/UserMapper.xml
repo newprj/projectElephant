@@ -34,7 +34,7 @@
 	</insert>
 	
 	<update id="modify">
-		update tbl_user set password = #{password}, name = #{name}, email = #{email} where user_id = #{user_id}
+		update tbl_user set password = #{password}, name = #{name}, email = #{email}, profile=#{profile} where user_id = #{user_id}
 	</update>
 	
 	<delete id="delete">

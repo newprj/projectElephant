@@ -109,11 +109,7 @@
 				let fileInput = $('input[name="uploadFile"]');
 				let fileList = fileInput[0].files;
 				let fileObj = fileList[0];
-				/*
-				if(!fileCheck(fileObj.name, fileObj.size)){
-					return false;
-				}
-				*/
+		
 				formData.append("uploadFile", fileObj);
 				
 				$.ajax({
@@ -159,16 +155,7 @@
 				let str = "";
 				let fileCallPath = encodeURIComponent(obj.uploadPath + "/" + obj.uuid + "_" + obj.fileName);
 				let profilePath = `/display?fileName=\${fileCallPath}`
-				str += "<div id='result_card'>";
-				str += "<button type='button' class='imgDeleteBtn' data-file='" + fileCallPath + "'>변경 취소</button></br>";
-				str += "<img src='/display?fileName=" + fileCallPath +"' style='max-width: 30%; height: auto;'>";
-
-				str += "<input type='hidden' name='imageList[0].fileName' value='"+obj.fileName+"'> ";
-				str += "<input type='hidden' name='imageList[0].uuid' value='"+obj.uuid+"'> ";
-				str += "<input type='hidden' name='imageList[0].uploadPath' value='"+obj.uploadPath+"'> ";
-				str += "</div>"
-				
-				uploadResult.append(str);
+				$("body > form > div.form_section > div.form_section_title > img").attr('src', profilePath)
 				$('input[name="profile"]').val(profilePath)
 			}
 			$("#uploadResult").on("click", ".imgDeleteBtn", function(e){
@@ -210,12 +197,6 @@
    			<div class="form_section_content">
    			   	<label for="fileItem">사진 변경</label>
 				<input type="file" id ="fileItem" name='uploadFile' >
-				<div id="uploadResult">
-					<!-- <div id="result_card">
-						<div class="imgDeleteBtn">x</div>
-						<img src="/display?fileName=test.jpg">
-					</div> -->
-				</div>
    			</div>
    		</div> 
 	   

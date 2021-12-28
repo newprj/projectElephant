@@ -389,7 +389,7 @@ prefix="c" %>
 					? location.reload()
 					: sort === "pop"
 					? getPop()
-					: getCompleted();
+					: sort === "complete" ? getCompleted() : "";
 			});
 		});
 	</script>
