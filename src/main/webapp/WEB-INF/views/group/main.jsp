@@ -286,21 +286,15 @@ prefix="c" %>
 				</div>
 				<div id="defaultmenu" class="navbar-collapse collapse">
 					<ul class="nav navbar-nav">
+						
 						<li>
-							<a href="/mypage/user"> Home </a>
-						</li>
-
-						<li>
-							<a href="/mypage/userGroup"> Group</a>
+							<a href="/group/"> Group</a>
 						</li>
 
 						<li>
 							<a href="/qna/list"> Q&amp;A </a>
 						</li>
 
-						<li>
-							<a href="/mypage/allMessage"> Message </a>
-						</li>
 						<li>
 							<a href="/mypage/calendar"> Calendar </a>
 						</li>

@@ -75,7 +75,7 @@
           </div>
       </div>
 	
-	</div>
+	
 	
 	<div>
 		<ul class="pagination">
@@ -95,7 +95,7 @@
 			</c:if>
 		</ul>
 	</div>
-	
+	</div>
 	<form id='actionForm' action="/qna/list" method="get" >
 		<input type="hidden" name='pageNum' value='${pageMarker.cri.pageNum}'/>
 		<input type="hidden" name='amount' value='${pageMarker.cri.amount}'/>
