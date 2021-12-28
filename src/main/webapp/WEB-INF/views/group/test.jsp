@@ -115,64 +115,7 @@ prefix="c" %>
 	
 					<div class="right">
 				
-						<c:if test="${user!=null}">
-							<div class="btn-group">
-								<div class="dropdown">
-								<button
-									class="btn btn-outline-info dropdown-toggle"
-									type="button"
-									id="dropdownMenuButton"
-									data-toggle="dropdown"
-									aria-haspopup="true"
-									aria-expanded="false"
-								>
-									내 그룹
-								</button>
-								<div
-									class="dropdown-menu"
-									aria-labelledby="dropdownMenuButton"
-								>
-								<c:choose>
-									<c:when test="${empty myGroup}"
-										>
-										<a
-											class="dropdown-item"
-											>가입한 그룹이 없습니다 </a
-										>
-									</c:when>
-									<c:otherwise>
-									<c:forEach items="${myGroup}" var="mine">
-										<a
-											class="dropdown-item"
-											href="/group/${mine.group_name}"
-											>${mine.group_name}</a
-										>
-											</c:forEach>
-											</c:otherwise>
-											</c:choose>
-										</div>
-									</div>
-	
-								<div class="dropdown">
-									<button
-										class="btn btn-outline-info dropdown-toggle"
-										type="button"
-										id="dropdownMenuButton"
-										data-toggle="dropdown"
-										aria-haspopup="true"
-										aria-expanded="false"
-									>
-										MY
-									</button>
-									<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-										<a class="dropdown-item" href="/mypage/user">마이페이지</a>
-										<a class="dropdown-item" href="/user/modify">회원정보 수정</a>
-										<a class="dropdown-item" href="/user/logout">로그아웃</a>
-									</div>
-								</div>
-
-							</div>
-						</c:if>
+						
 					</div>
 					<!-- right -->
 				</div>
@@ -571,9 +514,9 @@ prefix="c" %>
 					eventDrop: evnetDropAndResizeHandler,
 				}); //calender
 				calendar.render();
-			}); //event
-
-			//calendar.refetchEvents()
+		
+		
+			});
 		</script>
 	</body>
 </html>

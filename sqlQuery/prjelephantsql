@@ -33,7 +33,7 @@ drop sequence SEQ_CNO;
 commit; 
 
 
--- spring database���� ��� table�� ���� �߽��ϴ�
+-- spring database���� ���? table�� ���� �߽��ϴ�
 --CREATE DATABASE spring CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 --- create , drop table and sequence
@@ -49,7 +49,7 @@ alter table tbl_user add(reg_Date timestamp);
 alter table tbl_user add suspension varchar2(50) default 'N' check(suspension in('Y','N'));
 alter table tbl_user add suspDate timestamp;
 alter table tbl_user add suspContent varchar2(100);
-alter table tbl_user add profile varchar(1000);
+alter table tbl_user add profile varchar2(1000);
 
 commit;
 create table tbl_group(
@@ -139,7 +139,7 @@ create sequence seq_cid;
 --- ���� ���� ���� /���� �� ������ �κ� �ּ����� �޾��ּ��� 
 --- select, update �� �׽�Ʈ�� ���� �������� ���� X
 
------ ���α��
+----- ���α��?
 --select * from tbl_group;
 --update tbl_group set authorized = 'Y' where gno =<40; 
 --select * from tbl_groupuser where group_name='����8' order by cno;
@@ -170,6 +170,6 @@ select * from letter_tbl;
 --update tbl_groupuser set leader ='Y' where user_id='test39';
 --delete from tbl_groupuser where authorized is null;
 --select * from tbl_groupuser where user_id='test5';
-update tbl_user set profile= null;
+-- update tbl_user set profile= null;
 
 commit;

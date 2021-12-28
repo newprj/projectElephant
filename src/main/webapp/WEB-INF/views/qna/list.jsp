@@ -49,9 +49,9 @@
                   <thead>
                       <tr>
                           <th>No.</th>
-                          <th>Position</th>
                           <th class="min-tablet">구분</th>
                           <th class="min-tablet">제목</th>
+                          <th class="min-tablet">작성자</th>
                           <th class="min-desktop">작성일</th>
                           <th class="min-desktop">조회수</th>
                       </tr>
@@ -75,7 +75,7 @@
           </div>
       </div>
 	
-	</div>
+	
 	
 	<div>
 		<ul class="pagination">
@@ -95,7 +95,7 @@
 			</c:if>
 		</ul>
 	</div>
-	
+	</div>
 	<form id='actionForm' action="/qna/list" method="get" >
 		<input type="hidden" name='pageNum' value='${pageMarker.cri.pageNum}'/>
 		<input type="hidden" name='amount' value='${pageMarker.cri.amount}'/>

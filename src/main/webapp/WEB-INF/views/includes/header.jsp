@@ -282,7 +282,7 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 	                <div id="defaultmenu" class="navbar-collapse collapse">
 	                    <ul class="nav navbar-nav">
 	                    	<li>
-                                  <a href="/group/"> Main</a>
+                                  <a href="/group/"> Group</a>
                             </li>
                             <li>
                                   <a href="/qna/list"> Q&A</a>

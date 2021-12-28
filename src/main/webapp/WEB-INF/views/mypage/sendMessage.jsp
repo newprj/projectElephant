@@ -34,13 +34,13 @@
                 <div class="mail-categories">
                     <ul class="list-group">
                         <li class="list-group-item">
-                            <a href="/mypage/allMessage"> <i class="fa fa-inbox"></i> 받은 메일 <span class="label label-info pull-right">6</span> </a>
+                            <a href="/mypage/allMessage"> <i class="fa fa-inbox"></i> 받은 메일</a>
                         </li>
                         <li class="list-group-item">
                             <a href="/mypage/sendMessage"> <i class="fa fa-envelope-o"></i> 보낸 메일 </a>
                         </li>
                         <li class="list-group-item">
-                            <a href="javascript:;"> <i class="fa fa-star"></i> Starred <span class="label label-danger pull-right">3</span> </a>
+                            <a href="javascript:;"> <i class="fa fa-star"></i> Starred </a>
                         </li>
                     </ul>
                 </div>
@@ -147,7 +147,7 @@
 			<c:forEach items="ch" >
 				var data={
 					lno:ch,
-					writer:'${user}'
+					writer:'${user.user_id}'
 				}
 				console.log(data)
 			</c:forEach>

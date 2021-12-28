@@ -367,14 +367,17 @@ pageEncoding="UTF-8"%>
 
 			<script>
 				let socket = new SockJS("http://localhost:8080/chat/${group_name}");
-				console.log(socket);
+				
 				const loginUser = "${user.user_id}";
 				const group = "${group_name}";
 				let msg = $("input.message");
 				let userprofile = {}
+				
+				
 				$.getJSON("/group/getMemberlistByGroup/" + group, (list) => {
 					console.log(list);
 					console.log(loginUser);
+					
 					list.memberList.map((user) => {
 						let img =
 							user.profile !== null
@@ -383,14 +386,15 @@ pageEncoding="UTF-8"%>
 						userprofile[user.user_id] = img;
 						const memberElement = $(
 							`<li class="clearfix">
-                <img src=\${img} alt="avatar">
-                <div class="about">
-                <div class="name">\${user.user_id}</div>
-                <div class="status"> <i class="fa fa-circle" id=\${user.user_id} aria-hidden="true"></i> </div>
-                </div></li>`
+				                <img src=\${img} alt="avatar">
+				                <div class="about">
+				                <div class="name">\${user.user_id}</div>
+				                <div class="status"> <i class="fa fa-circle" id=\${user.user_id} aria-hidden="true"></i> </div>
+				                </div></li>`
 						);
 						$("ul.list-unstyled").append(memberElement);
 					}); //map
+					
 					console.log(userprofile)
 				}); //getJSON
 

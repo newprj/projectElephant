@@ -220,14 +220,10 @@ pageEncoding="UTF-8"%>
 				// input file이 변할때
 				
 				// 글 작성
-
-
 				$(".create").click(function (e) {
 					e.preventDefault();
-
 					const title = $('input[name="title"]').val();
 					const content = myEditor.children[0].innerHTML;
-
 					if (title == "" || content == "<p><br></p>") {
 						if (title == "") {
 							$('input[name="title"]').focus();
@@ -256,7 +252,6 @@ pageEncoding="UTF-8"%>
 						}); //ajax
 					} //else
 				}); //click
-
 				const imageHandler = (e) => {
 					console.log(e);
 					let input = $('<input type="file" accept="image/*">');
@@ -266,7 +261,6 @@ pageEncoding="UTF-8"%>
 						let uploadFile = $(input)[0].files[0];
 						console.log("uploadFile", uploadFile);
 						formData.append("uploadFile", uploadFile);
-
 						$.ajax({
 							type: "post",
 							url: "/upload",
@@ -274,7 +268,6 @@ pageEncoding="UTF-8"%>
 							contentType: false,
 							data: formData,
 							dataType: "json",
-
 							success: (res) => {
 								console.log("2)");
 								console.log(res);
@@ -282,7 +275,6 @@ pageEncoding="UTF-8"%>
 									`\${res[0].uploadPath}/\${res[0].uuid}_\${res[0].fileName}`
 								);
 								const IMG_URL = `/display?fileName=\${encodURL}`;
-
 								let range = quill.getSelection();
 								console.log(range);
 								quill.insertEmbed(range, "image", IMG_URL);
@@ -291,12 +283,10 @@ pageEncoding="UTF-8"%>
 						}); // ajax
 					}); // click
 				}; //imageHandletr
-
 				$('input[name="notice"]').click((e) =>{
 					$(e.target).prop('checked') ? $('label.form-icon').addClass('active')
 																	: $('label.form-icon').removeClass('active')
 				})
-
 				const toolbarOptions = [
 					[{ header: [1, 2, 3, 4, 5, 6, false] }],
 					[{ list: "ordered" }, { list: "bullet" }],
@@ -316,7 +306,6 @@ pageEncoding="UTF-8"%>
 						},
 					},
 				});
-
 				let toolbar = quill.getModule("toolbar");
 				toolbar.addHandler("image", imageHandler);
 			}); // docu ready

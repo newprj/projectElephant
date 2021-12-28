@@ -21,10 +21,12 @@ prefix="c" %>
 		/>
 		<link href="/resources/assets/css/bootstrap.css" rel="stylesheet" />
 		<link href="/resources/stylesheets/style.css" rel="stylesheet" />
+		
 		<script
 			src="https://kit.fontawesome.com/eab4c34ae3.js"
 			crossorigin="anonymous"
 		></script>
+
 		<style>
 			body {
 				background-color: #f6f9fc;
@@ -36,7 +38,6 @@ prefix="c" %>
 				align-items: center;
 				padding: 50px 0;
 			}
-
 			div.wrapper {
 				width: 70%;
 				height: 90%;
@@ -46,7 +47,6 @@ prefix="c" %>
 				overflow-x: hidden;
 				overflow-y: hidden;
 			}
-
 			div.head {
 				color: #000;
 				border-left: 5px solid #5ec2dd;
@@ -60,7 +60,6 @@ prefix="c" %>
 				display: flex;
 				font-display: row;
 			}
-
 			#letter_modal {
 				background: rgba(0, 0, 0, 0.8);
 				display: none;
@@ -73,7 +72,6 @@ prefix="c" %>
 				bottom: 0;
 				z-index: 1;
 			}
-
 			#modal-content {
 				position: absolute;
 				display: felx;
@@ -88,6 +86,7 @@ prefix="c" %>
 			.content-body {
 				display: flex;
 				min-height: 700px;
+				padding: 10px 70px;
 			}
 			.content-left {
 				flex: 1;
@@ -100,7 +99,6 @@ prefix="c" %>
 			}
 			.notice-header {
 				margin-bottom: 0;
-
 				border-bottom: 1px solid rgba(0, 0, 0, 0.125);
 				border-bottom-width: 1px;
 				border-bottom-style: solid;
@@ -113,7 +111,22 @@ prefix="c" %>
 				padding: 10px 3em 8px 15px;
 				margin-bottom: 10px;
 			}
-		
+			.icon-wrap {
+				color: #fff;
+				background-color: #9cc96b;
+				border-radius: 100px 100px 0;
+				padding: 12px;
+				display: flex;
+				width: 50px;
+				align-items: center;
+				justify-content: center;
+				height: 50px;
+			}
+			.h4 {
+    font-size: 18px;
+    display: inline-block;
+    vertical-align: sub;
+			}
 		</style>
 	</head>
 
@@ -200,40 +213,63 @@ prefix="c" %>
 			<!--  head -->
 
 			<div class="content-body">
-				<div class="content-left member">
-					<ul style="list-style: none; padding-left: 10px;">
-						<c:forEach items="${group.userList}" var="user">
-							<li data-user="${user.user_id}" style="cursor: pointer;">
-								<c:choose>
-									<c:when test="${user.profile eq null}">
-										<img class="avatar avatar-24 bg-light rounded-circle text-white p-1"
-											id="${user.user_id}"
-     								src="https://raw.githubusercontent.com/twbs/icons/main/icons/person-fill.svg">
-									</c:when>
-									<c:otherwise>
-										<img src="${user.profile}" style="width: 24px; height: 24px; border-radius: 50%;" id="${user.user_id}">
-									</c:otherwise>
-								</c:choose>
-								${user.user_id}
-							</li>
-						</c:forEach>
-					</ul>
-				</div>
 				<div class="content-center">
-					<div >
-					
-					
-						<div style="display: flex; justify-content: space-between; width: 90%;">
-							<span> 	<img
-								src="${group.profile}"
-								style="
-									width: 50px;
-									height: 50px;
-									border-radius: 50%;
-									border: 2px solid #5ec2dd;
-								"
-							/>	&nbsp;&nbsp;${group.group_name} 공지사항</span>
-							<button class="btn btn-outline-info" onclick="location.href='/group/board/${group_name}'"> <i class="fa fa-file-text-o"></i> 게시판 </button>
+					<div>
+						<div
+							style="display: flex; justify-content: space-between; width: 90%"
+						>
+						<div class="panel media pad-all">
+							<div class="media-left">
+								<span class="icon-wrap">
+									<i class="fas fa-check"></i>
+								</span>
+							</div>
+							<div class="media-body">
+								<p class="text-2x mar-no text-thin text-right"></p>
+								<p class="h4 mar-no text-right">&nbsp&nbsp${group.group_name} 공지사항</p>
+							</div>
+						</div>
+								
+
+							
+							<div
+								style="display: flex; flex-direction: row;  align-items: baseline;"
+							>
+								<div class="dropdown">
+									<button
+										class="btn btn-outline-info dropdown-toggle"
+										type="button"
+										id="dropdownMenuButton"
+										data-toggle="dropdown"
+										aria-haspopup="true"
+										aria-expanded="false"
+									>
+										<i class="far fa-envelope"></i> 쪽지
+									</button>
+									<div
+										class="dropdown-menu letter"
+										aria-labelledby="dropdownMenuButton"
+									>
+										<c:forEach items="${group.userList}" var="users">
+											<c:if test="${users.user_id ne user}">
+												<a
+													data-user="${users.user_id}"
+													style="cursor: pointer"
+													class="dropdown-item"
+													>${users.user_id}</a
+												>
+											</c:if>
+										</c:forEach>
+									</div>
+								</div>
+
+								<button
+									class="btn btn-outline-info"
+									onclick="location.href='/group/board/${group_name}'"
+								>
+									<i class="fa fa-file-text-o"></i> 게시판
+								</button>
+							</div>
 						</div>
 					</div>
 					<c:choose>
@@ -260,7 +296,12 @@ prefix="c" %>
 											aria-labelledby="heading"
 											data-parent="#accordion"
 										>
-											<div class="card-body" style="max-height: 380px; overflow-y: auto">${board.content}</div>
+											<div
+												class="card-body"
+												style="max-height: 380px; overflow-y: auto"
+											>
+												${board.content}
+											</div>
 										</div>
 									</div>
 								</div>
@@ -269,22 +310,35 @@ prefix="c" %>
 						</c:when>
 						<c:otherwise>
 							<div>
-								<h4>등록된 공지글이 없습니다
-								</h4>
-								</div>
+								<h4>등록된 공지글이 없습니다</h4>
+							</div>
 						</c:otherwise>
 					</c:choose>
-
 				</div>
 				<div class="content-right">
-					<h4>최근일정</h4>
+				
+					<div>
+						
+						<div class="panel media pad-all">
+							<div class="media-left">
+								<span class="icon-wrap">
+									<i class="fa fa-calendar-o"></i>
+								</span>
+							</div>
+							<div class="media-body">
+								<p class="text-2x mar-no text-thin text-right"> </p>
+								<p class="h4 mar-no text-right" style="display : flex;     justify-content: space-between;"> <span> &nbsp&nbsp 최근일정</span> <span> <a href="/group/test/${group_name}"></span> <i class="fa fa-calendar-o"></i> 일정 </a></span></p>
+							</div>
+						</div>
+					</div>
+
+				
 					<div>
 						<h5>오늘의 일정</h5>
 						<ul class="today" style="list-style: none"></ul>
 						<h5>다가오는 일정</h5>
 						<ul class="latest" style="list-style: none"></ul>
 					</div>
-					<a href="/group/test/${group_name}"> <i class="fa fa-calendar-o"></i> 일정 더보기 </a>
 				</div>
 			</div>
 			<!-- content-body -->
@@ -346,8 +400,7 @@ prefix="c" %>
 		<script>
 			let loginUser = "${user}";
 			let group = "${group_name}";
-			$('#${group.leader}').css("outline" , "2px solid cornflowerblue")
-
+			$("#${group.leader}").css("outline", "2px solid cornflowerblue");
 			$.getJSON(`/group/getMemberlistByGroup/\${group}`, (list) => {
 				let joinCheck = list.memberList.find(
 					(user) => user.user_id === loginUser
@@ -357,11 +410,8 @@ prefix="c" %>
 					location.href = "/group/";
 				}
 			});
-
 			const today = new Date().toISOString().split("T")[0];
-
 			console.log(today);
-
 			$.getJSON(`/group/getLatestEvent/\${group}`, (list) => {
 				const todayEvent = list.filter((i) => i.startDate === today);
 				console.log(todayEvent);
@@ -369,7 +419,6 @@ prefix="c" %>
 					let noEvent = $("<li> 오늘의 일정이 없습니다 </li>");
 					$("ul.today").append(noEvent);
 				}
-
 				todayEvent.map((event) => {
 					const { title, description_ } = event;
 					let todayLi = $(
@@ -377,7 +426,6 @@ prefix="c" %>
 					);
 					$("ul.today").append(todayLi);
 				});
-
 				const latestEvent = list
 					.filter((i) => i.startDate !== today)
 					.sort((a, b) => {
@@ -386,12 +434,10 @@ prefix="c" %>
 						return aDate - bDate;
 					})
 					.slice(0, 10);
-
 				if (latestEvent.length == 0 || latestEvent == null) {
 					let noEvent = $("<li> 다가오는 일정이 없습니다 </li>");
 					$("ul.latest").append(noEvent);
 				}
-
 				latestEvent.map((event) => {
 					const { title, description_ } = event;
 					let eventLi = $(
@@ -400,9 +446,7 @@ prefix="c" %>
 					$("ul.latest").append(eventLi);
 				});
 			}); // getJSON
-
 			// 채팅
-
 			let popup;
 			$("button.getChat").click((e) => {
 				popup = window.open(
@@ -412,20 +456,17 @@ prefix="c" %>
 				);
 				console.log(popup);
 			});
-
-			$("div.member li").click((e) => {
+			$("div.letter >a").click((e) => {
 				$('input[name="recipientId').val($(e.target).data("user"));
 				$("input[name='writeId']").val("${user}");
 				$("#letter_modal").show();
 			});
-
 			const getLetter = () => ({
 				writer: "${user}",
 				recipient: $('input[name="recipientId').val(),
 				content: $('textarea[name="letterContent"]').val(),
 				reg_date: new Date(),
 			});
-
 			$("#letterRegister").click((e) => {
 				e.preventDefault();
 				const letter = getLetter();
@@ -447,7 +488,6 @@ prefix="c" %>
 					},
 				});
 			});
-
 			$(".closeModal").click((e) => {
 				e.preventDefault();
 				$("#letter_modal").hide();
@@ -456,6 +496,7 @@ prefix="c" %>
 					this.reset();
 				});
 			});
+		
 		</script>
 	</body>
 </html>

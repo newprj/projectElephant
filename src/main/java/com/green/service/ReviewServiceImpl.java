@@ -30,7 +30,7 @@ public class ReviewServiceImpl implements ReviewService{
 	@Override
 	public void register(ReviewVO vo) {
 		reviewMapper.insert(vo);
-		
+		System.out.println(vo.getAttachList());
 		if(vo.getAttachList()==null || vo.getAttachList().size()<=0) {
 			return;
 		}

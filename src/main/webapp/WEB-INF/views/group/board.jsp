@@ -49,7 +49,6 @@ uri="http://java.sun.com/jsp/jstl/functions"%>
 				align-items: center;
 				color: #222;
 			}
-
 			.pagenate {
 				display: inline-block;
 				padding: 10px 18px;
@@ -71,7 +70,6 @@ uri="http://java.sun.com/jsp/jstl/functions"%>
 				margin-bottom: 10px;
 			}
  
-
 		</style>
 	</head>
 	<body>
@@ -151,7 +149,7 @@ uri="http://java.sun.com/jsp/jstl/functions"%>
                     <td></td>
                     <td>
                       <i class="fas fa-check"></i>
-                      <span class="list" data="${board.bno}">
+                      <span class="list" data="${board.bno}" style="cursor: pointer;">
                         ${board.title}
                       </span>
                       <c:if
@@ -170,7 +168,7 @@ uri="http://java.sun.com/jsp/jstl/functions"%>
 								<tr>
                   <td></td>
 									<td>
-										<span class="list" data="${board.bno}">
+										<span class="list" data="${board.bno}"  style="cursor: pointer;"> 
 											${board.title}
 										</span>
 										<c:if
@@ -215,9 +213,7 @@ uri="http://java.sun.com/jsp/jstl/functions"%>
 				let actionForm = $("#actionForm");
 				let pageNum = "${cri.pageNum}";
 				let amount = "${cri.amount}";
-
 				let loginUser = "${user}";
-
 				$.getJSON("/group/getMemberlistByGroup/${name}", (list) => {
 					console.log(list.memberList);
 					console.log(loginUser);
@@ -229,39 +225,31 @@ uri="http://java.sun.com/jsp/jstl/functions"%>
 						location.href = "/group/";
 					}
 				});
-
 				$("span.goGroup").click((e) => {
 					location.href = `/group/${name}`;
 				});
-
 			
 				$(".list").click(function (e) {
 					bno = $(this).attr("data");
 					let type = "${cri.type}";
 					let keyword = "${cri.keyword}";
-
 					let url =
 						type && keyword
 							? `/group/board/${name}/\${bno}/\${pageNum}/\${amount}/\${type}/\${keyword}`
 							: `/group/board/${name}/\${bno}/\${pageNum}/\${amount}`;
-
 					location.href = url;
 				}); //list.click
-
 				$("a.pagenate").click(function (e) {
 					e.preventDefault();
 					let type = "${cri.type}";
 					let keyword = "${cri.keyword}";
-
 					let pageNum = $(this).attr("href");
 					let url =
 						type && keyword
 							? `/group/board/${name}/\${pageNum}/\${amount}/\${type}/\${keyword}`
 							: `/group/board/${name}/\${pageNum}/\${amount}`;
-
 					location.href = url;
 				}); // a click
-
 				let searchForm = $("form.searchForm");
 				$(".dropdown-menu >li >a").click((e) => {
 					e.preventDefault();

@@ -61,7 +61,6 @@ prefix="c" %>
 				padding: 50px 0;
 				font-size: 14px;
 			}
-
 			div.wrapper {
 				width: 70%;
 			
@@ -71,7 +70,6 @@ prefix="c" %>
 				overflow-x: hidden;
 				overflow-y: hidden;
 			}
-
 			div.head {
 				color: #000;
 				border-left: 5px solid #5ec2dd;
@@ -93,7 +91,6 @@ prefix="c" %>
 			a {
 				text-decoration: none;
 			}
-
 			.group-list {
 				max-width: 1240px;
 				margin: 0 auto;
@@ -105,7 +102,6 @@ prefix="c" %>
 				list-style: none;
 				padding-bottom: 3rem;
 			}
-
 			.group {
 				display: inline-block;
 				width: 90%;
@@ -118,12 +114,10 @@ prefix="c" %>
 					0 1px 3px rgba(0, 0, 0, 0.08);
 				transition: transform 0.1s ease-in-out, box-shadow 0.1s;
 			}
-
 			.group:hover {
 				transform: translateY(-0.5rem) scale(1.0125);
 				box-shadow: 0 0.5em 3rem -1rem rgba(0, 0, 0, 0.5);
 			}
-
 			.group-image {
 				display: flex;
 				padding: 0;
@@ -131,11 +125,9 @@ prefix="c" %>
 				background: #fff center center no-repeat;
 				background-size: cover;
 			}
-
 			.group-image:hover {
 				backdrop-filter: blur(10px);
 			}
-
 			.group-description {
 				display: flex;
 				align-items: center;
@@ -146,7 +138,6 @@ prefix="c" %>
 				width: 100%;
 				height: 100%;
 			}
-
 			.group-description:hover {
 				z-index: 3;
 				font-family: "Noto Sans KR", sans-serif;
@@ -154,23 +145,19 @@ prefix="c" %>
 				-webkit-backdrop-filter: blur(10px);
 				backdrop-filter: blur(10px);
 			}
-
 			.group-description > h2 {
 				margin: 0 0 0.5em;
 			}
-
 			.group-description > p {
 				margin: 0;
 				color: black;
 			}
-
 			ul#portfolioFilter span {
 				cursor: pointer;
 				font-size: 14px;
 				color: #333;
 				font-family: "Montserrat", sans-serif;
 			}
-
 			div.link {
 				display: flex;
 				justify-content: center;
@@ -286,21 +273,15 @@ prefix="c" %>
 				</div>
 				<div id="defaultmenu" class="navbar-collapse collapse">
 					<ul class="nav navbar-nav">
+						
 						<li>
-							<a href="/mypage/user"> Home </a>
-						</li>
-
-						<li>
-							<a href="/mypage/userGroup"> Group</a>
+							<a href="/group/"> Group</a>
 						</li>
 
 						<li>
 							<a href="/qna/list"> Q&amp;A </a>
 						</li>
 
-						<li>
-							<a href="/mypage/allMessage"> Message </a>
-						</li>
 						<li>
 							<a href="/mypage/calendar"> Calendar </a>
 						</li>
@@ -378,7 +359,6 @@ prefix="c" %>
 						});
 				}); //getJSON
 			}; //getPop
-
 			const getCompleted = () => {
 				$.getJSON("/group/main/getGroupAll", (list) => {
 					if (list.completed == null || list.completed.length < 1) {
@@ -401,7 +381,6 @@ prefix="c" %>
 					});
 				}); //getJSON
 			};
-
 			$("#filter_wrapper li span").on("click", function () {
 				$("span.current").removeClass("current");
 				$(this).addClass("current");
@@ -410,7 +389,7 @@ prefix="c" %>
 					? location.reload()
 					: sort === "pop"
 					? getPop()
-					: getCompleted();
+					: sort === "complete" ? getCompleted() : "";
 			});
 		});
 	</script>

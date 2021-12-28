@@ -5,7 +5,7 @@
 	<mapper namespace="com.green.mapper.ReviewReplyMapper">
 	
 	<insert id="insert">
-		insert into review_reply values(seq_cno.nextval, #{rno}, #{writer},#{content},sysdate)
+		insert into review_reply values(seq_acno.nextval, #{rno}, #{writer},#{content},sysdate)
 	</insert>
 	
 	<select id="read" resultType="com.green.vo.ReviewReplyVO">

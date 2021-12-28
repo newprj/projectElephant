@@ -35,7 +35,7 @@
 				<td><a href="/user/view?uno=${list.uno}"><c:out value="${list.user_id}" /></td>
 				<td><c:out value="${list.name}" /></td>
 				<td><c:out value="${list.email}"/></td>
-				<td><fmt:formatDate value="${list.regDate}" pattern="yyyy-MM-dd"/></td>
+				<td><fmt:formatDate value="${list.reg_Date}" pattern="yyyy-MM-dd"/></td>
 			</tr>
 		</c:forEach>
 	</table>

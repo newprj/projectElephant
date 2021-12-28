@@ -54,7 +54,6 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 	                    	<li class="dropdown">
 		                        <a href="#" data-toggle="dropdown" class="dropdown-toggle">
 		                        <i class="fa fa-envelope fa-lg"></i>
-		                        <span class="badge badge-header badge-warning">9</span>
 		                        </a>
 		                        <!--Message dropdown menu-->
 		                        <div class="dropdown-menu dropdown-menu-md with-arrow">
@@ -151,7 +150,7 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 
 	                    <li class="dropdown">
-	                        <a href="#" data-toggle="dropdown" class="dropdown-toggle"> <i class="fa fa-bell fa-lg"></i> <span class="badge badge-header badge-danger">5</span> </a>
+	                        <a href="#" data-toggle="dropdown" class="dropdown-toggle"> <i class="fa fa-bell fa-lg"></i>  </a>
 	                        <!--Notification dropdown menu-->
 	                        <div class="dropdown-menu dropdown-menu-md with-arrow">
 	                            <div class="pad-all bord-btm">

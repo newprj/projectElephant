@@ -35,7 +35,6 @@ pageEncoding="UTF-8"%>
     .form-container {
       width: 500px;
     }
-
     .row {
         margin-top: 15px;
       }
@@ -157,7 +156,6 @@ pageEncoding="UTF-8"%>
 					let formData = new FormData();
 					let uploadFile = $(profileImg)[0].files[0];
 					formData.append("uploadFile", uploadFile);
-
 					$.ajax({
 						type: "post",
 						url: "/upload",
@@ -165,7 +163,6 @@ pageEncoding="UTF-8"%>
 						contentType: false,
 						data: formData,
 						dataType: "json",
-
 						success: (res) => {
 							console.log(" 2 프로필)");
 							console.log(res);
@@ -194,7 +191,6 @@ pageEncoding="UTF-8"%>
 				$(input).change(function (e) {
 					let formData = new FormData();
 					let uploadFile = $(input)[0].files[0];
-
 					formData.append("uploadFile", uploadFile);
 	
 					$.ajax({
@@ -204,7 +200,6 @@ pageEncoding="UTF-8"%>
 						contentType: false,
 						data: formData,
 						dataType: "json",
-
 						success: (res) => {
 						 	console.log("2)");
 							console.log(res);
@@ -222,7 +217,6 @@ pageEncoding="UTF-8"%>
 					}); // ajax
 				}); // click
 			}; //imageHandletr
-
 			const toolbarOptions = [
 				[{ header: [1, 2, 3, 4, 5, 6, false] }],
 				[{ list: "ordered" }, { list: "bullet" }],
@@ -232,7 +226,6 @@ pageEncoding="UTF-8"%>
 				["image"],
 				["clean"],
 			];
-
 			let quill = new Quill("#editor", {
 				theme: "snow",
 				modules: {
@@ -243,7 +236,6 @@ pageEncoding="UTF-8"%>
 					},
 				},
 			});
-
 			let toolbar = quill.getModule("toolbar");
 			toolbar.addHandler("image", imageHandler);
 			
@@ -281,7 +273,6 @@ pageEncoding="UTF-8"%>
 						}, //error
 					}); //ajax
 				}); // modify c*/
-
 			
 			
 			

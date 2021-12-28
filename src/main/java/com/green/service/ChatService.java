@@ -2,7 +2,6 @@ package com.green.service;
 
 import java.util.List;
 
-import com.green.vo.AttachFileDTO;
 import com.green.vo.ChatRoomVO;
 import com.green.vo.ChatVO;
 

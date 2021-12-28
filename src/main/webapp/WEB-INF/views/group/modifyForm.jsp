@@ -181,7 +181,6 @@ prefix="c" %>
 			
 				const uploadClone = $(".file").clone();
 				var myEditor = document.querySelector("#editor");
-
 				getFileList("${cri.bno}");
 				
 				
@@ -210,7 +209,6 @@ prefix="c" %>
 							error: (xhr, status, er) => console.log(xhr),
 						});
 					// 업로드한 파일 삭제할경우
-
 					$(".uploadResult").on("click", "button", function (e) {
 						e.preventDefault();
 						console.log("뭐가 눌림")
@@ -248,7 +246,6 @@ prefix="c" %>
 					writer: $('input[name="writer"]').val(),
 					title: $('input[name="title"]').val(),
 				});
-
 				$(".modify").click(function (e) {
 					e.preventDefault();
 					let modified = getForm();
@@ -292,7 +289,6 @@ prefix="c" %>
 						},
 					});
 				}); //uploadResult click
-
 				$(".delete").click(function (e) {
 					e.preventDefault();
 					$.ajax({
@@ -314,7 +310,6 @@ prefix="c" %>
 					url += "${cri.keyword}" ? "/${cri.type}/${cri.keyword}" : ""
 					location.href = url
 				});
-
 				const imageHandler = (e) => {
 					console.log(e);
 					let input = $('<input type="file" accept="image/*">');
@@ -322,9 +317,7 @@ prefix="c" %>
 					$(input).change( (e) =>{
 						let formData = new FormData();
 						let uploadFile = $(input)[0].files[0];
-
 						formData.append("uploadFile", uploadFile);
-
 						$.ajax({
 							type: "post",
 							url: "/upload",
@@ -332,7 +325,6 @@ prefix="c" %>
 							contentType: false,
 							data: formData,
 							dataType: "json",
-
 							success: (res) => {
 								console.log("2)");
 								console.log(res);
@@ -340,7 +332,6 @@ prefix="c" %>
 									`\${res[0].uploadPath}/\${res[0].uuid}_\${res[0].fileName}`
 								);
 								const IMG_URL = `/display?fileName=\${encodURL}`;
-
 								let range = quill.getSelection();
 								console.log(range);
 								quill.insertEmbed(range, "image", IMG_URL);
@@ -349,7 +340,6 @@ prefix="c" %>
 						}); // ajax
 					}); // click
 				}; //imageHandletr
-
 				const toolbarOptions = [
 					[{ header: [1, 2, 3, 4, 5, 6, false] }],
 					[{ list: "ordered" }, { list: "bullet" }],
@@ -369,12 +359,10 @@ prefix="c" %>
 						},
 					},
 				});
-
 				$.getJSON("/group/getBoard/${board.bno}", (res) => {
 					let content = res.content;
 					quill.container.firstChild.innerHTML = content;
 				});
-
 				let toolbar = quill.getModule("toolbar");
 				toolbar.addHandler("image", imageHandler);
 			}); // docu ready

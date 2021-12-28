@@ -37,11 +37,11 @@ public class GroupChatHandler extends TextWebSocketHandler{
 	// 전송했을 때 
 	@Override
 	public void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception{
+
 		ObjectMapper objectMapper = new ObjectMapper();
 		MessageDTO msg = objectMapper.readValue(message.getPayload(), MessageDTO.class);
 		
-		//json을 객체로 저장함 
-		System.out.println(message.getPayload());
+		
 		if(roomList.get(msg.getGroup()) == null) {
 			ArrayList<WebSocketSession> sList = new ArrayList<WebSocketSession>();
 			sList.add(session);
