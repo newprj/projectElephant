@@ -1,4 +1,4 @@
-create table tbl_review( /*¸®ºä¿¡ ´ëÇÑ Å×ÀÌºí*/
+create table tbl_review( /*ï¿½ï¿½ï¿½ä¿¡ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½*/
     rno number,
     group_name varchar2(30),
     title varchar2(200),
@@ -10,28 +10,24 @@ create sequence seq_rno;
 
 alter table tbl_review add reply_count int DEFAULT '0';
 alter table tbl_review add view_count int DEFAULT '0';
+alter table tbl_review add attachedFile int DEFAULT '0';
 
 
+create table review_reply( /*ï¿½ï¿½ï¿½ä¿¡ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½*/
+    cno number,
+    rno number,
+    writer varchar2(30),
+    content varchar2(2000),
+    regdate date default sysdate ); 
+create sequence seq_acno;
+    
+    
 
-
-create table attachFile(/*Ã·ºÎÆÄÀÏ¿¡ ´ëÇÑ Å×ÀÌºí*/
+create table attachFile(/*Ã·ï¿½ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºï¿½*/
     rno number,
     fileName varchar2(100),
     uploadPath varchar2(20),
     uuid varchar2(50),
     fileSize number );
 
-create sequence seq_cno;
 
-
-
-
-    create table cpage( /*¼Ò¸ğÀÓÀå ÆäÀÌÁö¿¡ ´ëÇÑ Å×ÀÌºí*/ 
-    rno number,
-    group_name varchar2(30),
-    member varchar2(50),
-    captain varchar2(2)default 'N',
-    Membership varchar2(2) default 'N'
-    );    
-
- create sequence seq_cpno;
