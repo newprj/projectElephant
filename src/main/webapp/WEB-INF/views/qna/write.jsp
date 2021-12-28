@@ -129,6 +129,8 @@ li {
 				let uploadFile=$(input)[0].files[0];
 				formData.append("uploadFile", uploadFile);
 				
+				attachList = attachList.filter((i) => i.uuid !== uuid);
+
 				$.ajax({
 					url:'/upload/uploadAjaxAction',
 					processData:false,
@@ -154,6 +156,8 @@ li {
 				})
 			})
 		};
+		
+		
 			/* 파일 삭제 */
 		$(".uploadResult").on("click","button",function(e){
 			console.log('파일 삭제')
@@ -195,6 +199,7 @@ li {
 					str+="<input type='hidden' name='attachList["+i+"].fileType' value='"+jobj.data("type")+"'>"
 				})
 				
+		
 				
 				$('input[name="q_content"]').val(myEditor.children[0].innerHTML);
 				console.log($('input[name="q_content"]').val());

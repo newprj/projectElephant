@@ -151,6 +151,7 @@ $(document).ready(function () {
 			$("#modForm").append(str);
 			$("#modForm").append(choice);
 			$("#modForm").append("<input type='hidden' name='up_date' pattern ='yy/MM/dd hh:mm' value='"+today+"'/>");
+			$("#modForm").append("<input type='hidden' name='qno' pattern ='yy/MM/dd hh:mm' value='"+${get.qno}+"'/>");
 			$("#modForm").submit()
 		})
 		

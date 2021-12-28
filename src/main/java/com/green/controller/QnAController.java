@@ -60,9 +60,7 @@ public class QnAController {
 	@PostMapping("/write")
 	public String writepost(QnaVO vo,RedirectAttributes rttr) {
 		
-		log.info("받은 게시글 내용"+vo);
-		if(vo.getAttachList()!=null) vo.getAttachList().forEach(i->log.info(""+i));
-		
+			
 		service.insertQna(vo);
 		rttr.addFlashAttribute("result",vo.getQno());
 		return "redirect:/qna/list";
