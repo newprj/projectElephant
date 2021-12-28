@@ -21,10 +21,12 @@ prefix="c" %>
 		/>
 		<link href="/resources/assets/css/bootstrap.css" rel="stylesheet" />
 		<link href="/resources/stylesheets/style.css" rel="stylesheet" />
+		
 		<script
 			src="https://kit.fontawesome.com/eab4c34ae3.js"
 			crossorigin="anonymous"
 		></script>
+
 		<style>
 			body {
 				background-color: #f6f9fc;
@@ -88,6 +90,7 @@ prefix="c" %>
 			.content-body {
 				display: flex;
 				min-height: 700px;
+				padding: 10px 70px;
 			}
 			.content-left {
 				flex: 1;
@@ -113,7 +116,22 @@ prefix="c" %>
 				padding: 10px 3em 8px 15px;
 				margin-bottom: 10px;
 			}
-		
+			.icon-wrap {
+				color: #fff;
+				background-color: #9cc96b;
+				border-radius: 100px 100px 0;
+				padding: 12px;
+				display: flex;
+				width: 50px;
+				align-items: center;
+				justify-content: center;
+				height: 50px;
+			}
+			.h4 {
+    font-size: 18px;
+    display: inline-block;
+    vertical-align: sub;
+			}
 		</style>
 	</head>
 
@@ -200,40 +218,63 @@ prefix="c" %>
 			<!--  head -->
 
 			<div class="content-body">
-				<div class="content-left member">
-					<ul style="list-style: none; padding-left: 10px;">
-						<c:forEach items="${group.userList}" var="user">
-							<li data-user="${user.user_id}" style="cursor: pointer;">
-								<c:choose>
-									<c:when test="${user.profile eq null}">
-										<img class="avatar avatar-24 bg-light rounded-circle text-white p-1"
-											id="${user.user_id}"
-     								src="https://raw.githubusercontent.com/twbs/icons/main/icons/person-fill.svg">
-									</c:when>
-									<c:otherwise>
-										<img src="${user.profile}" style="width: 24px; height: 24px; border-radius: 50%;" id="${user.user_id}">
-									</c:otherwise>
-								</c:choose>
-								${user.user_id}
-							</li>
-						</c:forEach>
-					</ul>
-				</div>
 				<div class="content-center">
-					<div >
-					
-					
-						<div style="display: flex; justify-content: space-between; width: 90%;">
-							<span> 	<img
-								src="${group.profile}"
-								style="
-									width: 50px;
-									height: 50px;
-									border-radius: 50%;
-									border: 2px solid #5ec2dd;
-								"
-							/>	&nbsp;&nbsp;${group.group_name} 공지사항</span>
-							<button class="btn btn-outline-info" onclick="location.href='/group/board/${group_name}'"> <i class="fa fa-file-text-o"></i> 게시판 </button>
+					<div>
+						<div
+							style="display: flex; justify-content: space-between; width: 90%"
+						>
+						<div class="panel media pad-all">
+							<div class="media-left">
+								<span class="icon-wrap">
+									<i class="fas fa-check"></i>
+								</span>
+							</div>
+							<div class="media-body">
+								<p class="text-2x mar-no text-thin text-right"></p>
+								<p class="h4 mar-no text-right">&nbsp&nbsp${group.group_name} 공지사항</p>
+							</div>
+						</div>
+								
+
+							
+							<div
+								style="display: flex; flex-direction: row;  align-items: baseline;"
+							>
+								<div class="dropdown">
+									<button
+										class="btn btn-outline-info dropdown-toggle"
+										type="button"
+										id="dropdownMenuButton"
+										data-toggle="dropdown"
+										aria-haspopup="true"
+										aria-expanded="false"
+									>
+										<i class="far fa-envelope"></i> 쪽지
+									</button>
+									<div
+										class="dropdown-menu letter"
+										aria-labelledby="dropdownMenuButton"
+									>
+										<c:forEach items="${group.userList}" var="users">
+											<c:if test="${users.user_id ne user}">
+												<a
+													data-user="${users.user_id}"
+													style="cursor: pointer"
+													class="dropdown-item"
+													>${users.user_id}</a
+												>
+											</c:if>
+										</c:forEach>
+									</div>
+								</div>
+
+								<button
+									class="btn btn-outline-info"
+									onclick="location.href='/group/board/${group_name}'"
+								>
+									<i class="fa fa-file-text-o"></i> 게시판
+								</button>
+							</div>
 						</div>
 					</div>
 					<c:choose>
@@ -260,7 +301,12 @@ prefix="c" %>
 											aria-labelledby="heading"
 											data-parent="#accordion"
 										>
-											<div class="card-body" style="max-height: 380px; overflow-y: auto">${board.content}</div>
+											<div
+												class="card-body"
+												style="max-height: 380px; overflow-y: auto"
+											>
+												${board.content}
+											</div>
 										</div>
 									</div>
 								</div>
@@ -269,22 +315,35 @@ prefix="c" %>
 						</c:when>
 						<c:otherwise>
 							<div>
-								<h4>등록된 공지글이 없습니다
-								</h4>
-								</div>
+								<h4>등록된 공지글이 없습니다</h4>
+							</div>
 						</c:otherwise>
 					</c:choose>
-
 				</div>
 				<div class="content-right">
-					<h4>최근일정</h4>
+				
+					<div>
+						
+						<div class="panel media pad-all">
+							<div class="media-left">
+								<span class="icon-wrap">
+									<i class="fa fa-calendar-o"></i>
+								</span>
+							</div>
+							<div class="media-body">
+								<p class="text-2x mar-no text-thin text-right"> </p>
+								<p class="h4 mar-no text-right" style="display : flex;     justify-content: space-between;"> <span> &nbsp&nbsp 최근일정</span> <span> <a href="/group/test/${group_name}"></span> <i class="fa fa-calendar-o"></i> 일정 </a></span></p>
+							</div>
+						</div>
+					</div>
+
+				
 					<div>
 						<h5>오늘의 일정</h5>
 						<ul class="today" style="list-style: none"></ul>
 						<h5>다가오는 일정</h5>
 						<ul class="latest" style="list-style: none"></ul>
 					</div>
-					<a href="/group/test/${group_name}"> <i class="fa fa-calendar-o"></i> 일정 더보기 </a>
 				</div>
 			</div>
 			<!-- content-body -->
@@ -345,8 +404,9 @@ prefix="c" %>
 
 		<script>
 			let loginUser = "${user}";
+
 			let group = "${group_name}";
-			$('#${group.leader}').css("outline" , "2px solid cornflowerblue")
+			$("#${group.leader}").css("outline", "2px solid cornflowerblue");
 
 			$.getJSON(`/group/getMemberlistByGroup/\${group}`, (list) => {
 				let joinCheck = list.memberList.find(
@@ -413,7 +473,7 @@ prefix="c" %>
 				console.log(popup);
 			});
 
-			$("div.member li").click((e) => {
+			$("div.letter >a").click((e) => {
 				$('input[name="recipientId').val($(e.target).data("user"));
 				$("input[name='writeId']").val("${user}");
 				$("#letter_modal").show();
@@ -456,6 +516,9 @@ prefix="c" %>
 					this.reset();
 				});
 			});
+
+		
+
 		</script>
 	</body>
 </html>

@@ -90,17 +90,17 @@
 	</select>
 
 <select id="list" resultType="com.green.vo.UserVO">
-		select uno, user_id, name, email, regDate from tbl_user order by uno
+		select uno, user_id, name, email, reg_date from tbl_user order by uno
 	</select>
 
 	<select id="view" parameterType="int" resultType="com.green.vo.UserVO">
-		select uno, user_id, name, email, regDate, profile from tbl_user where uno = #{uno}
+		select uno, user_id, name, email, reg_date, profile from tbl_user where uno = #{uno}
 	</select>
 	
 		<select id="listPage" resultType="com.green.vo.UserVO" parameterType="com.green.vo.Cri">
-		select uno, user_id, name, email, regDate 
+		select uno, user_id, name, email, reg_date 
 		from(
-			select uno, user_id, name, email, regDate, row_number() over(order by uno asc) as rNum from tbl_user) tu
+			select uno, user_id, name, email, reg_date, row_number() over(order by uno asc) as rNum from tbl_user) tu
 				where rNum between #{rowStart} and #{rowEnd} order by uno asc
 	</select>
 
@@ -111,8 +111,8 @@
 	</select>
 
 		<select id="listSearch" resultType="com.green.vo.UserVO" parameterType="com.green.vo.SCri">
-		select uno, user_id, name, email, regDate 
-		from(select uno, user_id, name, email, regDate, row_number() over(order by uno asc) as rNum from tbl_user
+		select uno, user_id, name, email, reg_date 
+		from(select uno, user_id, name, email, reg_date, row_number() over(order by uno asc) as rNum from tbl_user
 		<include refid="search"></include>) tu where rNum between #{rowStart} and #{rowEnd} order by uno asc
 	</select>
 	<sql id="search">
