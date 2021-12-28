@@ -49,9 +49,9 @@
                   <thead>
                       <tr>
                           <th>No.</th>
-                          <th>Position</th>
                           <th class="min-tablet">구분</th>
                           <th class="min-tablet">제목</th>
+                          <th class="min-tablet">작성자</th>
                           <th class="min-desktop">작성일</th>
                           <th class="min-desktop">조회수</th>
                       </tr>
