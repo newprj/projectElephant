@@ -34,7 +34,7 @@ ${view.name}<br/></h4>
 <h4><span class="label label-success">이메일</span>
 ${view.email}<br/></h4>
 <h4><span class="label label-success">가입일</span>
-${view.regDate}<br/></h4>
+${view.reg_Date}<br/></h4>
 
 <div>
 	<button class="btn btn-warning" type="button" onclick="location.href='/user/modify2?uno=${view.uno}' ">회원정보 수정</button>
