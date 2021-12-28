@@ -8,7 +8,7 @@
 	<!-- 리뷰 등록  -->
 	<insert id="insert">
 		<selectKey keyProperty="rno" order="BEFORE" resultType="Long">
-			select seq_rno.nextval from dual
+			select seq_rrno.nextval from dual
 		</selectKey>
 		insert into tbl_review values
 		(#{rno}, #{group_name},#{title},#{content},#{writer},sysdate,null,0,default)
