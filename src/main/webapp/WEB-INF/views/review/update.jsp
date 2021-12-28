@@ -4,39 +4,70 @@ uri="http://java.sun.com/jsp/jstl/core"%>
 <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet" />
 <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 <script src="/resources/js/fileUpload.js" type="text/javascript"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+<script src="https://kit.fontawesome.com/6584921572.js" crossorigin="anonymous"></script>
+
 <!DOCTYPE html>
 <html>
   <head>
     <meta charset="UTF-8" />
     <title>Insert title here</title>
   </head>
-  <h1>후기 수정 페이지</h1>
   <body>
-    <form>
-      번호 <input type="text" name="rno" value="${read.rno}" readonly /><br />
-      그룹명 <input type="text" name="group_name" value="${read.group_name}" /><br />
-      제목 <input type="text" name="title" value="${read.title}" /><br />
-   <input type="hidden" name="writer" value="${read.writer}" /> <br />
-      <div id="editor" style="max-height: 400px; overflow: auto"></div>
-      <br />
-      <%-- 내용 <input type="text" name="content" value="${read.content}" /><br />
-      --%>
-
-      <input type="file" name="uploadFile" multiple="multiple" /><br />
-      <br />
-      첨부파일 삭제 :
-      <c:forEach items="${attachFile}" var="attachFile">
-        <div class="delete" name="${attachFile.uuid}">${attachFile.fileName}</div>
-      </c:forEach>
-      <br />
-      <button type="button" id="update">수정완료</button>
-      <button type="button" onclick="location.href='/review/list'">홈으로</button>
-    </form>
+  <div class="row">
+	    <article class="col-md-12 text-left">
+	      <h2 class="page-heading">후기 수정 페이지</h2>
+	      <div class="liner"><span></span></div>
+	    </article>
+	</div>
+  <form>
+  	<div class="container">
+			<section id="container">				
+				<div class="form-group">
+					<label for="rno" class="col-sm-2 control-label">번호</label>
+					<input type="text" id="rno" name="rno" class="form-control" value="${read.rno}" readonly/>
+				</div>
+				<div class="form-group">
+					<label for="group_name" class="col-sm-2 control-label">그룹명</label>
+					<input type="text" id="group_name" name="group_name" value="${read.group_name}" class="form-control"/>
+				</div>
+				<div class="form-group">
+					<input type="hidden" name="writer" value="${login}"/>
+				</div>
+				<div class="form-group">
+					<label for="title" class="col-sm-2 control-label">제목</label>
+					<input type="text" id="title" name="title" value="${read.title}" class="form-control"/>
+				</div>
+				<div class="form-group">
+					<div id="editor" style="max-height: 400px; overflow: auto"></div>
+				</div>
+				<div class="form-group">
+					<input type="file" name="uploadFile" multiple />
+				</div>
+				<div class="form-group">
+					<label for="attachFile" class="col-sm-2 control-label">첨부파일</label>
+					<c:forEach items="${attachFile}" var="attachFile">
+						[ <a href="/reviewUpload/download?uuid=${attachFile.uuid}">${attachFile.fileName}</a> ]
+					</c:forEach> 
+				</div>
+				<div class="form-group">
+					<label for="attachFileDelete" class="col-sm-2 control-label">첨부파일 삭제</label>
+					<c:forEach items="${attachFile}" var="attachFile">
+				        <div class="delete" name="${attachFile.uuid}">${attachFile.fileName}</div>
+				     </c:forEach>
+				</div>
+				<div>
+					<button type="button" id="update" class="btn btn-primary"><i class="far fa-edit"></i> 수정완료</button>
+     				<button type="button" class="btn btn-secondary" onclick="location.href='/review/list'"><i class="fas fa-list"></i> 목록으로</button>
+				</div>
+			</section>
+		</div>
+	</form> 
   </body>
   <script>
     var regex = new RegExp('(.*?)\.(exe|sh|alz)$') //정규 표현식
     var maxSize = 10485760 // 10MB 제한
-
     //파일 사이즈 10MB 초과 또는 파일형식이 정규표현식이 아닌것을 업로드 시 alert창 띄우는 메서드
     function checkExtension1(fileName, fileSize) {
       if (fileSize >= maxSize) {
@@ -49,11 +80,9 @@ uri="http://java.sun.com/jsp/jstl/core"%>
       }
       return true
     }
-
     var myEditor = document.querySelector('#editor')
     let form = $('form')
     // 폼데이터 얻기
-
     $(document).ready(function (e) {
       $("input[type='file']").change(function (e) {
         attachList = []
@@ -82,7 +111,6 @@ uri="http://java.sun.com/jsp/jstl/core"%>
           },
         }) //ajax
       }) //file change
-
       $('#update').click(function (e) {
         e.preventDefault()
         review = {
@@ -104,7 +132,6 @@ uri="http://java.sun.com/jsp/jstl/core"%>
           },
         }) //ajax
       }) //click
-
       $('.delete').on('click', function (e) {
         console.log('여기가 왜 안눌려?')
         var uuid = $(this).attr('name')
@@ -135,7 +162,6 @@ uri="http://java.sun.com/jsp/jstl/core"%>
             contentType: false,
             data: formData,
             dataType: 'json',
-
             success: (res) => {
               console.log('2)')
               console.log(res)
@@ -150,7 +176,6 @@ uri="http://java.sun.com/jsp/jstl/core"%>
         }) // click
       } //imageHandletr
     
-
     const toolbarOptions = [
       [{ header: [1, 2, 3, 4, 5, 6, false] }],
       [{ list: 'ordered' }, { list: 'bullet' }],
@@ -160,14 +185,12 @@ uri="http://java.sun.com/jsp/jstl/core"%>
       ['image'],
       ['clean'],
     ]
-
     let quill = new Quill('#editor', {
       theme: 'snow',
       modules: {
         toolbar: toolbarOptions,
       },
     })
-
     $.getJSON('/review/getReview/${read.rno}', (res) => {
       let content = res.content
       quill.container.firstChild.innerHTML = content

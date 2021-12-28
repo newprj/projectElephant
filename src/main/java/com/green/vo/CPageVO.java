@@ -11,10 +11,11 @@ import lombok.ToString;
 @Setter
 @Getter
 @ToString
-public class AttachFileDTO {
+public class CPageVO {
 	private long rno;
-	private String fileName;
-	private String uploadPath;
-	private String uuid;
-	private long fileSize;
+	private String group_name;
+	private String member;
+	private String captain;
+	private String Membership;
+	private int memberLimit;
 }
