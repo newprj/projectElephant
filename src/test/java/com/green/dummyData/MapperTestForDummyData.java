@@ -154,7 +154,7 @@ public class MapperTestForDummyData {
 	}
 	
 	//리플 등록
-//	@Test
+	//@Test
 	public void registerReply() {
 		List<GroupVO> list = gMapper.showAll();
 		int num = list.size();
@@ -188,7 +188,7 @@ public class MapperTestForDummyData {
 	}
 	
 	//이벤트 등록
-	//@Test
+	@Test
 	public void registerEvent() {
 		List<GroupVO> list = gMapper.showAll();
 		int num = list.size();
