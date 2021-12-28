@@ -59,7 +59,6 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 			align-items: center;
 			padding: 50px 0;
 		}
-
 		div.wrapper {
 			width: 70%;
 			height: 90%;
@@ -70,7 +69,6 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 			overflow-x: hidden;
 			overflow-y: hidden;
 		}
-
 		div.head {
 			color: #000;
 			border-left: 5px solid #5ec2dd;
@@ -85,24 +83,20 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 			max-height: 700px;
 			overflow-y: auto;
 		}
-
 		div.content > p > img {
 			max-width: 80%;
 		}
-
 		div.title {
 			padding-top: 30px;
 			padding-bottom: 30px;
 			color: inherit;
 			border-bottom: 1px solid #7ec6da;
 		}
-
 		p.reply {
 			display: flex;
 			align-items: center;
 			justify-content: space-between;
 		}
-
 		.uploadResult {
 			display: block;
 			width: 100%;
@@ -119,25 +113,21 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 			transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
 			margin-bottom: 5px;
 		}
-
 		.uploadResult > ul {
 			list-style: none;
 			display: flex;
 			flex-direction: column;
 		}
-
 		.file-container {
 			margin-top: 10px;
 			margin-bottom: 10px;
 		}
-
 		div.button {
 			display: flex;
 			flex-flow: row nowrap;
 			justify-content: center;
 			align-items: center;
 		}
-
 		.btn {
 			margin-left: 4px;
 		}
@@ -307,29 +297,24 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 				},
 			});
 		};
-
 		$(document).ready(function (e) {
 			console.log("${one.leader}");
 			console.log("${user}");
 			const member_number = Number("${one.member_number}");
-
 			let signupform = {};
 			$("button.signup").click(function (e) {
 				console.log(" 버튼이 눌림 사인업버튼 ");
 				let memberMsg = $("<span> 이미 지원한 모임입니다 </span>");
 				$("button.signup").remove();
 				$("div.signup").append(memberMsg);
-
 				signupform = {
 					user_id: "${user.user_id}",
 					group_name: "${one.group_name}",
 					leader: "N",
 					authorized: "N",
 				};
-
 				signupGroup(signupform);
 			}); // 가입버튼 click
-
 			$(".delete").click(function (e) {
 				$.ajax({
 					type: "delete",
@@ -342,7 +327,6 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 					},
 				}); //ajax
 			}); //delete button
-
 			let joinedMember;
 			$.getJSON("/group/getMemberlistByGroup/${group_name}", (list) => {
 				
@@ -366,7 +350,6 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 					$("button.signup").remove();
 				}
 			}); //getJson
-
 			/* admin이 그룹 승인 */
 			$(".auth").click(function () {
 				var gno = "${one.gno}";

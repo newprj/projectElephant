@@ -68,7 +68,8 @@ public class MapperTestForDummyData {
 			vo.setPassword("test");
 			vo.setName("이름"+i);
 			vo.setEmail("a@a.com");
-			
+			int num = i % 4 +1 ;
+			vo.setProfile("/resources/img/sample/a" +num+".jpg");
 			uMapper.register(vo);
 		});
 	}
@@ -80,11 +81,12 @@ public class MapperTestForDummyData {
 		IntStream.rangeClosed(1, 60).forEach(i ->{
 			int random = (int)(Math.random()*subject.length);
 			GroupVO vo = new GroupVO();
-			vo.setProfile("/resources/img/elephant.png");
+			int num = i %12 +1;
+			vo.setProfile("/resources/img/sample/g"+num+".jpg");
 			vo.setGroup_name(subject[random]+i);
 			vo.setLeader("test"+i);
 			vo.setSubject(subject[random]);
-			vo.setDescription("<h1>이런분을 모집합니다</h1><p><br></p><p><img src='/display?fileName=2021%5C12%5C19%2Fa676df39-8542-422f-932f-2dd5aaea5df7_KakaoTalk_20211130_180951177.jpg' width='276' style=''>"
+			vo.setDescription("<h1>이런분을 모집합니다</h1><p><br></p><p>"
 					+ "</p><ul><li>잘 노는 분</li><li><strong>잘 먹는 분</strong></li><li>깨끗한 분 </li></ul><p><br></p>");
 			vo.setMember_number(5);
 			gMapper.makeGroup(vo);
@@ -93,6 +95,8 @@ public class MapperTestForDummyData {
 			gUserVO.setUser_id(vo.getLeader());
 			gUserVO.setAuthorized("Y");
 			gUserVO.setLeader("Y");
+			
+			
 			guMapper.groupSignUp(gUserVO);
 		});
 
@@ -109,7 +113,7 @@ public class MapperTestForDummyData {
 	}
 	
 	//지원하기
-//	@Test
+	//@Test
 	public void groupSignUP() {
 		
 		List<GroupVO> list = gMapper.showAll();
@@ -146,7 +150,7 @@ public class MapperTestForDummyData {
 			vo.setWriter((guserVoList.get((int)(Math.random()*guserVoList.size()))).getUser_id());
 			if(i%10==0) {
 				vo.setNotice('Y');
-				vo.setTitle("공지   ==============" + vo.getTitle());
+				vo.setTitle(vo.getGroup_name() + "공지사항 입니다 " +i);
 			}
 			else vo.setNotice('N');
 			bMapper.register(vo);
@@ -154,7 +158,7 @@ public class MapperTestForDummyData {
 	}
 	
 	//리플 등록
-	//@Test
+//@Test
 	public void registerReply() {
 		List<GroupVO> list = gMapper.showAll();
 		int num = list.size();
@@ -166,7 +170,7 @@ public class MapperTestForDummyData {
 			BoardReplyVO replyVO = new BoardReplyVO();
 			BoardVO board = boardList.get((int)(Math.random()*boardList.size()));
  			replyVO.setBno(board.getBno());
- 			replyVO.setReply("댓글이야 " + i);
+ 			replyVO.setReply("리플입니다  " + i);
  			GUserVO user = userList.get((int)(Math.random()*userList.size()));
  			replyVO.setReplyer(user.getUser_id());
  			replyMapper.registerReply(replyVO);
@@ -174,7 +178,7 @@ public class MapperTestForDummyData {
 	}
 	
 	//조회수 올리기
-	//@Test
+//	@Test
 	public void viewCntUp() {
 		List<GroupVO> list = gMapper.showAll();
 		int num = list.size();
@@ -188,7 +192,7 @@ public class MapperTestForDummyData {
 	}
 	
 	//이벤트 등록
-	@Test
+//	@Test
 	public void registerEvent() {
 		List<GroupVO> list = gMapper.showAll();
 		int num = list.size();
@@ -200,11 +204,11 @@ public class MapperTestForDummyData {
 			GUserVO user = userList.get((int)(Math.random()*userList.size()));
 			CalendarVO vo = new CalendarVO();
 			vo.setColor(color[(int)(Math.random()*color.length)]);
-			vo.setTitle("일정 타이틀 " +i );
+			vo.setTitle("정기회의 " );
 			vo.setEditable(true);
 			vo.setLocation("서울");
 			vo.setUser_(user.getUser_id());
-			vo.setDescription_("일정 설명"+i);
+			vo.setDescription_("친목도모 및 방향 설정 ");
 			vo.setMember_(user.getUser_id());
 			vo.setGroup_(user.getGroup_name());
 

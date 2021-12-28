@@ -102,4 +102,3 @@ const getFileList = (bno) =>{
 		$('.uploadResult ul').html(str)
 	}) //getJSON
 }
-

@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> <%@ taglib prefix="c"
 uri="http://java.sun.com/jsp/jstl/core"%>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+<script src="https://kit.fontawesome.com/6584921572.js" crossorigin="anonymous"></script>
 
 <!DOCTYPE html>
 <html>
@@ -14,23 +16,45 @@ uri="http://java.sun.com/jsp/jstl/core"%>
 	<script src="/resources/image-drop.min.js"></script>
   </head>
   <body>
-    <form>
-      그룹명 <input type="text" name="group_name" /><br />
-   <input type="hidden" name="writer" value="${login}"/>
-      제목 <input type="text" name="title" /><br />
-      <div id="editor" style="max-height: 400px; overflow: auto"></div>
-      <br />
-      <input type="file" name="uploadFile" multiple /><br>
-      <hr>
-      <button type="button" id="create">등록하기</button>
-      <button type="button" onclick="location.href='/review/list'">돌아가기</button>
-    </form>
+  <div class="row">
+	    <article class="col-md-12 text-left">
+	      <h2 class="page-heading">후기 등록 페이지</h2>
+	      <div class="liner"><span></span></div>
+	    </article>
+	</div>
+	<hr>
+  <form>
+  	<div class="container">
+			<section id="container">				
+				<div class="form-group">
+					<label for="group_name" class="col-sm-2 control-label">그룹명</label>
+					<input type="text" id="group_name" name="group_name" class="form-control"/>
+				</div>
+				<div class="form-group">
+					<input type="hidden" name="writer" value="${login}"/>
+				</div>
+				<div class="form-group">
+					<label for="title" class="col-sm-2 control-label">제목</label>
+					<input type="text" id="title" name="title" class="form-control"/>
+				</div>
+				<div class="form-group">
+					<div id="editor" style="max-height: 400px; overflow: auto"></div>
+				</div>
+				<div class="form-group">
+					<input type="file" name="uploadFile" multiple /><br>
+				</div>
+				<div>
+					<button type="button" id="create" class="btn btn-primary"><i class="far fa-edit"></i>등록하기</button>
+     			 <button type="button" class="btn btn-secondary" onclick="location.href='/review/list'"><i class="fas fa-list"></i> 목록으로</button>
+				</div>
+			</section>
+		</div>
+	</form>
   </body>
   <script>
   
     var regex = new RegExp('(.*?)\.(exe|sh|alz)$') //정규 표현식
     var maxSize = 10485760 // 10MB 제한
-
     //파일 사이즈 10MB 초과 또는 파일형식이 정규표현식이 아닌것을 업로드 시 alert창 띄우는 메서드
     function checkExtension1(fileName, fileSize) {
       if (fileSize >= maxSize) {
@@ -72,12 +96,9 @@ $(document).ready(function (e) {
      	})//ajax
      })//file change
      
-
-
      
     var myEditor = document.querySelector('#editor')
     let form = $('form')
-
     const imageHandler = (e) => {
       console.log(e)
       let input = $('<input type="file" accept="image/*">')
@@ -103,9 +124,7 @@ $(document).ready(function (e) {
         }) // ajax
       }) // click
     } //imageHandletr
-
     
-
     $('#create').click(function (e) {
       e.preventDefault()
       review = {
@@ -126,8 +145,6 @@ $(document).ready(function (e) {
         },
       }) //ajax
     }) //click
-
-
     
     const toolbarOptions = [
       [{ header: [1, 2, 3, 4, 5, 6, false] }],
@@ -138,14 +155,12 @@ $(document).ready(function (e) {
       ['image'],
       ['clean'],
     ]
-
     let quill = new Quill('#editor', {
       theme: 'snow',
       modules: {
         toolbar: toolbarOptions,
       },
     })
-
     let toolbar = quill.getModule('toolbar')
     toolbar.addHandler('image', imageHandler)
 })

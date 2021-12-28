@@ -46,6 +46,7 @@ public class ReviewReplyController {
 		vo.setWriter(login.getUser_id());
 		vo.setContent(content);
 		replyService.register(vo);
+		log.info("{"+vo);
 		reviewService.updateReplyCount((long)rno);
 		return 1;
     }

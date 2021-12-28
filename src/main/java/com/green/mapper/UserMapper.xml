@@ -29,8 +29,8 @@
 		<selectKey keyProperty="uno" order="BEFORE" resultType="long">
 			select seq_uno.nextval from dual
 		</selectKey>
-		insert into tbl_user(uno, user_id, password, name,  email,reg_date) 
-			values(#{uno} , #{user_id},#{password},#{name},#{email},sysdate)
+		insert into tbl_user(uno, user_id, password, name,  email,reg_date, profile) 
+			values(#{uno} , #{user_id},#{password},#{name},#{email},sysdate, #{profile} )
 	</insert>
 	
 	<update id="modify">
@@ -131,7 +131,7 @@
 	</select>
 
 
-		<insert id="imageEnroll">
+	<insert id="imageEnroll">
 		insert into tbl_file(id, fileName, uploadPath, uuid) values(seq_id.nextval, #{fileName}, #{uploadPath}, #{uuid})
 	</insert>
 	
@@ -140,4 +140,3 @@
 	</select>
 	
 </mapper>
-

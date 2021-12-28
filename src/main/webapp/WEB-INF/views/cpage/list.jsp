@@ -3,6 +3,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="https://kit.fontawesome.com/6584921572.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+<link href="/resources/css/style.css" rel="stylesheet" />
+<link href="/resources/css/bootstrap.min.css" rel="stylesheet" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,57 +34,112 @@ li {
 	background-color:#fefefe;
 	margin:15% auto;
 	padding: 20px;
-	border: 1px solid #888;
+	border: 3px solid #F79A9A;
        width: 30%;
-
 }
+.limit{	
+  	float: right;
+}
+#confirm {
+    border: 2px solid gray;
+}
+.member{
+	color: red;
+}
+.modal-header{
+	align-content : flex-start;
+}
+
 
 
 </style>
 <h1>소모임장 페이지</h1>
+<hr>
 <body>
-	<h2>소모임 명 : ${leader.group_name}</h2>
-	<h3>소모임 장 : ${leader.user_id}</h3>
-	 <div class="memberLimit">
-	 모집인원 : ${memberLimit} / ${limit}
-	 </div> 
-	<li>가입된 회원</li>
-	<c:forEach items="${list}" var="list">
-		<c:if test="${list.authorized eq 'Y'}">
-			<c:if test="${list.leader ne 'Y'}">
-				${list.user_id} ======== <button type="button" onclick="remove('${list.user_id}')" >추방하기</button>
-				<button type="button" onclick="letter('${list.user_id}')">쪽지보내기</button><br>
-			</c:if>
-		</c:if>
-	</c:forEach>
+<div class="container">
+	<h3>소모임 명 : ${leader.group_name} / 소모임 장 : ${leader.user_id}</h3>
+</div>
+<div class="container" id="confirm">
+	<div class="membership">
+		<br>
+	 	<label class ="member">가입된 회원</label>
+	 	<label class ="limit">모집인원 : ${memberLimit} / ${limit}</label>
+	 </div>
+		 <table class="table">
+					   <thead class="thead-dark">
+					    <tr>
+					      <th scope="col">USER_ID</th>
+					      <th scope="col">거절</th>
+					      <th scope="col">쪽지</th>
+					    </tr>
+					  </thead>
+			<c:forEach items="${list}" var="list">
+				<c:if test="${list.authorized eq 'Y'}">
+					<c:if test="${list.leader ne 'N'}">
+						<tr>
+							<td>${list.user_id} <b>(리더)</b></td>
+						</tr>
+					</c:if>
+					<c:if test="${list.leader ne 'Y'}">
+						  <tbody>
+						    <tr>
+						      <td>${list.user_id}</td>
+						      <td><button type="button" class="btn btn-danger btn-sm" onclick="remove('${list.user_id}')" ><i class="fas fa-handshake-slash"></i> 모임에서 내보내기</button></td>
+						      <td><button type="button" class="btn btn-success btn-sm" onclick="letter('${list.user_id}')"><i class="far fa-envelope"></i> 쪽지보내기</button></td>
+						    </tr>
+						   </tbody>
+					</c:if>	   
+				</c:if>
+			</c:forEach>
+		</table>
+	</div>
 	<hr>
-	<li>가입된 승인 대기중인 회원</li>
-	<br>
-	<c:forEach items="${list}" var="list">
-		<c:if test="${list.authorized eq 'N'}">
-			${list.user_id}  ======== <button type="button" onclick="update('${list.user_id}')" >승인</button>
-			<button type="button" onclick="remove('${list.user_id}')" >거절</button>
-			<button type="button" onclick="letter('${list.user_id}')">쪽지보내기</button><br>
-		</c:if>
-	</c:forEach>
+	<div class="container" id="confirm">
+	<div>
+		<br>
+	 	<label class ="member">승인 대기중인 회원</label>
+	 </div>
+		 <table class="table">
+					  <thead class="thead-dark">
+					    <tr>
+					      <th scope="col">USER_ID</th>
+					      <th scope="col">가입승인</th>
+					      <th scope="col">거절</th>
+					      <th scope="col">쪽지</th>
+					    </tr>
+					  </thead>
+			<c:forEach items="${list}" var="list">
+				<c:if test="${list.authorized eq 'N'}">
+					<tbody>
+					    <tr>
+					      <td>${list.user_id}</td>
+					      <td><button type="button" class="btn btn-primary btn-sm" onclick="update('${list.user_id}')" ><i class="fas fa-handshake"></i> 가입승인</button></td>
+					      <td><button type="button" class="btn btn-danger btn-sm" onclick="deleteMember('${list.user_id}')" ><i class="fas fa-handshake-slash"></i> 거절</button></td>
+					      <td><button type="button" class="btn btn-success btn-sm" onclick="letter('${list.user_id}')"><i class="far fa-envelope"></i> 쪽지보내기</button></td>
+					    </tr>
+					</tbody>
+				</c:if>
+			</c:forEach>
+		</table>
+	</div>
 	<div class="modal">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h4 class="modal-title">쪽지보내기</h4>
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title"><b>쪽지보내기</b></h4>
+			</div>
+			<div class="modal-body">
+				<div class="modal-group">
+					<input name="writer" type="hidden" value="${leader.user_id}"/>
 				</div>
-				<div class="modal-body">
-					<div class="modal-group">
-						<input name="writer" type="hidden" value="${leader.user_id}"/>
-					</div>
-					<div class="modal-group">
-						<label>쪽지내용</label><br/>
-						<textarea name="content" placeholder="내용을 입력하세요"></textarea>
-					</div>
-				</div><br/>
-				<div class="modal-footer">
-					<button type="button" id="register">보내기</button>
-					<button type="button" id="close">닫기</button>
+				<div class="modal-group">
+					<label>쪽지내용</label><br/>
+					<textarea name="content" placeholder="내용을 입력하세요" style="width:250px;height:100px;overflow-y:hidden"></textarea>
 				</div>
+			</div><br/>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary btn-sm" id="register">보내기</button>
+				<button type="button" class="btn btn-danger btn-sm"id="close">닫기</button>
+			</div>
 		</div>
 	</div>
 </body>
@@ -123,11 +182,7 @@ li {
 			})
 		})
 	}
-	
-	
-	
-	
-	
+
 	
 	$('#close').click(function() {
 		$(".modal").hide()
@@ -154,6 +209,16 @@ li {
 	function remove(member){
 	    $.ajax({
 	        url : `/cpage/remove/\${member}/\${group_name}`,
+	        type : 'post',
+	        success : function(data){
+	        	if(data == "success") location.reload();  
+	        }
+	    });
+	}
+	
+	function deleteMember(member){
+	    $.ajax({
+	        url : `/cpage/delete/\${member}/\${group_name}`,
 	        type : 'post',
 	        success : function(data){
 	        	if(data == "success") location.reload();  

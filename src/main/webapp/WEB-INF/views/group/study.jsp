@@ -38,7 +38,6 @@ prefix="c" %>
 				align-items: center;
 				padding: 50px 0;
 			}
-
 			div.wrapper {
 				width: 70%;
 				height: 90%;
@@ -48,7 +47,6 @@ prefix="c" %>
 				overflow-x: hidden;
 				overflow-y: hidden;
 			}
-
 			div.head {
 				color: #000;
 				border-left: 5px solid #5ec2dd;
@@ -62,7 +60,6 @@ prefix="c" %>
 				display: flex;
 				font-display: row;
 			}
-
 			#letter_modal {
 				background: rgba(0, 0, 0, 0.8);
 				display: none;
@@ -75,7 +72,6 @@ prefix="c" %>
 				bottom: 0;
 				z-index: 1;
 			}
-
 			#modal-content {
 				position: absolute;
 				display: felx;
@@ -103,7 +99,6 @@ prefix="c" %>
 			}
 			.notice-header {
 				margin-bottom: 0;
-
 				border-bottom: 1px solid rgba(0, 0, 0, 0.125);
 				border-bottom-width: 1px;
 				border-bottom-style: solid;
@@ -404,10 +399,8 @@ prefix="c" %>
 
 		<script>
 			let loginUser = "${user}";
-
 			let group = "${group_name}";
 			$("#${group.leader}").css("outline", "2px solid cornflowerblue");
-
 			$.getJSON(`/group/getMemberlistByGroup/\${group}`, (list) => {
 				let joinCheck = list.memberList.find(
 					(user) => user.user_id === loginUser
@@ -417,11 +410,8 @@ prefix="c" %>
 					location.href = "/group/";
 				}
 			});
-
 			const today = new Date().toISOString().split("T")[0];
-
 			console.log(today);
-
 			$.getJSON(`/group/getLatestEvent/\${group}`, (list) => {
 				const todayEvent = list.filter((i) => i.startDate === today);
 				console.log(todayEvent);
@@ -429,7 +419,6 @@ prefix="c" %>
 					let noEvent = $("<li> 오늘의 일정이 없습니다 </li>");
 					$("ul.today").append(noEvent);
 				}
-
 				todayEvent.map((event) => {
 					const { title, description_ } = event;
 					let todayLi = $(
@@ -437,7 +426,6 @@ prefix="c" %>
 					);
 					$("ul.today").append(todayLi);
 				});
-
 				const latestEvent = list
 					.filter((i) => i.startDate !== today)
 					.sort((a, b) => {
@@ -446,12 +434,10 @@ prefix="c" %>
 						return aDate - bDate;
 					})
 					.slice(0, 10);
-
 				if (latestEvent.length == 0 || latestEvent == null) {
 					let noEvent = $("<li> 다가오는 일정이 없습니다 </li>");
 					$("ul.latest").append(noEvent);
 				}
-
 				latestEvent.map((event) => {
 					const { title, description_ } = event;
 					let eventLi = $(
@@ -460,9 +446,7 @@ prefix="c" %>
 					$("ul.latest").append(eventLi);
 				});
 			}); // getJSON
-
 			// 채팅
-
 			let popup;
 			$("button.getChat").click((e) => {
 				popup = window.open(
@@ -472,20 +456,17 @@ prefix="c" %>
 				);
 				console.log(popup);
 			});
-
 			$("div.letter >a").click((e) => {
 				$('input[name="recipientId').val($(e.target).data("user"));
 				$("input[name='writeId']").val("${user}");
 				$("#letter_modal").show();
 			});
-
 			const getLetter = () => ({
 				writer: "${user}",
 				recipient: $('input[name="recipientId').val(),
 				content: $('textarea[name="letterContent"]').val(),
 				reg_date: new Date(),
 			});
-
 			$("#letterRegister").click((e) => {
 				e.preventDefault();
 				const letter = getLetter();
@@ -507,7 +488,6 @@ prefix="c" %>
 					},
 				});
 			});
-
 			$(".closeModal").click((e) => {
 				e.preventDefault();
 				$("#letter_modal").hide();
@@ -516,9 +496,7 @@ prefix="c" %>
 					this.reset();
 				});
 			});
-
 		
-
 		</script>
 	</body>
 </html>

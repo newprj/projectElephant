@@ -121,7 +121,6 @@ public class UserController {
 	public void loginPost(UserVO vo, HttpServletRequest req, RedirectAttributes rttr) {
 		HttpSession session = req.getSession();
 		UserVO login = userservice.login(vo);
-	
 		if(login == null) {
 			rttr.addFlashAttribute("msg", false);
 		}
@@ -278,13 +277,4 @@ public class UserController {
 	}
 
 }
-
-
-
-
-
-
-
-
-
 
