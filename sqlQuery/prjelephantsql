@@ -32,16 +32,9 @@ drop sequence SEQ_CNO;
 
 commit; 
 
-select * from TBL_GROUP order by gno desc;
-select * from TBL_USER;
-select * from TBL_GROUPUSER;
-select * from BOARD_FILE;
-select * from TBL_BOARD;
-select * from BOARD_REPLY;
-select * from TBL_CALENDAR;
 
--- spring database¿¡¼­ ¸ðµç tableÀ» »èÁ¦ Çß½À´Ï´Ù
-CREATE DATABASE spring CHARACTER SET utf8 COLLATE utf8_general_ci;
+-- spring databaseï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ tableï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß½ï¿½ï¿½Ï´ï¿½
+--CREATE DATABASE spring CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 --- create , drop table and sequence
 
@@ -52,7 +45,13 @@ create table tbl_user(
     name varchar2(300),
     email varchar2(300));
 create sequence seq_uno;
+alter table tbl_user add(reg_Date timestamp);
+alter table tbl_user add suspension varchar2(50) default 'N' check(suspension in('Y','N'));
+alter table tbl_user add suspDate timestamp;
+alter table tbl_user add suspContent varchar2(100);
+alter table tbl_user add profile varchar(1000);
 
+commit;
 create table tbl_group(
     gno number constraint pk_group primary key,
     group_name varchar2(300) unique,
@@ -63,9 +62,9 @@ create table tbl_group(
     regdate timestamp,
     authorized char(1) default 'N' check(authorized in('Y','N')),
     viewCnt number default 0,
+    profile varchar2(1000),
     constraint fk_group foreign key(leader) references tbl_user(user_id)
 );
-alter table tbl_group add(profile varchar2(1000));
 create sequence seq_gno;
 
 create table tbl_groupuser(
@@ -73,11 +72,11 @@ create table tbl_groupuser(
     authorized varchar2(1) default 'N',
     user_id varchar2(30),
     group_name varchar2(30),
+    leader varchar2(2) default 'N',
     constraint fk_g_user foreign key(user_id) references tbl_user(user_id),
     constraint fk_g_group foreign key(group_name) references tbl_group(group_name)
     );
 alter table tbl_groupuser add unique(user_id, group_name);
-alter table tbl_groupuser add( leader varchar2(2) default 'N');
 create sequence seq_cno;
 desc tbl_groupuser;
 
@@ -137,16 +136,16 @@ create sequence seq_cid;
 
 ------------------------------------------------------------------
 
---- Äõ¸® ¹®¼­ ¼öÁ¤ /°øÀ¯ ½Ã ¼öÁ¤ÇÑ ºÎºÐ ÁÖ¼®À¸·Î ´Þ¾ÆÁÖ¼¼¿ä 
---- select, update µî Å×½ºÆ®¸¦ À§ÇÑ Äõ¸®¹®Àº °øÀ¯ X
+--- ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ /ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Îºï¿½ ï¿½Ö¼ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¾ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½ 
+--- select, update ï¿½ï¿½ ï¿½×½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ X
 
------ ¾îµå¹Î±â´É
-select * from tbl_group;
-update tbl_group set authorized = 'Y' where gno <40; 
-select * from tbl_groupuser where group_name='¸ÀÁý8' order by cno;
-update tbl_groupuser set authorized='Y' where cno<138 and group_name='¸ÀÁý8';
-
-select * from tbl_groupuser;
+----- ï¿½ï¿½ï¿½Î±ï¿½ï¿½
+--select * from tbl_group;
+--update tbl_group set authorized = 'Y' where gno =<40; 
+--select * from tbl_groupuser where group_name='ï¿½ï¿½ï¿½ï¿½8' order by cno;
+--update tbl_groupuser set authorized='Y', leader='Y' where cno<=60;
+--select * from tbl_groupuser;
+--select * from tbl_groupuser;
 commit;
 -------------------------------------------------------------------------
 ---select * from user_constraints where table_name='TBL_GROUP'; 
@@ -156,8 +155,21 @@ commit;
 
 commit;
 
---select profile from tbl_group;
-select * from tbl_groupuser where user_id='test5';
-update tbl_groupuser set leader ='Y' where user_id='test39';
+select * from tbl_group where authorized='Y' order by gno desc;
+select * from TBL_GROUP order by gno desc;
+select * from TBL_USER;
+select * from TBL_GROUPUSER;
+select * from BOARD_FILE;
+select * from TBL_BOARD where notice ='Y';
+select * from BOARD_REPLY;
+select * from TBL_CALENDAR;
+select * from letter_tbl;
 
-select * from tbl_groupuser where user_id='test5';
+--select profile from tbl_group;
+--select * from tbl_groupuser where user_id='test5';
+--update tbl_groupuser set leader ='Y' where user_id='test39';
+--delete from tbl_groupuser where authorized is null;
+--select * from tbl_groupuser where user_id='test5';
+update tbl_user set profile= null;
+
+commit;

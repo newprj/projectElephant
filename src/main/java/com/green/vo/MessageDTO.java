@@ -25,5 +25,6 @@ public class MessageDTO {
 	private String sendTime;
 	private String longMsg;
 	private Set<String> member;
+	private String img;
 	
 }

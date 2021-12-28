@@ -119,7 +119,7 @@ create table qna_tbl
     p_group varchar2(10) default 'public' constraint group_ch check (p_group in ('public','private'))
 );
 alter table qna_tbl add up_date timestamp;
----qna ê²Œì‹œë¬¼ ì¡°íšŒìˆ˜ (12/17)
+---qna ê²Œì‹œë¬? ì¡°íšŒ?ˆ˜ (12/17)
 alter table qna_tbl add hit number DEFAULT 0;
 
 create sequence qna_seq;
@@ -147,7 +147,7 @@ create table qna_attach_tbl(
 drop table tbl_user;
 
 
-----------------admin í˜ì´ì§€ì—ì„œ user í™œë™ ì •ì§€ (12ì›” 15ì¼ ìˆ˜ì •)
+----------------admin ?˜?´ì§??—?„œ user ?™œ?™ ? •ì§? (12?›” 15?¼ ?ˆ˜? •)
 create table tbl_user(
     uno number,
     user_id varchar2(30),
@@ -157,7 +157,7 @@ create table tbl_user(
 
 create sequence seq_uno;
 
--- ì •ì§€ ì¹¼ëŸ¼ :ê¸°ë³¸ìœ¼ë¡œ N(í™œë™ê°€ëŠ¥) /YëŠ” ì •ì§€
+-- ? •ì§? ì¹¼ëŸ¼ :ê¸°ë³¸?œ¼ë¡? N(?™œ?™ê°??Š¥) /Y?Š” ? •ì§?
 alter table tbl_user add suspension varchar2(50) default 'N' check(suspension in('Y','N'));
 alter table tbl_user add suspDate timestamp;
 alter table tbl_user add suspContent varchar2(100);
@@ -165,7 +165,7 @@ alter table tbl_user add suspContent varchar2(100);
 select*from tbl_user;
 
 
--- ìŠ¤í„°ë”” ìŠ¹ì¸ ì¹¼ëŸ¼ì¶”ê°€ (12/15)
+-- ?Š¤?„°?”” ?Š¹?¸ ì¹¼ëŸ¼ì¶”ê? (12/15)
 create table tbl_group(
     gno number primary key,
     group_name varchar2(30),
@@ -178,7 +178,7 @@ create table tbl_group(
 );
 
 
--------ìª½ì§€ DB
+-------ìª½ì? DB
 create table letter_tbl(
     lno number primary key,
     writer varchar2(40),
@@ -188,16 +188,18 @@ create table letter_tbl(
 );
 create SEQUENCE lno_seq;
 
----qna ìš©ëŸ‰ ì¦ê°€(12/19)
+---qna ?š©?Ÿ‰ ì¦ê?(12/19)
 alter table qna_tbl modify q_content varchar2(700);
+alter table qna_tbl add(q_content varchar2(700));
 
------- ë°©ë¬¸ì í…Œì´ë¸” (12/20)
+------ ë°©ë¬¸? ?…Œ?´ë¸? (12/20)
 create table tbl_visitor(
     vno number primary key,
     in_date Date
 );
 create SEQUENCE v_seq;
 
--------- ìœ ì €í…Œì´ë¸” ê°€ì…ì‹œ ë‚ ì§œ
+-------- ?œ ???…Œ?´ë¸? ê°??…?‹œ ?‚ ì§?
 alter table tbl_user add reg_date timestamp;
 
+commit;

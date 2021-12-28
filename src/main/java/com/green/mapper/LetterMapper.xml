@@ -50,4 +50,7 @@
 	</select> 
 	
 	
+	<select id="oneLetter" resultType="com.green.vo.LetterVO">
+		select * from letter_tbl where lno=#{lno}
+	</select>
 </mapper>

@@ -69,7 +69,7 @@
         </div>
 
         <button class="btn btn-danger" id="submit">탈퇴</button>
-        <button class="btn btn-success" type="button" onclick="location.href='login' ">탈퇴 취소</button>
+        <button class="btn btn-success" type="button" onclick="location.href='/group/' ">탈퇴 취소</button>
       </form>
       
       <c:if test="${msg == false}">

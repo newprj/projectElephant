@@ -20,9 +20,9 @@
 		<![CDATA[
 	    select 
 	     /*+ index_desc(tbl_group PK_GROUP) */
-	    rownum rn, gno, group_name, leader, subject, description, member_number, authorized, viewcnt, regdate 
+	    rownum rn, gno, group_name, leader, subject, description, member_number, authorized, viewcnt, regdate, profile
 	    from tbl_group 
-	    where authorized ='Y' and rownum <=20
+	    where authorized ='Y' and rownum <=12
 	   ]]>
 	</select>
 	
@@ -44,24 +44,14 @@
 		    </trim>
 	</sql>
 
-	<sql id="sortBy">
-		<choose>
-			<when test="sort=='viewCnt'">
-				order by g.viewCnt desc
-			</when>
-			<when test="sort=='popular'">
-				order by u.pop desc
-			</when>
-		</choose>
-	</sql>
 	
 	<select id="getListWithPaging" resultType="com.green.vo.GroupVO">
 			 <![CDATA[
-			select g.gno, g.group_name, g.leader, g.subject, g.description, g.member_number, g.viewcnt, g.regdate, u.pop
+			select g.gno, g.group_name, g.leader, g.subject, g.description, g.member_number, g.viewcnt, g.regdate, u.pop, g.profile
 				from (
 			    select 
 			    /*+ index_desc(tbl_group pk_group ) */
-				    rownum rn, gno, group_name, leader, subject, description, member_number, authorized, viewcnt, regdate
+				    rownum rn, gno, group_name, leader, subject, description, member_number, authorized, viewcnt, regdate, profile
 				    	from tbl_group
 				    where ]]>
 				    <include refid="criteria"></include>
@@ -73,7 +63,7 @@
             on g.group_name = u.group_name
 		    where rn> (#{pageNum}-1) *  #{amount}
 		    ]]>
-		    <include refid="sortBy"></include>
+		  
 	</select>
 	
 	<select id="getTotalCount" resultType="int">
@@ -108,7 +98,69 @@
 	</update>
 	
 	
+	<select id="allList" resultType="com.green.vo.GroupVO">
+		select * from tbl_group
+	</select>
+	
+	<select id="NotAuthList" resultType="com.green.vo.GroupVO">
+		<![CDATA[
+			select gno, group_name, leader, subject, description, member_number, authorized, viewcnt, regdate, profile
+			from (
+			    select /*+ index_desc(tbl_group pk_gno) */
+				    rownum rn,gno, group_name, leader, subject, description, member_number, authorized, viewcnt, regdate, profile
+				    	from 
+				    	(select * from  tbl_group 
+					    	order by regdate desc nulls LAST
+					   	)
+				    where 
+		]]>
+		<include refid="criteria"></include>
+	    <![CDATA[
+			    rownum <=#{pageNum} * #{amount} and authorized ='N'
+		    )
+		    where rn> (#{pageNum}-1) * #{amount}  
+		]]>
+	</select>
+	
+	<select id="myGroup" resultType="com.green.vo.GroupVO">
+			 <![CDATA[
+			select gno, group_name, leader, subject, description, member_number, authorized, viewcnt, regdate, profile
+				from (
+			    select  /*+ index_desc(tbl_group pk_group ) */
+				    rownum rn, gno, group_name, leader, subject, description, member_number, authorized, viewcnt, regdate, profile
+				    	from (select * from  tbl_group where  leader =#{leader}
+					    	order by regdate desc nulls LAST
+					   	)
+				    where 
+				    ]]>
+		    <![CDATA[
+			   rownum <=#{cri.pageNum} * #{cri.amount} 
+		    ) 
+		    where rn> (#{cri.pageNum}-1) *  #{cri.amount}
+		    ]]>
+	</select>
+	
+	
+	<select id="myGrouptotal" resultType="int">
+		select count(*) from tbl_group where leader=#{leader} and
+		<trim prefix="(" suffix=") and " prefixOverrides="OR">
+			    	<foreach item="type" collection="cri.typeArr">
+			    		<trim prefix="OR">
+			    			<choose>
+			    				<when test="type== 'N'.toString()">
+			    					group_name like '%'||#{keyword}||'%'
+			    				</when>
+			    				<when test="type== 'S'.toString()">
+			    					subject like '%'||#{keyword}||'%'
+			    				</when>
+			    			</choose>
+			    		</trim>
+			    	</foreach>
+		    </trim>
+		gno>0
+	</select>
+	
+
 	
 </mapper>
-
    

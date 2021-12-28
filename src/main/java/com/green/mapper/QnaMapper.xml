@@ -6,14 +6,14 @@
 
 	<sql id="criteria">
 		<trim prefix="(" suffix=") and " prefixOverrides="OR">
-			    	<foreach item="type" collection="typeArr">
+			    	<foreach item="type" collection="cri.typeArr">
 			    		<trim prefix="OR">
 			    			<choose>
 			    				<when test="type== 'T'.toString()">
-			    					title like '%'||#{keyword}||'%'
+			    					title like '%'||#{cri.keyword}||'%'
 			    				</when>
 			    				<when test="type== 'W'.toString()">
-			    					writer like '%'||#{keyword}||'%'
+			    					writer like '%'||#{cri.keyword}||'%'
 			    				</when>
 			    			</choose>
 			    		</trim>
@@ -39,9 +39,9 @@
 		]]>
 		<include refid="criteria"></include>
 	    <![CDATA[
-			    rownum <=#{pageNum} * #{amount}
+			    rownum <=#{cri.pageNum} * #{cri.amount}
 		    )
-		    where rn> (#{pageNum}-1) * #{amount}  
+		    where rn> (#{cri.pageNum}-1) * #{cri.amount}  
 		]]>
 	</select> 
 
@@ -75,6 +75,12 @@
 	
 	<select id="totalCount" resultType="int">
 		select count(*) from qna_tbl where 
+		<include refid="criteria"></include>
+		qno>0
+	</select>
+	
+	<select id="Qnatotal" resultType="int">
+		select count(*) from qna_tbl where writer=#{writer} and
 		<include refid="criteria"></include>
 		qno>0
 	</select>

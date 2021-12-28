@@ -1,105 +1,84 @@
-        <div id="container" class="effect mainnav-full">
-            <div class="boxed">
-                <section id="content-container">
-                   
-                    <header class="pageheader">
-                        <h3><i class="fa fa-home"></i> Calendar </h3>
-                        <div class="breadcrumb-wrapper">
-                            <span class="label">You are here:</span>
-                            <ol class="breadcrumb">
-                                <li> <a href="#"> Home </a> </li>
-                                <li class="active"> Calendar </li>
-                            </ol>
-                        </div>
-                    </header>
-                    <section id="page-content">
-                        <div class="row">
-                            <div class="col-md-4 col-lg-3">
-                                <div class="panel">
-                                    <div class="panel-heading">
-                                        <h3 class="panel-title">Events</h3>
-                                    </div>
-                                    <div class="panel-body">
-                                        <!-- Draggable Events --> 
-                                        <!-- ============================================ -->
-                                        <h4 class="text-thin">Draggable Events</h4>
-                                        <div id="demo-external-events">
-                                            <div class="fc-event" data-class="warning">My Event 1</div>
-                                            <div class="fc-event" data-class="success">My Event 2</div>
-                                            <div class="fc-event" data-class="mint">My Event 3</div>
-                                            <div class="fc-event" data-class="purple">My Event 4</div>
-                                            <div class="fc-event" data-class="warning">My Event 5</div>
-                                            <div class="fc-event" data-class="success">My Event 6</div>
-                                            <div class="fc-event" data-class="mint">My Event 7</div>
-                                            <div class="fc-event" data-class="purple">My Event 8</div>
-                                            <div class="fc-event">My Event 9</div>
-                                            <hr>
-                                            <div>
-                                                <label class="form-checkbox form-normal form-primary">
-                                                <input type="checkbox" id="drop-remove">
-                                                Remove after drop </label>
-                                            </div>
-                                        </div>
-                                        <!-- ============================================ --> 
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-8 col-lg-9">
-                                <div class="panel">
-                                    <div class="panel-body">
-                                        <!-- Calendar placeholder--> 
-                                        <!-- ============================================ -->
-                                        <div id='demo-calendar'></div>
-                                        <!-- ============================================ --> 
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                    <!--===================================================--> 
-                    <!--End page content--> 
-                </section>
-                <!--===================================================--> 
-                <!--END CONTENT CONTAINER--> 
-            </div>
-            <!-- FOOTER -->
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title> Login Page | SmartAdmin - Responsive admin template.</title>
+        <link rel="shortcut icon" href="img/favicon.ico">
+        <!--STYLESHEET-->
+        <!--=================================================-->
+        <!--Roboto Slab Font [ OPTIONAL ] -->
+        <link href="http://fonts.googleapis.com/css?family=Roboto+Slab:400,300,100,700" rel="stylesheet">
+        <link href="http://fonts.googleapis.com/css?family=Roboto:500,400italic,100,700italic,300,700,500italic,400" rel="stylesheet">
+        <!--Bootstrap Stylesheet [ REQUIRED ]-->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <!--Jasmine Stylesheet [ REQUIRED ]-->
+        <link href="css/style.css" rel="stylesheet">
+        <!--Font Awesome [ OPTIONAL ]-->
+        <link href="plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+        <!--Switchery [ OPTIONAL ]-->
+        <link href="plugins/switchery/switchery.min.css" rel="stylesheet">
+        <!--Bootstrap Select [ OPTIONAL ]-->
+        <link href="plugins/bootstrap-select/bootstrap-select.min.css" rel="stylesheet">
+        <!--Demo [ DEMONSTRATION ]-->
+        <link href="css/demo/jasmine.css" rel="stylesheet">
+        <!--SCRIPT-->
+        <!--=================================================-->
+        <!--Page Load Progress Bar [ OPTIONAL ]-->
+        <link href="plugins/pace/pace.min.css" rel="stylesheet">
+        <script src="plugins/pace/pace.min.js"></script>
+    </head>
+    <!--TIPS-->
+    <!--You may remove all ID or Class names which contain "demo-", they are only used for demonstration. -->
+    <body>
+        <div id="container" class="cls-container">
+            <!-- LOGIN FORM -->
             <!--===================================================-->
-            <footer id="footer">
-                <!-- Visible when footer positions are fixed -->
-                <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-                <div class="show-fixed pull-right">
-                    <ul class="footer-list list-inline">
-                        <li>
-                            <p class="text-sm">SEO Proggres</p>
-                            <div class="progress progress-sm progress-light-base">
-                                <div style="width: 80%" class="progress-bar progress-bar-danger"></div>
+            <div class="lock-wrapper">
+                <div class="panel lock-box">
+                    <div class="center"> <img alt="" src="img/user.png" class="img-circle"/> </div>
+                    <h4> Hello User !</h4>
+                    <p class="text-center">Please login to Access your Account</p>
+                    <div class="row">
+                        <form action="index.html" class="form-inline">
+                            <div class="form-group col-md-12 col-sm-12 col-xs-12">
+                                <div class="text-left">
+                                    <label class="text-muted">Email ID</label>
+                                    <input id="signupInputEmail1" type="email" placeholder="Enter Email ID" class="form-control" required />
+                                </div>
+                                <div class="text-left">
+                                    <label for="signupInputPassword" class="text-muted">Password</label>
+                                    <input id="signupInputPassword" type="password" placeholder="Password" class="form-control lock-input" required />
+                                </div>
+                                <div class="pull-left pad-btm">
+                                    <label class="form-checkbox form-icon form-text">
+                                    <input type="checkbox"> Remember Me
+                                    </label>
+                                </div>
+                                <button type="submit" class="btn btn-block btn-primary">
+                                Sign In
+                                </button>
                             </div>
-                        </li>
-                        <li>
-                            <p class="text-sm">Online Tutorial</p>
-                            <div class="progress progress-sm progress-light-base">
-                                <div style="width: 80%" class="progress-bar progress-bar-primary"></div>
-                            </div>
-                        </li>
-                        <li>
-                            <button class="btn btn-sm btn-dark btn-active-success">Checkout</button>
-                        </li>
-                    </ul>
+                        </form>
+                    </div>
                 </div>
-                <!-- Visible when footer positions are static -->
-                <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-                <div class="hide-fixed pull-right pad-rgt">Currently v2.2</div>
-                <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-                <!-- Remove the class name "show-fixed" and "hide-fixed" to make the content always appears. -->
-                <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-                <p class="pad-lft">&#0169; 2015 Your Company</p>
-            </footer>
-            <!--===================================================-->
-            <!-- END FOOTER -->
-            <!-- SCROLL TOP BUTTON -->
-            <!--===================================================-->
-            <button id="scroll-top" class="btn"><i class="fa fa-chevron-up"></i></button>
-            <!--===================================================-->
+                <div class="registration"> Don't have an account ! <a href="#/pages/signup"> <span class="text-primary"> Sign Up </span> </a> </div>
+            </div>
         </div>
+        <!--===================================================-->
+        <!-- END OF CONTAINER -->
+        <!--JAVASCRIPT-->
+        <!--=================================================-->
+        <!--jQuery [ REQUIRED ]-->
+        <script src="js/jquery-2.1.1.min.js"></script>
+        <!--BootstrapJS [ RECOMMENDED ]-->
+        <script src="js/bootstrap.min.js"></script>
+        <!--Fast Click [ OPTIONAL ]-->
+        <script src="plugins/fast-click/fastclick.min.js"></script>
+        <!--Switchery [ OPTIONAL ]-->
+        <script src="plugins/switchery/switchery.min.js"></script>
+        <!--Bootstrap Select [ OPTIONAL ]-->
+        <script src="plugins/bootstrap-select/bootstrap-select.min.js"></script>
     </body>
 </html>

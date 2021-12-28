@@ -1,6 +1,8 @@
 package com.green.vo;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -21,6 +23,7 @@ public class UserVO {
 	private String password;
 	private String name;
 	private String email;
+
 	
 	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date regDate;
@@ -33,4 +36,13 @@ public class UserVO {
 	
 	// 로그인 유지
 	private boolean useCookie;
+	private String profile;
+	
+
+	private int id;
+	private String uploadPath;
+	private String uuid;
+	private String fileName;
+	private List<AttachImageVO> imageList;
+
 }

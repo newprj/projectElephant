@@ -1,81 +1,86 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    <%@ taglib uri="http://java.sun.com/jsp/jstl/core"
-prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %> 
-<script
-  src="https://code.jquery.com/jquery-3.6.0.js"></script>
-  
-<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
-<script src="//code.jquery.com/jquery-3.6.0.js"></script>
-<link
-	href="https://cdn.quilljs.com/1.3.6/quill.snow.css"
-	rel="stylesheet"
-/>
-<script src="/resources/image-resize.min.js"></script>
-<script src="/resources/image-drop.min.js"></script>
-<script src="/resources/js/fileUpload.js" type="text/javascript"></script>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
-<!DOCTYPE html>
-<html>
-<head>
+<%@ include file="../includes/header.jsp" %>
+
 <style>
 li {
 	list-style-type:none;
 }
 </style>
-<meta charset="UTF-8">
-<title>Q & A 등록</title>
-</head>
-<body>
-	<h1>QnA 등록</h1>
-	<h3>로그인되면 임시저장 도전</h3>
-	<form action="/qna/write" method="post" name="write">
-		<div>
-			<label for="p_select">구분</label>
-			<select id="p_select" onchange="selectOption(this.value);">
-				<option value="0">선택</option>
-				<option value="public">공개글</option>
-				<option value="private">비밀글</option>			
-			</select>
-		</div>
-		<div>
-			<label for="pwd">비밀번호</label>
-			<input type="password" id="pwd" name="pwd"/> 
-		</div>
-		<div>
-			<label for="title">제목</label>
-			<input type="text" name="title"/> 
-		</div>
-		<div>
-			<label for="writer">글쓴이</label>
-			<input type="text" name="writer" value='${id}' readonly="readonly"/> 
-		</div>
-		<div>
-			<label for="q_content">내용</label>
-			<div id="editor" style="max-height: 400px; overflow: auto"></div>
-			<input name="q_content" type="hidden" />
-		</div>
-		<div>
-			<div class="panel-heading">첨부파일</div>
-			<div>
-				<div class="form-group uploadDiv">
-					<input type="file" name="uploadFile" multiple />
-				</div>
-				<div class="uploadResult">
-					<ul>
-					
-					</ul>
-				</div>
-			</div>
-		</div>
-		<button >임시저장(될까?sessionStorage사용)</button>
-		<button id="sbtn" type="submit">등록</button>
-		<button type="button" onclick="location.href='/qna/list'">취소</button>
-		
-	</form>
-</body>
 
-<script>
+<div class="boxed">
+<div id="content-container">
+
+	<div class="pageheader">
+         <h3><i class="fa fa-home"></i> Q&A 등록</h3>
+         <div class="breadcrumb-wrapper">
+             <span class="label">You are here:</span>
+             <ol class="breadcrumb">
+                 <li> <a href="/qna/list"> Q&A </a> </li>
+                 <li class="active"> Q&A 등록</li>
+             </ol>
+         </div>
+     </div>
+     
+     <div class="col-xs-12 col-md-9 col-lg-9">
+         <div class="panel">
+             <div class="panel-body">
+                 <!-- Multiple Select Choosen -->
+                 <!--===================================================-->
+                 <form class="form-horizontal form-bordered"  action="/qna/write" method="post" >
+                     <div class="form-group nb">
+                         <label class="control-label col-md-2">구분: </label>
+                         <div class="col-md-10">
+                             <select id="p_select" onchange="selectOption(this.value);">
+								<option value="0">선택</option>
+								<option value="public">공개글</option>
+								<option value="private">비밀글</option>			
+							</select>
+                         </div>
+                     </div>
+                     <div class="form-group nb">
+                         <label class="control-label col-md-2">비밀번호: </label>
+                         <div class="col-md-10">
+                            <input type="text" class="form-control" name="pwd">
+                         </div>
+                     </div>
+                     <div class="form-group nb">
+                         <label class="control-label col-md-2">제목: </label>
+                         <div class="col-md-10">
+                            <input type="text" class="form-control" name="title"> 
+                         </div>
+                     </div>
+                     <div class="form-group nb">
+                         <label class="control-label col-md-2">글쓴이: </label>
+                         <div class="col-md-10">
+                            <input type="text" name="writer" value='${id}' readonly="readonly" class="form-control"/> 
+                         </div>
+                     </div>
+                     
+                    
+                     <!--Summernote-->
+                     <!--===================================================-->
+                     <div id="demo-summernote">
+                     	<div id="editor" rows="9" class="form-control" style="height: 400px; overflow: auto"></div>
+						<input name="q_content" type="hidden" />
+                     </div>
+                     <!--===================================================-->
+                     <!-- End Summernote -->
+                     <div class="pad-top text-right"> 
+                         <button class="btn btn-danger" id="sbtn" type="submit"><i class="fa fa-send"></i> Send </button>
+                         <button class="btn btn-default" type="button" onclick="location.href='/qna/list'"><i class="fa fa-trash-o"></i> Discard </button>
+                     </div>
+                 </form>
+             </div>
+         </div>
+     </div>
+</div>
+</div>
+<%@ include file="../includes/admin_footer.jsp" %> 
+
+<script type="text/javascript">
 
 	var today=new Date()
 	
@@ -84,73 +89,72 @@ li {
 	var p=''
 
 	var selectOption=function(value){
-	if(value=='private')
-		$("#pwd").attr("disabled",false)
-	else
-		$("#pwd").attr("disabled",true)
-	p=value
-	choice="<input type='hidden' name='p_group' id='p_group' value='"+value+"'/>"
-	console.log(choice)
-	console.log($("#pwd").val())
-}
-$(document).ready(function () {
-	
-	let myEditor = document.querySelector("#editor");
+		if(value=='private')
+			$("#pwd").attr("disabled",false)
+		else
+			$("#pwd").attr("disabled",true)
+		p=value
+		choice="<input type='hidden' name='p_group' id='p_group' value='"+value+"'/>"
+		console.log(choice)
+		console.log($("#pwd").val())
+	}
 	
 	
-	
-	var regex=new RegExp("(.*?)\.(exe|sh|alz)$");
-	var maxSize=10485760
-	
-	function checkExtension(fileName,fileSize){
-		if(fileSize >= maxSize){
-			alert("사이즈 초과")
-			return false
-		}
-		
-		if(regex.test(fileName)){
-			alert("해당 종류의 파일은 업로드할 수 없습니다.")
-			return false
-		}
-		return true
-	}	
-	
-	const imageHandler = (e) => {
-		/* 파일 등록 */
-		let input = $('<input type="file" accept="image/*">');
-		input.click();
-		$(input).change(function(e){
-			console.log("파일 등록")
-			let formData=new FormData()
-			let uploadFile=$(input)[0].files[0];
-			formData.append("uploadFile", uploadFile);
+	$(document).ready(function () {
 			
-			$.ajax({
-				url:'/upload/uploadAjaxAction',
-				processData:false,
-				contentType:false,
-				data:formData,
-				type:'post',
-				dataType:'json',
-				success:function(res){
-					const IMG_URL =
-						"/upload/display?fileName=" +
-						encodeURIComponent(
-							res[0].uploadPath + "/" + res[0].uuid + "_" + res[0].fileName +
-							
-						);
-
-					let range = quill.getSelection();
-					console.log(range);
-					quill.insertEmbed(range, "image", IMG_URL);
-				},
-				error:function(){
-					alert("실패")
-				}
+		var myEditor = document.querySelector("#editor");
+		
+		var regex=new RegExp("(.*?)\.(exe|sh|alz)$");
+		var maxSize=10485760
+		
+		function checkExtension(fileName,fileSize){
+			if(fileSize >= maxSize){
+				alert("사이즈 초과")
+				return false
+			}
+			
+			if(regex.test(fileName)){
+				alert("해당 종류의 파일은 업로드할 수 없습니다.")
+				return false
+			}
+			return true
+		}	
+		function imageHandler(e){
+			/* 파일 등록 */
+			let input = $('<input type="file" accept="image/*">');
+			input.click();
+			$(input).change(function(e){
+				console.log("파일 등록")
+				let formData=new FormData()
+				let uploadFile=$(input)[0].files[0];
+				formData.append("uploadFile", uploadFile);
+				
+				$.ajax({
+					url:'/upload/uploadAjaxAction',
+					processData:false,
+					contentType:false,
+					data:formData,
+					type:'post',
+					dataType:'json',
+					success:function(res){
+						const IMG_URL =
+							"/upload/display?fileName=" +
+							encodeURIComponent(
+								res[0].uploadPath + "/" + res[0].uuid + "_" + res[0].fileName 
+								
+							);
+	
+						let range = quill.getSelection();
+						console.log(range);
+						quill.insertEmbed(range, "image", IMG_URL);
+					},
+					error:function(){
+						alert("실패")
+					}
+				})
 			})
-		})
-	};
-		/* 파일 삭제 */
+		};
+			/* 파일 삭제 */
 		$(".uploadResult").on("click","button",function(e){
 			console.log('파일 삭제')
 			var targetFile=$(this).data("file")
@@ -170,7 +174,7 @@ $(document).ready(function () {
 			})
 		})
 		
-		/* 등록 버튼 눌름 */
+			/* 등록 버튼 눌름 */
 		$("#sbtn").click(function(e){
 			if(p=='private' && $("#pwd").val()==''){
 				e.preventDefault();
@@ -202,8 +206,8 @@ $(document).ready(function () {
 				
 				
 			}
-			
-			
+				
+				
 		})
 		const toolbarOptions = [
 			[{ header: [1, 2, 3, 4, 5, 6, false] }],
@@ -226,10 +230,10 @@ $(document).ready(function () {
 				},
 			},
 		});
-
+	
 		let toolbar = quill.getModule("toolbar");
 		toolbar.addHandler("image", imageHandler);
-		
+	
 	})
 	
 </script>

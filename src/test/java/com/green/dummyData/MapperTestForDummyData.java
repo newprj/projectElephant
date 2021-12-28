@@ -1,5 +1,7 @@
 package com.green.dummyData;
 
+import static org.hamcrest.CoreMatchers.instanceOf;
+
 import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
@@ -66,18 +68,19 @@ public class MapperTestForDummyData {
 			vo.setPassword("test");
 			vo.setName("이름"+i);
 			vo.setEmail("a@a.com");
+			
 			uMapper.register(vo);
 		});
 	}
 	
-	//그룹 생성 =>  20번까지 승인함(오라클)
+	//그룹 생성
 	//@Test
 	public void makeGroup() {
 		String [] subject = {"코딩", "그림", "공부", "맛집", "피아노", "독서", "공연", "운동", "요가"};
 		IntStream.rangeClosed(1, 60).forEach(i ->{
 			int random = (int)(Math.random()*subject.length);
 			GroupVO vo = new GroupVO();
-			vo.setProfile("<img class='profile' src='/resources/img/elephant.png'>");
+			vo.setProfile("/resources/img/elephant.png");
 			vo.setGroup_name(subject[random]+i);
 			vo.setLeader("test"+i);
 			vo.setSubject(subject[random]);
@@ -88,12 +91,25 @@ public class MapperTestForDummyData {
 			GUserVO gUserVO = new GUserVO();
 			gUserVO.setGroup_name(vo.getGroup_name());
 			gUserVO.setUser_id(vo.getLeader());
+			gUserVO.setAuthorized("Y");
+			gUserVO.setLeader("Y");
 			guMapper.groupSignUp(gUserVO);
+		});
+
+		
+	}
+	
+	//@Test
+	public void groupAuthorize() {
+		List<GroupVO> List = gMapper.allList();
+		IntStream.rangeClosed(1, 30).forEach(i ->{
+			
+			gMapper.GroupAuth(List.get(i).getGno(), "Y");
 		});
 	}
 	
-	//지원하기 => 오라클에서 적당히 승인
-	//@Test
+	//지원하기
+//	@Test
 	public void groupSignUP() {
 		
 		List<GroupVO> list = gMapper.showAll();
@@ -106,6 +122,8 @@ public class MapperTestForDummyData {
 			GUserVO groupUserVO = new GUserVO();
 			groupUserVO.setUser_id("test"+random);
 			groupUserVO.setGroup_name(groupVO.getGroup_name());
+			groupUserVO.setAuthorized("N");
+			groupUserVO.setLeader("N");
 			guMapper.groupSignUp(groupUserVO);
 			}catch (Exception e) {
 				e.printStackTrace();
@@ -114,7 +132,7 @@ public class MapperTestForDummyData {
 	}
 	
 	//게시글 등록
-//	@Test
+	//@Test
 	public void resgisterTest() {
 		BoardVO vo = new BoardVO();
 		List<GroupVO> list = gMapper.showAll();
@@ -136,7 +154,7 @@ public class MapperTestForDummyData {
 	}
 	
 	//리플 등록
-	//@Test
+//	@Test
 	public void registerReply() {
 		List<GroupVO> list = gMapper.showAll();
 		int num = list.size();
@@ -170,7 +188,7 @@ public class MapperTestForDummyData {
 	}
 	
 	//이벤트 등록
-	@Test
+	//@Test
 	public void registerEvent() {
 		List<GroupVO> list = gMapper.showAll();
 		int num = list.size();

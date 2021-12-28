@@ -70,6 +70,12 @@ public class LetterServiceImpl implements LetterService{
 		return mapper.totalCount(recipient);
 	}
 
+	@Override
+	public LetterVO oneLetter(Long lno) {
+		// TODO Auto-generated method stub
+		return mapper.oneLetter(lno);
+	}
+
 
 	
 	

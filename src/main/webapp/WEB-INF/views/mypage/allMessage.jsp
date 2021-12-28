@@ -12,7 +12,14 @@
       <div class="breadcrumb-wrapper">
           <span class="label">You are here:</span>
           <ol class="breadcrumb">
-              <li> <a href="/mypage/admin"> Home </a> </li>
+              <c:choose>
+		          <c:when test="${user.user_id == 'admin'}">
+		              <li> <a href="/mypage/admin"> Home </a> </li>
+		          </c:when>
+		          <c:otherwise>
+		           	<li> <a href="/mypage/user"> Home </a> </li>
+		          </c:otherwise>
+             </c:choose>
               <li class="active"> Message </li>
           </ol>
       </div>
@@ -63,7 +70,7 @@
                         <div class="tab-base">
                             <!--Nav Tabs-->
                             <ul class="nav nav-tabs">
-                                <li class="active"> <a data-toggle="tab" href="#demo-lft-tab-1">Primary <span class="badge badge-purple">2</span></a> </li>
+                                <li class="active"> <a data-toggle="tab" href="#demo-lft-tab-1">Primary <span class="badge badge-purple">${total}</span></a> </li>
                                 <li>
                                     <a data-toggle="tab" href="#demo-lft-tab-4"> <i class="fa fa-plus"></i> </a>
                                 </li>
@@ -83,7 +90,7 @@
 	                                                <div class="inbox-star"><span class="fa fa-star-o"></span></div>
 	                                            </td>
 	                                            <td class="hidden-xs"><span class="label label-success"> Primary </span></td>
-	                                            <td>${i.writer} </td>
+	                                            <td><a href="/mypage/messageView?lno=${i.lno}">${i.writer}</a></td>
 	                                            <td>${i.content} </td>
 	                                            <td><fmt:formatDate value="${i.reg_date}" pattern="yyyy-MM-dd a hh:mm" /></td>
 	                                        </tr>

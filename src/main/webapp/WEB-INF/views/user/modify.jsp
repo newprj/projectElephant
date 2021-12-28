@@ -10,6 +10,55 @@
  	
  	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <title>회원정보수정</title>
+    <style>
+    .form_section_content label {
+  display: inline-block;
+  padding: .5em .75em;
+  color: #fff;
+  font-size: inherit;
+  line-height: normal;
+  vertical-align: middle;
+  background-color: #f7ab07;
+  cursor: pointer;
+  border-radius: .25em;
+  -webkit-transition: background-color 0.2s;
+  transition: background-color 0.2s;
+}
+
+.form_section_content label:hover {
+  background-color: #f7704e;
+}
+
+.form_section_content label:active {
+  background-color: #f7ab07;
+}
+
+.form_section_content input[type="file"] {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+.imgDeleteBtn {
+	display: inline-block;
+	padding: .5em .75em;
+	color: #fff;
+	font-size: inherit;
+	line-height: normal;
+	vertical-align: middle;
+	background-color: #e91010;
+	border:none;
+	border-radius: .25em;
+}
+.imgDeleteBtn:hover {
+  background-color: #382323;
+}
+
+ 	 </style>
 
   </head>
   <script type="text/javascript">
@@ -48,13 +97,128 @@
 				$(".result2 .msg2").attr("style", "color:#000")
 				$("#submit").attr("disabled", "disabled")
 			})
+			
+			/* 이미지 업로드 */
+			$("input[type='file']").on("change", function(e){
+				
+				if($(".imgDeleteBtn").length>0){
+					deleteFile();
+				}
+				
+				let formData = new FormData();
+				let fileInput = $('input[name="uploadFile"]');
+				let fileList = fileInput[0].files;
+				let fileObj = fileList[0];
+				/*
+				if(!fileCheck(fileObj.name, fileObj.size)){
+					return false;
+				}
+				*/
+				formData.append("uploadFile", fileObj);
+				
+				$.ajax({
+					url: '/user/upload',
+			    	processData : false,
+			    	contentType : false,
+			    	data : formData,
+			    	type : 'POST',
+			    	dataType : 'json',
+			    	success : function(result){
+			    		console.log(result);
+			    		showUploadImage(result);
+			    	},
+			    	error : function(result){
+			    		alert("이미지 파일이 아닙니다")
+			    	}
+				});	
+			});
+			
+			let regex = new RegExp("(.*?)\.(jpg|png|PNG)$");
+			let maxSize = 1048576; //1MB	
+			
+			function fileCheck(fileName, fileSize){
 
+				if(fileSize >= maxSize){
+					alert("파일 사이즈 초과");
+					return false;
+				}
+					  
+				if(!regex.test(fileName)){
+					alert("해당 종류의 파일은 업로드할 수 없습니다.");
+					return false;
+				}
+				
+				return true;		
+				
+			}
+			function showUploadImage(uploadResultArr){
+				if(!uploadResultArr || uploadResultArr.length == 0){return}
+
+				let  uploadResult = $("#uploadResult");
+				let obj = uploadResultArr[0];
+				let str = "";
+				let fileCallPath = encodeURIComponent(obj.uploadPath + "/" + obj.uuid + "_" + obj.fileName);
+				let profilePath = `/display?fileName=\${fileCallPath}`
+				str += "<div id='result_card'>";
+				str += "<button type='button' class='imgDeleteBtn' data-file='" + fileCallPath + "'>변경 취소</button></br>";
+				str += "<img src='/display?fileName=" + fileCallPath +"' style='max-width: 30%; height: auto;'>";
+
+				str += "<input type='hidden' name='imageList[0].fileName' value='"+obj.fileName+"'> ";
+				str += "<input type='hidden' name='imageList[0].uuid' value='"+obj.uuid+"'> ";
+				str += "<input type='hidden' name='imageList[0].uploadPath' value='"+obj.uploadPath+"'> ";
+				str += "</div>"
+				
+				uploadResult.append(str);
+				$('input[name="profile"]').val(profilePath)
+			}
+			$("#uploadResult").on("click", ".imgDeleteBtn", function(e){
+				deleteFile();
+			});
+			
+			function deleteFile(){
+				let targetFile = $(".imgDeleteBtn").data("file");
+				let targetDiv =$("#result_card");
+				
+				$.ajax({
+					url : '/user/deleteFile',
+					data : {fileName : targetFile},
+					dataType : 'text',
+					type : 'POST',
+					success : function(result){
+						console.log(result);
+						targetDiv.remove();
+						$("input[type='file']").val("");
+					},
+					error: function(result){
+						console.log(result);
+						alert("파일을 삭제하지 못했습니다")
+					}
+				})
+			}
 		})
-	</script>
+  </script>
+		
   <body>
     <h4>회원정보수정</h4>
 		
       <form action="/user/modify" method="post">
+      	<div class="form_section">
+   			<div class="form_section_title">
+   				<input type="hidden" name="profile" value="${user.profile}"/>
+   				<img src="${user.profile}" style="max-width: 30%; height: auto;">
+   			</div>
+   			<div class="form_section_content">
+   			   	<label for="fileItem">사진 변경</label>
+				<input type="file" id ="fileItem" name='uploadFile' >
+				<div id="uploadResult">
+					<!-- <div id="result_card">
+						<div class="imgDeleteBtn">x</div>
+						<img src="/display?fileName=test.jpg">
+					</div> -->
+				</div>
+   			</div>
+   		</div> 
+	   
         <div class="form-group">
           <label for="user_id">아이디</label>
           <input type="text" class="form-control" name="user_id" value="${user.user_id}" readonly/>
@@ -78,9 +242,10 @@
          <div class="form-group">
           <label for="email">이메일</label>
           <input type="text" class="form-control" name="email" value="${user.email }"/>
+          
         </div>
         <button class="btn btn-info" id="submit">수정</button>
-        <button class="btn btn-warning" type="button" onclick="location.href='login' ">수정 취소</button>
+        <button class="btn btn-warning" type="button" onclick="location.href='/group/' ">수정 취소</button>
       </form>
 
   </body>

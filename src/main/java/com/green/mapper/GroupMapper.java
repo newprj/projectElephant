@@ -27,5 +27,13 @@ public interface GroupMapper {
 
 
 	//스터디 승인
+	public List<GroupVO> NotAuthList(Criteria cri);
 	public void GroupAuth(@Param("gno") Long gno,@Param("authorized") String authorized);
+	
+	//user page에 사용
+	public List<GroupVO> myGroup(@Param("cri") Criteria cri, @Param("leader") String leader);
+	public int myGrouptotal(@Param("cri") Criteria cri,@Param("leader") String leader);
+	
+	//더미테스트 용
+	public List<GroupVO> allList();
 }
