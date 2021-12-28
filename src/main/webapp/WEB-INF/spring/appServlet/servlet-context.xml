@@ -24,11 +24,11 @@
 	</beans:bean>
 	
 	
-	<beans:bean id="logininterceptor" class="com.green.interceptor.LoginInterceptor"/>
 
-  	<beans:bean id="authinterceptor"  class="com.green.interceptor.AhthInterceptor"/>
   	<beans:bean id="visitCounter" class="com.green.listener.VisitCounter"/>
 
+  	<beans:bean id="authinterceptor"  class="com.green.interceptor.AhthInterceptor"/>
+	<beans:bean id="logininterceptor" class="com.green.interceptor.LoginInterceptor"/>
 
 	<interceptors>
 	  <interceptor>

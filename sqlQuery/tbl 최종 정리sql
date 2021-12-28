@@ -11,6 +11,248 @@ GRANT DBA TO spring;
 grant connect ,dba  to spring ;
 ----------------------------------------
 
+<<<<<<< HEAD
+create table tbl_user(
+    uno number constraint pk_user primary key,
+    user_id varchar2(300) unique,
+    password varchar2(300),
+    name varchar2(300),
+    email varchar2(300),
+    reg_date Date,
+    suspension varchar2(50) default 'N' check(suspension in('Y','N')),
+    suspDate timestamp,
+    suspContent varchar2(100),
+    profile varchar(1000)
+);
+create sequence seq_uno;
+
+--------------------------------
+create table tbl_group(
+    gno number constraint pk_group primary key,
+    group_name varchar2(300) unique,
+    leader varchar2(300),
+    subject varchar2(30),
+    description varchar2(2000),
+    member_number number,
+    regdate timestamp,
+    authorized char(1) default 'N' check(authorized in('Y','N')),
+    viewCnt number default 0,
+    profile varchar2(1000),
+    constraint fk_group foreign key(leader) references tbl_user(user_id)
+);
+create sequence seq_gno;
+
+----------------------------------
+create table tbl_groupuser(
+    cno number primary key,
+    authorized varchar2(1) default 'N',
+    user_id varchar2(30),
+    group_name varchar2(30),
+    leader varchar2(2) default 'N',
+    constraint fk_g_user foreign key(user_id) references tbl_user(user_id),
+    constraint fk_g_group foreign key(group_name) references tbl_group(group_name)
+    );
+alter table tbl_groupuser add unique(user_id, group_name);
+create sequence seq_cno;
+
+-------------------------------
+
+create table tbl_board(
+    bno number constraint pk_board primary key,
+    group_name varchar2(300),
+    title varchar2(300),
+    content varchar2(2000),
+    writer varchar2(300),
+    notice char(1) default('N'),
+    regdate timestamp default sysdate,
+    updatedate timestamp,
+    constraint fk_b_user foreign key(writer) references tbl_user(user_id),
+    constraint fk_b_group foreign key(group_name) references tbl_group(group_name)
+    );  
+
+-----------------------------------
+
+create table board_file(
+    uuid varchar2(100) primary key,
+    uploadPath varchar2(200),
+    fileName varchar2(100),
+    fileType char(1) default '1',
+    bno number,
+    constraint fk_file foreign key(bno) references tbl_board(bno)
+    );
+
+---------------------------------------
+
+create table board_reply(
+    rno number primary key,
+    bno number,
+    reply varchar2(500),
+    replyer varchar2(100),
+    replydate date default sysdate,
+    updatedate timestamp,
+    constraint fk_r_bno foreign key(bno) references tbl_board(bno),
+    constraint fk_r_user foreign key(replyer) references tbl_user(user_id)
+    );   
+create sequence board_rno;  
+
+---------------------------------------
+
+create table tbl_calendar(
+    cid number primary key,
+    title varchar2(50),
+    startDate timestamp,
+    endDate timestamp,
+    editable varchar2(1) default 'N',
+    color varchar2(50),
+    description_ varchar2(500),
+    location varchar2(100),
+    group_ varchar2(500),
+    user_ varchar2(50),
+    member_ varchar2(50),
+    constraint fk_c_group foreign key(group_) references tbl_group(group_name),
+    constraint fk_c_user foreign key(user_) references tbl_user(user_id)
+    );
+create sequence seq_cid;
+
+-------------------------------------
+
+create table tbl_review(
+    rno number,
+    group_name varchar2(30),
+    title varchar2(200),
+    content varchar2(2000),
+    writer varchar2(30),
+    regdate date default sysdate,
+    reply_count int DEFAULT '0',
+    view_count int DEFAULT '0'
+);    
+
+create sequence seq_rno;
+
+---------------------------------------
+
+create table tbl_visitor(
+    vno number primary key,
+    in_date Date
+);
+create SEQUENCE v_seq;
+
+----------------------------
+
+create table letter_tbl(
+    lno number primary key,
+    writer varchar2(40),
+    recipient varchar2(40),
+    content varchar2(100),
+    reg_date Date 
+);
+create SEQUENCE lno_seq;
+
+----------------------------------------
+create table qna_attach_tbl(
+    uuid varchar2(100) primary key,
+    uploadPath varchar2(200) not null,
+    fileName varchar2(100) not null,
+    fileType char(1) default 'I',
+    qno number(10,0),
+    constraint fk_attach_qno foreign key(qno) references qna_tbl(qno) on delete cascade
+);
+
+------------------------------
+
+create table qna_reply_tbl(
+    rno number(10,0) primary key,
+    qno number(10,0) not null,
+    r_writer varchar2(50) not null,
+    r_content varchar2(100) not null,
+    r_reg_date timestamp not null,
+    r_up_date timestamp ,
+    constraint fk_qna_no foreign key(qno) references qna_tbl(qno) on delete cascade
+);
+create sequence reply_seq;
+
+------------------------------------------
+create table qna_tbl
+(
+    qno number(10,0) primary key,
+    title varchar2(50) not null,
+    writer varchar2(100) not null,
+    reg_date timestamp not null,
+    pwd varchar2(10) null,
+    hit number DEFAULT 0,
+    up_date timestamp,
+    q_content varchar2(700),
+    p_group varchar2(10) default 'public' constraint group_ch check (p_group in ('public','private'))
+);
+
+create sequence qna_seq;
+
+--------------------------------
+
+create table tbl_qanda(
+    qno number,
+    title varchar2(200),
+    content varchar2(2000),
+    writer varchar2(30),
+    regdate date default sysdate );    
+
+create sequence seq_qno;
+
+-------------------------------
+
+create table tbl_qanda(
+    qno number,
+    title varchar2(200),
+    content varchar2(2000),
+    writer varchar2(30),
+    regdate date default sysdate );    
+    
+create sequence seq_qno;
+
+---------------------------------
+
+create table attachFile(
+    rno number,
+    fileName varchar2(100),
+    uploadPath varchar2(20),
+    uuid varchar2(50),
+    fileSize number );
+    
+create sequence seq_rno;
+
+--------------------------------------
+create table cpage(
+    rno number,
+    group_name varchar2(30),
+    member varchar2(50),
+    captain varchar2(2)default 'N',
+    Membership varchar2(2) default 'N'
+);    
+
+ create sequence seq_cpno;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+=======
 DROP TABLE TBL_USER CASCADE CONSTRAINTS;
 DROP TABLE TBL_GROUP CASCADE CONSTRAINTS;
 DROP TABLE TBL_GROUPUSER CASCADE CONSTRAINTS;
@@ -274,6 +516,7 @@ create table cpage(
 
 
 commit;
+>>>>>>> branch 'main' of https://github.com/newprj/projectElephant.git
 
 
 
