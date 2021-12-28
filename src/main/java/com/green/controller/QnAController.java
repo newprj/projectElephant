@@ -82,7 +82,7 @@ public class QnAController {
 
 	@PostMapping("/modify")
 	public String modifyPost(QnaVO vo,@ModelAttribute("cri") Criteria cri, RedirectAttributes rttr) {
-		if(service.update(vo)) rttr.addFlashAttribute("result","success");		
+		service.update(vo);	
 		rttr.addAttribute("pageNum",cri.getPageNum());
 		rttr.addAttribute("amount",cri.getAmount());
 		rttr.addAttribute("type",cri.getType());

@@ -73,12 +73,12 @@ public class QnaServiceImpl implements QnaService{
 
 	@Transactional
 	@Override
-	public boolean update(QnaVO vo) {
+	public int update(QnaVO vo) {
 		log.info("2) 서비스에서 qna 수정"+vo);
-		attachMapper.deleteAll(vo.getQno());
+		//attachMapper.deleteAll(vo.getQno());
 		
-		boolean modifyResult=mapper.update(vo)==1;
-		if(modifyResult && vo.getAttachList() !=null && vo.getAttachList().size()>0) {
+		int modifyResult=mapper.update(vo);
+		if(modifyResult==1 && vo.getAttachList() !=null && vo.getAttachList().size()>0) {
 			vo.getAttachList().forEach(i->{
 				i.setQno(vo.getQno());
 				attachMapper.insert(i);

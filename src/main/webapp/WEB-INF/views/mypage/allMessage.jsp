@@ -90,7 +90,7 @@
 	                                                <div class="inbox-star"><span class="fa fa-star-o"></span></div>
 	                                            </td>
 	                                            <td class="hidden-xs"><span class="label label-success"> Primary </span></td>
-	                                            <td><a href="/mypage/messageView?lno=${i.lno}">${i.writer}</a></td>
+	                                            <td class="w" id="writer${status.index}"><a href="/mypage/messageView?lno=${i.lno}" >${i.writer}</a></td>
 	                                            <td>${i.content} </td>
 	                                            <td><fmt:formatDate value="${i.reg_date}" pattern="yyyy-MM-dd a hh:mm" /></td>
 	                                        </tr>
@@ -135,7 +135,12 @@
 		
 		$("#trash").on("click",function(e){
 			
-			e.preventDefault();
+			e.preventDefault()
+			
+			var idx=$(".w").index(this)
+			var uid=$("#writer"+idx).text()
+			console.log(uid)
+			
 			var checkBoxes = document.getElementsByName("check_trash");
 			var ch=new Array()
             for (var i = 0; i < checkBoxes.length; i++) {
@@ -148,12 +153,12 @@
 			<c:forEach items="ch" >
 				var data={
 					lno:ch,
-					writer:'${user.user_id}'
+					writer:'${user}'
 				}
 				console.log(data)
 			</c:forEach>
 				
-			$.ajax({
+			/* $.ajax({
 				url:"/mypage/deleLetter",
 				type:"post",
 				data:JSON.stringify(data),
@@ -164,7 +169,7 @@
 				error:function(){
 					alert("실패")
 				}
-			})
+			}) */
 			
 		})
 	})

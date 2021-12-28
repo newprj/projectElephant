@@ -223,13 +223,7 @@
 					
 				}
 			})
-			if(loginId==$("#writer${i.qno}").text()){
-				$('#writeMod${i.qno}').show()
-				$('#writeRemove${i.qno}').show()
-			} else{
-				$('#writeMod${i.qno}').hide()
-				$('#writeRemove${i.qno}').hide()
-			}
+			
 			 
 		</c:forEach>
 		

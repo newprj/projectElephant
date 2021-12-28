@@ -56,7 +56,7 @@
 			select qna_seq.nextval from dual
 		</selectKey>
 		insert into qna_tbl(qno, title, writer,q_content,reg_date,up_date,pwd,p_group) 
-			values(#{qno}, #{title},#{writer},#{q_content},#{reg_date},#{up_date},#{pwd, jdbcType=TIMESTAMP},#{p_group})
+			values(#{qno}, #{title},#{writer},#{q_content},#{reg_date},#{up_date},#{pwd, jdbcType=INTEGER },#{p_group})
 	</insert>
 	
 	<select id="get" resultType="com.green.vo.QnaVO" >
@@ -65,7 +65,7 @@
 	
 	<update id="update">
 		update qna_tbl set title=#{title},writer=#{writer},q_content=#{q_content},
-			up_date=#{up_date},pwd=#{pwd, jdbcType=TIMESTAMP},p_group=#{p_group}
+			up_date=#{up_date},pwd=#{pwd, jdbcType=INTEGER },p_group=#{p_group}
 				where qno=#{qno}
 	</update>
 	
