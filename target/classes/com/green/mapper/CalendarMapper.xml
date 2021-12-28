@@ -50,4 +50,18 @@
 			where startdate >= to_char(sysdate, 'yyyy-mm-dd') or enddate >= to_char(sysdate, 'yyyy-mm-dd')
 			]]>
 	</select>
+	
+	<insert id="register">
+		insert into tbl_calendar (cid, title, startDate, endDate)
+			values(seq_cid.nextval, #{title}, #{startDate}, #{endDate, jdbcType=TIMESTAMP})
+	</insert>
+	
+	<update id="modify">
+		update tbl_calendar set cid =#{cid}, title=#{title}, startDate=#{start} , endDate=#{end, jdbcType=TIMESTAMP}, 
+			where cid=#{cid}
+	</update>
+	
+	<delete id="delete">
+		delete from tbl_calendar where cid = #{cid}
+	</delete>
 </mapper>

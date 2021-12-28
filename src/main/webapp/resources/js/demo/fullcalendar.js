@@ -68,6 +68,20 @@ $(document).ready(function() {
 						start: start,
 						end: end
 					};
+					$.ajax({
+						type: "post",
+						url: "/group/test/",
+						data: JSON.stringify(eventData),
+						async: false,
+						contentType: "application/json; charset=utf-8",
+						success: (res) => {
+							modal.hide();
+							resCid = res;
+						},
+						error: (xhr, staturs, er) => {
+							console.log(xhr);
+						},
+					}); //ajax
 					$('#demo-calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
 				}
 				$('#demo-calendars').fullCalendar('unselect');

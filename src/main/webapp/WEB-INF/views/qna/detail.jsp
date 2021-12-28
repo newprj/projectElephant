@@ -1,8 +1,9 @@
+	
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-			<%@ include file="../includes/header.jsp" %>
 
+<%@ include file="../includes/header.jsp" %>
 <style>
 li {
 	list-style-type:none;
@@ -97,8 +98,8 @@ li {
 							<tr style="background-color:gray">
 								<td align="left" id="r_writer${i.rno}" >${i.r_writer}</td>
 								<td align="right" id="r_reg_date"><fmt:formatDate value="${i.r_reg_date}" pattern="yyyy/MM/dd a hh:mm" /></td>
-								<td><button  id="reReply" class="btn btn-primary btn-rounded">댓글</button></td>
-								<td><button data-rno="${i.rno}" class='btn btn-warning btn-rounded' id="replymodify${i.rno}">수정</button> </td>
+								<td><button  id="reReply" class="btn btn-default btn-rounded">댓글</button></td>
+								<td><button data-rno="${i.rno}" class="btn btn-default btn-rounded" id="replymodify${i.rno}">수정</button> </td>
 								<td><button id="replyRemove${i.rno}" class="btn btn-danger btn-rounded">삭제</button> </td>
 							</tr>	
 							<tr>

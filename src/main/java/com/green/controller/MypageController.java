@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.green.mapper.CalendarMapper;
 import com.green.service.BoardService;
 import com.green.service.GUserService;
 import com.green.service.GroupService;
@@ -35,6 +36,7 @@ import com.green.service.QnaService;
 import com.green.service.ReplyService;
 import com.green.service.UserService;
 import com.green.service.VisitService;
+import com.green.vo.CalendarVO;
 import com.green.vo.Criteria;
 import com.green.vo.GUserVO;
 import com.green.vo.GroupVO;
@@ -72,6 +74,9 @@ public class MypageController {
 	
 	@Setter(onMethod_=@Autowired)
 	VisitService visitService;
+
+	@Setter(onMethod_=@Autowired)
+	CalendarMapper calMapper;
 	
 	//admin확인 함수 만들기
 	public String check(String id, HttpServletResponse response) {
@@ -313,6 +318,26 @@ public class MypageController {
 		System.out.println("들어온 정보"+data);
 		letterService.delete(data.get("writer"),Long.valueOf(data.get("lno")));
 		
+	}
+	
+	//일정 달력 관리
+	
+	@ResponseBody
+	@PostMapping(value="/calRegister", consumes="application/json")
+	public void calRegister(@RequestBody CalendarVO vo) {
+		calMapper.register(vo);
+	}
+	
+	@ResponseBody
+	@PostMapping(value="/calModify", consumes="application/json")
+	public void calModify(@RequestBody CalendarVO vo) {
+		calMapper.modify(vo);
+	}
+	
+	@ResponseBody
+	@PostMapping(value="/calDelete", consumes="application/json")
+	public void calDelete(@RequestBody CalendarVO vo) {
+		calMapper.delete(vo);
 	}
 	
 }

@@ -50,11 +50,7 @@
                                <div class="fc-event" data-class="purple">My Event 8</div>
                                <div class="fc-event">My Event 9</div>
                                <hr>
-                               <div>
-                                   <label class="form-checkbox form-normal form-primary">
-                                   <input type="checkbox" id="drop-remove">
-                                   Remove after drop </label>
-                               </div>
+                               
                            </div>
                            <!-- ============================================ --> 
                        </div>
@@ -76,14 +72,32 @@
 </div>
 	
 	<%@ include file="../includes/admin_footer.jsp" %> 
-</div>
-	
+
 	
 <script type="text/javascript">
 	
 	$(document).ready(function () {
-	
-		})
+		//일정 등록
+		const eventSubmit = (data) => {
+			let resCid;
+			$.ajax({
+				type: "post",
+				url: "/group/calRegister/",
+				data: JSON.stringify(data),
+				async: false,
+				contentType: "application/json; charset=utf-8",
+				success: (res) => {
+					modal.hide();
+					resCid = res;
+				},
+				error: (xhr, staturs, er) => {
+					console.log(xhr);
+				},
+			}); //ajax
+			return resCid;
+		};
+		
+	})
 
 </script>
 </html>

@@ -14,5 +14,10 @@ public interface CalendarService {
 	public int deleteEvent(Long cno);
 	
 	public List<CalendarVO> eventsAfterToday(String group);
+	
+	//admin page 
+	public int register(CalendarVO vo);
+	public int modify(CalendarVO vo);
+	public int delete(CalendarVO vo);
 
 }

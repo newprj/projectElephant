@@ -59,4 +59,22 @@ public class CalendarServiceImpl implements CalendarService{
 		return mapper.eventsAfterToday(group);
 	}
 
+	@Override
+	public int register(CalendarVO vo) {
+		// TODO Auto-generated method stub
+		return mapper.register(vo);
+	}
+
+	@Override
+	public int modify(CalendarVO vo) {
+		// TODO Auto-generated method stub
+		return mapper.modify(vo);
+	}
+
+	@Override
+	public int delete(CalendarVO vo) {
+		// TODO Auto-generated method stub
+		return mapper.delete(vo);
+	}
+
 }
