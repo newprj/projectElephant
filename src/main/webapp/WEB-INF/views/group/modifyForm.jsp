@@ -99,6 +99,7 @@ prefix="c" %>
 
 		<div class="wrapper">
 			<div class="head">
+			
 				<div class="media-left">
 					<img
 						src="/resources/img/elephantIcon.png"
@@ -130,8 +131,8 @@ prefix="c" %>
 					<div class="col-md-9">
 							<div class="col-md-6 pad-no form-block">
 									<div class="checkbox">
-											<label class="form-checkbox form-icon">
-											<input type="checkbox" name="notice" value="${board.notice}"> 공지사항 </label>
+											<label class="form-checkbox form-icon" >
+											<input type="checkbox" name="notice" id="notice" > 공지사항 </label>
 									</div>
 							</div>
 					</div>
@@ -150,14 +151,16 @@ prefix="c" %>
 			</div>
 			<div class="button">
 				<button class="modify btn btn-default">수정</button>
-				<button type="reset" class="btn btn-default">리셋</button>
-				<button class="btn btn-default go_board">리셋</button>
+				<button class="btn btn-default go_board">목록</button>
 			</div>
 
 		<script>
 			$(document).ready(function (e) {
 				let loginUser = "${user}";
-			
+				if("${board.notice}" =='Y') {
+					$('input:checkbox[id="notice"]').prop('checked', true); 
+					$('label.form-icon').addClass('active')
+				}
 			
 					$.getJSON("/group/getMemberlistByGroup/${cri.group_name}", (list) => {
 						console.log(list);
@@ -172,52 +175,70 @@ prefix="c" %>
 						}
 					});//get json
 				
-				if("${board.notice}" ==='Y') $('input[name="notice"]').prop('checked', true); 
+				console.log("${board.notice}" )
+				console.log("${board.notice}" =='Y')
+				
+			
 				const uploadClone = $(".file").clone();
 				var myEditor = document.querySelector("#editor");
 				getFileList("${cri.bno}");
-				$('input[type="file"]').change(function (e) {
-					let formData = new FormData();
-					let uploadFiles = $('input[name="file"]')[0].files;
-					let files = Object.values(uploadFiles);
-					files
-						.filter((file) => checkExtension(file.name, file.size))
-						.map((file) => formData.append("uploadFile", file));
-					$.ajax({
-						type: "post",
-						url: "/upload",
-						processData: false,
-						contentType: false,
-						data: formData,
-						dataType: "json",
-						success: (res) => {
-							$(".file").html(uploadClone.html());
-							showUploadFile(res);
-							console.log(res);
-						},
-						error: (xhr, status, er) => console.log(xhr),
-					}); //upload ajax
-				}); //file change
-				$(".uploadResult").on("click", "button", function (e) {
-					e.preventDefault();
-					let fileName = $(this).data("file");
-					let fileType = $(this).data("type");
-					let targetLi = $(this).closest("li");
-					let uuid = $(this).data("uuid");
-					let data = { fileName, fileType };
-					attachList = attachList.filter((i) => i.uuid !== uuid);
-					console.log(data);
-					$.ajax({
-						url: "/delete",
-						type: "post",
-						data: data,
-						dataType: "text",
-						success: (res) => {
-							console.log(res);
-							targetLi.remove();
-						},
-					});
-				}); //uploadResult의 버튼  click
+				
+				
+				$('.fileBtn').click( (e) => {
+					let fileUpload = $('<input type="file" name="file" multiple />')
+					fileUpload.click()
+					$(fileUpload).change(function (e) {
+						let formData = new FormData();
+						let uploadFiles = fileUpload[0].files;
+						let files = Object.values(uploadFiles);
+						files
+							.filter((file) => checkExtension(file.name, file.size))
+							.map((file) => formData.append("uploadFile", file));
+						$.ajax({
+							type: "post",
+							url: "/upload",
+							processData: false,
+							contentType: false,
+							data: formData,
+							dataType: "json",
+							success: (res) => {
+								$(".file").html(uploadClone.html());
+								showUploadFile(res);
+								console.log(res);
+							},
+							error: (xhr, status, er) => console.log(xhr),
+						});
+					// 업로드한 파일 삭제할경우
+					$(".uploadResult").on("click", "button", function (e) {
+						e.preventDefault();
+						console.log("뭐가 눌림")
+						let fileName = $(this).data("file");
+						let fileType = $(this).data("type");
+						let targetLi = $(this).closest("li");
+						let uuid = $(this).data("uuid");
+						let data = {
+							fileName,
+							fileType,
+						};
+						attachList = attachList.filter((i) => i.uuid !== uuid);
+						$.ajax({
+							url: "/delete",
+							type: "post",
+							data: data,
+							dataType: "text",
+							success: (res) => {
+								console.log(res);
+								targetLi.remove();
+							},
+						});
+					}); //uploadResult click
+				});
+				}) //file
+				
+				$('input[name="notice"]').click((e) =>{
+					$(e.target).prop('checked') ? $('label.form-icon').addClass('active')
+																	: $('label.form-icon').removeClass('active')
+				})
 				const getForm = () => ({
 					bno: "${cri.bno}",
 					content: myEditor.children[0].innerHTML,
@@ -244,6 +265,30 @@ prefix="c" %>
 						}, //error
 					}); //ajax
 				}); // modify c
+				
+				$(".uploadResult").on("click", "button", function (e) {
+					e.preventDefault();
+					console.log("뭐가 눌림")
+					let fileName = $(this).data("file");
+					let fileType = $(this).data("type");
+					let targetLi = $(this).closest("li");
+					let uuid = $(this).data("uuid");
+					let data = {
+						fileName,
+						fileType,
+					};
+					attachList = attachList.filter((i) => i.uuid !== uuid);
+					$.ajax({
+						url: "/delete",
+						type: "post",
+						data: data,
+						dataType: "text",
+						success: (res) => {
+							console.log(res);
+							targetLi.remove();
+						},
+					});
+				}); //uploadResult click
 				$(".delete").click(function (e) {
 					e.preventDefault();
 					$.ajax({

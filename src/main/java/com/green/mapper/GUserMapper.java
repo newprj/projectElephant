@@ -2,7 +2,9 @@ package com.green.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 
+import com.green.vo.Criteria;
 import com.green.vo.GUserVO;
 import com.green.vo.GroupVO;
 
@@ -18,4 +20,7 @@ public interface GUserMapper {
 	public GUserVO read(String member);
 	public int memberLimit(String group_name);
 
+	//user group
+	public List<GroupVO> joinGroup(@Param("cri") Criteria cri,@Param("user_id") String user_id);
+	public int allGrouptotal(@Param("cri") Criteria cri,@Param("user_id") String user_id);
 }

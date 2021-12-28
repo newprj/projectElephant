@@ -69,7 +69,15 @@
 	<listener> 
 	   <listener-class>com.green.listener.VisitCounter</listener-class> 
 	</listener> 
-
+	<error-page>
+		<error-code>404</error-code>
+		<location>/WEB-INF/views/pages-404.jsp</location>
+	</error-page>
+	
+	<error-page>
+		<error-code>500</error-code>
+		<location>/WEB-INF/views/pages-500.jsp</location>
+	</error-page>
 
 </web-app>
 

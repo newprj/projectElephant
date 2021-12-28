@@ -65,7 +65,7 @@ uri="http://java.sun.com/jsp/jstl/functions"%>
 			}
 			div.head{
 				color: #000;
-    		border-left: 5px solid #5ec2dd;
+    			border-left: 5px solid #5ec2dd;
 				padding: 10px 3em 8px 15px;
 				margin-bottom: 10px;
 			}
@@ -78,7 +78,8 @@ uri="http://java.sun.com/jsp/jstl/functions"%>
 				<div class="media-left">
 					<img
 						src="/resources/img/elephantIcon.png"
-						style="height: 50px; width: 50px; border-radius: 50%"
+						style="height: 50px; width: 50px; border-radius: 50%; cursor: pointer;"
+						onclick="location.href='/group/${name}'"
 					/>
 				</div>
 				<div class="media-body">
@@ -92,7 +93,7 @@ uri="http://java.sun.com/jsp/jstl/functions"%>
 					<div class="row">
 						<div class="col-sm-6 table-toolbar-left">
               <div class="btn-group">
-                <button class="btn btn-default"><a href="/group/${name}"><i class="fa fa-arrow-left"></i></a></button>
+                
                 <button class="btn btn-default"><a href="/group/"><i class="fa fa-home"></i> 메인</a> </button>
                 <button class="btn btn-default"><a href="/group/board/${name}/write"><i class="fa fa-plus"></i> 글작성</a></button>
               </div>
@@ -148,7 +149,7 @@ uri="http://java.sun.com/jsp/jstl/functions"%>
                     <td></td>
                     <td>
                       <i class="fas fa-check"></i>
-                      <span class="list" data="${board.bno}">
+                      <span class="list" data="${board.bno}" style="cursor: pointer;">
                         ${board.title}
                       </span>
                       <c:if
@@ -167,7 +168,7 @@ uri="http://java.sun.com/jsp/jstl/functions"%>
 								<tr>
                   <td></td>
 									<td>
-										<span class="list" data="${board.bno}">
+										<span class="list" data="${board.bno}"  style="cursor: pointer;"> 
 											${board.title}
 										</span>
 										<c:if

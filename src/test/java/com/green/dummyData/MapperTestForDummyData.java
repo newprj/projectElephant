@@ -68,6 +68,7 @@ public class MapperTestForDummyData {
 			vo.setPassword("test");
 			vo.setName("이름"+i);
 			vo.setEmail("a@a.com");
+			
 			uMapper.register(vo);
 		});
 	}
@@ -153,7 +154,7 @@ public class MapperTestForDummyData {
 	}
 	
 	//리플 등록
-	//@Test
+//	@Test
 	public void registerReply() {
 		List<GroupVO> list = gMapper.showAll();
 		int num = list.size();

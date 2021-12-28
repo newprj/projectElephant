@@ -283,6 +283,10 @@ pageEncoding="UTF-8"%>
 						}); // ajax
 					}); // click
 				}; //imageHandletr
+				$('input[name="notice"]').click((e) =>{
+					$(e.target).prop('checked') ? $('label.form-icon').addClass('active')
+																	: $('label.form-icon').removeClass('active')
+				})
 				const toolbarOptions = [
 					[{ header: [1, 2, 3, 4, 5, 6, false] }],
 					[{ list: "ordered" }, { list: "bullet" }],

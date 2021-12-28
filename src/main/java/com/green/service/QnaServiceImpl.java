@@ -155,6 +155,18 @@ public class QnaServiceImpl implements QnaService{
 		return mapper.updateHit(qno, hit);
 	}
 
+	@Override
+	public int Qnatotal(Criteria cri, String writer) {
+		// TODO Auto-generated method stub
+		return mapper.Qnatotal(cri, writer);
+	}
+
+	@Override
+	public int replyTotal(Criteria cri, String r_writer) {
+		// TODO Auto-generated method stub
+		return replyMapper.replyTotal(cri, r_writer);
+	}
+
 	
 
 

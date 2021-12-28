@@ -73,8 +73,9 @@ public class BoardServiceImpl implements BoardService{
 
 	@Override
 	public BoardVO read(Long bno) {
-		// TODO Auto-generated method stub
-		return mapper.read(bno);
+		BoardVO board = mapper.read(bno);
+		board.setAttachList(fileMapper.filesByBno(board.getBno()));
+		return board;
 	}
 
 	@Override

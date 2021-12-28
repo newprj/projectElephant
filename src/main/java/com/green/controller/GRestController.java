@@ -28,6 +28,7 @@ import com.green.service.CalendarService;
 import com.green.service.GUserService;
 import com.green.service.GroupService;
 import com.green.service.ReplyService;
+import com.green.service.UserService;
 import com.green.vo.BoardReplyVO;
 import com.green.vo.BoardVO;
 import com.green.vo.CalendarVO;
@@ -63,6 +64,9 @@ public class GRestController {
 	
 	@Setter(onMethod_=@Autowired)
 	ReplyService replyService;
+	
+	@Setter(onMethod_=@Autowired)
+	UserService userService;
 
 	
 	
@@ -75,7 +79,8 @@ public class GRestController {
 		try {
 			UserVO user = (UserVO) session.getAttribute("user");
 			List<GUserVO> groupList = groupUserService.listByUSer(user.getUser_id()).stream()
-					.filter(i -> i.getAuthorized().equals("Y")).collect(Collectors.toList());
+					.filter(i -> i.getAuthorized().equals("Y") && groupService.showOne(i.getGroup_name()).getAuthorized().equals("Y"))
+					.collect(Collectors.toList());
 			mv.addObject("myGroup", groupList);
 			mv.addObject("user", user);
 		}catch(Exception e) {
@@ -101,24 +106,28 @@ public class GRestController {
 			"/main/list/{pageNum}/{amount}/{sort}", "/main/list/{pageNum}/{amount}/{type}/{keyword}/{sort}" })
 	public ModelAndView listOfgroups(HttpServletRequest request, @ModelAttribute("cri") Criteria cri) {
 		ModelAndView mv = new ModelAndView("/group/groupBoard");
-		cri.setAmount(9);
+		
 		try {
 			HttpSession session = request.getSession();
 			UserVO user = (UserVO) session.getAttribute("user");
 			mv.addObject("user", user);
+			List<GUserVO> groupList = groupUserService.listByUSer(user.getUser_id()).stream()
+					.filter(i -> i.getAuthorized().equals("Y")  && groupService.showOne(i.getGroup_name()).getAuthorized().equals("Y"))
+					.collect(Collectors.toList());
+			mv.addObject("myGroup", groupList);
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
 		try {
+			cri.setAmount(9);
+			
 			List<GroupVO> group = groupService.getListWithPaging(cri);
 			group.forEach(i -> {
 				i.setApplicantCnt(groupUserService.listByGroupAll(i.getGroup_name()).size());
 				i.setJoinedCnt(groupUserService.listByGroup(i.getGroup_name()).size());
 			});
-			List<GroupVO> groupList = group.stream().filter(i -> 
-				i.getMember_number() > groupUserService.listByGroup(i.getGroup_name()).size())
-				.collect(Collectors.toList());
-			mv.addObject("group", groupList);
+			
+			mv.addObject("group", group);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -127,6 +136,8 @@ public class GRestController {
 		mv.addObject("pageMaker" , new PageDTO(cri, total));
 		return mv;
 	}
+	
+	
 	
 	// 내가 가입한 그룹 가지고 오기
 	@GetMapping(value = "/getGroupByUSer/{user_id}")
@@ -173,8 +184,12 @@ public class GRestController {
 	public ResponseEntity<Map<String, List<GUserVO>>> getMemberlistByGroup(
 			@PathVariable("group_name") String group_name){
 		Map<String, List<GUserVO>> userMap= new HashMap<>();
-		
-		userMap.put("memberList" , groupUserService.listByGroup(group_name));
+		List<GUserVO> list = groupUserService.listByGroup(group_name);
+		list.forEach(i -> {
+			String profile = userService.selectMaster(i.getUser_id()).getProfile();
+			i.setProfile(profile);
+		});
+		userMap.put("memberList" , list);
 		userMap.put("allList", groupUserService.listByGroupAll(group_name));
 		
 
@@ -188,6 +203,14 @@ public class GRestController {
 	public ModelAndView groupDetail(@PathVariable("group_name") String group_name, HttpSession session ) {
 		UserVO user = (UserVO) session.getAttribute("user");
 		ModelAndView mv = new ModelAndView("/group/detail");
+		try {
+			List<GUserVO> groupList = groupUserService.listByUSer(user.getUser_id()).stream()
+					.filter(i -> i.getAuthorized().equals("Y") && groupService.showOne(i.getGroup_name()).getAuthorized().equals("Y"))
+					.collect(Collectors.toList());
+			mv.addObject("myGroup", groupList);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
 		mv.addObject("one", groupService.showOne(group_name));
 		mv.addObject("user", user);
 		return mv;
@@ -233,13 +256,28 @@ public class GRestController {
 		ModelAndView mv = new ModelAndView("/group/study");
 		try {
 			UserVO user = (UserVO) session.getAttribute("user");
-			mv.addObject("group", groupService.showOne(group_name));
+			List<GUserVO> groupList = groupUserService.listByUSer(user.getUser_id()).stream()
+					.filter(i -> i.getAuthorized().equals("Y") && groupService.showOne(i.getGroup_name()).getAuthorized().equals("Y"))
+					.collect(Collectors.toList());
+			
+			List<GUserVO> list = groupUserService.listByGroup(group_name);
+			list.forEach(i -> {
+				String profile = userService.selectMaster(i.getUser_id()).getProfile();
+				i.setProfile(profile);
+			});
+			GroupVO group  = groupService.showOne(group_name);
+			group.setUserList(list);
+			
+			mv.addObject("myGroup", groupList);
+			mv.addObject("group", group);
 			mv.addObject("user", user.getUser_id());
 			mv.addObject("board", boardService.showList(group_name));
 			
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
+		
+	
 		
 		return mv;		
 	}
@@ -425,10 +463,15 @@ public class GRestController {
 		
 		try {
 			UserVO user = (UserVO) session.getAttribute("user");
+			List<GUserVO> groupList = groupUserService.listByUSer(user.getUser_id()).stream()
+					.filter(i -> i.getAuthorized().equals("Y") && groupService.showOne(i.getGroup_name()).getAuthorized().equals("Y"))
+					.collect(Collectors.toList());
+			
 			GroupVO vo = groupService.showOne(group_name);
 			mv.addObject("user", user.getUser_id());
 			mv.addObject("group", vo);
-			mv.addObject("member", groupUserService.listByGroupAll(group_name));
+			mv.addObject("member", groupUserService.listByGroup(group_name));
+			mv.addObject("myGroup", groupList);
 			
 		}catch(Exception e) {
 			e.printStackTrace();

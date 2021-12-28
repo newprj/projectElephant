@@ -2,7 +2,11 @@ package com.green.service;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
+import com.green.vo.Criteria;
 import com.green.vo.GUserVO;
+import com.green.vo.GroupVO;
 
 public interface GUserService {
 	
@@ -21,5 +25,7 @@ public interface GUserService {
 	public List<GUserVO> listByGroup(String group_name); 
 
 	
-	
+	public List<GroupVO> joinGroup(@Param("cri") Criteria cri,@Param("user_id") String user_id);
+	public int allGrouptotal(@Param("cri") Criteria cri,@Param("user_id") String user_id);
+
 }
