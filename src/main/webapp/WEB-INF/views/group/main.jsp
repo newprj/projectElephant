@@ -281,6 +281,9 @@ prefix="c" %>
 						<li>
 							<a href="/qna/list"> Q&amp;A </a>
 						</li>
+						<li>
+							<a href="/review/list"> 후기 </a>
+						</li>
 
 						<li>
 							<a href="/mypage/calendar"> Calendar </a>
