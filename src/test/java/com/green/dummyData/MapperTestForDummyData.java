@@ -74,7 +74,7 @@ public class MapperTestForDummyData {
 	}
 	
 	//그룹 생성
-	//@Test
+	@Test
 	public void makeGroup() {
 		String [] subject = {"코딩", "그림", "공부", "맛집", "피아노", "독서", "공연", "운동", "요가"};
 		IntStream.rangeClosed(1, 60).forEach(i ->{
