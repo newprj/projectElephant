@@ -184,8 +184,7 @@ li {
 				e.preventDefault();
 				alert('비밀번호를 입력하세요')
 				$("#pwd").focus()
-			}
-			else{
+			}else{
 				e.preventDefault();
 				$('input[name="q_content"]').val(myEditor.children[0].innerHTML);
 				console.log($('input[name="q_content"]').val());
