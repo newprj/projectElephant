@@ -112,7 +112,8 @@ public class MypageController {
 	}
 	
 	@GetMapping("/allUser")
-	public String allUser(Model model,Criteria cri,HttpServletResponse response,HttpSession session) {
+	public String allUser(Model model,Criteria cri,
+			HttpServletResponse response,HttpSession session) {
 		UserVO login= (UserVO) session.getAttribute("user");
 		String id=login.getUser_id();
 		
@@ -126,7 +127,8 @@ public class MypageController {
 	}
 	
 	@GetMapping("/allQna")
-	public String allQna(Model model,Criteria cri,HttpServletResponse response,HttpSession session) {
+	public String allQna(Model model,Criteria cri,
+			HttpServletResponse response,HttpSession session) {
 		UserVO login= (UserVO) session.getAttribute("user");
 		String id=login.getUser_id();
 		
