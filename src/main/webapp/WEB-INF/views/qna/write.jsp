@@ -129,6 +129,8 @@ li {
 				let uploadFile=$(input)[0].files[0];
 				formData.append("uploadFile", uploadFile);
 				
+				attachList = attachList.filter((i) => i.uuid !== uuid);
+
 				$.ajax({
 					url:'/upload/uploadAjaxAction',
 					processData:false,
@@ -154,6 +156,8 @@ li {
 				})
 			})
 		};
+		
+		
 			/* 파일 삭제 */
 		$(".uploadResult").on("click","button",function(e){
 			console.log('파일 삭제')
@@ -180,25 +184,10 @@ li {
 				e.preventDefault();
 				alert('비밀번호를 입력하세요')
 				$("#pwd").focus()
-			}
-			else{
+			}else{
 				e.preventDefault();
-				console.log("등록하기")
-				var str=""
-				$(".uploadResult ul li").each(function(i,obj){
-					var jobj=$(obj)
-					console.log(jobj.data("filename"))
-					
-					str+="<input type='hidden' name='attachList["+i+"].fileName' value='"+jobj.data("filename")+"'>"
-					str+="<input type='hidden' name='attachList["+i+"].uuid' value='"+jobj.data("uuid")+"'>"
-					str+="<input type='hidden' name='attachList["+i+"].uploadPath' value='"+jobj.data("path")+"'>"
-					str+="<input type='hidden' name='attachList["+i+"].fileType' value='"+jobj.data("type")+"'>"
-				})
-				
-				
 				$('input[name="q_content"]').val(myEditor.children[0].innerHTML);
 				console.log($('input[name="q_content"]').val());
-				$("form").append(str);
 				$("form").append(choice);
 				$("form").append("<input type='hidden' name='reg_date' pattern ='yy/MM/dd hh:mm' value='"+today+"'>");
 				$("form").append("<input type='hidden' name='up_date' pattern ='yy/MM/dd hh:mm' value='"+today+"'>");

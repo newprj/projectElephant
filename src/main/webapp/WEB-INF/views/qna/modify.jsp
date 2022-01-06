@@ -49,7 +49,7 @@ li {
                      <div class="form-group nb">
                          <label class="control-label col-md-2">비밀번호: </label>
                          <div class="col-md-10">
-                            <input type="text" class="form-control" value="${get.pwd}">
+                            <input type="text" class="form-control" name='pwd' value="${get.pwd}">
                          </div>
                      </div>
                      <div class="form-group nb">
@@ -100,11 +100,8 @@ li {
 <script>
 	var choice=''
 	$("select").val("${get.p_group}")
-	choice="<input type='hidden' name='p_group' value='${get.p_group}'/>"
 	var selectOption=function(value){
-		console.log(value)
 		choice="<input type='hidden' name='p_group' value='"+value+"'/>"
-		console.log(choice)
 	}
 	
 $(document).ready(function () {
@@ -137,20 +134,13 @@ $(document).ready(function () {
 			
 			console.log("수정하기")
 			var str=""
-			$(".uploadResult ul li").each(function(i,obj){
-				var jobj=$(obj)
-				console.log(jobj.data("filename"))
-				
-				str+="<input type='hidden' name='attachList["+i+"].fileName' value='"+jobj.data("filename")+"'>"
-				str+="<input type='hidden' name='attachList["+i+"].uuid' value='"+jobj.data("uuid")+"'>"
-				str+="<input type='hidden' name='attachList["+i+"].uploadPath' value='"+jobj.data("path")+"'>"
-				str+="<input type='hidden' name='attachList["+i+"].fileType' value='"+jobj.data("type")+"'>"
-			})
+		
 			
 			$('input[name="q_content"]').val(myEditor.children[0].innerHTML);
 			$("#modForm").append(str);
 			$("#modForm").append(choice);
 			$("#modForm").append("<input type='hidden' name='up_date' pattern ='yy/MM/dd hh:mm' value='"+today+"'/>");
+			$("#modForm").append("<input type='hidden' name='qno' pattern ='yy/MM/dd hh:mm' value='"+${get.qno}+"'/>");
 			$("#modForm").submit()
 		})
 		

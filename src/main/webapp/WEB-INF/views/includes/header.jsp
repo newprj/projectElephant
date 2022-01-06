@@ -287,7 +287,9 @@ prefix="c" %> <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
                             <li>
                                   <a href="/qna/list"> Q&A</a>
                             </li>
-	                        
+	                         <li>
+                                  <a href="/review/list"> 후기</a>
+                            </li>
 	                        <li>
 	                            <a href="/mypage/calendar"> Calendar </a>
 	                        </li>

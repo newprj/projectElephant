@@ -74,7 +74,7 @@ public class ControllerTester {
 		
 	}
 	
-	//@Test
+	@Test
 	public void test() {
 		for (int i = 0; i <50; i++) {
 			QnaVO vo =new QnaVO();
@@ -82,7 +82,7 @@ public class ControllerTester {
 			vo.setQ_content("내용"+i);
 			vo.setReg_date(date);
 			vo.setTitle("제목"+i);
-			vo.setWriter("사용자"+i);
+			vo.setWriter("test"+i);
 			vo.setPwd(null);
 			service.insertQna(vo);
 		}

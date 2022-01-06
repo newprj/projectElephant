@@ -1,5 +1,7 @@
 package com.green.interceptor;
 
+import java.io.PrintWriter;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -23,12 +25,14 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 			Object handler
 			) throws Exception {
 		System.out.println( " pre handell... ");
-		
 		HttpSession session = request.getSession();
+		
 		if(session.getAttribute("user") != null) {
 			Object dest = session.getAttribute("dest");
 			response.sendRedirect(dest != null? (String) dest : "/group/");
+			
 		}
+		
 		return true;
 
 	
@@ -45,6 +49,12 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 			UserVO user = (UserVO) userVO;
 			if(user.getUser_id().equals("admin")) {
 				response.sendRedirect("/mypage/admin");
+			}else if(user.getSuspension().equals("Y")) {
+				session.invalidate();
+				PrintWriter printwriter = response.getWriter();
+				printwriter.print("<script>alert('Suspended member.');</script>");
+				printwriter.flush();
+				printwriter.close();
 			}else {
 				log.info(" login success ");
 				Object dest = session.getAttribute("dest");

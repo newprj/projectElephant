@@ -15,7 +15,7 @@ public interface QnaService {
 	public List<QnaVO> list();
 	public void insertQna(QnaVO vo);
 	public QnaVO get(Long qno);
-	public boolean update(QnaVO vo);
+	public int update(QnaVO vo);
 	public int deleteByQno(Long qno);
 	public int totalCount(Criteria cri);
 	public List<QnaVO> listqnaWithPaging(Criteria cri);
@@ -36,4 +36,9 @@ public interface QnaService {
 	
 	//attach
 	public int attachCount(Long qno);
+	public void insert(QnaAttachDTO dto);
+	public void delete(String uuid);
+	public List<QnaAttachDTO> findByQno(Long Qno);
+	public void deleteAll(Long Qno);
+	public int cnt(Long Qno);
 }

@@ -10,4 +10,5 @@ public interface QnaAttachMapper {
 	public List<QnaAttachDTO> findByQno(Long Qno);
 	public void deleteAll(Long Qno);
 	public int cnt(Long Qno);
+	
 }

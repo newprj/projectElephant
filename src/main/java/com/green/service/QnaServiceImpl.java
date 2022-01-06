@@ -71,20 +71,11 @@ public class QnaServiceImpl implements QnaService{
 		return replyMapper.replyList(qno);
 	}
 
-	@Transactional
+	
 	@Override
-	public boolean update(QnaVO vo) {
-		log.info("2) 서비스에서 qna 수정"+vo);
-		attachMapper.deleteAll(vo.getQno());
-		
-		boolean modifyResult=mapper.update(vo)==1;
-		if(modifyResult && vo.getAttachList() !=null && vo.getAttachList().size()>0) {
-			vo.getAttachList().forEach(i->{
-				i.setQno(vo.getQno());
-				attachMapper.insert(i);
-			});
-		}
-		return modifyResult;
+	public int update(QnaVO vo) {
+
+		return mapper.update(vo);
 	}
 
 	@Override
@@ -165,6 +156,36 @@ public class QnaServiceImpl implements QnaService{
 	public int replyTotal(Criteria cri, String r_writer) {
 		// TODO Auto-generated method stub
 		return replyMapper.replyTotal(cri, r_writer);
+	}
+
+	@Override
+	public void insert(QnaAttachDTO dto) {
+		// TODO Auto-generated method stub
+		attachMapper.insert(dto);
+	}
+
+	@Override
+	public void delete(String uuid) {
+		// TODO Auto-generated method stub
+		attachMapper.delete(uuid);
+	}
+
+	@Override
+	public List<QnaAttachDTO> findByQno(Long Qno) {
+		// TODO Auto-generated method stub
+		return attachMapper.findByQno(Qno);
+	}
+
+	@Override
+	public void deleteAll(Long Qno) {
+		// TODO Auto-generated method stub
+		attachMapper.deleteAll(Qno);
+	}
+
+	@Override
+	public int cnt(Long Qno) {
+		// TODO Auto-generated method stub
+		return attachMapper.cnt(Qno);
 	}
 
 	

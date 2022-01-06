@@ -60,9 +60,7 @@ public class QnAController {
 	@PostMapping("/write")
 	public String writepost(QnaVO vo,RedirectAttributes rttr) {
 		
-		log.info("받은 게시글 내용"+vo);
-		if(vo.getAttachList()!=null) vo.getAttachList().forEach(i->log.info(""+i));
-		
+			
 		service.insertQna(vo);
 		rttr.addFlashAttribute("result",vo.getQno());
 		return "redirect:/qna/list";
@@ -82,7 +80,7 @@ public class QnAController {
 
 	@PostMapping("/modify")
 	public String modifyPost(QnaVO vo,@ModelAttribute("cri") Criteria cri, RedirectAttributes rttr) {
-		if(service.update(vo)) rttr.addFlashAttribute("result","success");		
+		service.update(vo);	
 		rttr.addAttribute("pageNum",cri.getPageNum());
 		rttr.addAttribute("amount",cri.getAmount());
 		rttr.addAttribute("type",cri.getType());

@@ -34,13 +34,13 @@
                 <div class="mail-categories">
                     <ul class="list-group">
                         <li class="list-group-item">
-                            <a href="/mypage/allMessage"> <i class="fa fa-inbox"></i> 받은 메일 <span class="label label-info pull-right">6</span> </a>
+                            <a href="/mypage/allMessage"> <i class="fa fa-inbox"></i> 받은 메일 </a>
                         </li>
                         <li class="list-group-item">
                             <a href="/mypage/sendMessage"> <i class="fa fa-envelope-o"></i> 보낸 메일 </a>
                         </li>
                         <li class="list-group-item">
-                            <a href="javascript:;"> <i class="fa fa-star"></i> Starred <span class="label label-danger pull-right">3</span> </a>
+                            <a href="javascript:;"> <i class="fa fa-star"></i> Starred  </a>
                         </li>
                     </ul>
                 </div>
@@ -90,7 +90,7 @@
 	                                                <div class="inbox-star"><span class="fa fa-star-o"></span></div>
 	                                            </td>
 	                                            <td class="hidden-xs"><span class="label label-success"> Primary </span></td>
-	                                            <td><a href="/mypage/messageView?lno=${i.lno}">${i.writer}</a></td>
+	                                            <td class="w" id="writer${status.index}"><a href="/mypage/messageView?lno=${i.lno}" >${i.writer}</a></td>
 	                                            <td>${i.content} </td>
 	                                            <td><fmt:formatDate value="${i.reg_date}" pattern="yyyy-MM-dd a hh:mm" /></td>
 	                                        </tr>
@@ -135,7 +135,12 @@
 		
 		$("#trash").on("click",function(e){
 			
-			e.preventDefault();
+			e.preventDefault()
+			
+			var idx=$(".w").index(this)
+			var uid=$("#writer"+idx).text()
+			console.log(uid)
+			
 			var checkBoxes = document.getElementsByName("check_trash");
 			var ch=new Array()
             for (var i = 0; i < checkBoxes.length; i++) {
@@ -152,18 +157,19 @@
 				}
 				console.log(data)
 			</c:forEach>
-				$.ajax({
-					url:"/mypage/deleLetter",
-					type:"post",
-					data:JSON.stringify(data),
-					contentType:"application/json; charset=utf-8",
-					success:function(){
-						location.reload();
-					},
-					error:function(){
-						alert("실패")
-					}
-				})
+				
+			/* $.ajax({
+				url:"/mypage/deleLetter",
+				type:"post",
+				data:JSON.stringify(data),
+				contentType:"application/json; charset=utf-8",
+				success:function(){
+					location.reload();
+				},
+				error:function(){
+					alert("실패")
+				}
+			}) */
 			
 		})
 	})

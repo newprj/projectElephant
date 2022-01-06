@@ -113,7 +113,7 @@ public class MapperTestForDummyData {
 	}
 	
 	//지원하기
-	//@Test
+	@Test
 	public void groupSignUP() {
 		
 		List<GroupVO> list = gMapper.showAll();
@@ -158,6 +158,7 @@ public class MapperTestForDummyData {
 	}
 	
 	//리플 등록
+
 //	@Test
 	public void registerReply() {
 		List<GroupVO> list = gMapper.showAll();
