@@ -57,6 +57,7 @@ public class CPageController {
 		int memberLimit = groupuserSevice.memberLimit(input);
 		log.info("회원수..................."+memberLimit);
 		
+		
 		model.addAttribute("limit", groupService.showOne(input).getMember_number());
 		model.addAttribute("list",groupuserSevice.listByGroupAll(input));
 		model.addAttribute("leader",userVO);

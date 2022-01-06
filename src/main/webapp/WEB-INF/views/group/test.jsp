@@ -259,6 +259,7 @@ prefix="c" %>
 				});
 
 				// 이벤트 렌더 위해 가지고 옴 => 이거 클로저 가능할것같은데
+				
 				const getEvent = (data) => {
 					let result;
 					$.ajax({
@@ -350,6 +351,7 @@ prefix="c" %>
 				};
 
 				//날짜 클릭 핸들러 => 모달 띄움
+
 				const dateClickHandler = (e) => {
 					console.log(e.dateStr);
 					$('input[name="startDate"]').val(e.dateStr);
@@ -384,6 +386,7 @@ prefix="c" %>
 				const eventMountHandler = () => {};
 
 				// 이벤트 드래그 , 리사이즈 했을때 날짜 수정
+				
 				const evnetDropAndResizeHandler = (e) => {
 					let cid = e.event._def.extendedProps.cid;
 					let newDates = {
@@ -501,7 +504,7 @@ prefix="c" %>
 						right: "dayGridMonth,listMonth",
 					},
 					events: event,
-					navLinks: true, // 세부 일정 보기
+					navLinks: true, 
 					eventStartEditable: true,
 					selectable: true,
 					dayMaxEvents: true,

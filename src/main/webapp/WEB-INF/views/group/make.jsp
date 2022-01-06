@@ -190,6 +190,9 @@ pageEncoding="UTF-8"%>
                     }); //ajax
                 }
             ); //namecheck
+
+
+
             $(".btn").click(function(e) {
                 e.preventDefault();
                 $('input[name="description"]').val(myEditor.children[0].innerHTML);
@@ -242,6 +245,8 @@ pageEncoding="UTF-8"%>
                     }); // ajax
                 }); // change
             }); //click
+
+            
             const imageHandler = (e) => {
                 console.log(e);
                 let input = $('<input type="file" accept="image/*">');

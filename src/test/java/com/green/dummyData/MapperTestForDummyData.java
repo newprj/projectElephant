@@ -60,7 +60,7 @@ public class MapperTestForDummyData {
 	CalendarMapper mapper;
 	
 	// 유저 생성 
-	//@Test
+//	@Test
 	public void signUp() {
 		IntStream.rangeClosed(1,200).forEach( i-> {
 			UserVO vo = new UserVO();
@@ -75,7 +75,7 @@ public class MapperTestForDummyData {
 	}
 	
 	//그룹 생성
-	//@Test
+//	@Test
 	public void makeGroup() {
 		String [] subject = {"코딩", "그림", "공부", "맛집", "피아노", "독서", "공연", "운동", "요가"};
 		IntStream.rangeClosed(1, 60).forEach(i ->{
@@ -103,7 +103,7 @@ public class MapperTestForDummyData {
 		
 	}
 	
-	//@Test
+//	@Test
 	public void groupAuthorize() {
 		List<GroupVO> List = gMapper.allList();
 		IntStream.rangeClosed(1, 30).forEach(i ->{
@@ -136,7 +136,7 @@ public class MapperTestForDummyData {
 	}
 	
 	//게시글 등록
-	//@Test
+	@Test
 	public void resgisterTest() {
 		BoardVO vo = new BoardVO();
 		List<GroupVO> list = gMapper.showAll();
@@ -158,7 +158,7 @@ public class MapperTestForDummyData {
 	}
 	
 	//리플 등록
-//@Test
+//	@Test
 	public void registerReply() {
 		List<GroupVO> list = gMapper.showAll();
 		int num = list.size();
@@ -178,7 +178,7 @@ public class MapperTestForDummyData {
 	}
 	
 	//조회수 올리기
-//	@Test
+	//@Test
 	public void viewCntUp() {
 		List<GroupVO> list = gMapper.showAll();
 		int num = list.size();
@@ -192,7 +192,7 @@ public class MapperTestForDummyData {
 	}
 	
 	//이벤트 등록
-//	@Test
+	@Test
 	public void registerEvent() {
 		List<GroupVO> list = gMapper.showAll();
 		int num = list.size();

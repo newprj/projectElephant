@@ -412,6 +412,8 @@ prefix="c" %>
 			});
 			const today = new Date().toISOString().split("T")[0];
 			console.log(today);
+		
+		
 			$.getJSON(`/group/getLatestEvent/\${group}`, (list) => {
 				const todayEvent = list.filter((i) => i.startDate === today);
 				console.log(todayEvent);
@@ -446,6 +448,8 @@ prefix="c" %>
 					$("ul.latest").append(eventLi);
 				});
 			}); // getJSON
+			
+			
 			// 채팅
 			let popup;
 			$("button.getChat").click((e) => {

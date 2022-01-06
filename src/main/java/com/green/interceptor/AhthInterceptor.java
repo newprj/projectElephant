@@ -38,7 +38,6 @@ private void saveDestination(HttpServletRequest req) {
 		if(session.getAttribute("user") == null ) {
 			response.sendRedirect("/user/login");
 			saveDestination(request);
-			log.info(" 로그인 안한 사용자");
 			return false;
 		}
 		

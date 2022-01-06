@@ -182,7 +182,6 @@ pageEncoding="UTF-8"%>
 			border-radius: 7px;
 			display: inline-block;
 			position: relative;
-
 		}
 
 		.chat .chat-history .message:after {
@@ -313,7 +312,7 @@ pageEncoding="UTF-8"%>
 			display: flex;
 			font-display: row;
 		}
-		li.notice{
+		li.notice {
 			text-align: -webkit-center !important;
 		}
 	</style>
@@ -367,22 +366,19 @@ pageEncoding="UTF-8"%>
 
 			<script>
 				let socket = new SockJS("http://localhost:8080/chat/${group_name}");
-				
+
 				const loginUser = "${user.user_id}";
 				const group = "${group_name}";
 				let msg = $("input.message");
-				let userprofile = {}
-				
-				
+				let userprofile = {};
+
 				$.getJSON("/group/getMemberlistByGroup/" + group, (list) => {
 					console.log(list);
 					console.log(loginUser);
-					
+
 					list.memberList.map((user) => {
 						let img =
-							user.profile !== null
-								? user.profile
-								: "/resources/img/lion.png";
+							user.profile !== null ? user.profile : "/resources/img/lion.png";
 						userprofile[user.user_id] = img;
 						const memberElement = $(
 							`<li class="clearfix">
@@ -394,8 +390,8 @@ pageEncoding="UTF-8"%>
 						);
 						$("ul.list-unstyled").append(memberElement);
 					}); //map
-					
-					console.log(userprofile)
+
+					console.log(userprofile);
 				}); //getJSON
 
 				const sendMessage = () => {
@@ -420,17 +416,17 @@ pageEncoding="UTF-8"%>
 						users
 							.filter((user) => user !== "")
 							.map((user) => $(`#\${user}`).css({ color: "red " }));
-							msgElement = $(
-								`<li class="clearfix notice"> \${sessionId} 님이 입장했습니다 </li>`
-							)
-					} else if (type == "close"){
+						msgElement = $(
+							`<li class="clearfix notice"> \${sessionId} 님이 입장했습니다 </li>`
+						);
+					} else if (type == "close") {
 						$(`#\${sessionId}`).css({
 							color: "#999",
 						});
 						msgElement = $(
-								`<li class="clearfix notice"> \${sessionId} 님이 퇴장했습니다 </li>`
-							)
-					}	else {
+							`<li class="clearfix notice"> \${sessionId} 님이 퇴장했습니다 </li>`
+						);
+					} else {
 						if (sessionId === loginUser) {
 							msgElement = $(
 								`<li class="clearfix">
@@ -438,12 +434,12 @@ pageEncoding="UTF-8"%>
 											<span class="message-data-time">\${time}</span>
 									</div>
 									<div class="message my-message float-right">\${messages}</div>
-							 </li>`
+							</li>`
 							);
 						} else {
-							let img = userprofile[sessionId]
+							let img = userprofile[sessionId];
 							msgElement = $(`
-									 <li class="clearfix">
+									<li class="clearfix">
 											<div class="message-data">
 												<span class="message-data-time">\${time}</span>
 												<img src="\${img}" alt="avatar">
@@ -465,7 +461,6 @@ pageEncoding="UTF-8"%>
 					const data = {
 						user: loginUser,
 						group,
-						msg: " 님이 퇴장했습니다 ",
 						sendTime,
 						type: "close",
 					};
@@ -475,6 +470,11 @@ pageEncoding="UTF-8"%>
 					socket.close();
 				};
 
+				$(window).on("beforeunload", function () {
+					socketClose();
+				});
+				
+				
 				const onClose = (e, a) => {}; // onClose
 
 				const onOpen = (e) => {
@@ -502,9 +502,7 @@ pageEncoding="UTF-8"%>
 					}
 				});
 
-				$(window).on("beforeunload", function () {
-					socketClose();
-				});
+				
 
 				socket.onmessage = onMessage;
 				socket.onclose = onClose;
