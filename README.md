@@ -7,7 +7,7 @@
 ---
    
 ### 팀원
-🙋‍♀️ 이혜원 (hxxone)   
+🙋‍♀️ 이혜원 (hxxone) 리팩토링 및 추가기능 구현 진행 중 https://github.com/hxxone/elephant.git       
 🙎‍♀️ 장희주 (gmlwnrs8024)  
 🙎‍♂️ 박치원 (pcwchita)   
 🙎‍♂️ 정세형 (dkgkqwe)   
